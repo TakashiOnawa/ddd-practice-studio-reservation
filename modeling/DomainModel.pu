@@ -1,0 +1,20 @@
+@startuml DomainModel
+class スタジオ
+{
+}
+
+class 機材
+{
+}
+
+class 予約
+{
+}
+
+enum 練習区分
+{
+    バンド練習
+    個人練習
+}
+
+@enduml
