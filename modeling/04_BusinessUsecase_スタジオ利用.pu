@@ -1,0 +1,14 @@
+@startuml BusinessUsecase 
+
+left to right direction
+
+actor スタッフ
+actor 会員
+
+スタッフ -- (スタジオ準備)
+(スタジオ準備) -- 会員
+(練習) -- 会員
+(会計) -- 会員
+スタッフ -- (会計)
+
+@enduml

@@ -1,0 +1,10 @@
+@startuml BusinessUsecase
+
+left to right direction
+
+actor スタッフ
+
+スタッフ -- (スタジオ管理)
+スタッフ -- (機材管理)
+
+@enduml
