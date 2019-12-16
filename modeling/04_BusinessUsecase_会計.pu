@@ -2,10 +2,10 @@
 
 left to right direction
 
-actor 会員
+actor 利用者
 actor スタッフ
 
-会員 -- (会計)
+利用者 -- (会計)
 (会計) -- スタッフ
 
 @enduml

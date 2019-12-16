@@ -2,17 +2,17 @@
 
 left to right direction
 
-actor 会員
+actor 利用者
 actor スタッフ
 
 usecase (スタジオ予約システム) as studioReservationSystem
 
-会員 -- studioReservationSystem
+利用者 -- studioReservationSystem
 スタッフ -- studioReservationSystem
 
 note top of studioReservationSystem
 <b>システム化の目的</b>
-会員が Web でスタジオ予約できるようにすることで、
+利用者が Web でスタジオ予約できるようにすることで、
 スタッフの作業を効率化する。
 end note
 

@@ -2,13 +2,13 @@
 
 left to right direction
 
-actor 会員
+actor 利用者
 note right : スタジオ、機材の空き情報を確認したい。
-actor 会員
+actor 利用者
 note right : スタジオ、機材の利用料金を確認したい。
-actor 会員
+actor 利用者
 note right : 借りたいスタジオ、機材を Web で予約したい。
-actor 会員
+actor 利用者
 note right : 個人練習だとしても Web で予約したい。
 
 actor スタッフ
