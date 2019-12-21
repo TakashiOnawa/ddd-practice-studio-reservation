@@ -16,14 +16,6 @@ RDRA 2.0 に沿って要件定義をします。
 * スタジオ、機材の在庫数が管理できること。
 
 # ビジネスコンテキスト・ビジネスユースケース
-## 会員管理（ビジネスコンテキスト）
-![](./modeling/04_BusinessUsecase_会員管理/BusinessUsecase.png)
-* ユーザーが Web で会員登録する「Web会員登録」。
-* ユーザーが店頭で会員登録する「店頭会員登録」。
-
-＜補足＞
-* ユーザーが Web でスタジオを予約する祭には会員登録が必要。
-
 ## 予約（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_予約/BusinessUsecase.png)
 * ユーザーが Web で予約する「Web予約」。（Web での会員登録が必要。）
@@ -41,8 +33,8 @@ RDRA 2.0 に沿って要件定義をします。
 ## スタジオ利用（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
 * スタッフが機材貸出や転換などを行う「スタジオ準備」。
-* 会員がスタジオを利用する「練習」。
-* 会員が支払いを行う「会計」。
+* 利用者がスタジオを利用する「練習」。
+* 利用者が支払いを行う「会計」。
 
 ＜補足＞
 * 練習中に追加で機材を借りることもある。
@@ -52,7 +44,7 @@ RDRA 2.0 に沿って要件定義をします。
 TODO：ビジネスユースケースごとに業務フローを洗い出しシステムのユースケースを洗い出す。ユースケースはユースケース複合図で示す。
 
 # ドメインモデル
-![](https://github.com/TakashiOnawa/ddd-practice-reservation/blob/master/modeling/DomainModel/DomainModel.png)
+![](https://github.com/TakashiOnawa/ddd-practice-reservation/blob/master/modeling/06_DomainModel/DomainModel.png)
 
 * バンド練習の予約は 2 カ月前から受付開始。
 * 個人練習の予約は前日の 22 時から受付開始。
