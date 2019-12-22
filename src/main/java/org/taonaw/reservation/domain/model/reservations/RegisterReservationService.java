@@ -8,9 +8,9 @@ import org.taonaw.common.domain.exception.DomainExceptionCodes;
 @AllArgsConstructor
 public class RegisterReservationService {
     @NonNull
-    private final ReservationRepository reservationRepository;
+    private final IReservationRepository reservationRepository;
 
-    public void register(Reservation reservation) {
+    public void register(@NonNull Reservation reservation) {
         if (isDuplicatedReservation(reservation)) {
             throw new DomainException(DomainExceptionCodes.ReservationDuplication);
         }

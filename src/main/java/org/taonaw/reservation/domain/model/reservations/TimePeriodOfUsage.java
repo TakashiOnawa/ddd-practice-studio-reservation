@@ -1,20 +1,16 @@
 package org.taonaw.reservation.domain.model.reservations;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 
-@Getter
-@EqualsAndHashCode
-public class ReservationTime {
+public class TimePeriodOfUsage {
     private final Date start;
     private final Date end;
 
-    public ReservationTime(@NonNull Date startDate, @NonNull Date endDate) {
+    public TimePeriodOfUsage(@NonNull Date startDate, @NonNull Date endDate) {
         // 秒以下を削る。
         this.start = DateUtils.truncate(startDate, Calendar.MINUTE);
         this.end = DateUtils.truncate(endDate, Calendar.MINUTE);
@@ -25,11 +21,11 @@ public class ReservationTime {
         }
     }
 
-    public Date getReservationDate() {
+    public Date dayOfYear() {
         return DateUtils.truncate(this.start, Calendar.HOUR);
     }
 
-    public boolean isOvarlapping(@NonNull ReservationTime other) {
+    public boolean isOverlapping(@NonNull TimePeriodOfUsage other) {
         return start.compareTo(other.end) < 0 && other.start.compareTo(end) < 0;
     }
 }

@@ -1,10 +1,12 @@
 package org.taonaw.common.domain.exception;
 
+import lombok.NonNull;
+
 public class DomainException extends  RuntimeException {
-    public DomainException(DomainExceptionCodes code) {
+    public DomainException(@NonNull DomainExceptionCodes code) {
         this(code, code.getDefaultMessage());
     }
-    public DomainException(DomainExceptionCodes code, String message) {
+    public DomainException(@NonNull DomainExceptionCodes code, String message) {
         super(code.getDefaultMessage());
     }
 }

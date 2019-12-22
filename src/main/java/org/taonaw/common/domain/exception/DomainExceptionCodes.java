@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DomainExceptionCodes {
     ReservationDuplication(10000, "予約が重複しています。"),
-    PersonalReservationNotStartedAccepting(10001, "個人練習の予約はまだ開始していません。");
+    ReservationNotStartedReception(10001, "予約はまだ受付を開始していません。"),
+    ReservationOverMaxNumberOfUsers(10002, "利用最大人数を超えています。");
 
     private final int code;
     private final String defaultMessage;

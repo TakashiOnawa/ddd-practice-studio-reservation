@@ -4,12 +4,11 @@ import lombok.NonNull;
 import org.taonaw.common.domain.exception.DomainException;
 import org.taonaw.common.domain.exception.DomainExceptionCodes;
 import org.taonaw.reservation.domain.model.accounts.AccountId;
+import org.taonaw.reservation.domain.model.reservations.specificatiions.ReservationSpecifications;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class Reservation {
+    private final ReservationSpecifications specifications;
 
     private final ReservationId reservationId;
     private final AccountId accountId;
@@ -17,43 +16,35 @@ public class Reservation {
     private final RentalEquipments rentalEquipments;
 
     private StudioId studioId;
-    private ReservationTime reservationTime;
+    private TimePeriodOfUsage timePeriodOfUsage;
     private NumberOfUsers numberOfUsers;
 
     private Reservation(
             @NonNull ReservationId reservationId,
             @NonNull AccountId accountId,
-            @NonNull PracticeTypes practiceType){
+            @NonNull PracticeTypes practiceType,
+            @NonNull ReservationSpecifications reservationSpecifications){
         this.reservationId = reservationId;
         this.accountId = accountId;
         this.practiceType = practiceType;
         this.rentalEquipments = new RentalEquipments();
+
+        this.specifications = reservationSpecifications;
     }
 
     public static Reservation newReservation(
             @NonNull AccountId accountId,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
-            @NonNull ReservationTime reservationTime,
-            @NonNull NumberOfUsers numberOfUsers) {
-        Reservation reservation = new Reservation(new ReservationId(), accountId, practiceType);
+            @NonNull TimePeriodOfUsage timePeriodOfUsage,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull ReservationSpecifications reservationSpecifications) {
+        Reservation reservation = new Reservation(new ReservationId(), accountId, practiceType, reservationSpecifications);
         reservation.studioId = studioId;
-        reservation.reservationTime = reservationTime;
+        reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
 
-        if (practiceType.equals(PracticeTypes.PERSONAL) && numberOfUsers.greatherThan(2)) {
-            throw new IllegalArgumentException("個人練習の利用可能人数の上限を超えています。");
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(reservationTime.getReservationDate());
-        calendar.add(Calendar.DATE, -1);
-        calendar.add(Calendar.HOUR, 21);
-        Date currentDate = new Date();
-        if (practiceType.equals(PracticeTypes.PERSONAL) && currentDate.before((calendar.getTime()))) {
-            throw new DomainException(DomainExceptionCodes.PersonalReservationNotStartedAccepting);
-        }
-
+        reservation.validate();
         return reservation;
     }
 
@@ -62,17 +53,22 @@ public class Reservation {
             @NonNull AccountId accountId,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
-            @NonNull ReservationTime reservationTime,
-            @NonNull NumberOfUsers numberOfUsers) {
-        Reservation reservation = new Reservation(reservationId, accountId, practiceType);
+            @NonNull TimePeriodOfUsage timePeriodOfUsage,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull ReservationSpecifications reservationSpecifications) {
+        Reservation reservation = new Reservation(reservationId, accountId, practiceType, reservationSpecifications);
         reservation.studioId = studioId;
-        reservation.reservationTime = reservationTime;
+        reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
+
         return reservation;
     }
 
-    public StudioId studioId() {
-        return this.studioId;
+    public StudioId studioId() { return this.studioId; }
+    public NumberOfUsers numberOfUsers() { return this.numberOfUsers; }
+    public PracticeTypes practiceType() { return this.practiceType; }
+    public TimePeriodOfUsage timePeriodOfUsage() {
+        return  this.timePeriodOfUsage;
     }
 
     public void addRentalEquipment(@NonNull RentalEquipment rentalEquipment) {
@@ -80,6 +76,18 @@ public class Reservation {
     }
 
     public boolean isDuplicated(@NonNull Reservation other) {
-        return studioId.equals(other.studioId) && reservationTime.isOvarlapping(other.reservationTime);
+        return studioId.equals(other.studioId) && timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
+    }
+
+    private void validate() {
+        if (!specifications.getTimePeriodUnitOfUsageSpecification().isSatisfied(this)) {
+
+        }
+        if (!specifications.getReceptionStartTimeSpecification().isSatisfied(this)) {
+            throw new DomainException(DomainExceptionCodes.ReservationNotStartedReception);
+        }
+        if (!specifications.getMaxNumberOfUsersSpecification().isSatisfied(this)) {
+            throw new DomainException(DomainExceptionCodes.ReservationOverMaxNumberOfUsers);
+        }
     }
 }
