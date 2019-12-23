@@ -25,8 +25,11 @@ public class Equipment {
         return equipment;
     }
 
-    public void AddStock(@NonNull EquipmentStockQuantity quantity) {
-        this.stockQuantity = this.stockQuantity.Add(quantity);
+    public EquipmentId equipmentId() { return this.equipmentId; }
+    public EquipmentStockQuantity stockQuantity() { return this.stockQuantity; }
+
+    public void addStock(@NonNull EquipmentStockQuantity quantity) {
+        this.stockQuantity = this.stockQuantity.add(quantity);
     }
 
     public static Equipment reconstruct(

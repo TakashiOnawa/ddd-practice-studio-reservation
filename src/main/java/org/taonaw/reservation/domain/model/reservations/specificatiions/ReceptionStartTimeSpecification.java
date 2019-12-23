@@ -10,7 +10,6 @@ import org.taonaw.reservation.domain.model.reservations.TimePeriodOfUsage;
 import java.util.Date;
 
 public class ReceptionStartTimeSpecification implements IReservationSpecification {
-
     private final CurrentDate currentDate;
 
     public ReceptionStartTimeSpecification(@NonNull CurrentDate currentDate) {
@@ -23,7 +22,7 @@ public class ReceptionStartTimeSpecification implements IReservationSpecificatio
     }
 
     public boolean isSatisfied(@NonNull PracticeTypes practiceType, @NonNull TimePeriodOfUsage timePeriodOfUsage) {
-        Date receptionStartTime = timePeriodOfUsage.dayOfYear();
+        Date receptionStartTime = timePeriodOfUsage.startDayOfYear();
 
         if (practiceType.equals(PracticeTypes.PERSONAL)) {
             receptionStartTime = DateUtils.addDays(receptionStartTime, -1);
@@ -32,10 +31,6 @@ public class ReceptionStartTimeSpecification implements IReservationSpecificatio
             receptionStartTime = DateUtils.addMonths(receptionStartTime, -2);
         }
 
-        if (this.currentDate.Now().before((receptionStartTime))) {
-            return false;
-        }
-
-        return true;
+        return !this.currentDate.Now().before((receptionStartTime));
     }
 }

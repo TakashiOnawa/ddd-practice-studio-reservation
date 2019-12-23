@@ -1,4 +1,4 @@
-package org.taonaw.reservation.helloworld;
+package org.taonaw.reservation.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -14,7 +14,7 @@ public class EquipmentStockQuantity {
         this.value = value;
     }
 
-    public EquipmentStockQuantity Add(@NonNull EquipmentStockQuantity quantity) {
+    public EquipmentStockQuantity add(@NonNull EquipmentStockQuantity quantity) {
         return new EquipmentStockQuantity(this.value + quantity.value);
     }
 }

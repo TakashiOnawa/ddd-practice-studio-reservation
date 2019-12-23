@@ -5,7 +5,10 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.taonaw.reservation.domain.model.reservations.Reservation;
 import org.taonaw.reservation.domain.model.reservations.TimePeriodOfUsage;
 
+import java.util.Calendar;
+
 public class TimePeriodUnitOfUsageSpecification implements IReservationSpecification {
+    private final int MIN_TIME_PERIOD_UNIT = 30;
 
     @Override
     public boolean isSatisfied(Reservation reservation) {
@@ -13,9 +16,10 @@ public class TimePeriodUnitOfUsageSpecification implements IReservationSpecifica
     }
 
     public boolean isSatisfied(@NonNull TimePeriodOfUsage timePeriodOfUsage) {
-        // 30 分単位での予約のみ可能
-        // 利用時間が 30 分で割り切れる。
-        // 利用開始時間が 30 分で割り切れる。
-        return true;
+        long startFragmentInMinutes = DateUtils.getFragmentInMinutes(timePeriodOfUsage.getStart(), Calendar.HOUR_OF_DAY);
+        long minutes = timePeriodOfUsage.minutes();
+
+        return startFragmentInMinutes % MIN_TIME_PERIOD_UNIT == 0 &&
+                minutes % MIN_TIME_PERIOD_UNIT == 0;
     }
 }
