@@ -14,7 +14,19 @@ public class EquipmentStockQuantity {
         this.value = value;
     }
 
+    public static EquipmentStockQuantity empty() {
+        return new EquipmentStockQuantity(0);
+    }
+
     public EquipmentStockQuantity add(@NonNull EquipmentStockQuantity quantity) {
         return new EquipmentStockQuantity(this.value + quantity.value);
+    }
+
+    public boolean greaterThan(@NonNull EquipmentStockQuantity other) {
+        return this.greaterThan(other.value);
+    }
+
+    public boolean greaterThan(int otherValue) {
+        return this.value > otherValue;
     }
 }

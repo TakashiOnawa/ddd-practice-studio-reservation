@@ -14,7 +14,7 @@ public class MaxNumberOfUsersSpecification implements IReservationSpecification 
 
     public boolean isSatisfied(@NonNull PracticeTypes practiceType, @NonNull NumberOfUsers numberOfUsers) {
         if (practiceType.equals(PracticeTypes.PERSONAL)) {
-            if (numberOfUsers.greatherThan(2)) {
+            if (numberOfUsers.greaterThan(2)) {
                 return false;
             }
         }

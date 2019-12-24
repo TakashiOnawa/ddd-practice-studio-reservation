@@ -19,20 +19,13 @@ public class RegisterReservationService {
     @NonNull
     private final IEquipmentRepository equipmentRepository;
 
-    private static final Map<String, String> map = Collections.unmodifiableMap(new HashMap<String, String>());
-
-
     public void register(@NonNull Reservation reservation) {
         if (isDuplicatedReservation(reservation)) {
             throw new DomainException(DomainExceptionCodes.ReservationDuplication);
         }
 
-        // TODO:機材の在庫チェック
-        List<Equipment> equipments = equipmentRepository.findAll();
-
-        TotalRentalEquipments totalRentalEquipments = new TotalRentalEquipments();
-        for (Reservation otherReservation : reservationRepository.findTimePeriodOverlapped(reservation)) {
-            totalRentalEquipments.add(otherReservation.rentalEquipments());
+        if (isNotInEquipmentStock(reservation)) {
+            throw new DomainException(DomainExceptionCodes.ReservedEquipmentsNotInStock);
         }
 
         reservationRepository.save(reservation);
@@ -40,31 +33,47 @@ public class RegisterReservationService {
 
     private boolean isDuplicatedReservation(Reservation reservation) {
         var sameStudioReservations = reservationRepository.findByStudio(reservation.studioId());
-        return sameStudioReservations.stream().anyMatch(other -> reservation.isDuplicated(other));
+        return sameStudioReservations.stream().anyMatch(reservation::isDuplicated);
+    }
+
+    private boolean isNotInEquipmentStock(Reservation reservation) {
+        TotalRentalEquipments totalRentalEquipments = new TotalRentalEquipments();
+        for (Reservation otherReservation : reservationRepository.findTimePeriodOverlapped(reservation)) {
+            totalRentalEquipments.add(otherReservation.rentalEquipments());
+        }
+        return !totalRentalEquipments.isInStock(equipmentRepository.findAll());
     }
 
     private static class TotalRentalEquipments {
-        private final HashMap<EquipmentId, Integer> rentalEquipmentsQuantity = new HashMap<>();
+        private final HashMap<EquipmentId, EquipmentStockQuantity> totalRentalEquipmentsQuantity = new HashMap<>();
 
-        public void add(Collection<RentalEquipment> rentalEquipments) {
-            rentalEquipments.forEach(rentalEquipment -> add(rentalEquipment));
+        void add(Collection<RentalEquipment> rentalEquipments) {
+            rentalEquipments.forEach(this::add);
         }
 
-        public void add(RentalEquipment rentalEquipment) {
-            Integer quantity = rentalEquipmentsQuantity.get(rentalEquipment.getEquipmentId());
-            if (quantity == null) {
-                quantity = 0;
-                rentalEquipmentsQuantity.put(rentalEquipment.getEquipmentId(), quantity);
-            }
-            rentalEquipmentsQuantity.replace(rentalEquipment.getEquipmentId(), quantity + rentalEquipment.getQuantity());
+        void add(RentalEquipment rentalEquipment) {
+            EquipmentStockQuantity quantity = totalRentalEquipmentsQuantity
+                    .computeIfAbsent(rentalEquipment.getEquipmentId(), s -> EquipmentStockQuantity.empty());
+
+            quantity = quantity.add(new EquipmentStockQuantity(rentalEquipment.getQuantity()));
+            totalRentalEquipmentsQuantity.replace(rentalEquipment.getEquipmentId(), quantity);
         }
 
-        public boolean stillHaveStock(List<Equipment> equipments) {
+        boolean isInStock(List<Equipment> equipments) {
             Map<EquipmentId, EquipmentStockQuantity> equipmentQuantityMap = equipments.stream()
-                    .collect(Collectors.toMap(s -> s.equipmentId(), s -> s.stockQuantity()));
+                    .collect(Collectors.toMap(Equipment::equipmentId, Equipment::stockQuantity));
 
-            for (EquipmentId rentalEquipmentId : rentalEquipmentsQuantity.keySet()) {
-                Integer rentalQuantity = rentalEquipmentsQuantity.get(rentalEquipmentId);
+            for (EquipmentId rentalEquipmentId : totalRentalEquipmentsQuantity.keySet()) {
+                EquipmentStockQuantity rentalEquipmentQuantity = totalRentalEquipmentsQuantity.get(rentalEquipmentId);
+
+                EquipmentStockQuantity equipmentStockQuantity = equipmentQuantityMap.get(rentalEquipmentId);
+                if (equipmentStockQuantity == null) {
+                    return  false;
+                }
+
+                if (rentalEquipmentQuantity.greaterThan(equipmentStockQuantity)) {
+                    return false;
+                }
             }
 
             return true;
