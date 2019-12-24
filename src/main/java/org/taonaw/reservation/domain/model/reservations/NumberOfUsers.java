@@ -2,6 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import org.taonaw.common.Assertion;
 
 @Getter
@@ -14,11 +15,11 @@ public class NumberOfUsers {
         this.value = value;
     }
 
-    public boolean greatherThan(int value) {
-        return this.value > value;
+    public boolean greaterThan(@NonNull NumberOfUsers other) {
+        return this.greaterThan(other.value);
     }
 
-    public boolean greatherThan(NumberOfUsers other) {
-        return value > other.value;
+    public boolean greaterThan(int otherValue) {
+        return this.value > otherValue;
     }
 }

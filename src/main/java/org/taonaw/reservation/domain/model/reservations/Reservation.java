@@ -7,6 +7,8 @@ import org.taonaw.reservation.domain.model.accounts.AccountId;
 import org.taonaw.reservation.domain.model.reservations.specificatiions.ReservationSpecifications;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
+import java.util.Collection;
+
 public class Reservation {
     private final ReservationSpecifications specifications;
 
@@ -67,9 +69,8 @@ public class Reservation {
     public StudioId studioId() { return this.studioId; }
     public NumberOfUsers numberOfUsers() { return this.numberOfUsers; }
     public PracticeTypes practiceType() { return this.practiceType; }
-    public TimePeriodOfUsage timePeriodOfUsage() {
-        return  this.timePeriodOfUsage;
-    }
+    public TimePeriodOfUsage timePeriodOfUsage() { return  this.timePeriodOfUsage; }
+    public Collection<RentalEquipment> rentalEquipments() { return this.rentalEquipments.items(); }
 
     public void addRentalEquipment(@NonNull RentalEquipment rentalEquipment) {
         this.rentalEquipments.add(rentalEquipment);
@@ -77,6 +78,10 @@ public class Reservation {
 
     public boolean isDuplicated(@NonNull Reservation other) {
         return studioId.equals(other.studioId) && timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
+    }
+
+    public boolean isTimePeriodOverlaped(@NonNull Reservation other) {
+        return timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
     }
 
     private void validate() {

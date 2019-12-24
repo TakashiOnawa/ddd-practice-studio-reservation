@@ -1,11 +1,15 @@
 package org.taonaw.reservation.domain.model.reservations;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 
+@Getter
+@EqualsAndHashCode
 public class TimePeriodOfUsage {
     private final Date start;
     private final Date end;
@@ -21,11 +25,17 @@ public class TimePeriodOfUsage {
         }
     }
 
-    public Date dayOfYear() {
+    public Date startDayOfYear() {
         return DateUtils.truncate(this.start, Calendar.HOUR);
     }
 
     public boolean isOverlapping(@NonNull TimePeriodOfUsage other) {
         return start.compareTo(other.end) < 0 && other.start.compareTo(end) < 0;
+    }
+
+    public long minutes() {
+        long startTime = this.start.getTime();
+        long endTime = this.end.getTime();
+        return (endTime - startTime) / (1000 * 60);
     }
 }
