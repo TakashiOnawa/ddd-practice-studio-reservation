@@ -1,0 +1,18 @@
+@startuml Usecase
+
+left to right direction
+
+actor 管理者
+
+rectangle スタジオ管理 {
+    管理者 --> (ログインする)
+    管理者 --> (管理画面を開く)
+    管理者 --> (スタジオ情報を登録する)
+    管理者 --> (スタジオ情報を変更する)
+
+    note right of (管理画面を開く)
+    管理者のみ開くことができる。
+    end note
+}
+
+@enduml

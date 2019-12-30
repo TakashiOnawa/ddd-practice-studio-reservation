@@ -1,0 +1,22 @@
+@startuml Usecase
+
+left to right direction
+
+actor 管理者
+
+rectangle 機材管理 {
+    管理者 --> (ログインする)
+    管理者 --> (管理画面を開く)
+    管理者 --> (機材情報を登録する)
+    管理者 --> (機材情報を変更する)
+
+    note right of (管理画面を開く)
+    管理者のみ開くことができる。
+    end note
+
+    note right of (機材情報を登録する)
+    機材モデル名、数量を登録する。
+    end note
+}
+
+@enduml
