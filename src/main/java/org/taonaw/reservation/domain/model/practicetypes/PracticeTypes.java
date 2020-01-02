@@ -1,9 +1,7 @@
-package org.taonaw.reservation.domain.model.reservations;
+package org.taonaw.reservation.domain.model.practicetypes;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public enum PracticeTypes {
     BAND(1),

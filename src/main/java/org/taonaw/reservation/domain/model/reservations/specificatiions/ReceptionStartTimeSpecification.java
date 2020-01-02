@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservations.specificatiions;
 import lombok.NonNull;
 import org.apache.commons.lang3.time.DateUtils;
 import org.taonaw.common.date.CurrentDate;
-import org.taonaw.reservation.domain.model.reservations.PracticeTypes;
+import org.taonaw.reservation.domain.model.practicetypes.PracticeTypes;
 import org.taonaw.reservation.domain.model.reservations.Reservation;
 import org.taonaw.reservation.domain.model.reservations.TimePeriodOfUsage;
 

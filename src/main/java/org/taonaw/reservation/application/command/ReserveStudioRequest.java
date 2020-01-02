@@ -9,8 +9,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Getter
-public class RegisterReservationRequest {
-    private String accountId;
+public class ReserveStudioRequest {
+    private String memberId;
     private int practiceType;
     private String studioId;
     private Date startDateTime;

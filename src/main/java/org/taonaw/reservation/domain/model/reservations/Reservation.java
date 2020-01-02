@@ -1,21 +1,21 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.NonNull;
-import org.taonaw.common.domain.exception.DomainException;
-import org.taonaw.common.domain.exception.DomainExceptionCodes;
-import org.taonaw.reservation.domain.model.accounts.AccountId;
-import org.taonaw.reservation.domain.model.reservations.specificatiions.ReservationSpecifications;
+import org.taonaw.reservation.domain.model.members.MemberId;
+import org.taonaw.reservation.domain.model.practicetypes.PracticeTypes;
+import org.taonaw.reservation.domain.model.rentalequipments.RentalEquipmentId;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Reservation {
-    private final ReservationSpecifications specifications;
-
     private final ReservationId reservationId;
-    private final AccountId accountId;
+    private final MemberId memberId;
     private final PracticeTypes practiceType;
-    private final RentalEquipments rentalEquipments;
+    private final Map<RentalEquipmentId, EquipmentOfUsage> equipmentOfUsages;
 
     private StudioId studioId;
     private TimePeriodOfUsage timePeriodOfUsage;
@@ -23,42 +23,35 @@ public class Reservation {
 
     private Reservation(
             @NonNull ReservationId reservationId,
-            @NonNull AccountId accountId,
-            @NonNull PracticeTypes practiceType,
-            @NonNull ReservationSpecifications reservationSpecifications){
+            @NonNull MemberId memberId,
+            @NonNull PracticeTypes practiceType){
         this.reservationId = reservationId;
-        this.accountId = accountId;
+        this.memberId = memberId;
         this.practiceType = practiceType;
-        this.rentalEquipments = new RentalEquipments();
-
-        this.specifications = reservationSpecifications;
+        this.equipmentOfUsages = new HashMap<>();
     }
 
     public static Reservation newReservation(
-            @NonNull AccountId accountId,
+            @NonNull MemberId memberId,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers,
-            @NonNull ReservationSpecifications reservationSpecifications) {
-        Reservation reservation = new Reservation(new ReservationId(), accountId, practiceType, reservationSpecifications);
+            @NonNull NumberOfUsers numberOfUsers) {
+        Reservation reservation = new Reservation(new ReservationId(), memberId, practiceType);
         reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
-
-        reservation.validate();
         return reservation;
     }
 
     public static Reservation reconstruct(
             @NonNull ReservationId reservationId,
-            @NonNull AccountId accountId,
+            @NonNull MemberId memberId,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers,
-            @NonNull ReservationSpecifications reservationSpecifications) {
-        Reservation reservation = new Reservation(reservationId, accountId, practiceType, reservationSpecifications);
+            @NonNull NumberOfUsers numberOfUsers) {
+        Reservation reservation = new Reservation(reservationId, memberId, practiceType);
         reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
@@ -70,10 +63,17 @@ public class Reservation {
     public NumberOfUsers numberOfUsers() { return this.numberOfUsers; }
     public PracticeTypes practiceType() { return this.practiceType; }
     public TimePeriodOfUsage timePeriodOfUsage() { return  this.timePeriodOfUsage; }
-    public Collection<RentalEquipment> rentalEquipments() { return this.rentalEquipments.items(); }
+    public Collection<EquipmentOfUsage> equipmentOfUsages() { return this.equipmentOfUsages.values(); }
 
-    public void addRentalEquipment(@NonNull RentalEquipment rentalEquipment) {
-        this.rentalEquipments.add(rentalEquipment);
+    public void increaseRentalEquipment(@NonNull RentalEquipmentId rentalEquipmentId) {
+        if (this.equipmentOfUsages.containsKey(rentalEquipmentId)) {
+            EquipmentOfUsage targetRentalEquipment = this.equipmentOfUsages.get(rentalEquipmentId);
+            targetRentalEquipment = targetRentalEquipment.increase(1);
+            this.equipmentOfUsages.replace(targetRentalEquipment.getRentalEquipmentId(), targetRentalEquipment);
+        } else {
+            EquipmentOfUsage targetRentalEquipment = new EquipmentOfUsage(rentalEquipmentId, 1);
+            this.equipmentOfUsages.put(rentalEquipmentId, targetRentalEquipment);
+        }
     }
 
     public boolean isDuplicated(@NonNull Reservation other) {
@@ -84,15 +84,16 @@ public class Reservation {
         return timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
     }
 
-    private void validate() {
-        if (!specifications.getTimePeriodUnitOfUsageSpecification().isSatisfied(this)) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return reservationId.equals(that.reservationId);
+    }
 
-        }
-        if (!specifications.getReceptionStartTimeSpecification().isSatisfied(this)) {
-            throw new DomainException(DomainExceptionCodes.ReservationNotStartedReception);
-        }
-        if (!specifications.getMaxNumberOfUsersSpecification().isSatisfied(this)) {
-            throw new DomainException(DomainExceptionCodes.ReservationOverMaxNumberOfUsers);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(reservationId);
     }
 }

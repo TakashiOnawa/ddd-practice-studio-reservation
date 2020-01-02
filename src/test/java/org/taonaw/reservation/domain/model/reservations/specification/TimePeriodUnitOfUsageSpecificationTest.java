@@ -11,20 +11,19 @@ import java.util.Date;
 
 public class TimePeriodUnitOfUsageSpecificationTest {
     @Test
-    public void isSatisfied_30分単位の場合はtrueを返却する() throws Exception {
+    public void isSatisfied_60分単位の場合はtrueを返却する() throws Exception {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
-        Assertions.assertTrue(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010030")));
         Assertions.assertTrue(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010100")));
-        Assertions.assertTrue(isSatisfiedTest(df.parse("201901010030"), df.parse("201901010100")));
-        Assertions.assertTrue(isSatisfiedTest(df.parse("201901010030"), df.parse("201901010130")));
+        Assertions.assertTrue(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010200")));
     }
 
     @Test
-    public void isSatisfied_30分単位ではない場合はfalseを返却する() throws Exception {
+    public void isSatisfied_60分単位ではない場合はfalseを返却する() throws Exception {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
-        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010001"), df.parse("201901010030")));
-        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010031")));
-        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010015"), df.parse("201901010045")));
+        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010001"), df.parse("201901010100")));
+        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010001"), df.parse("201901010101")));
+        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010059")));
+        Assertions.assertFalse(isSatisfiedTest(df.parse("201901010000"), df.parse("201901010101")));
     }
 
     private boolean isSatisfiedTest(Date start, Date end) {

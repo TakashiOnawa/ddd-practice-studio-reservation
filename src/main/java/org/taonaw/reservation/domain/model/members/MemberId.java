@@ -1,22 +1,16 @@
-package org.taonaw.reservation.domain.model.accounts;
+package org.taonaw.reservation.domain.model.members;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import org.taonaw.common.Assertion;
 
-import java.util.UUID;
-
 @Getter
 @EqualsAndHashCode
-public class AccountId {
+public class MemberId {
     private final String value;
 
-    public AccountId() {
-        this.value = UUID.randomUUID().toString();
-    }
-
-    public AccountId(@NonNull String value) {
+    public MemberId(@NonNull String value) {
         Assertion.argumentNotEmpty(value, "value is required.");
         this.value = value;
     }

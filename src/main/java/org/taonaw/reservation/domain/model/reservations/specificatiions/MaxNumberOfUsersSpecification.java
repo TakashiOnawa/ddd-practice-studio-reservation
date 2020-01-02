@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservations.specificatiions;
 
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.reservations.NumberOfUsers;
-import org.taonaw.reservation.domain.model.reservations.PracticeTypes;
+import org.taonaw.reservation.domain.model.practicetypes.PracticeTypes;
 import org.taonaw.reservation.domain.model.reservations.Reservation;
 
 public class MaxNumberOfUsersSpecification implements IReservationSpecification {

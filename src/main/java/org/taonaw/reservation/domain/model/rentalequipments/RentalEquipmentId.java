@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.equipments;
+package org.taonaw.reservation.domain.model.rentalequipments;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,14 +9,14 @@ import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
-public class EquipmentId {
+public class RentalEquipmentId {
     private final String value;
 
-    public EquipmentId() {
+    public RentalEquipmentId() {
         this.value = UUID.randomUUID().toString();
     }
 
-    public EquipmentId(@NonNull String value) {
+    public RentalEquipmentId(@NonNull String value) {
         Assertion.argumentNotEmpty(value, "value is required.");
         this.value = value;
     }

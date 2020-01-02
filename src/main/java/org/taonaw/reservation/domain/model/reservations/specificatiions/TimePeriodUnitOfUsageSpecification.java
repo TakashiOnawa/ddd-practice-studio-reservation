@@ -8,7 +8,7 @@ import org.taonaw.reservation.domain.model.reservations.TimePeriodOfUsage;
 import java.util.Calendar;
 
 public class TimePeriodUnitOfUsageSpecification implements IReservationSpecification {
-    private final int MIN_TIME_PERIOD_UNIT = 30;
+    private final int MIN_TIME_PERIOD_UNIT = 60;
 
     @Override
     public boolean isSatisfied(Reservation reservation) {
