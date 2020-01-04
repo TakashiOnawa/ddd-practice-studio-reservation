@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: reservation_db
+      MYSQL_USER: reservation_user
+      MYSQL_PASSWORD: reservation_password
+      MYSQL_ROOT_PASSWORD: root_password
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
+      - ./conf.d:/etc/mysql/conf.d
+      - ./log:/var/log/mysql

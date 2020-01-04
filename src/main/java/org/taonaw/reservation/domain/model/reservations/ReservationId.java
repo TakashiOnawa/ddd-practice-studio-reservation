@@ -3,16 +3,17 @@ package org.taonaw.reservation.domain.model.reservations;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.common.Assertion;
+import org.taonaw.reservation.common.domain.Assertion;
 
 import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
 public class ReservationId {
+
     private final String value;
 
-    public ReservationId() {
+    ReservationId() {
         this.value = UUID.randomUUID().toString();
     }
 

@@ -25,7 +25,7 @@ RDRA 2.0 に沿って要件定義をします。
 ＜補足＞
 * スタジオ利用終了後に次回の予約を行うこともある。
 
-## スタジオ管理（ビジネスコンテキスト）
+## 管理（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ管理/BusinessUsecase.png)
 * スタッフが、スタジオの登録を行う「スタジオ管理」。
 * スタッフが、機材の在庫登録を行う「機材管理」。
@@ -43,12 +43,17 @@ RDRA 2.0 に沿って要件定義をします。
 # 業務フロー
 TODO：ビジネスユースケースごとに業務フローを洗い出しシステムのユースケースを洗い出す。ユースケースはユースケース複合図で示す。
 
-# ドメインモデル
-![](https://github.com/TakashiOnawa/ddd-practice-reservation/blob/master/modeling/06_DomainModel/DomainModel.png)
+# コンテキストマップ
+![](./modeling/06_ContextMap/ContextMap.png)
 
-* バンド練習の予約は 2 カ月前から受付開始。
-* 個人練習の予約は前日の 22 時から受付開始。
+# ドメインモデル（予約）
+![](./modeling/07_DomainModel_予約/DomainModel.png)
 
+# ドメインモデル（管理）
+![](./modeling/07_DomainModel_管理/DomainModel.png)
+
+# ドメインモデル（認証）
+![](./modeling/07_DomainModel_認証/DomainModel.png)
 
 # その他やりたいこと
 ### 料金の管理

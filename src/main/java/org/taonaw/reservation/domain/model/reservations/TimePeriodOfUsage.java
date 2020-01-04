@@ -1,14 +1,12 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 
-@Getter
 @EqualsAndHashCode
 public class TimePeriodOfUsage {
     private final Date start;
@@ -37,5 +35,17 @@ public class TimePeriodOfUsage {
         long startTime = this.start.getTime();
         long endTime = this.end.getTime();
         return (endTime - startTime) / (1000 * 60);
+    }
+
+    public boolean isStartMinutesEquals(int startMinutes) {
+        return DateUtils.getFragmentInMinutes(this.start, Calendar.HOUR_OF_DAY) == startMinutes;
+    }
+
+    public boolean isPeriodEquals(long minutes) {
+        return this.minutes() == minutes;
+    }
+
+    public boolean isStartDatePassedFrom(@NonNull Date date) {
+        return this.start.compareTo(date) >= 0;
     }
 }

@@ -1,42 +1,41 @@
 package org.taonaw.reservation.application;
 
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.taonaw.common.date.CurrentDate;
-import org.taonaw.common.domain.exception.DomainException;
-import org.taonaw.common.domain.exception.DomainExceptionCodes;
+import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.common.domain.exception.DomainException;
+import org.taonaw.reservation.common.domain.exception.DomainExceptionCodes;
 import org.taonaw.reservation.application.command.ReserveStudioRequest;
+import org.taonaw.reservation.domain.model.equipments.IEquipmentRepository;
 import org.taonaw.reservation.domain.model.members.MemberId;
-import org.taonaw.reservation.domain.model.practicetypes.IPracticeTypeRepository;
-import org.taonaw.reservation.domain.model.practicetypes.PracticeTypes;
-import org.taonaw.reservation.domain.model.rentalequipments.IRentalEquipmentRepository;
 import org.taonaw.reservation.domain.model.reservations.*;
-import org.taonaw.reservation.domain.model.studios.IStudioRepository;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
+@Service
+@AllArgsConstructor
 public class ReserveStudioAppService {
 
+    @NonNull
+    @Autowired
     private final CurrentDate currentDate;
+    @NonNull
+    @Autowired
+    private final ReservationService reservationService;
+    @NonNull
+    @Autowired
     private final IReservationRepository reservationRepository;
-    private final IRentalEquipmentRepository rentalEquipmentRepository;
-    private final IStudioRepository studioRepository;
-    private final IPracticeTypeRepository practiceTypeRepository;
-
-    public ReserveStudioAppService(CurrentDate currentDate,
-                                   IReservationRepository reservationRepository,
-                                   IRentalEquipmentRepository rentalEquipmentRepository,
-                                   IStudioRepository studioRepository,
-                                   IPracticeTypeRepository practiceTypeRepository) {
-        this.currentDate = currentDate;
-        this.reservationRepository = reservationRepository;
-        this.rentalEquipmentRepository = rentalEquipmentRepository;
-        this.studioRepository = studioRepository;
-        this.practiceTypeRepository = practiceTypeRepository;
-    }
+    @NonNull
+    @Autowired
+    private final IEquipmentRepository equipmentRepository;
 
     @Transactional
-    public void ReserveStudio(ReserveStudioRequest request) {
+    public void reserveStudio(@NonNull ReserveStudioRequest request) {
 
-        // 予約を作成する。
+        // TODO:予約権限があるかどうか確認する。
+
         var reservation = Reservation.newReservation(
                 new MemberId(request.getMemberId()),
                 PracticeTypes.of(request.getPracticeType()),
@@ -44,39 +43,18 @@ public class ReserveStudioAppService {
                 new TimePeriodOfUsage(request.getStartDateTime(), request.getEndDateTime()),
                 new NumberOfUsers(request.getNumberOfUsers()));
 
-        // TODO:予約権限があるかどうか確認する。
+        reservation.addEquipments(request.getEquipmentIds());
 
-        /** 予約内容が正しいかを確認する **/
-        var practiceType = practiceTypeRepository.findby(reservation.practiceType());
+        reservation.validate(reservationRepository.getReservationValidator());
 
-        if (practiceType.beforeReservation(reservation.timePeriodOfUsage())) {
-            throw new DomainException(DomainExceptionCodes.BeforeReservation);
-        }
-
-        if (practiceType.overMaxNumberOfUsers(reservation.numberOfUsers())) {
-            throw new DomainException(DomainExceptionCodes.OverMaxNumberOfUsers);
-        }
-
-        var studio = studioRepository.findBy(reservation.studioId());
-
-        if (!studio.startTimeSatisfied(reservation.timePeriodOfUsage())) {
-            throw new DomainException(DomainExceptionCodes.aaa);
-        }
-
-        /** 予約できるかを確認する **/
-        var reservationService = new ReservationService(reservationRepository, rentalEquipmentRepository);
-
-        // 利用機材が開いているかを確認する。
         if (reservationService.equipmentOutOfStock(reservation)) {
             throw new DomainException(DomainExceptionCodes.EquipmentOutOfStock);
         }
 
-        // スタジオが既に予約されているかを確認する。
         if (reservationService.alreadyReserved(reservation)) {
-            throw new DomainException(DomainExceptionCodes.ReservationAlreadyReservedDuplication);
+            throw new DomainException(DomainExceptionCodes.StudioAlreadyReserved);
         }
 
-        /** 予約を登録する **/
         reservationRepository.save(reservation);
     }
 }

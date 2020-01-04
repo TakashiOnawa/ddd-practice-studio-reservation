@@ -1,21 +1,18 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.NonNull;
+import org.taonaw.reservation.domain.model.equipments.EquipmentId;
 import org.taonaw.reservation.domain.model.members.MemberId;
-import org.taonaw.reservation.domain.model.practicetypes.PracticeTypes;
-import org.taonaw.reservation.domain.model.rentalequipments.RentalEquipmentId;
+import org.taonaw.reservation.domain.model.reservations.specificatiions.IReservationValidator;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Reservation {
     private final ReservationId reservationId;
     private final MemberId memberId;
     private final PracticeTypes practiceType;
-    private final Map<RentalEquipmentId, EquipmentOfUsage> equipmentOfUsages;
+    private final Map<EquipmentId, EquipmentOfUsage> equipmentOfUsages;
 
     private StudioId studioId;
     private TimePeriodOfUsage timePeriodOfUsage;
@@ -59,20 +56,37 @@ public class Reservation {
         return reservation;
     }
 
-    public StudioId studioId() { return this.studioId; }
-    public NumberOfUsers numberOfUsers() { return this.numberOfUsers; }
-    public PracticeTypes practiceType() { return this.practiceType; }
-    public TimePeriodOfUsage timePeriodOfUsage() { return  this.timePeriodOfUsage; }
-    public Collection<EquipmentOfUsage> equipmentOfUsages() { return this.equipmentOfUsages.values(); }
+    public ReservationId reservationId() {
+        return this.reservationId;
+    }
+    StudioId studioId() {
+        return this.studioId;
+    }
+    NumberOfUsers numberOfUsers() {
+        return this.numberOfUsers;
+    }
+    PracticeTypes practiceType() {
+        return this.practiceType;
+    }
+    TimePeriodOfUsage timePeriodOfUsage() {
+        return  this.timePeriodOfUsage;
+    }
+    Collection<EquipmentOfUsage> equipmentOfUsages() {
+        return Collections.unmodifiableCollection(this.equipmentOfUsages.values());
+    }
 
-    public void increaseRentalEquipment(@NonNull RentalEquipmentId rentalEquipmentId) {
-        if (this.equipmentOfUsages.containsKey(rentalEquipmentId)) {
-            EquipmentOfUsage targetRentalEquipment = this.equipmentOfUsages.get(rentalEquipmentId);
-            targetRentalEquipment = targetRentalEquipment.increase(1);
-            this.equipmentOfUsages.replace(targetRentalEquipment.getRentalEquipmentId(), targetRentalEquipment);
+    public void addEquipments(@NonNull Collection<EquipmentId> equipmentIds) {
+        equipmentIds.forEach(item -> addEquipment(item));
+    }
+
+    public void addEquipment(@NonNull EquipmentId equipmentId) {
+        if (this.equipmentOfUsages.containsKey(equipmentId)) {
+            EquipmentOfUsage equipmentOfUsage = this.equipmentOfUsages.get(equipmentId);
+            equipmentOfUsage = equipmentOfUsage.addQuantity(1);
+            this.equipmentOfUsages.replace(equipmentId, equipmentOfUsage);
         } else {
-            EquipmentOfUsage targetRentalEquipment = new EquipmentOfUsage(rentalEquipmentId, 1);
-            this.equipmentOfUsages.put(rentalEquipmentId, targetRentalEquipment);
+            EquipmentOfUsage equipmentOfUsage = new EquipmentOfUsage(equipmentId, 1);
+            this.equipmentOfUsages.put(equipmentId, equipmentOfUsage);
         }
     }
 
@@ -82,6 +96,10 @@ public class Reservation {
 
     public boolean isTimePeriodOverlaped(@NonNull Reservation other) {
         return timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
+    }
+
+    public void validate(@NonNull IReservationValidator validator) {
+        validator.validate(this);
     }
 
     @Override
