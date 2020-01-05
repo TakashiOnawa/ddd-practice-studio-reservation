@@ -1,6 +1,8 @@
-package org.taonaw.reservation.common.domain;
+package org.taonaw.common;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.regex.Pattern;
 
 public final class Assertion {
     public static void argumentNotEmpty(String value, String message) {
@@ -48,6 +50,12 @@ public final class Assertion {
         }
         if (value < min) {
             throw new IllegalArgumentException(exceptionMessage);
+        }
+    }
+
+    public static void argumentPatternMatches(String value, String regex, String message) {
+        if (!Pattern.matches(regex, value)) {
+            throw new IllegalArgumentException(message);
         }
     }
 }

@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservations;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.apache.commons.lang3.time.DateUtils;
-import org.taonaw.reservation.common.domain.Assertion;
+import org.taonaw.common.Assertion;
 import org.taonaw.reservation.common.date.CurrentDate;
 
 @EqualsAndHashCode

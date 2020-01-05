@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.reservations;
+package org.taonaw.authentication.domain.model.accounts;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,16 +9,15 @@ import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
-public class ReservationId {
-
+public class AccountId {
     private final String value;
 
-    ReservationId() {
+    AccountId() {
         this(UUID.randomUUID().toString());
     }
 
-    public ReservationId(@NonNull String value) {
-        Assertion.argumentNotEmpty(value, "Reservation id is required.");
+    public AccountId(@NonNull String value) {
+        Assertion.argumentNotEmpty(value, "Account id is required.");
         this.value = value;
     }
 }

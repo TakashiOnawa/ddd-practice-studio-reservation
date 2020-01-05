@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.reservation.common.domain.ISpecification;
+import org.taonaw.common.domain.specification.ISpecification;
 
 import java.util.Map;
 import java.util.NoSuchElementException;

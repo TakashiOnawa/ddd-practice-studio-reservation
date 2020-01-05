@@ -10,8 +10,10 @@ import org.taonaw.reservation.domain.model.equipments.IEquipmentRepository;
 @AllArgsConstructor
 public class ReservationService {
 
+    @NonNull
     @Autowired
     private final IReservationRepository reservationRepository;
+    @NonNull
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 

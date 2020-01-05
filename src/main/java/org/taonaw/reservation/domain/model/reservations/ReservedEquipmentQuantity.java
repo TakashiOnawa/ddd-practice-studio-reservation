@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
-import org.taonaw.reservation.common.domain.Assertion;
+import org.taonaw.common.Assertion;
 
 @EqualsAndHashCode
 public class ReservedEquipmentQuantity {

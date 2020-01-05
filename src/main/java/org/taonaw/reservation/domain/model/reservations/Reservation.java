@@ -34,7 +34,7 @@ public class Reservation {
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
             @NonNull NumberOfUsers numberOfUsers) {
-        Reservation reservation = new Reservation(new ReservationId(), memberId, practiceType);
+        var reservation = new Reservation(new ReservationId(), memberId, practiceType);
         reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
@@ -48,11 +48,10 @@ public class Reservation {
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
             @NonNull NumberOfUsers numberOfUsers) {
-        Reservation reservation = new Reservation(reservationId, memberId, practiceType);
+        var reservation = new Reservation(reservationId, memberId, practiceType);
         reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
-
         return reservation;
     }
 
@@ -81,11 +80,11 @@ public class Reservation {
 
     public void addEquipment(@NonNull EquipmentId equipmentId) {
         if (this.equipmentOfUsages.containsKey(equipmentId)) {
-            EquipmentOfUsage equipmentOfUsage = this.equipmentOfUsages.get(equipmentId);
+            var equipmentOfUsage = this.equipmentOfUsages.get(equipmentId);
             equipmentOfUsage = equipmentOfUsage.addQuantity(1);
             this.equipmentOfUsages.replace(equipmentId, equipmentOfUsage);
         } else {
-            EquipmentOfUsage equipmentOfUsage = new EquipmentOfUsage(equipmentId, 1);
+            var equipmentOfUsage = new EquipmentOfUsage(equipmentId, 1);
             this.equipmentOfUsages.put(equipmentId, equipmentOfUsage);
         }
     }

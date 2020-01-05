@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.taonaw.reservation.common.date.CurrentDate;
-import org.taonaw.reservation.common.domain.exception.DomainException;
-import org.taonaw.reservation.common.domain.exception.DomainExceptionCodes;
+import org.taonaw.common.domain.exception.DomainException;
+import org.taonaw.common.domain.exception.DomainExceptionCodes;
 import org.taonaw.reservation.application.command.ReserveStudioRequest;
 import org.taonaw.reservation.domain.model.equipments.IEquipmentRepository;
 import org.taonaw.reservation.domain.model.members.MemberId;
@@ -33,8 +33,6 @@ public class ReserveStudioAppService {
 
     @Transactional
     public void reserveStudio(@NonNull ReserveStudioRequest request) {
-
-        // TODO:予約権限があるかどうか確認する。
 
         var reservation = Reservation.newReservation(
                 new MemberId(request.getMemberId()),

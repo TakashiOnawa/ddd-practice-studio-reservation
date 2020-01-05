@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.taonaw.reservation.common.domain.Assertion;
+import org.taonaw.common.Assertion;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
 
 @EqualsAndHashCode

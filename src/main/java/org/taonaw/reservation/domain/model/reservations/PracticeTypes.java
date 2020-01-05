@@ -10,12 +10,11 @@ public enum PracticeTypes {
     private final int value;
 
     public static PracticeTypes of(int value) {
-        for (PracticeTypes practiceType : PracticeTypes.values()) {
+        for (var practiceType : values()) {
             if (practiceType.value == value) {
                 return practiceType;
             }
         }
-
         throw new IllegalArgumentException();
     }
 }
