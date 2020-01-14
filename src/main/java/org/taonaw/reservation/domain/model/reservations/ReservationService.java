@@ -26,7 +26,7 @@ public class ReservationService {
     public boolean alreadyReserved(@NonNull Reservation reservation) {
         var sameStudioReservations = reservationRepository.findByStudio(reservation.studioId());
         return sameStudioReservations.stream()
-                .anyMatch(other -> reservation.isDuplicated(other) && !reservation.equals(other));
+                .anyMatch(other -> !other.equals(reservation) && reservation.isDuplicated(other));
     }
 
     public ReservedEquipments getSameTimeReservedEquipments(@NonNull Reservation reservation) {

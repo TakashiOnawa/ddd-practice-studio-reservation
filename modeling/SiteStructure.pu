@@ -1,0 +1,30 @@
+@startuml SiteStructure
+
+left to right direction
+
+actor 会員
+actor スタッフ
+actor 管理スタッフ
+
+rectangle 予約サイト
+rectangle 管理サイト
+
+会員 --> 予約サイト
+スタッフ --> 管理サイト
+管理スタッフ --> 管理サイト
+管理スタッフ --> 予約サイト
+
+note right of 予約サイト
+* 会員登録
+* スタジオ予約
+end note
+
+note right of 管理サイト
+* 予約スケジュール確認
+* スタジオ登録
+* 機材登録
+* その他予約に関する設定
+* 料金設定
+end note
+
+@enduml

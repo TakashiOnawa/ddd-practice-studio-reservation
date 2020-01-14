@@ -93,10 +93,6 @@ public class Reservation {
         return studioId.equals(other.studioId) && timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
     }
 
-    public boolean isTimePeriodOverlaped(@NonNull Reservation other) {
-        return timePeriodOfUsage.isOverlapping(other.timePeriodOfUsage);
-    }
-
     public void validate(@NonNull IReservationValidator validator) {
         validator.validate(this);
     }

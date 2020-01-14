@@ -43,6 +43,14 @@ RDRA 2.0 に沿って要件定義をします。
 # 業務フロー
 TODO：ビジネスユースケースごとに業務フローを洗い出しシステムのユースケースを洗い出す。ユースケースはユースケース複合図で示す。
 
+# サイト構成
+![](./modeling/SiteStructure/SiteStructure.png)
+
+# ユースケース
+### Web 予約
+![](./modeling/05_Usecase_Web予約/Usecase.png)
+
+
 # コンテキストマップ
 ![](./modeling/06_ContextMap/ContextMap.png)
 
@@ -54,6 +62,12 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 
 # ドメインモデル（認証）
 ![](./modeling/07_DomainModel_認証/DomainModel.png)
+
+# API
+## 予約 API
+* 利用者、利用日、利用時間、利用スタジオ、利用機材、を指定して予約する。
+* 予約をキャンセルする。
+* 利用機材を変更する。
 
 # その他やりたいこと
 ### 料金の管理
