@@ -1,0 +1,19 @@
+@startuml Usecase
+
+left to right direction
+
+actor 利用者
+actor スタッフ
+
+利用者 --> スタッフ
+
+rectangle 管理サイト {
+}
+
+スタッフ --> 管理サイト
+
+note top of 管理サイト
+電話予約と同じユースケース
+end note
+
+@enduml

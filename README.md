@@ -53,6 +53,9 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ### 電話予約
 ![](./modeling/05_Usecase_電話予約/Usecase.png)
 
+### 店頭予約
+![](./modeling/05_Usecase_店頭予約/Usecase.png)
+
 # コンテキストマップ
 ![](./modeling/06_ContextMap/ContextMap.png)
 
