@@ -24,7 +24,7 @@ public class MemberId {
         this(value, false);
     }
 
-    public static MemberId fixedMember() {
+    public static MemberId nonMember() {
         return new MemberId(UUID.randomUUID().toString(), true);
     }
 }

@@ -1,7 +1,6 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.NonNull;
-import org.jooq.User;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
 import org.taonaw.reservation.domain.model.members.MemberId;
 import org.taonaw.reservation.domain.model.reservations.specificatiions.IReservationValidator;
@@ -44,13 +43,13 @@ public class Reservation {
         return reservation;
     }
 
-    public static Reservation phoneReservation(
+    public static Reservation reservedByNonMember(
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
             @NonNull NumberOfUsers numberOfUsers,
             @NonNull UserInformation userInformation) {
-        var reservation = new Reservation(new ReservationId(), MemberId.fixedMember(), studioId, practiceType);
+        var reservation = new Reservation(new ReservationId(), MemberId.nonMember(), studioId, practiceType);
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
         reservation.userInformation = userInformation;
