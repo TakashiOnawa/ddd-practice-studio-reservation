@@ -13,8 +13,8 @@ public class AccountService {
     @Autowired
     private final IAccountRepository accountRepository;
 
-    public boolean sameEmailAddressAccountRegistered(@NonNull Account account) {
+    public boolean sameAccountNameRegistered(@NonNull Account account) {
         var allAccounts = accountRepository.findAll();
-        return allAccounts.stream().anyMatch(account::isEmailAddressEquals);
+        return allAccounts.stream().anyMatch(account::isAccountNameEquals);
     }
 }

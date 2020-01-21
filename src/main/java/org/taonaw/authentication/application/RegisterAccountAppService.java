@@ -22,13 +22,14 @@ public class RegisterAccountAppService {
     public void registerAccount(RegisterAccountRequest request) {
 
         var account = Account.newAccount(
-                new RoleId(request.getRoleId()),
+                new AccountName(request.getAccountName()),
                 new FullName(request.getFirstName(), request.getLastName()),
-                new DateOfBirth(request.getDateOfBirth()),
-                new EmailAddress(request.getEmailAddress()),
                 new Password(request.getPassword()));
 
-        if (accountService.sameEmailAddressAccountRegistered(account)) {
+        account.assignRole(request.getRoleIds());
+
+        if (accountService.sameAccountNameRegistered(account)) {
+            // TODO:業務例外
         }
 
         accountRepository.save(account);

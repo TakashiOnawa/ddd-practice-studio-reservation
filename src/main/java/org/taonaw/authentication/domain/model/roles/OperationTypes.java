@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum OperationTypes {
     Reserve(1, "Reserve"),
-    Admin(2, "Admin");
+    EquipmentManagement(2, "EquipmentManagement"),
+    StudioManagement(3, "StudioManagement"),
+    PriceSetting(4, "PriceSetting"),
+    Payment(5, "Payment");
 
     private final int id;
     private final String name;

@@ -3,51 +3,57 @@ package org.taonaw.authentication.domain.model.accounts;
 import lombok.NonNull;
 import org.taonaw.authentication.domain.model.roles.RoleId;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Account {
     private final AccountId accountId;
-    private RoleId roleId;
-    private FullName fullName;
-    private DateOfBirth dateOfBirth;
-    private EmailAddress emailAddress;
+    private final AccountName accountName;
+    private final List<RoleId> roles = new ArrayList<>();
     private Password password;
+    private FullName fullName;
 
-    private Account(@NonNull AccountId accountId) {
+    private Account(@NonNull AccountId accountId,
+                    @NonNull AccountName accountName) {
         this.accountId = accountId;
+        this.accountName = accountName;
     }
 
-    public static Account newAccount(@NonNull RoleId roleId,
+    public static Account newAccount(@NonNull AccountName accountName,
                                      @NonNull FullName fullName,
-                                     @NonNull DateOfBirth dateOfBirth,
-                                     @NonNull EmailAddress emailAddress,
                                      @NonNull Password password) {
-        var account = new Account(new AccountId());
-        account.roleId = roleId;
+        var account = new Account(new AccountId(), accountName);
         account.fullName = fullName;
-        account.dateOfBirth = dateOfBirth;
-        account.emailAddress = emailAddress;
         account.password = password;
         return account;
     }
 
     public static Account reconstruct(@NonNull AccountId accountId,
-                                      @NonNull RoleId roleId,
-                                      @NonNull FullName fullName,
-                                      @NonNull DateOfBirth dateOfBirth,
-                                      @NonNull EmailAddress emailAddress,
-                                      @NonNull Password password) {
-        var account = new Account(accountId);
-        account.roleId = roleId;
+                                      @NonNull AccountName accountName,
+                                      @NonNull List<RoleId> roles,
+                                      @NonNull Password password,
+                                      @NonNull FullName fullName) {
+        var account = new Account(accountId, accountName);
+        account.roles.addAll(roles);
         account.fullName = fullName;
-        account.dateOfBirth = dateOfBirth;
-        account.emailAddress = emailAddress;
         account.password = password;
         return account;
     }
 
-    public boolean isEmailAddressEquals(@NonNull Account other) {
-        return this.emailAddress.equals(other.emailAddress);
+    public void assignRole(@NonNull List<RoleId> roleIds) {
+        roleIds.stream().forEach(this::assignRole);
+    }
+
+    public void assignRole(@NonNull RoleId roleId) {
+        if (this.roles.stream().anyMatch(item -> item.equals(roleId))) {
+            return;
+        }
+        this.roles.add(roleId);
+    }
+
+    boolean isAccountNameEquals(@NonNull Account other) {
+        return this.accountName.equals(other.accountName);
     }
 
     @Override

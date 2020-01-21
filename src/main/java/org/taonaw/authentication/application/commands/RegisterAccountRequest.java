@@ -4,23 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import org.taonaw.authentication.domain.model.roles.RoleId;
 
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class RegisterAccountRequest {
     @NonNull
-    private String roleId;
+    private String accountName;
     @NonNull
     private String firstName;
     @NonNull
     private String lastName;
     @NonNull
-    private Date dateOfBirth;
-    @NonNull
-    private String emailAddress;
-    @NonNull
     private String password;
+    @NonNull
+    private List<String> roles;
+
+    public List<RoleId> getRoleIds() {
+        return roles.stream().map(RoleId::new).collect(Collectors.toList());
+    }
 }
