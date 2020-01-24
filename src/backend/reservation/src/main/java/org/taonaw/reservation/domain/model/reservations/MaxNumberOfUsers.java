@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.taonaw.common.Assertion;
+import org.taonaw.reservation.domain.shared.Assertion;
 
 @EqualsAndHashCode
 public class MaxNumberOfUsers {

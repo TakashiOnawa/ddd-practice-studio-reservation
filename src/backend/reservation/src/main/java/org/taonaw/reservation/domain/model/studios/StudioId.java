@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.studios;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.common.Assertion;
+import org.taonaw.reservation.domain.shared.Assertion;
 
 @Getter
 @EqualsAndHashCode

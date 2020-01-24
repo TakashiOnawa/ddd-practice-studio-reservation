@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservations;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.taonaw.reservation.common.date.CurrentDate;
-import org.taonaw.common.domain.specification.ISpecification;
+import org.taonaw.reservation.domain.shared.specification.ISpecification;
 
 import java.util.Map;
 import java.util.NoSuchElementException;

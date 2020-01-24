@@ -1,4 +1,4 @@
-package org.taonaw.common;
+package org.taonaw.reservation.domain.shared;
 
 import org.apache.commons.lang3.StringUtils;
 

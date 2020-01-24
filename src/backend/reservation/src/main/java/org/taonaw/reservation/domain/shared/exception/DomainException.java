@@ -1,4 +1,4 @@
-package org.taonaw.common.domain.exception;
+package org.taonaw.reservation.domain.shared.exception;
 
 import lombok.NonNull;
 

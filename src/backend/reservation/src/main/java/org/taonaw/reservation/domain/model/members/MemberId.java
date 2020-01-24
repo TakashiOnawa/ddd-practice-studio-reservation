@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.members;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.common.Assertion;
+import org.taonaw.reservation.domain.shared.Assertion;
 
 import java.util.UUID;
 

@@ -2,8 +2,8 @@ package org.taonaw.reservation.domain.model.reservations.specificatiions;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.common.domain.exception.DomainException;
-import org.taonaw.common.domain.exception.DomainExceptionCodes;
+import org.taonaw.reservation.domain.shared.exception.DomainException;
+import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 import org.taonaw.reservation.domain.model.reservations.MaxNumberOfUsersSpecification;
 import org.taonaw.reservation.domain.model.reservations.Reservation;
 import org.taonaw.reservation.domain.model.reservations.ReservationStartDateTimeSpecification;

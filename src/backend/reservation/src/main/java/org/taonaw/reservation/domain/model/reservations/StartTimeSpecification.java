@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.common.domain.specification.ISpecification;
+import org.taonaw.reservation.domain.shared.specification.ISpecification;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
 import java.util.Map;

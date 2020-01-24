@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
-import org.taonaw.common.Assertion;
+import org.taonaw.reservation.domain.shared.Assertion;
 
 @EqualsAndHashCode
 public class NumberOfUsers {
