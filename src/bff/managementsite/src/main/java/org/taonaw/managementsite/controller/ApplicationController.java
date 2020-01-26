@@ -2,13 +2,12 @@ package org.taonaw.managementsite.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class LoginController {
+public class ApplicationController {
 
-    @GetMapping("/login")
-    public String index(){
-        return "login/index";
+    @GetMapping("/")
+    public String index() {
+        return "index";
     }
 }
