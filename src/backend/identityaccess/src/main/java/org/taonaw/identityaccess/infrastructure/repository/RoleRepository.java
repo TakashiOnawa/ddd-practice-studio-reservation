@@ -7,6 +7,7 @@ import org.taonaw.identityaccess.domain.model.roles.Role;
 
 @Repository
 public class RoleRepository implements IRoleRepository {
+
     public void save(@NonNull Role role) {
         throw new IllegalCallerException();
     }

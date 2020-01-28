@@ -1,14 +1,15 @@
-package org.taonaw.identityaccess.application.commands;
+package org.taonaw.identityaccess.query.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
-@Getter
+@Value
 @Builder
 @AllArgsConstructor
-public class AuthenticateAccountRequest {
+public class AccountQueryDto {
+
     @NonNull
     private String accountName;
     @NonNull

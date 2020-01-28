@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.taonaw.identityaccess.application.commands.RegisterAccountRequest;
 import org.taonaw.identityaccess.domain.model.accounts.*;
 
 @Service
 @AllArgsConstructor
-public class RegisterAccountAppService {
+public class AccountAppService {
 
-    @NonNull
     @Autowired
     private final IAccountRepository accountRepository;
-    @NonNull
     @Autowired
     private final AccountService accountService;
 
+    @Transactional
     public void registerAccount(RegisterAccountRequest request) {
 
         var account = Account.newAccount(

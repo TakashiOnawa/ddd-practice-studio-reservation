@@ -18,16 +18,12 @@ import org.taonaw.reservation.domain.model.studios.StudioId;
 @AllArgsConstructor
 public class ReserveStudioAppService {
 
-    @NonNull
     @Autowired
     private final CurrentDate currentDate;
-    @NonNull
     @Autowired
     private final ReservationService reservationService;
-    @NonNull
     @Autowired
     private final IReservationRepository reservationRepository;
-    @NonNull
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 
