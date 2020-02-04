@@ -1,0 +1,49 @@
+version: "2"
+
+services:
+  managementsite:
+    build:
+      context: ./bff/managementsite/
+      args:
+        - JAR_FILE=build/libs/*.jar
+    container_name: managementsite
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+    depends_on:
+      - identityaccess
+      - reservation
+    networks:
+      - studio-management-service-network
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000 -jar app.jar
+
+  identityaccess:
+    build:
+      context: ./backend/identityaccess/
+      args:
+        - JAR_FILE=build/libs/*.jar
+    container_name: identityaccess
+    ports:
+      - "8001:8001"
+    expose:
+      - "8080"
+    networks:
+      - studio-management-service-network
+
+  reservation:
+    build:
+      context: ./backend/reservation/
+      args:
+        - JAR_FILE=build/libs/*.jar
+    container_name: reservation
+    ports:
+      - "8002:8002"
+    expose:
+      - "8080"
+    networks:
+      - studio-management-service-network
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 -jar app.jar
+
+networks:
+  studio-management-service-network:
+    external: true
