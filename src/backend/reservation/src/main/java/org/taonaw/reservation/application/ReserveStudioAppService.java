@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 import org.taonaw.reservation.common.date.CurrentDate;
 import org.taonaw.reservation.domain.shared.exception.DomainException;
 import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
@@ -27,7 +27,7 @@ public class ReserveStudioAppService {
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 
-    @Transactional
+//    @Transactional
     public void reserveStudio(@NonNull ReserveStudioRequest request) {
 
         var reservation = Reservation.newReservation(
