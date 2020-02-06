@@ -10,6 +10,12 @@ import java.util.Optional;
 public class AccountQuery implements IAccountQuery {
 
     public Optional<AccountQueryDto> accountByName(String accountName) {
-        return Optional.empty();
+
+        var dto = AccountQueryDto.builder()
+                .accountId("1")
+                .accountName(accountName)
+                .password("$2a$10$vZzdISmDQqPYGHwYrrqvB.ijiOPhyy/ZhLAEUJdXnZ86jJIvNZsgS")
+                .build();
+        return Optional.of(dto);
     }
 }

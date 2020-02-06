@@ -10,10 +10,17 @@ import org.springframework.web.client.RestOperations;
 public class RestTemplateConfig {
 
     private final String reservationServiceUri = "http://reservation:8080";
+    private final String identityaccessServiceUri = "http://identityaccess:8080";
 
     @Bean
     @Qualifier("reservationRestOptions")
     public RestOperations reservationRestOptions(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder.rootUri(reservationServiceUri).build();
+    }
+
+    @Bean
+    @Qualifier("identityaccessRestOptions")
+    public RestOperations identityaccessRestOptions(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.rootUri(identityaccessServiceUri).build();
     }
 }

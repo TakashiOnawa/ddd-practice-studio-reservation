@@ -21,7 +21,6 @@ public class AccountController {
     @GetMapping
     public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("accountName") String accountName) {
         var account = accountQuery.accountByName(accountName);
-        return account.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
