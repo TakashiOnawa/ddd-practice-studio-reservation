@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link th:href="@{/webjars/semantic-ui/2.1.6/dist/semantic.min.css}" href="https://cdn.jsdelivr.net/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <style>
+        .main.container {
+            margin-top: 70px;
+        }
+    </style>
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a th:href="@{/}" href="../index.html" class="item" sec:authorize="isAuthenticated()">
+                スタジオ管理システム
+            </a>
+            <div class="right item">
+                <form method="post" th:action="@{/logout}" action="../login/index.html">
+                    <button class="ui button" type="submit">
+                        <i class="ui sign out icon"></i>ログアウト
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="ui main container" layout:fragment="content"></div>
+</body>
+</html>

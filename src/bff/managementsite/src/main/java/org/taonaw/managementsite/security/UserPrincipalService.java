@@ -28,7 +28,7 @@ public class UserPrincipalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var uri = "/accounts?accountName={accountName}";
+        var uri = "/accounts?account_name={accountName}";
         var uriVars = new HashMap<String, String>();
         uriVars.put("accountName", username);
 
@@ -44,7 +44,7 @@ public class UserPrincipalService implements UserDetailsService {
 
             return User.withUsername(map.get("accountName"))
                     .password(map.get("password"))
-//                    .authorities("")
+                    .authorities("GENERAL")
                     .build();
         } catch (IOException e) {
             throw new UsernameNotFoundException(username, e);

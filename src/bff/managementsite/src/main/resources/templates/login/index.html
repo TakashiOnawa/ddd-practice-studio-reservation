@@ -2,17 +2,40 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:href="@{/webjars/semantic-ui/2.1.6/dist/semantic.min.css}" href="https://cdn.jsdelivr.net/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-<form method="post" th:action="@{/login}">
-    <input type="text" name="account" placeholder="account name">
-    <br/>
-    <input type="password" name="password" placeholder="password">
-    <br/>
-    <button type="submit">Login</button>
-    <br/>
-</form>
+    <style>
+        .container {
+            margin-top: 70px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+    </style>
+    <div class="ui grid center aligned">
+        <div class="container">
+            <h2 class="ui header">スタジオ管理システム</h2>
+            <form class="ui form segment" method="post" th:action="@{/login}">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="account" placeholder="アカウント名">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="パスワード">
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="submit" class="ui fluid orange submit button">ログイン</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

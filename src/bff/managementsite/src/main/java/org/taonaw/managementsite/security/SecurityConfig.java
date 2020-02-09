@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .anyRequest().permitAll();
+                .anyRequest()
+                .permitAll();
     }
 
     @Bean
