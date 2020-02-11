@@ -2,6 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import org.taonaw.reservation.domain.model.members.Member;
 import org.taonaw.reservation.domain.shared.Assertion;
 
 @EqualsAndHashCode
@@ -19,7 +20,7 @@ public class UserInformation {
         this.phoneNumber = phoneNumber;
     }
 
-    public static UserInformation none() {
-        return none;
+    public static UserInformation of(Member member) {
+        return  new UserInformation(member.name(), member.phoneNumber());
     }
 }

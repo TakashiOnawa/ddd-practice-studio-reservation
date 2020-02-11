@@ -12,12 +12,12 @@ import java.util.UUID;
 public class MemberId {
 
     private final String value;
-    private boolean isFixedMember;
+    private boolean isNonMember;
 
-    private MemberId(String value, boolean isFixedMember) {
+    private MemberId(String value, boolean isNonMember) {
         Assertion.argumentNotEmpty(value, "Member id is required.");
         this.value = value;
-        this.isFixedMember = isFixedMember;
+        this.isNonMember = isNonMember;
     }
 
     public MemberId(@NonNull String value) {

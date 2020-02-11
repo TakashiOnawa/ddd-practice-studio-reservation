@@ -21,5 +21,4 @@ public class Equipment {
     public boolean isOutOfStock(@NonNull ReservedEquipmentQuantity reservedEquipmentQuantity) {
         return this.equipmentStock.isOutOfStock(reservedEquipmentQuantity);
     }
-
 }

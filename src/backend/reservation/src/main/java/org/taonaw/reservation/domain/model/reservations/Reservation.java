@@ -2,6 +2,7 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
+import org.taonaw.reservation.domain.model.members.Member;
 import org.taonaw.reservation.domain.model.members.MemberId;
 import org.taonaw.reservation.domain.model.reservations.specificatiions.IReservationValidator;
 import org.taonaw.reservation.domain.model.studios.StudioId;
@@ -17,7 +18,7 @@ public class Reservation {
 
     private TimePeriodOfUsage timePeriodOfUsage;
     private NumberOfUsers numberOfUsers;
-    private UserInformation userInformation = UserInformation.none();
+    private UserInformation userInformation;
 
     private Reservation(
             @NonNull ReservationId reservationId,
@@ -32,18 +33,6 @@ public class Reservation {
     }
 
     public static Reservation newReservation(
-            @NonNull MemberId memberId,
-            @NonNull PracticeTypes practiceType,
-            @NonNull StudioId studioId,
-            @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers) {
-        var reservation = new Reservation(new ReservationId(), memberId, studioId, practiceType);
-        reservation.timePeriodOfUsage = timePeriodOfUsage;
-        reservation.numberOfUsers = numberOfUsers;
-        return reservation;
-    }
-
-    public static Reservation reservedByNonMember(
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
@@ -53,6 +42,19 @@ public class Reservation {
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
         reservation.userInformation = userInformation;
+        return reservation;
+    }
+
+    public static Reservation reservedByMember(
+            @NonNull Member member,
+            @NonNull PracticeTypes practiceType,
+            @NonNull StudioId studioId,
+            @NonNull TimePeriodOfUsage timePeriodOfUsage,
+            @NonNull NumberOfUsers numberOfUsers) {
+        var reservation = new Reservation(new ReservationId(), member.memberId(), studioId, practiceType);
+        reservation.timePeriodOfUsage = timePeriodOfUsage;
+        reservation.numberOfUsers = numberOfUsers;
+        reservation.userInformation = UserInformation.of(member);
         return reservation;
     }
 
@@ -67,11 +69,15 @@ public class Reservation {
         var reservation = new Reservation(reservationId, memberId, studioId, practiceType);
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
+        reservation.userInformation = userInformation;
         return reservation;
     }
 
     public ReservationId reservationId() {
         return this.reservationId;
+    }
+    MemberId memberId() {
+        return this.memberId;
     }
     StudioId studioId() {
         return this.studioId;
@@ -90,7 +96,7 @@ public class Reservation {
     }
 
     public void addEquipments(@NonNull Collection<EquipmentId> equipmentIds) {
-        equipmentIds.forEach(item -> addEquipment(item));
+        equipmentIds.forEach(this::addEquipment);
     }
 
     public void addEquipment(@NonNull EquipmentId equipmentId) {
