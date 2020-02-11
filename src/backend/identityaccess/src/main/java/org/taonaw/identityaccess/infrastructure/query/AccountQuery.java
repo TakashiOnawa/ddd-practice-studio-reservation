@@ -9,11 +9,11 @@ import java.util.Optional;
 @Repository
 public class AccountQuery implements IAccountQuery {
 
-    public Optional<AccountQueryDto> accountByName(String accountName) {
+    public Optional<AccountQueryDto> accountByLoginId(String loginId) {
 
         var dto = AccountQueryDto.builder()
                 .accountId("1")
-                .accountName(accountName)
+                .loginId("test")
                 .password("$2a$10$vZzdISmDQqPYGHwYrrqvB.ijiOPhyy/ZhLAEUJdXnZ86jJIvNZsgS")
                 .build();
         return Optional.of(dto);

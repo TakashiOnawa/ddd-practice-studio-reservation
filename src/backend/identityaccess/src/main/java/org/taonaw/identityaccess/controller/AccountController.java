@@ -19,8 +19,8 @@ public class AccountController {
     private final IAccountQuery accountQuery;
 
     @GetMapping
-    public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("account_name") String accountName) {
-        var account = accountQuery.accountByName(accountName);
+    public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("login_id") String loginId) {
+        var account = accountQuery.accountByLoginId(loginId);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

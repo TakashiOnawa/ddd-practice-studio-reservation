@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login")
-                .usernameParameter("account")
+                .usernameParameter("loginId")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", true)
                 .permitAll();
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .anyRequest()
-                .permitAll();
+                .authenticated();
     }
 
     @Bean

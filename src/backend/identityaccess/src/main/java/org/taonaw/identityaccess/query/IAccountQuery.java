@@ -5,5 +5,5 @@ import org.taonaw.identityaccess.query.dto.AccountQueryDto;
 import java.util.Optional;
 
 public interface IAccountQuery {
-    Optional<AccountQueryDto> accountByName(String accountName);
+    Optional<AccountQueryDto> accountByLoginId(String loginId);
 }

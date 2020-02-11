@@ -28,9 +28,9 @@ public class UserPrincipalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var uri = "/accounts?account_name={accountName}";
+        var uri = "/accounts?login_id={loginId}";
         var uriVars = new HashMap<String, String>();
-        uriVars.put("accountName", username);
+        uriVars.put("loginId", username);
 
         var response = identityaccessRestOptions.getForEntity(uri, String.class, uriVars);
 
@@ -42,7 +42,7 @@ public class UserPrincipalService implements UserDetailsService {
             var mapper = new ObjectMapper();
             var map = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, String>>() {});
 
-            return User.withUsername(map.get("accountName"))
+            return User.withUsername(map.get("loginId"))
                     .password(map.get("password"))
                     .authorities("GENERAL")
                     .build();

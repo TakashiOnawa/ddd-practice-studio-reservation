@@ -10,7 +10,7 @@ public class AccountQueryDto {
     @NonNull
     private String accountId;
     @NonNull
-    private String accountName;
+    private String loginId;
     @NonNull
     private String password;
 }
