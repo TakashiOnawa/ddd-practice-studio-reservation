@@ -3,15 +3,15 @@ package org.taonaw.reservation.domain.model.reservations;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.members.Member;
+import org.taonaw.reservation.domain.model.members.MemberId;
 import org.taonaw.reservation.domain.shared.Assertion;
 
 @EqualsAndHashCode
 public class UserInformation {
 
-    private static final UserInformation none = new UserInformation("None", "00000");
-
     private final String name;
     private final String phoneNumber;
+    private MemberId memberId = MemberId.nonMember();
 
     public UserInformation(@NonNull String name, @NonNull String phoneNumber) {
         Assertion.argumentRange(name, 1, 50);
@@ -21,6 +21,8 @@ public class UserInformation {
     }
 
     public static UserInformation of(Member member) {
-        return  new UserInformation(member.name(), member.phoneNumber());
+        var userInformation = new UserInformation(member.name(), member.phoneNumber());
+        userInformation.memberId = member.memberId();
+        return userInformation;
     }
 }

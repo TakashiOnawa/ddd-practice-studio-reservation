@@ -11,37 +11,35 @@ import java.util.*;
 
 public class Reservation {
     private final ReservationId reservationId;
-    private final MemberId memberId;
+    private final UserInformation userInformation;
     private final StudioId studioId;
     private final PracticeTypes practiceType;
     private final Map<EquipmentId, EquipmentOfUsage> equipmentOfUsages;
 
     private TimePeriodOfUsage timePeriodOfUsage;
     private NumberOfUsers numberOfUsers;
-    private UserInformation userInformation;
 
     private Reservation(
             @NonNull ReservationId reservationId,
-            @NonNull MemberId memberId,
+            @NonNull UserInformation userInformation,
             @NonNull StudioId studioId,
             @NonNull PracticeTypes practiceType){
         this.reservationId = reservationId;
-        this.memberId = memberId;
+        this.userInformation = userInformation;
         this.studioId = studioId;
         this.practiceType = practiceType;
         this.equipmentOfUsages = new HashMap<>();
     }
 
     public static Reservation newReservation(
+            @NonNull UserInformation userInformation,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers,
-            @NonNull UserInformation userInformation) {
-        var reservation = new Reservation(new ReservationId(), MemberId.nonMember(), studioId, practiceType);
+            @NonNull NumberOfUsers numberOfUsers) {
+        var reservation = new Reservation(new ReservationId(), userInformation, studioId, practiceType);
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
-        reservation.userInformation = userInformation;
         return reservation;
     }
 
@@ -51,33 +49,30 @@ public class Reservation {
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
             @NonNull NumberOfUsers numberOfUsers) {
-        var reservation = new Reservation(new ReservationId(), member.memberId(), studioId, practiceType);
+        var reservation = new Reservation(new ReservationId(), UserInformation.of(member), studioId, practiceType);
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
-        reservation.userInformation = UserInformation.of(member);
         return reservation;
     }
 
     public static Reservation reconstruct(
             @NonNull ReservationId reservationId,
-            @NonNull MemberId memberId,
+            @NonNull UserInformation userInformation,
             @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers,
-            @NonNull UserInformation userInformation) {
-        var reservation = new Reservation(reservationId, memberId, studioId, practiceType);
+            @NonNull NumberOfUsers numberOfUsers) {
+        var reservation = new Reservation(reservationId, userInformation, studioId, practiceType);
         reservation.timePeriodOfUsage = timePeriodOfUsage;
         reservation.numberOfUsers = numberOfUsers;
-        reservation.userInformation = userInformation;
         return reservation;
     }
 
     public ReservationId reservationId() {
         return this.reservationId;
     }
-    MemberId memberId() {
-        return this.memberId;
+    UserInformation userInformation() {
+        return this.userInformation;
     }
     StudioId studioId() {
         return this.studioId;

@@ -1,6 +1,9 @@
 package org.taonaw.reservation.application.command;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
 
 import java.util.Collection;
@@ -11,11 +14,9 @@ import java.util.stream.Collectors;
 @Builder
 @Getter
 @AllArgsConstructor
-public class ReserveStudioRequest {
+public class ReserveStudioByMemberRequest {
     @NonNull
-    private String userName;
-    @NonNull
-    private String userPhoneNumber;
+    private String memberId;
     private int practiceType;
     @NonNull
     private String studioId;
