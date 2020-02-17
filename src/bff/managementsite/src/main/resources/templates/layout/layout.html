@@ -18,6 +18,12 @@
             <a th:href="@{/}" href="../index.html" class="item" sec:authorize="isAuthenticated()">
                 スタジオ管理システム
             </a>
+            <a th:href="@{/}" href="../index.html" class="item" sec:authorize="isAuthenticated()">
+                設備管理
+            </a>
+            <a th:href="@{/accounts}" href="../account/list.html" class="item" sec:authorize="isAuthenticated()">
+                アカウント管理
+            </a>
             <div class="right item">
                 <form method="post" th:action="@{/logout}" action="../login/index.html">
                     <button class="ui button" type="submit">

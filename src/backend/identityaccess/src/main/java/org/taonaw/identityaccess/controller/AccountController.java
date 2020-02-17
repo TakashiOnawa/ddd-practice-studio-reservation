@@ -8,8 +8,9 @@ import org.taonaw.identityaccess.application.AccountAppService;
 import org.taonaw.identityaccess.query.IAccountQuery;
 import org.taonaw.identityaccess.query.dto.AccountQueryDto;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(path = "/accounts")
 @AllArgsConstructor
 public class AccountController {
 
@@ -18,9 +19,15 @@ public class AccountController {
     @Autowired
     private final IAccountQuery accountQuery;
 
-    @GetMapping
-    public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("login_id") String loginId) {
-        var account = accountQuery.accountByLoginId(loginId);
+    @GetMapping(value = "/accounts", params = {"loginid"})
+    public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("loginid") String loginId) {
+        var account = accountQuery.findByLoginId(loginId);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/accounts")
+    public ResponseEntity<List<AccountQueryDto>> getAccounts() {
+        var accounts = accountQuery.findAll();
+        return ResponseEntity.ok(accounts);
     }
 }

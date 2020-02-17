@@ -69,10 +69,23 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ![](./modeling/07_DomainModel_認証/DomainModel.png)
 
 # API
-## 予約 API
-* 利用者、利用日、利用時間、利用スタジオ、利用機材、を指定して予約する。
-* 予約をキャンセルする。
-* 利用機材を変更する。
+## maintenancesite
+|Method|URI|説明|
+|---|---|---|
+|GET|/login|ログイン画面を表示する。|
+|GET|/accounts|アカウント一覧画面を表示する。|
+|GET|/accounts/new|アカウント新規作成画面を表示する。|
+
+## reservation
+|Method|URI|説明|
+|---|---|---|
+
+## identityaccess
+|Method|URI|説明|
+|---|---|---|
+|GET|/accounts|すべてのアカウントを取得する。|
+|GET|/accounts?login_id={loginId}|指定されたログインIDのアカウントを取得する。|
+
 
 # その他やりたいこと
 ### 料金の管理

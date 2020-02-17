@@ -13,4 +13,6 @@ public class AccountQueryDto {
     private String loginId;
     @NonNull
     private String password;
+    @NonNull
+    private String accountName;
 }

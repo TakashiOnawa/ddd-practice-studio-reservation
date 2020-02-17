@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <link th:href="@{/webjars/semantic-ui/2.1.6/dist/semantic.min.css}" href="https://cdn.jsdelivr.net/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>アカウント管理</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <a class="ui button" th:href="@{/accounts/new}">新規作成</a>
+        <table class="ui table" th:if="accounts">
+            <thead>
+                <tr>
+                    <th>アカウントID</th>
+                    <th>ログインID</th>
+                    <th>アカウント名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.accountId}"></td>
+                    <td th:text="${account.loginId}"></td>
+                    <td th:text="${account.accountName}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

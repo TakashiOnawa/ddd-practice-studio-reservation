@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 
@@ -28,7 +27,7 @@ public class UserPrincipalService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var uri = "/accounts?login_id={loginId}";
+        var uri = "/accounts?loginid={loginId}";
         var uriVars = new HashMap<String, String>();
         uriVars.put("loginId", username);
 
