@@ -15,6 +15,7 @@ import org.springframework.web.client.RestOperations;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +40,7 @@ public class UserPrincipalService implements UserDetailsService {
 
         try {
             var mapper = new ObjectMapper();
-            var map = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, String>>() {});
+            var map = mapper.readValue(response.getBody(), new TypeReference<Map<String, String>>() {});
 
             return User.withUsername(map.get("loginId"))
                     .password(map.get("password"))

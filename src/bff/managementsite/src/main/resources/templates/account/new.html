@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <link th:href="@{/webjars/semantic-ui/2.1.6/dist/semantic.min.css}" href="https://cdn.jsdelivr.net/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>アカウント作成</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h1>アカウント作成</h1>
+        <form class="ui large form" method="post" th:action="@{/accounts}">
+            <div class="field">
+                <label>ログインID</label>
+                <input type="text" name="loginid"/>
+            </div>
+            <div class="field">
+                <label>パスワード</label>
+                <input type="text" name="password"/>
+            </div>
+            <div class="field">
+                <label>アカウント名</label>
+                <input type="text" name="lastname" placeholder="姓"/>
+                <input type="text" name="firstname" placeholder="名"/>
+            </div>
+            <button type="submit" class="ui large orange submit button">登録</button>
+        </form>
+    </div>
+</body>
+</html>
