@@ -11,19 +11,26 @@
 <body>
     <div layout:fragment="content">
         <h1>アカウント作成</h1>
-        <form class="ui large form" method="post" th:action="@{/accounts}">
+        <form class="ui large form" method="post" th:action="@{/accounts}" th:object="${accountRegistrationForm}">
+            <div class="field">
+                <span class="ui large" style="color:red" th:if="${validationError}" th:text="${validationError}"></span>
+            </div>
             <div class="field">
                 <label>ログインID</label>
-                <input type="text" name="loginid"/>
+                <span style="color:red" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+                <input type="text" th:field="*{loginId}"/>
             </div>
             <div class="field">
                 <label>パスワード</label>
-                <input type="text" name="password"/>
+                <span style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                <input type="text" th:field="*{password}"/>
             </div>
             <div class="field">
                 <label>アカウント名</label>
-                <input type="text" name="lastname" placeholder="姓"/>
-                <input type="text" name="firstname" placeholder="名"/>
+                <span style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                <input type="text" th:field="*{lastName}" placeholder="姓"/>
+                <span style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                <input type="text" th:field="*{firstName}" placeholder="名"/>
             </div>
             <button type="submit" class="ui large orange submit button">登録</button>
         </form>

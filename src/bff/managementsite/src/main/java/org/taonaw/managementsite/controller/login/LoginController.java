@@ -1,4 +1,4 @@
-package org.taonaw.managementsite.controller;
+package org.taonaw.managementsite.controller.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
