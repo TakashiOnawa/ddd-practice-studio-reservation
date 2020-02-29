@@ -72,8 +72,8 @@ public class ReserveStudioAppService {
             throw new DomainException(DomainExceptionCodes.EquipmentOutOfStock);
         }
 
-        if (reservationService.alreadyReserved(reservation)) {
-            throw new DomainException(DomainExceptionCodes.StudioAlreadyReserved);
+        if (reservationService.isDuplicated(reservation)) {
+            throw new DomainException(DomainExceptionCodes.ReservationDuplicated);
         }
 
         reservationRepository.save(reservation);

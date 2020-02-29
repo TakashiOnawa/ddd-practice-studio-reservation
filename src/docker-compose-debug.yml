@@ -15,7 +15,7 @@ services:
       - reservation
     networks:
       - studio-management-service-network
-    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000 -jar app.jar
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000 -jar app.jar --debug
 
   identityaccess:
     build:
@@ -29,7 +29,7 @@ services:
       - "8080"
     networks:
       - studio-management-service-network
-    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 -jar app.jar
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 -jar app.jar --debug
 
   reservation:
     build:
@@ -43,7 +43,7 @@ services:
       - "8080"
     networks:
       - studio-management-service-network
-    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8002 -jar app.jar
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8002 -jar app.jar --debug
 
 networks:
   studio-management-service-network:

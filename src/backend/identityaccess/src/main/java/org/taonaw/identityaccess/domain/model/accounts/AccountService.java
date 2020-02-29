@@ -13,8 +13,8 @@ public class AccountService {
     @Autowired
     private final IAccountRepository accountRepository;
 
-    public boolean sameAccountNameRegistered(@NonNull Account account) {
-        var allAccounts = accountRepository.findAll();
-        return allAccounts.stream().anyMatch(account::isAccountNameEquals);
+    public boolean isDuplicated(@NonNull Account account) {
+        var duplicateAccount = accountRepository.find(account.loginId());
+        return duplicateAccount.isPresent();
     }
 }

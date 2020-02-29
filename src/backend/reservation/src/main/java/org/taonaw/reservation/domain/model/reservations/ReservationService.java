@@ -10,10 +10,9 @@ import org.taonaw.reservation.domain.model.equipments.IEquipmentRepository;
 @AllArgsConstructor
 public class ReservationService {
 
-    @NonNull
     @Autowired
     private final IReservationRepository reservationRepository;
-    @NonNull
+
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 
@@ -23,7 +22,7 @@ public class ReservationService {
         return reservedEquipments.isOutOfStock(allEquipments);
     }
 
-    public boolean alreadyReserved(@NonNull Reservation reservation) {
+    public boolean isDuplicated(@NonNull Reservation reservation) {
         var sameStudioReservations = reservationRepository.findByStudio(reservation.studioId());
         return sameStudioReservations.stream()
                 .anyMatch(other -> !other.equals(reservation) && reservation.isDuplicated(other));

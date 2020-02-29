@@ -9,7 +9,6 @@ public class RoleName {
     private final String value;
 
     public RoleName(@NonNull String value) {
-        Assertion.argumentNotEmpty(value, "Role name is required.");
         Assertion.argumentRange(value, 1, 20);
         this.value = value;
     }

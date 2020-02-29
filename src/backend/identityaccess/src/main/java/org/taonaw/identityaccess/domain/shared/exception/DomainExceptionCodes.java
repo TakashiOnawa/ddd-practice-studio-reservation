@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum DomainExceptionCodes {
-    Test(20000, "テスト例外コード。");
+    LoginAccountNotFound(20000, "ログインアカウントが存在しません。"),
+    LoginAccountPasswordNotMatched(20001, "ログインパスワードが一致しません。"),
+    AccountDuplicated(20002, "アカウントが重複しています。");
 
     private final int code;
     private final String defaultMessage;
