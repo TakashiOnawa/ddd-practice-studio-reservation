@@ -83,8 +83,9 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ## identityaccess
 |Method|URI|説明|
 |---|---|---|
+|POST|/accounts/login|ログインID、パスワードで認証を行う。|
 |GET|/accounts|すべてのアカウントを取得する。|
-|GET|/accounts?login_id={loginId}|指定されたログインIDのアカウントを取得する。|
+|GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
 
 
 # その他やりたいこと
