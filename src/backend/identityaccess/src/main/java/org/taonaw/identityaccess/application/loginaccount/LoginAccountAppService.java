@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.application.temp;
+package org.taonaw.identityaccess.application.loginaccount;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
