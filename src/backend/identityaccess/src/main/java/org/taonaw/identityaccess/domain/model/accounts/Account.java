@@ -40,8 +40,10 @@ public class Account {
     public LoginId loginId() { return loginId; }
     public Password password() { return password; }
 
-    public boolean authenticate(@NonNull Password password) {
-        return this.password.equals(password);
+    public boolean authenticate(@NonNull LoginId loginId,
+                                @NonNull PlainTextPassword plainTextPassword,
+                                @NonNull IPasswordEncoder passwordEncoder) {
+        return this.loginId.equals(loginId) && plainTextPassword.matches(this.password, passwordEncoder);
     }
 
     @Override

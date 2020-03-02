@@ -23,6 +23,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.security:spring-security-core:5.2.0.RELEASE'
 //	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'

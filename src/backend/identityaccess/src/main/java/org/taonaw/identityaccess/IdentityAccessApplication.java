@@ -1,25 +1,39 @@
 package org.taonaw.identityaccess;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.taonaw.identityaccess.domain.model.accounts.*;
 import org.taonaw.identityaccess.infrastructure.repository.AccountRepository;
+import org.taonaw.identityaccess.infrastructure.service.BCryptPasswordEncoder;
 
 // @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @SpringBootApplication
-public class IdentityAccessApplication {
+public class IdentityAccessApplication implements CommandLineRunner {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
+		SpringApplication.run(IdentityAccessApplication.class, args);
+	}
 
+	@Override
+	public void run(String... args) {
+		var encoder = new BCryptPasswordEncoder(passwordEncoder);
 		var testAccount = Account.reconstruct(
 				new AccountId("1"),
 				new AccountName("太郎", "テスト"),
 				new LoginId("test"),
-				Password.of("12345678"));
+				new PlainTextPassword("12345678").encode(encoder));
 		new AccountRepository().save(testAccount);
-
-		SpringApplication.run(IdentityAccessApplication.class, args);
 	}
 
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+	}
 }

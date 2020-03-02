@@ -16,6 +16,8 @@ public class RegisterAccountAppService {
     private final IAccountRepository accountRepository;
     @Autowired
     private final AccountService accountService;
+    @Autowired
+    private final IPasswordEncoder passwordEncoder;
 
 //    @Transactional
     public void handle(RegisterAccountRequest request) {
@@ -23,7 +25,7 @@ public class RegisterAccountAppService {
         var account = Account.newAccount(
                 new AccountName(request.getFirstName(), request.getLastName()),
                 new LoginId(request.getLoginId()),
-                Password.of(request.getPassword()));
+                new PlainTextPassword(request.getPassword()).encode(passwordEncoder));
 
         if (accountService.isDuplicated(account)) {
             throw new DomainException(DomainExceptionCodes.AccountDuplicated);
