@@ -47,12 +47,6 @@ public class AccountController {
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @GetMapping(value = "/accounts", params = {"loginid"})
-//    public ResponseEntity<AccountQueryDto> getAccount(@RequestParam("loginid") String loginId) {
-//        var account = accountQuery.findByLoginId(loginId);
-//        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-
     @GetMapping("/accounts")
     public ResponseEntity<GetAccountsResponse> getAccounts() {
         var accounts = accountQuery.getAccounts();
@@ -62,6 +56,6 @@ public class AccountController {
     @PostMapping("/accounts")
     public ResponseEntity<Void> registerAccount(@RequestBody RegisterAccountRequest request) {
         registerAccountAppService.handle(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

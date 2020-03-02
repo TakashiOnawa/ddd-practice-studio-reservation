@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
+import org.taonaw.managementsite.application.identityaccess.registeraccount.RegisterAccountRequest;
 import org.taonaw.managementsite.controller.account.form.AccountRegistrationForm;
 
 @Controller
@@ -33,7 +34,7 @@ public class AccountController {
     }
 
     @PostMapping("/accounts")
-    public String newAccount(@ModelAttribute @Validated AccountRegistrationForm accountRegistrationForm,
+    public String newAccount(@ModelAttribute @Validated AccountRegistrationForm form,
                              BindingResult bindingResult,
                              Model model) {
 
@@ -42,7 +43,14 @@ public class AccountController {
             return "account/new";
         }
 
-        // TODO:登録処理
+        var request = RegisterAccountRequest.builder()
+                .loginId(form.getLoginId())
+                .firstName(form.getFirstName())
+                .lastName(form.getLastName())
+                .password(form.getPassword())
+                .build();
+
+        identityAccessService.registerAccount(request);
 
         return "redirect:/accounts";
     }
