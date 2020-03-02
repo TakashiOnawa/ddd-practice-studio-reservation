@@ -1,5 +1,5 @@
 cd backend/identityaccess
-./gradlew build -x test
+bash ./gradlew build -x test
 cd ../..
 
 docker-compose -f docker-compose-debug.yml build identityaccess
