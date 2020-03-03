@@ -86,7 +86,7 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |POST|/accounts/login|ログインID、パスワードで認証を行う。|
 |GET|/accounts|すべてのアカウントを取得する。|
 |GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
-
+|POST|/accounts|アカウントを登録する|
 
 # その他やりたいこと
 ### 料金の管理

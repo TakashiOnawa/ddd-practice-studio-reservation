@@ -5,16 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.identityaccess.application.loginaccount.LoginAccountAppService;
 import org.taonaw.identityaccess.application.registeraccount.RegisterAccountAppService;
 import org.taonaw.identityaccess.application.loginaccount.LoginAccountRequest;
 import org.taonaw.identityaccess.application.loginaccount.LoginAccountResponse;
 import org.taonaw.identityaccess.application.registeraccount.RegisterAccountRequest;
+import org.taonaw.identityaccess.application.registeraccount.RegisterAccountResponse;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
 import org.taonaw.identityaccess.query.account.GetAccountsResponse;
 import org.taonaw.identityaccess.query.account.IAccountQuery;
 import org.taonaw.identityaccess.query.account.AccountDto;
+
+import java.net.URI;
 
 @RestController
 @AllArgsConstructor
@@ -54,8 +59,10 @@ public class AccountController {
     }
 
     @PostMapping("/accounts")
-    public ResponseEntity<Void> registerAccount(@RequestBody RegisterAccountRequest request) {
-        registerAccountAppService.handle(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<RegisterAccountResponse> registerAccount(@RequestBody RegisterAccountRequest request,
+                                                                   UriComponentsBuilder uriComponentsBuilder) {
+        var result = registerAccountAppService.handle(request);
+        var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(result.getAccountId()).toUri();
+        return ResponseEntity.created(uri).body(result);
     }
 }

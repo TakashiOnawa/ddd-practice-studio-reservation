@@ -20,7 +20,7 @@ public class RegisterAccountAppService {
     private final IPasswordEncoder passwordEncoder;
 
 //    @Transactional
-    public void handle(RegisterAccountRequest request) {
+    public RegisterAccountResponse handle(RegisterAccountRequest request) {
 
         var account = Account.newAccount(
                 new AccountName(request.getFirstName(), request.getLastName()),
@@ -32,5 +32,12 @@ public class RegisterAccountAppService {
         }
 
         accountRepository.save(account);
+
+        return RegisterAccountResponse.builder()
+                .accountId(account.accountId().getValue())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .loginId(request.getLoginId())
+                .build();
     }
 }
