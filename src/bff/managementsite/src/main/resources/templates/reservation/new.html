@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link th:href="@{/webjars/semantic-ui/2.1.6/dist/semantic.min.css}" href="https://cdn.jsdelivr.net/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/transition.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/components/popup.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.css"/>
+    <meta charset="UTF-8">
+    <title>予約</title>
+    <script>
+        $(function(){
+            $('.ui.calendar').calendar({
+                type: 'date',
+                formatter: {
+                    date: function (date) {
+                        var day = ('0' + date.getDate()).slice(-2);
+                        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                        var year = date.getFullYear();
+                        return year + '/' + month + '/' + day;
+                    }
+                }
+            });
+            $('#startTime').calendar({
+                type: 'time',
+                ampm: false
+            });
+            $('#endTime').calendar({
+                type: 'time',
+                ampm: false
+            });
+        });
+    </script>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h1>予約</h1>
+        <form class="ui large form" method="post" th:action="@{/reservations}" th:object="${reserveStudioForm}">
+            <div class="field">
+                <span class="ui large" style="color:red" th:if="${validationError}" th:text="${validationError}"></span>
+            </div>
+            <div class="field">
+                <label>スタジオ</label>
+                <span style="color:red" th:if="${#fields.hasErrors('studioId')}" th:errors="*{studioId}"></span>
+                <select class="ui search dropdown" th:field="*{studioId}">
+                    <option th:each="studio : *{studios}"
+                            th:value="${studio.key}"
+                            th:text="${studio.value}"
+                            th:selected="${studio.key}==*{studioId}">
+                    </option>
+                </select>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>利用開始日</label>
+                    <span style="color:red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+                    <div class="ui calendar" id="startDate">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" th:field="*{startDate}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>利用開始時間</label>
+                    <span style="color:red" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></span>
+                    <div class="ui calendar" id="startTime">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" th:field="*{startTime}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>利用終了日</label>
+                    <span style="color:red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+                    <div class="ui calendar" id="endDate">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" th:field="*{endDate}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>利用終了時間</label>
+                    <span style="color:red" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></span>
+                    <div class="ui calendar" id="endTime">
+                        <div class="ui input left icon">
+                            <i class="time icon"></i>
+                            <input type="text" th:field="*{endTime}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>利用者情報</label>
+                <span style="color:red" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+                <input type="text" th:field="*{userName}" placeholder="利用者名"/>
+                <span style="color:red" th:if="${#fields.hasErrors('userPhoneNumber')}" th:errors="*{userPhoneNumber}"></span>
+                <input type="number" th:field="*{userPhoneNumber}" placeholder="電話番号"/>
+            </div>
+            <div class="field">
+                <label>利用人数</label>
+                <span style="color:red" th:if="${#fields.hasErrors('numberOfUsers')}" th:errors="*{numberOfUsers}"></span>
+                <input type="number" th:field="*{numberOfUsers}" placeholder=""/>
+            </div>
+            <div class="field">
+                <label>練習区分</label>
+                <div class="ui radio checkbox">
+                    <input type="radio" name="practiceType" value="1" th:field="*{practiceType}" checked="checked">
+                    <label>バンド練習</label>
+                </div>
+                <div class="ui radio checkbox">
+                    <input type="radio" name="practiceType" value="2" th:field="*{practiceType}">
+                    <label>個人練習</label>
+                </div>
+            </div>
+            <div class="field">
+                <label>利用機材</label>
+                <table class="ui table" th:if="equipments">
+                    <thead>
+                        <tr>
+                            <th>機材種別</th>
+                            <th>機材名</th>
+                            <th>利用数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="equipment, start : *{equipments}">
+                            <td th:text="${equipment.typeName}"></td>
+                            <td th:text="${equipment.name}"></td>
+                            <td><input type="number" th:value="${equipment.quantity}" th:field="*{equipments[__${start.index}__].quantity}"></td>
+                            <td><input type="text" hidden th:value="${equipment.id}" th:field="*{equipments[__${start.index}__].id}"></td>
+                            <td><input type="text" hidden th:value="${equipment.typeName}" th:field="*{equipments[__${start.index}__].typeName}"></td>
+                            <td><input type="text" hidden th:value="${equipment.name}" th:field="*{equipments[__${start.index}__].name}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="ui large orange submit button">予約</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -18,6 +18,9 @@
             <a th:href="@{/}" href="../index.html" class="item" sec:authorize="isAuthenticated()">
                 スタジオ管理システム
             </a>
+            <a th:href="@{/reservations}" href="../reservation/list.html" class="item" sec:autorize="isAuthenticaetd()">
+                予約一覧
+            </a>
             <a th:href="@{/}" href="../index.html" class="item" sec:authorize="isAuthenticated()">
                 設備管理
             </a>

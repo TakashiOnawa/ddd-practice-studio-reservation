@@ -23,12 +23,12 @@ public class TimePeriodOfUsage {
         }
     }
 
-    public Date startDayOfYear() {
-        return DateUtils.truncate(this.start, Calendar.HOUR);
+    public boolean isOverlapping(@NonNull TimePeriodOfUsage other) {
+        return isOverlapping(other.start, other.end);
     }
 
-    public boolean isOverlapping(@NonNull TimePeriodOfUsage other) {
-        return start.compareTo(other.end) < 0 && other.start.compareTo(end) < 0;
+    public boolean isOverlapping(@NonNull Date start, @NonNull Date end) {
+        return this.start.compareTo(end) < 0 && start.compareTo(this.end) < 0;
     }
 
     public long minutes() {

@@ -1,4 +1,4 @@
-package org.taonaw.reservation.application.command;
+package org.taonaw.reservation.application.reservestudio;
 
 import lombok.*;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Builder
 @Getter
+@Builder
 @AllArgsConstructor
 public class ReserveStudioRequest {
     @NonNull

@@ -3,7 +3,6 @@ package org.taonaw.reservation.domain.model.reservations;
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
 import org.taonaw.reservation.domain.model.members.Member;
-import org.taonaw.reservation.domain.model.members.MemberId;
 import org.taonaw.reservation.domain.model.reservations.specificatiions.IReservationValidator;
 import org.taonaw.reservation.domain.model.studios.StudioId;
 
@@ -14,7 +13,7 @@ public class Reservation {
     private final UserInformation userInformation;
     private final StudioId studioId;
     private final PracticeTypes practiceType;
-    private final Map<EquipmentId, EquipmentOfUsage> equipmentOfUsages;
+    private final Map<EquipmentId, EquipmentOfUsage> equipmentsOfUsage;
 
     private TimePeriodOfUsage timePeriodOfUsage;
     private NumberOfUsers numberOfUsers;
@@ -28,7 +27,7 @@ public class Reservation {
         this.userInformation = userInformation;
         this.studioId = studioId;
         this.practiceType = practiceType;
-        this.equipmentOfUsages = new HashMap<>();
+        this.equipmentsOfUsage = new HashMap<>();
     }
 
     public static Reservation newReservation(
@@ -74,20 +73,20 @@ public class Reservation {
     UserInformation userInformation() {
         return this.userInformation;
     }
-    StudioId studioId() {
+    public StudioId studioId() {
         return this.studioId;
     }
-    NumberOfUsers numberOfUsers() {
+    public NumberOfUsers numberOfUsers() {
         return this.numberOfUsers;
     }
-    PracticeTypes practiceType() {
+    public PracticeTypes practiceType() {
         return this.practiceType;
     }
-    TimePeriodOfUsage timePeriodOfUsage() {
+    public TimePeriodOfUsage timePeriodOfUsage() {
         return  this.timePeriodOfUsage;
     }
     Collection<EquipmentOfUsage> equipmentOfUsages() {
-        return Collections.unmodifiableCollection(this.equipmentOfUsages.values());
+        return Collections.unmodifiableCollection(this.equipmentsOfUsage.values());
     }
 
     public void addEquipments(@NonNull Collection<EquipmentId> equipmentIds) {
@@ -95,13 +94,13 @@ public class Reservation {
     }
 
     public void addEquipment(@NonNull EquipmentId equipmentId) {
-        if (this.equipmentOfUsages.containsKey(equipmentId)) {
-            var equipmentOfUsage = this.equipmentOfUsages.get(equipmentId);
+        if (this.equipmentsOfUsage.containsKey(equipmentId)) {
+            var equipmentOfUsage = this.equipmentsOfUsage.get(equipmentId);
             equipmentOfUsage = equipmentOfUsage.addQuantity(1);
-            this.equipmentOfUsages.replace(equipmentId, equipmentOfUsage);
+            this.equipmentsOfUsage.replace(equipmentId, equipmentOfUsage);
         } else {
             var equipmentOfUsage = new EquipmentOfUsage(equipmentId, 1);
-            this.equipmentOfUsages.put(equipmentId, equipmentOfUsage);
+            this.equipmentsOfUsage.put(equipmentId, equipmentOfUsage);
         }
     }
 

@@ -1,5 +1,6 @@
 package org.taonaw.identityaccess.infrastructure.query;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.taonaw.identityaccess.domain.model.accounts.IAccountRepository;
@@ -12,10 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class AccountQuery implements IAccountQuery {
 
     @Autowired
-    private IAccountRepository accountRepository;
+    private final IAccountRepository accountRepository;
 
     public GetAccountsResponse getAccounts() {
         var accounts = new ArrayList<AccountDto>();
