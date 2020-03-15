@@ -51,7 +51,7 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ![](./modeling/05_Usecase_Web予約/Usecase.png)
 
 ### 電話予約
-![](./modeling/05_Usecase_電話予約/Usecase.png)
+v![](./modeling/05_Usecase_電話予約/Usecase.png)
 
 ### 店頭予約
 ![](./modeling/05_Usecase_店頭予約/Usecase.png)
@@ -74,11 +74,16 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |---|---|---|
 |GET|/login|ログイン画面を表示する。|
 |GET|/accounts|アカウント一覧画面を表示する。|
-|GET|/accounts/new|アカウント新規作成画面を表示する。|
+|GET|/accounts/new|アカウント登録画面を表示する。|
+|POST|/accounts|アカウントを登録する。|
+|GET|/reservations|予約一覧画面を表示する。|
+|GET|/reservations/new|スタジオ予約画面を表示する。|
+|POST|/reservations|スタジオを予約する。|
 
 ## reservation
 |Method|URI|説明|
 |---|---|---|
+|POST|/reservations|スタジオを予約する。|
 
 ## identityaccess
 |Method|URI|説明|
