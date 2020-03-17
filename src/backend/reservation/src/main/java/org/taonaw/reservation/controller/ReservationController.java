@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.reservation.application.reservestudio.ReserveStudioAppService;
+import org.taonaw.reservation.application.reservestudio.ReserveStudioRequest;
+import org.taonaw.reservation.application.reservestudio.ReserveStudioResponse;
 import org.taonaw.reservation.query.reservation.IReservationQuery;
 import org.taonaw.reservation.query.reservation.ReservationDto;
 
@@ -30,6 +31,11 @@ public class ReservationController {
         return ResponseEntity.ok(response);
     }
 
-    public void reserveStudio() {
+    @PostMapping("/reservations")
+    public ResponseEntity<ReserveStudioResponse> reserveStudio(@RequestBody ReserveStudioRequest request,
+                                                               UriComponentsBuilder uriComponentsBuilder) {
+        var response = reserveStudioAppService.handle(request);
+        var uri = uriComponentsBuilder.path("/reservations/{reservationId}").buildAndExpand(response.getReservationId()).toUri();
+        return ResponseEntity.created(uri).body(response);
     }
 }

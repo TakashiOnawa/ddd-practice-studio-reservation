@@ -16,6 +16,7 @@ public class UserInformation {
     public UserInformation(@NonNull String name, @NonNull String phoneNumber) {
         Assertion.argumentRange(name, 1, 50);
         Assertion.argumentRange(phoneNumber, 5, 20);
+        Assertion.argumentPatternMatches(phoneNumber, "[0-9]*", "数字でなければなりません。");
         this.name = name;
         this.phoneNumber = phoneNumber;
     }

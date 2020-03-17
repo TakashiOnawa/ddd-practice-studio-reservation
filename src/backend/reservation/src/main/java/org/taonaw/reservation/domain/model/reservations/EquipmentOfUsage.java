@@ -2,8 +2,13 @@ package org.taonaw.reservation.domain.model.reservations;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import org.taonaw.reservation.domain.model.equipments.Equipment;
 import org.taonaw.reservation.domain.shared.Assertion;
 import org.taonaw.reservation.domain.model.equipments.EquipmentId;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @EqualsAndHashCode
 public class EquipmentOfUsage {

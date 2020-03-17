@@ -60,6 +60,10 @@ public class ReservationController {
 
         var response = reservationService.reserveStudio(request);
 
+        // TODO：予約の重複エラーチェック
+
+        // TODO：機材の在庫切れエラーチェック
+
         return "redirect:/reservations";
     }
 

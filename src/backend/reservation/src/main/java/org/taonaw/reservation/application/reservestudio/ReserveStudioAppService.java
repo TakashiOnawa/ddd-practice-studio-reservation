@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.domain.model.equipments.Equipment;
 import org.taonaw.reservation.domain.model.members.IMemberRepository;
 import org.taonaw.reservation.domain.shared.exception.DomainException;
 import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
@@ -26,37 +27,44 @@ public class ReserveStudioAppService {
     private final IMemberRepository memberRepository;
 
 //    @Transactional
-    public void reserveStudio(ReserveStudioRequest request) {
-
+    public ReserveStudioResponse handle(ReserveStudioRequest request) {
         var reservation = Reservation.newReservation(
-                new UserInformation(request.getUserName(), request.getUserPhoneNumber()),
-                PracticeTypes.of(request.getPracticeType()),
                 new StudioId(request.getStudioId()),
                 new TimePeriodOfUsage(request.getStartDateTime(), request.getEndDateTime()),
-                new NumberOfUsers(request.getNumberOfUsers()));
-
-        reservation.addEquipments(request.getEquipmentIds());
+                new UserInformation(request.getUserName(), request.getUserPhoneNumber()),
+                new NumberOfUsers(request.getNumberOfUsers()),
+                PracticeTypes.of(request.getPracticeType()),
+                EquipmentOfUsages.of(request.getEquipmentIds()));
 
         saveReservation(reservation);
+
+        return ReserveStudioResponse.builder()
+                .reservationId(reservation.reservationId().getValue())
+                .build();
     }
 
     //    @Transactional
-    public void reserveStudioByMember(ReserveStudioByMemberRequest request) {
+    public ReserveStudioResponse handle(ReserveStudioByMemberRequest request) {
 
         var member = memberRepository
                 .findBy(new MemberId(request.getMemberId()))
                 .orElseThrow();
 
         var reservation = Reservation.reservedByMember(
-                member,
-                PracticeTypes.of(request.getPracticeType()),
                 new StudioId(request.getStudioId()),
                 new TimePeriodOfUsage(request.getStartDateTime(), request.getEndDateTime()),
-                new NumberOfUsers(request.getNumberOfUsers()));
+                member,
+                new NumberOfUsers(request.getNumberOfUsers()),
+                PracticeTypes.of(request.getPracticeType()),
+                EquipmentOfUsages.of(request.getEquipmentIds()));
 
         reservation.addEquipments(request.getEquipmentIds());
 
         saveReservation(reservation);
+
+        return ReserveStudioResponse.builder()
+                .reservationId(reservation.reservationId().getValue())
+                .build();
     }
 
     private void saveReservation(Reservation reservation) {

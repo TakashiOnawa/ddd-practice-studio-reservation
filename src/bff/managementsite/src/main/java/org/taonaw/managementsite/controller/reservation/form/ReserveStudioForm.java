@@ -2,8 +2,7 @@ package org.taonaw.managementsite.controller.reservation.form;
 
 import lombok.Data;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -34,7 +33,9 @@ public class ReserveStudioForm {
     @NotEmpty(message = "利用者名を入力してください")
     private String userName;
 
-    @NotEmpty(message = "電話番号を入力してください")
+    @NotNull
+    @Size(min = 5, max = 20, message = "電話番号は 5 文字以上 20 文字以内")
+    @Pattern(regexp = "[0-9]*", message = "電話番号は数字のみで入力してください")
     private String userPhoneNumber;
 
     @Min(value = 1, message = "利用人数は 1 名以上を入力してください")

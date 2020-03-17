@@ -10,60 +10,66 @@ import java.util.*;
 
 public class Reservation {
     private final ReservationId reservationId;
-    private final UserInformation userInformation;
-    private final StudioId studioId;
-    private final PracticeTypes practiceType;
-    private final Map<EquipmentId, EquipmentOfUsage> equipmentsOfUsage;
-
+    private StudioId studioId;
     private TimePeriodOfUsage timePeriodOfUsage;
+    private UserInformation userInformation;
     private NumberOfUsers numberOfUsers;
+    private PracticeTypes practiceType;
+    private EquipmentOfUsages equipmentOfUsages;
 
-    private Reservation(
-            @NonNull ReservationId reservationId,
-            @NonNull UserInformation userInformation,
-            @NonNull StudioId studioId,
-            @NonNull PracticeTypes practiceType){
+    private Reservation(@NonNull ReservationId reservationId){
         this.reservationId = reservationId;
-        this.userInformation = userInformation;
-        this.studioId = studioId;
-        this.practiceType = practiceType;
-        this.equipmentsOfUsage = new HashMap<>();
     }
 
     public static Reservation newReservation(
-            @NonNull UserInformation userInformation,
-            @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers) {
-        var reservation = new Reservation(new ReservationId(), userInformation, studioId, practiceType);
+            @NonNull UserInformation userInformation,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull PracticeTypes practiceType,
+            @NonNull EquipmentOfUsages equipmentOfUsages) {
+        var reservation = new Reservation(new ReservationId());
+        reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
+        reservation.userInformation = userInformation;
         reservation.numberOfUsers = numberOfUsers;
+        reservation.practiceType = practiceType;
+        reservation.equipmentOfUsages = equipmentOfUsages;
         return reservation;
     }
 
     public static Reservation reservedByMember(
-            @NonNull Member member,
-            @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers) {
-        var reservation = new Reservation(new ReservationId(), UserInformation.of(member), studioId, practiceType);
+            @NonNull Member member,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull PracticeTypes practiceType,
+            @NonNull EquipmentOfUsages equipmentOfUsages) {
+        var reservation = new Reservation(new ReservationId());
+        reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
+        reservation.userInformation = UserInformation.of(member);
         reservation.numberOfUsers = numberOfUsers;
+        reservation.practiceType = practiceType;
+        reservation.equipmentOfUsages = equipmentOfUsages;
         return reservation;
     }
 
     public static Reservation reconstruct(
             @NonNull ReservationId reservationId,
-            @NonNull UserInformation userInformation,
-            @NonNull PracticeTypes practiceType,
             @NonNull StudioId studioId,
             @NonNull TimePeriodOfUsage timePeriodOfUsage,
-            @NonNull NumberOfUsers numberOfUsers) {
-        var reservation = new Reservation(reservationId, userInformation, studioId, practiceType);
+            @NonNull UserInformation userInformation,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull PracticeTypes practiceType,
+            @NonNull EquipmentOfUsages equipmentOfUsages) {
+        var reservation = new Reservation(reservationId);
+        reservation.studioId = studioId;
         reservation.timePeriodOfUsage = timePeriodOfUsage;
+        reservation.userInformation = userInformation;
         reservation.numberOfUsers = numberOfUsers;
+        reservation.practiceType = practiceType;
+        reservation.equipmentOfUsages = equipmentOfUsages;
         return reservation;
     }
 
@@ -86,22 +92,15 @@ public class Reservation {
         return  this.timePeriodOfUsage;
     }
     Collection<EquipmentOfUsage> equipmentOfUsages() {
-        return Collections.unmodifiableCollection(this.equipmentsOfUsage.values());
+        return this.equipmentOfUsages.values();
     }
 
-    public void addEquipments(@NonNull Collection<EquipmentId> equipmentIds) {
-        equipmentIds.forEach(this::addEquipment);
+    public void addEquipments(@NonNull List<EquipmentId> equipmentIds) {
+        equipmentOfUsages.add(equipmentIds);
     }
 
     public void addEquipment(@NonNull EquipmentId equipmentId) {
-        if (this.equipmentsOfUsage.containsKey(equipmentId)) {
-            var equipmentOfUsage = this.equipmentsOfUsage.get(equipmentId);
-            equipmentOfUsage = equipmentOfUsage.addQuantity(1);
-            this.equipmentsOfUsage.replace(equipmentId, equipmentOfUsage);
-        } else {
-            var equipmentOfUsage = new EquipmentOfUsage(equipmentId, 1);
-            this.equipmentsOfUsage.put(equipmentId, equipmentOfUsage);
-        }
+        equipmentOfUsages.add(equipmentId);
     }
 
     public boolean isDuplicated(@NonNull Reservation other) {

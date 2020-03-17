@@ -61,8 +61,8 @@ public class AccountController {
     @PostMapping("/accounts")
     public ResponseEntity<RegisterAccountResponse> registerAccount(@RequestBody RegisterAccountRequest request,
                                                                    UriComponentsBuilder uriComponentsBuilder) {
-        var result = registerAccountAppService.handle(request);
-        var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(result.getAccountId()).toUri();
-        return ResponseEntity.created(uri).body(result);
+        var response = registerAccountAppService.handle(request);
+        var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(response.getAccountId()).toUri();
+        return ResponseEntity.created(uri).body(response);
     }
 }

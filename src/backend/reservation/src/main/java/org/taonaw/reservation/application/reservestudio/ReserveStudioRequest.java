@@ -13,21 +13,28 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ReserveStudioRequest {
     @NonNull
-    private String userName;
-    @NonNull
-    private String userPhoneNumber;
-    private int practiceType;
-    @NonNull
     private String studioId;
+
     @NonNull
     private Date startDateTime;
+
     @NonNull
     private Date endDateTime;
-    private int numberOfUsers;
+
     @NonNull
-    private Collection<String> equipments;
+    private String userName;
+
+    @NonNull
+    private String userPhoneNumber;
+
+    private int numberOfUsers;
+
+    private int practiceType;
+
+    @NonNull
+    private List<String> equipmentIds;
 
     public List<EquipmentId> getEquipmentIds() {
-        return this.equipments.stream().map(EquipmentId::new).collect(Collectors.toList());
+        return this.equipmentIds.stream().map(EquipmentId::new).collect(Collectors.toList());
     }
 }
