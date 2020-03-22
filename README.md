@@ -25,10 +25,10 @@ RDRA 2.0 に沿って要件定義をします。
 ＜補足＞
 * スタジオ利用終了後に次回の予約を行うこともある。
 
-## 管理（ビジネスコンテキスト）
-![](./modeling/04_BusinessUsecase_スタジオ管理/BusinessUsecase.png)
-* スタッフが、スタジオの登録を行う「スタジオ管理」。
-* スタッフが、機材の在庫登録を行う「機材管理」。
+## 設備管理（ビジネスコンテキスト）
+![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
+* スタッフが、スタジオの管理を行う「スタジオ管理」。
+* スタッフが、機材の在庫管理を行う「機材管理」。
 
 ## スタジオ利用（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
@@ -47,14 +47,22 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ![](./modeling/SiteStructure/SiteStructure.png)
 
 # ユースケース
+## 予約（ビジネスコンテキスト）
 ### Web 予約
 ![](./modeling/05_Usecase_Web予約/Usecase.png)
 
 ### 電話予約
-v![](./modeling/05_Usecase_電話予約/Usecase.png)
+![](./modeling/05_Usecase_電話予約/Usecase.png)
 
 ### 店頭予約
 ![](./modeling/05_Usecase_店頭予約/Usecase.png)
+
+## 設備管理（ビジネスコンテキスト）
+### スタジオ管理
+![](./modeling/05_Usecase_スタジオ管理/Usecase.png)
+
+### 機材管理
+![](./modeling/05_Usecase_機材管理/Usecase.png)
 
 # コンテキストマップ
 ![](./modeling/06_ContextMap/ContextMap.png)
@@ -62,14 +70,14 @@ v![](./modeling/05_Usecase_電話予約/Usecase.png)
 # ドメインモデル（予約）
 ![](./modeling/07_DomainModel_予約/DomainModel.png)
 
-# ドメインモデル（管理）
+# ドメインモデル（施設管理）
 ![](./modeling/07_DomainModel_管理/DomainModel.png)
 
 # ドメインモデル（認証）
 ![](./modeling/07_DomainModel_認証/DomainModel.png)
 
 # API
-## maintenancesite
+## Management Site
 |Method|URI|説明|
 |---|---|---|
 |GET|/login|ログイン画面を表示する。|
@@ -80,18 +88,22 @@ v![](./modeling/05_Usecase_電話予約/Usecase.png)
 |GET|/reservations/new|スタジオ予約画面を表示する。|
 |POST|/reservations|スタジオを予約する。|
 
-## reservation
-|Method|URI|説明|
-|---|---|---|
-|POST|/reservations|スタジオを予約する。|
-
-## identityaccess
+## Identity Access
 |Method|URI|説明|
 |---|---|---|
 |POST|/accounts/login|ログインID、パスワードで認証を行う。|
 |GET|/accounts|すべてのアカウントを取得する。|
 |GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
 |POST|/accounts|アカウントを登録する|
+
+## Reservation
+|Method|URI|説明|
+|---|---|---|
+|POST|/reservations|スタジオを予約する。|
+
+## Facility Management
+|Method|URI|説明|
+|---|---|---|
 
 # その他やりたいこと
 ### 料金の管理

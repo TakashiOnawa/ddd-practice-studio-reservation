@@ -4,7 +4,7 @@ left to right direction
 
 actor 管理者
 
-rectangle 機材管理 {
+rectangle 管理サイト {
     管理者 --> (ログインする)
     管理者 --> (管理画面を開く)
     管理者 --> (機材情報を登録する)
