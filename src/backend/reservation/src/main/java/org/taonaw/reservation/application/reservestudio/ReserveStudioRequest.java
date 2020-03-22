@@ -1,10 +1,12 @@
 package org.taonaw.reservation.application.reservestudio;
 
-import lombok.*;
-import org.taonaw.reservation.domain.model.equipments.EquipmentId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
+import org.taonaw.reservation.domain.model.equipment.EquipmentId;
 
-import java.util.Collection;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,29 +14,18 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class ReserveStudioRequest {
-    @NonNull
-    private String studioId;
-
-    @NonNull
-    private Date startDateTime;
-
-    @NonNull
-    private Date endDateTime;
-
-    @NonNull
-    private String userName;
-
-    @NonNull
-    private String userPhoneNumber;
-
+    @NonNull private String tenantId;
+    @NonNull private String studioId;
+    @NonNull private LocalDateTime startDateTime;
+    private int hourQuantity;
+    @NonNull private LocalDateTime endDateTime;
+    @NonNull private String userName;
+    @NonNull private String userPhoneNumber;
     private int numberOfUsers;
-
     private int practiceType;
-
-    @NonNull
-    private List<String> equipmentIds;
+    @NonNull private List<String> equipmentIds;
 
     public List<EquipmentId> getEquipmentIds() {
-        return this.equipmentIds.stream().map(EquipmentId::new).collect(Collectors.toList());
+        return equipmentIds.stream().map(EquipmentId::new).collect(Collectors.toList());
     }
 }

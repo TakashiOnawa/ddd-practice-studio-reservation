@@ -1,83 +1,62 @@
 package org.taonaw.reservation.application.reservestudio;
 
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
 import org.taonaw.reservation.common.date.CurrentDate;
-import org.taonaw.reservation.domain.model.equipments.Equipment;
-import org.taonaw.reservation.domain.model.members.IMemberRepository;
-import org.taonaw.reservation.domain.shared.exception.DomainException;
-import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
-import org.taonaw.reservation.domain.model.equipments.IEquipmentRepository;
-import org.taonaw.reservation.domain.model.members.MemberId;
-import org.taonaw.reservation.domain.model.reservations.*;
-import org.taonaw.reservation.domain.model.studios.StudioId;
+import org.taonaw.reservation.domain.model.equipment.IEquipmentRepository;
+import org.taonaw.reservation.domain.model.practice.IPracticeRepository;
+import org.taonaw.reservation.domain.model.practice.PracticeType;
+import org.taonaw.reservation.domain.model.reservation.*;
+import org.taonaw.reservation.domain.model.studio.IStudioRepository;
+import org.taonaw.reservation.domain.model.studio.StudioId;
+import org.taonaw.reservation.domain.model.tenant.ITenantRepository;
+
+//import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class ReserveStudioAppService {
-
-    @Autowired
-    private final ReservationService reservationService;
     @Autowired
     private final IReservationRepository reservationRepository;
     @Autowired
-    private final IMemberRepository memberRepository;
+    private final IStudioRepository studioRepository;
+    @Autowired
+    private final IEquipmentRepository equipmentRepository;
+    @Autowired
+    private final ITenantRepository tenantRepository;
+    @Autowired
+    private final IPracticeRepository practiceRepository;
+    @Autowired
+    private final CurrentDate currentDate;
 
-//    @Transactional
+    //    @Transactional
     public ReserveStudioResponse handle(ReserveStudioRequest request) {
         var reservation = Reservation.newReservation(
                 new StudioId(request.getStudioId()),
-                new TimePeriodOfUsage(request.getStartDateTime(), request.getEndDateTime()),
+                new UseTime(request.getStartDateTime(), request.getHourQuantity()),
                 new UserInformation(request.getUserName(), request.getUserPhoneNumber()),
                 new NumberOfUsers(request.getNumberOfUsers()),
-                PracticeTypes.of(request.getPracticeType()),
-                EquipmentOfUsages.of(request.getEquipmentIds()));
+                PracticeType.from(request.getPracticeType()),
+                UseEquipments.of(request.getEquipmentIds()));
 
-        saveReservation(reservation);
+        validate(reservation);
+
+        reservationRepository.add(reservation);
 
         return ReserveStudioResponse.builder()
-                .reservationId(reservation.reservationId().getValue())
+                .reservationId(reservation.getReservationId().getValue())
                 .build();
     }
 
-    //    @Transactional
-    public ReserveStudioResponse handle(ReserveStudioByMemberRequest request) {
+    private void validate(Reservation reservation) {
+        var validator = new ReservationValidator(studioRepository, practiceRepository, tenantRepository, currentDate);
+        validator.validate(reservation);
 
-        var member = memberRepository
-                .findBy(new MemberId(request.getMemberId()))
-                .orElseThrow();
+        var duplicateReservationService = new CheckDuplicateReservationService(reservationRepository);
+        duplicateReservationService.validate(reservation);
 
-        var reservation = Reservation.reservedByMember(
-                new StudioId(request.getStudioId()),
-                new TimePeriodOfUsage(request.getStartDateTime(), request.getEndDateTime()),
-                member,
-                new NumberOfUsers(request.getNumberOfUsers()),
-                PracticeTypes.of(request.getPracticeType()),
-                EquipmentOfUsages.of(request.getEquipmentIds()));
-
-        reservation.addEquipments(request.getEquipmentIds());
-
-        saveReservation(reservation);
-
-        return ReserveStudioResponse.builder()
-                .reservationId(reservation.reservationId().getValue())
-                .build();
-    }
-
-    private void saveReservation(Reservation reservation) {
-        reservation.validate(reservationRepository.getReservationValidator());
-
-        if (reservationService.equipmentOutOfStock(reservation)) {
-            throw new DomainException(DomainExceptionCodes.EquipmentOutOfStock);
-        }
-
-        if (reservationService.isDuplicated(reservation)) {
-            throw new DomainException(DomainExceptionCodes.ReservationDuplicated);
-        }
-
-        reservationRepository.save(reservation);
+        var equipmentsOutOfStocksService = new CheckEquipmentsOutOfStocksService(reservationRepository, equipmentRepository);
+        equipmentsOutOfStocksService.validate(reservation);
     }
 }

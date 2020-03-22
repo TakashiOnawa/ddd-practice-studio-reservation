@@ -9,7 +9,5 @@ import lombok.NonNull;
 @Builder
 @AllArgsConstructor
 public class ReserveStudioResponse {
-
-    @NonNull
-    private String reservationId;
+    @NonNull private String reservationId;
 }
