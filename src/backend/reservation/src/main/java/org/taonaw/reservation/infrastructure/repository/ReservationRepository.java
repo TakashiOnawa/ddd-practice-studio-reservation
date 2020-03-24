@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class ReservationRepository implements IReservationRepository {
     private final static List<Reservation> reservations = new ArrayList<>();
 
+    @Override
     public Optional<Reservation> findBy(@NonNull ReservationId reservationId) {
         var reservation = reservations.stream()
                 .filter(item -> item.getReservationId().equals(reservationId))
@@ -28,6 +29,7 @@ public class ReservationRepository implements IReservationRepository {
         return Optional.of(deepCopy(reservation.get()));
     }
 
+    @Override
     public List<Reservation> findByDateRange(@NonNull LocalDate start, @NonNull LocalDate end) {
         var startDateTime = start.atStartOfDay();
         var endDateTime = end.atTime(LocalTime.MAX);
@@ -37,6 +39,7 @@ public class ReservationRepository implements IReservationRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void add(@NonNull Reservation reservation) {
         reservations.add(deepCopy(reservation));
     }

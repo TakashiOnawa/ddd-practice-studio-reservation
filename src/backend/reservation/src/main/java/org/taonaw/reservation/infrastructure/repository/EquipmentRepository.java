@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public class EquipmentRepository implements IEquipmentRepository {
+    @Override
     public Optional<Equipment> findBy(@NonNull EquipmentId equipmentId) {
         return Optional.empty();
     }
