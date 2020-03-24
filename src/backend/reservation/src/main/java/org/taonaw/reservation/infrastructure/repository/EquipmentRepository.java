@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public class EquipmentRepository implements IEquipmentRepository {
     public Optional<Equipment> findBy(@NonNull EquipmentId equipmentId) {
-        throw new IllegalCallerException();
+        return Optional.empty();
     }
 }
