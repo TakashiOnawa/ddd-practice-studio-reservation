@@ -19,6 +19,11 @@ public class ReservationRepository implements IReservationRepository {
     private final static List<Reservation> reservations = new ArrayList<>();
 
     @Override
+    public void lock() {
+
+    }
+
+    @Override
     public Optional<Reservation> findBy(@NonNull ReservationId reservationId) {
         var reservation = reservations.stream()
                 .filter(item -> item.getReservationId().equals(reservationId))

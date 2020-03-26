@@ -32,6 +32,8 @@ public class ReserveStudioAppService {
 
     //    @Transactional
     public ReserveStudioResponse handle(ReserveStudioRequest request) {
+        reservationRepository.lock();
+
         var reservation = Reservation.newReservation(
                 new StudioId(request.getStudioId()),
                 new UseTime(request.getStartDateTime(), request.getHourQuantity()),
