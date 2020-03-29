@@ -6,24 +6,24 @@ import java.util.Objects;
 
 public class Equipment {
     private final EquipmentId equipmentId;
-    private final EquipmentStockQuantity equipmentStockQuantity;
+    private final EquipmentStocks equipmentStocks;
 
     public Equipment(@NonNull EquipmentId equipmentId,
-                     @NonNull EquipmentStockQuantity equipmentStockQuantity) {
+                     @NonNull EquipmentStocks equipmentStocks) {
         this.equipmentId = equipmentId;
-        this.equipmentStockQuantity = equipmentStockQuantity;
+        this.equipmentStocks = equipmentStocks;
     }
 
     public EquipmentId getEquipmentId() {
         return equipmentId;
     }
 
-    public EquipmentStockQuantity getEquipmentStockQuantity() {
-        return equipmentStockQuantity;
+    public EquipmentStocks getEquipmentStocks() {
+        return equipmentStocks;
     }
 
     public boolean isOutOfStocks(int reservedEquipmentQuantity) {
-        return equipmentStockQuantity.isOutOfStocks(reservedEquipmentQuantity);
+        return equipmentStocks.isOutOfStocks(reservedEquipmentQuantity);
     }
 
     @Override

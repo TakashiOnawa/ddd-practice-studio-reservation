@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.practice;
+package org.taonaw.reservation.domain.model.tenant;
 
 import lombok.EqualsAndHashCode;
 import org.taonaw.reservation.domain.model.reservation.NumberOfUsers;

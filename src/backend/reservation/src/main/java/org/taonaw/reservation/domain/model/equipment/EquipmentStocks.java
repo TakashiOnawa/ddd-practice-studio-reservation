@@ -4,10 +4,10 @@ import lombok.EqualsAndHashCode;
 import org.taonaw.reservation.domain.shared.Assertion;
 
 @EqualsAndHashCode
-public class EquipmentStockQuantity {
+public class EquipmentStocks {
     private final int value;
 
-    public EquipmentStockQuantity(int value) {
+    public EquipmentStocks(int value) {
         Assertion.argumentMin(value, 0);
         this.value = value;
     }

@@ -10,8 +10,8 @@ import java.util.Arrays;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum StartTimeType {
-    OnTheHour(0),
-    OnTheHalfHour(30);
+    ON_THE_HOUR(0),
+    ON_THE_HALF_HOUR(30);
 
     private final int startMinutes;
 

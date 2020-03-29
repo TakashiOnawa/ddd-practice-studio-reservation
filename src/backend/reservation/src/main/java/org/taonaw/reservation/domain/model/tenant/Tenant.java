@@ -1,34 +1,48 @@
 package org.taonaw.reservation.domain.model.tenant;
 
 import lombok.NonNull;
+import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.domain.model.reservation.NumberOfUsers;
+import org.taonaw.reservation.domain.model.reservation.PracticeType;
 import org.taonaw.reservation.domain.model.reservation.UseTime;
 
-import java.util.Objects;
-
 public class Tenant {
-    private final TenantId tenantId;
     private final OpeningHours openingHours;
+    private final MaxNumberOfUsers personalPracticeMaxNumberOfUsers;
+    private final ReservationStartDateTime bandReservationStartDateTime;
+    private final ReservationStartDateTime personalReservationStartDateTime;
 
-    public Tenant(@NonNull TenantId tenantId,
-                  @NonNull OpeningHours openingHours) {
-        this.tenantId = tenantId;
+    public Tenant(@NonNull OpeningHours openingHours,
+                  @NonNull MaxNumberOfUsers personalPracticeMaxNumberOfUsers,
+                  @NonNull ReservationStartDateTime bandReservationStartDateTime,
+                  @NonNull ReservationStartDateTime personalReservationStartDateTime) {
         this.openingHours = openingHours;
+        this.personalPracticeMaxNumberOfUsers = personalPracticeMaxNumberOfUsers;
+        this.bandReservationStartDateTime = bandReservationStartDateTime;
+        this.personalReservationStartDateTime = personalReservationStartDateTime;
     }
 
     public boolean isOpeningHoursSatisfiedBy(@NonNull UseTime useTime) {
         return openingHours.isSatisfiedBy(useTime);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tenant tenant = (Tenant) o;
-        return tenantId.equals(tenant.tenantId);
+    public boolean isMaxNumberOfUsersSatisfiedBy(@NonNull PracticeType practiceType,
+                                                 @NonNull NumberOfUsers numberOfUsers) {
+        if (practiceType.equals(PracticeType.PERSONAL)) {
+            return personalPracticeMaxNumberOfUsers.isSatisfiedBy(numberOfUsers);
+        }
+        return true;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(tenantId);
+    public boolean isReservationStartDateTimeSatisfiedBy(@NonNull PracticeType practiceType,
+                                                         @NonNull UseTime useTime,
+                                                         @NonNull CurrentDate currentDate) {
+        if (practiceType.equals(PracticeType.BAND)) {
+            return bandReservationStartDateTime.isSatisfiedBy(useTime, currentDate);
+        }
+        if (practiceType.equals(PracticeType.PERSONAL)) {
+            return personalReservationStartDateTime.isSatisfiedBy(useTime, currentDate);
+        }
+        return true;
     }
 }

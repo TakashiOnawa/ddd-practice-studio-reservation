@@ -1,7 +1,6 @@
 package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.NonNull;
-import org.taonaw.reservation.domain.model.practice.PracticeType;
 import org.taonaw.reservation.domain.model.studio.StudioId;
 
 import java.util.Collection;

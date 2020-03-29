@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.practice;
+package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
