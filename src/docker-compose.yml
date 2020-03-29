@@ -10,6 +10,7 @@ services:
     ports:
       - "8081:8080"
     depends_on:
+      - facilitymanagement
       - identityaccess
       - reservation
     networks:
@@ -26,6 +27,17 @@ services:
     networks:
       - studio-management-service-network
 
+  facilitymanagement:
+    build:
+      context: ./backend/facilitymanagement/
+      args:
+        - JAR_FILE=build/libs/*.jar
+    container_name: facilitymanagement
+    expose:
+      - "8080"
+    networks:
+      - studio-management-service-network
+
   reservation:
     build:
       context: ./backend/reservation/
@@ -34,6 +46,8 @@ services:
     container_name: reservation
     expose:
       - "8080"
+    depends_on:
+      - facilitymanagement
     networks:
       - studio-management-service-network
 

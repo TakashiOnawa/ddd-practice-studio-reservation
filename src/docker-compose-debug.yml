@@ -11,6 +11,7 @@ services:
       - "8081:8080"
       - "8000:8000"
     depends_on:
+      - facilitymanagement
       - identityaccess
       - reservation
     networks:
@@ -31,12 +32,12 @@ services:
       - studio-management-service-network
     entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 -jar app.jar --debug
 
-  reservation:
+  facilitymanagement:
     build:
-      context: ./backend/reservation/
+      context: ./backend/facilitymanagement/
       args:
         - JAR_FILE=build/libs/*.jar
-    container_name: reservation
+    container_name: facilitymanagement
     ports:
       - "8002:8002"
     expose:
@@ -44,6 +45,22 @@ services:
     networks:
       - studio-management-service-network
     entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8002 -jar app.jar --debug
+
+  reservation:
+    build:
+      context: ./backend/reservation/
+      args:
+        - JAR_FILE=build/libs/*.jar
+    container_name: reservation
+    ports:
+      - "8003:8003"
+    expose:
+      - "8080"
+    depends_on:
+      - facilitymanagement
+    networks:
+      - studio-management-service-network
+    entrypoint: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8003 -jar app.jar --debug
 
 networks:
   studio-management-service-network:

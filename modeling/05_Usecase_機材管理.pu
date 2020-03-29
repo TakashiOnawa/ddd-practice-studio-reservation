@@ -13,10 +13,6 @@ rectangle 管理サイト {
     note right of (管理画面を開く)
     管理者のみ開くことができる。
     end note
-
-    note right of (機材情報を登録する)
-    機材モデル名、数量を登録する。
-    end note
 }
 
 @enduml
