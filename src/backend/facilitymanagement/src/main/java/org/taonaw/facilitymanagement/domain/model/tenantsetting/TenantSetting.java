@@ -2,11 +2,15 @@ package org.taonaw.facilitymanagement.domain.model.tenantsetting;
 
 import lombok.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TenantSetting {
     private TenantName tenantName;
     private OpeningHours openingHours;
     private MaxNumberOfUsers personalPracticeMaxNumberOfUsers;
-    private ReservationStartDateTimeSetting reservationStartDateTimeSetting;
+    private ReservationStartDateTime bandReservationStartDateTime;
+    private Map<PracticeType, ReservationStartDateTime> reservationStartTime = new HashMap<>();
 
     private TenantSetting() { }
 
@@ -15,20 +19,22 @@ public class TenantSetting {
                 new TenantName("デフォルトスタジオ"),
                 OpeningHours.ALL_DAY,
                 new MaxNumberOfUsers(2),
-                new ReservationStartDateTimeSetting(
-                        new ReservationStartDateTime(2, ReservationStartDateType.MONTHS_AGO, 0),
-                        new ReservationStartDateTime(1, ReservationStartDateType.DAYS_AGO, 21)));
+                new ReservationStartDateTime(2, ReservationStartDateType.MONTHS_AGO, 0),
+                new ReservationStartDateTime(1, ReservationStartDateType.DAYS_AGO, 21));
     }
 
     public static TenantSetting reconstruct(@NonNull TenantName tenantName,
                                             @NonNull OpeningHours openingHours,
                                             @NonNull MaxNumberOfUsers personalPracticeMaxNumberOfUsers,
-                                            @NonNull ReservationStartDateTimeSetting reservationStartDateTimeSetting) {
+                                            @NonNull ReservationStartDateTime bandReservationStartDateTime,
+                                            @NonNull ReservationStartDateTime personalReservationStartDateTime) {
         var tenant = new TenantSetting();
         tenant.tenantName = tenantName;
         tenant.openingHours = openingHours;
         tenant.personalPracticeMaxNumberOfUsers = personalPracticeMaxNumberOfUsers;
-        tenant.reservationStartDateTimeSetting = reservationStartDateTimeSetting;
+        tenant.bandReservationStartDateTime = bandReservationStartDateTime;
+        tenant.reservationStartTime.put(PracticeType.BAND, bandReservationStartDateTime);
+        tenant.reservationStartTime.put(PracticeType.PERSONAL, personalReservationStartDateTime);
         return tenant;
     }
 
@@ -44,8 +50,13 @@ public class TenantSetting {
         return personalPracticeMaxNumberOfUsers;
     }
 
-    public ReservationStartDateTimeSetting getReservationStartDateTimeSetting() {
-        return reservationStartDateTimeSetting;
+    public MaxNumberOfUsers getMaxNumberOfUsers(@NonNull PracticeType practiceType) {
+        return practiceType.equals(PracticeType.PERSONAL) ?
+                personalPracticeMaxNumberOfUsers : MaxNumberOfUsers.UN_LIMITED;
+    }
+
+    public ReservationStartDateTime getReservationStartDateTime(@NonNull PracticeType practiceType) {
+        return reservationStartTime.get(practiceType);
     }
 
     public void changeTenantName(@NonNull TenantName tenantName) {
@@ -62,7 +73,6 @@ public class TenantSetting {
 
     public void changeReservationStartDateTime(@NonNull PracticeType practiceType,
                                                @NonNull ReservationStartDateTime reservationStartDateTime) {
-        this.reservationStartDateTimeSetting =
-                this.reservationStartDateTimeSetting.change(practiceType, reservationStartDateTime);
+        this.reservationStartTime.replace(practiceType, reservationStartDateTime);
     }
 }

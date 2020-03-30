@@ -4,17 +4,18 @@ import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 import org.taonaw.facilitymanagement.common.DeepCopy;
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCategory;
+import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCategoryId;
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.IEquipmentCategoryRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class EquipmentCategoryRepository implements IEquipmentCategoryRepository {
-    private final static List<EquipmentCategory> values = new ArrayList<>();
+    private final static Map<EquipmentCategoryId, EquipmentCategory> values = new HashMap<>();
 
     @Override
     public void add(@NonNull EquipmentCategory equipmentCategory) {
-        values.add(DeepCopy.clone(equipmentCategory, EquipmentCategory.class));
+        values.put(equipmentCategory.getEquipmentCategoryId(), DeepCopy.clone(equipmentCategory, EquipmentCategory.class));
     }
 }

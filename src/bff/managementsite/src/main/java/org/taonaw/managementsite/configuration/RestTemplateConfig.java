@@ -8,7 +8,6 @@ import org.springframework.web.client.RestOperations;
 
 @Configuration
 public class RestTemplateConfig {
-
     private final String reservationServiceUri = "http://reservation:8080";
     private final String identityAccessServiceUri = "http://identityaccess:8080";
 

@@ -1,10 +1,10 @@
-package org.taonaw.facilitymanagement.domain.model.tenantsetting;
+package org.taonaw.reservation.domain.model.reservationsetting;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
+import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.domain.model.reservation.UseTime;
 
-@Getter
 @EqualsAndHashCode
 public class ReservationStartDateTime {
     private final int startDateValue;
@@ -17,5 +17,11 @@ public class ReservationStartDateTime {
         this.startDateValue = startDateValue;
         this.startDateType = startDateType;
         this.startHour = startHour;
+    }
+
+    public boolean isSatisfiedBy(@NonNull UseTime useTime, @NonNull CurrentDate currentDate) {
+        var reservableDateTime =  startDateType
+                .getStartDate(useTime.getStart(), startDateValue).atTime(startHour, 0);
+        return !currentDate.isBefore(reservableDateTime);
     }
 }

@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.reservation.domain.model.studio.StartTimeType;
+import org.taonaw.reservation.domain.model.reservationsetting.StartTimeType;
 import org.taonaw.reservation.domain.shared.Assertion;
 
 import java.time.LocalDate;
@@ -24,10 +24,6 @@ public class UseTime {
 
     public boolean isStartMinutesEquals(int minutes) {
         return start.getMinute() == minutes;
-    }
-
-    public LocalDateTime daysAgo(int days) {
-        return start.minusDays(days);
     }
 
     public LocalDateTime getEnd() {

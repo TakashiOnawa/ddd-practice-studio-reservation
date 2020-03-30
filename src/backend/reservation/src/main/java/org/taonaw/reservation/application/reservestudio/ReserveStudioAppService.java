@@ -6,9 +6,8 @@ import org.springframework.stereotype.Service;
 import org.taonaw.reservation.common.date.CurrentDate;
 import org.taonaw.reservation.domain.model.equipment.IEquipmentRepository;
 import org.taonaw.reservation.domain.model.reservation.*;
-import org.taonaw.reservation.domain.model.studio.IStudioRepository;
+import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;
 import org.taonaw.reservation.domain.model.studio.StudioId;
-import org.taonaw.reservation.domain.model.tenant.ITenantRepository;
 
 //import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +17,9 @@ public class ReserveStudioAppService {
     @Autowired
     private final IReservationRepository reservationRepository;
     @Autowired
-    private final IStudioRepository studioRepository;
-    @Autowired
     private final IEquipmentRepository equipmentRepository;
     @Autowired
-    private final ITenantRepository tenantRepository;
+    private final IReservationSettingRepository reservationSettingRepository;
     @Autowired
     private final CurrentDate currentDate;
 
@@ -48,7 +45,7 @@ public class ReserveStudioAppService {
     }
 
     private void validate(Reservation reservation) {
-        var validator = new ReservationValidator(studioRepository, tenantRepository, currentDate);
+        var validator = new ReservationValidator(reservationSettingRepository, currentDate);
         validator.validate(reservation);
 
         var duplicateReservationService = new CheckDuplicateReservationService(reservationRepository);

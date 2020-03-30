@@ -4,17 +4,28 @@ import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 import org.taonaw.facilitymanagement.common.DeepCopy;
 import org.taonaw.facilitymanagement.domain.model.equipment.Equipment;
+import org.taonaw.facilitymanagement.domain.model.equipment.EquipmentId;
 import org.taonaw.facilitymanagement.domain.model.equipment.IEquipmentRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class EquipmentRepository implements IEquipmentRepository {
-    private final static List<Equipment> values = new ArrayList<>();
+    private final static Map<EquipmentId, Equipment> values = new HashMap<>();
 
     @Override
     public void add(@NonNull Equipment equipment) {
-        values.add(DeepCopy.clone(equipment, Equipment.class));
+        values.put(equipment.getEquipmentId(), DeepCopy.clone(equipment, Equipment.class));
+    }
+
+    @Override
+    public Optional<Equipment> findBy(@NonNull EquipmentId equipmentId) {
+        var equipment = values.get(equipmentId);
+        if (equipment == null) {
+            return Optional.empty();
+        }
+        return Optional.of(DeepCopy.clone(equipment, Equipment.class));
     }
 }

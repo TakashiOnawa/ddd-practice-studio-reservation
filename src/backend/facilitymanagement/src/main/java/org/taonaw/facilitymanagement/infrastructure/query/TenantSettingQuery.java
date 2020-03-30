@@ -1,34 +1,24 @@
-package org.taonaw.facilitymanagement.application.change_tenantsetting;
+package org.taonaw.facilitymanagement.infrastructure.query;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.taonaw.facilitymanagement.domain.model.tenantsetting.*;
+import org.springframework.stereotype.Repository;
+import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResponse;
+import org.taonaw.facilitymanagement.domain.model.tenantsetting.ITenantSettingRepository;
+import org.taonaw.facilitymanagement.domain.model.tenantsetting.PracticeType;
+import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;
+import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
 
-@Service
+@Repository
 @AllArgsConstructor
-public class ChangeTenantSettingAppService {
+public class TenantSettingQuery implements ITenantSettingQuery {
     @Autowired
     private final ITenantSettingRepository tenantSettingRepository;
 
-    public ChangeTenantSettingResponse handle(ChangeTenantSettingRequest request) {
+    @Override
+    public TenantSettingDto get() {
         var tenantSetting = tenantSettingRepository.get();
-
-        tenantSetting.changeTenantName(new TenantName(request.getTenantName()));
-        tenantSetting.changeOpeningHours(new OpeningHours(request.getOpeningStartTime(), request.getOpeningEndTime()));
-        tenantSetting.changePersonalPracticeMaxNumberOfUsers(new MaxNumberOfUsers(request.getPersonalPracticeMaxNumberOfUsers()));
-        tenantSetting.changeReservationStartDateTime(PracticeType.BAND, new ReservationStartDateTime(
-                        request.getBandPracticeReservationStartDateValue(),
-                        ReservationStartDateType.from(request.getBandPracticeReservationStartDateType()),
-                        request.getBandPracticeReservationStartHour()));
-        tenantSetting.changeReservationStartDateTime(PracticeType.PERSONAL, new ReservationStartDateTime(
-                request.getPersonalPracticeReservationStartDateValue(),
-                ReservationStartDateType.from(request.getPersonalPracticeReservationStartDateType()),
-                request.getPersonalPracticeReservationStartHour()));
-
-        tenantSettingRepository.update(tenantSetting);
-
-        return ChangeTenantSettingResponse.builder()
+        return TenantSettingDto.builder()
                 .tenantName(tenantSetting.getTenantName().getValue())
                 .openingStartTime(tenantSetting.getOpeningHours().getStart())
                 .openingEndTime(tenantSetting.getOpeningHours().getEnd())

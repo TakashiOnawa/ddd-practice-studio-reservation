@@ -1,4 +1,4 @@
-package org.taonaw.facilitymanagement.application.change_tenantsetting;
+package org.taonaw.facilitymanagement.query.tenantsetting;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ChangeTenantSettingRequest {
+public class TenantSettingDto {
     @NonNull private String tenantName;
     @NonNull private LocalTime openingStartTime;
     @NonNull private LocalTime openingEndTime;

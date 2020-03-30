@@ -11,15 +11,14 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 public class ChangeTenantSettingResponse {
-    @NonNull
-    private String tenantName;
+    @NonNull private String tenantName;
     @NonNull private LocalTime openingStartTime;
     @NonNull private LocalTime openingEndTime;
     private int personalPracticeMaxNumberOfUsers;
     private int personalPracticeReservationStartDateValue;
     private int personalPracticeReservationStartDateType;
-    private int personalPracticeReservationStartHours;
+    private int personalPracticeReservationStartHour;
     private int bandPracticeReservationStartDateValue;
     private int bandPracticeReservationStartDateType;
-    private int bandPracticeReservationStartHours;
+    private int bandPracticeReservationStartHour;
 }

@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.tenant;
+package org.taonaw.reservation.domain.model.reservationsetting;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

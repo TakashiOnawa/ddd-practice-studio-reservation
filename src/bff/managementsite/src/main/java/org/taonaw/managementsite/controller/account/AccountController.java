@@ -13,6 +13,8 @@ import org.taonaw.managementsite.application.identityaccess.IdentityAccessServic
 import org.taonaw.managementsite.application.identityaccess.registeraccount.RegisterAccountRequest;
 import org.taonaw.managementsite.controller.account.form.AccountRegistrationForm;
 
+import java.util.Objects;
+
 @Controller
 @AllArgsConstructor
 public class AccountController {
@@ -23,6 +25,7 @@ public class AccountController {
     @GetMapping("/accounts")
     public String list(Model model) {
         var response = identityAccessService.getAccounts();
+        Objects.requireNonNull(response.getBody());
         model.addAttribute("accounts", response.getBody().getAccounts());
         return "account/list";
     }
