@@ -8,11 +8,30 @@ import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCat
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.IEquipmentCategoryRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class EquipmentCategoryRepository implements IEquipmentCategoryRepository {
     private final static Map<EquipmentCategoryId, EquipmentCategory> values = new HashMap<>();
+
+    @Override
+    public List<EquipmentCategory> findAll() {
+        return values.values().stream()
+                .map(item -> DeepCopy.clone(item, EquipmentCategory.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<EquipmentCategory> findBy(@NonNull EquipmentCategoryId equipmentCategoryId) {
+        var equipmentCategory = values.get(equipmentCategoryId);
+        if (equipmentCategory == null) {
+            return Optional.empty();
+        }
+        return Optional.of(DeepCopy.clone(equipmentCategory, EquipmentCategory.class));
+    }
 
     @Override
     public void add(@NonNull EquipmentCategory equipmentCategory) {

@@ -13,4 +13,5 @@ public class EquipmentDto {
     @NonNull private String name;
     private int stocks;
     @NonNull private String categoryId;
+    @NonNull private String categoryName;
 }
