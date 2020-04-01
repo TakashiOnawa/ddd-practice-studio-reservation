@@ -1,6 +1,7 @@
 package org.taonaw.managementsite.controller.reservation.form;
 
 import lombok.Data;
+import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 
 import javax.validation.constraints.*;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class ReserveStudioForm {
 
     private final List<Equipment> equipments = new ArrayList<>();
 
-    private final Map<String, String> studios = new HashMap<>();
+    private final List<StudioDto> studios = new ArrayList<>();
 
     public Date getStartDateTime() {
         return toDate(startDate, startTime);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
-import org.taonaw.managementsite.application.identityaccess.registeraccount.RegisterAccountRequest;
+import org.taonaw.managementsite.application.identityaccess.command.register_account.RegisterAccountRequest;
 import org.taonaw.managementsite.controller.account.form.AccountRegistrationForm;
 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class AccountController {
     public String list(Model model) {
         var response = identityAccessService.getAccounts();
         Objects.requireNonNull(response.getBody());
-        model.addAttribute("accounts", response.getBody().getAccounts());
+        model.addAttribute("accounts", response.getBody());
         return "account/list";
     }
 

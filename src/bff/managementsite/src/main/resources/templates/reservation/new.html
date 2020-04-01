@@ -48,9 +48,9 @@
                 <span style="color:red" th:if="${#fields.hasErrors('studioId')}" th:errors="*{studioId}"></span>
                 <select class="ui search dropdown" th:field="*{studioId}">
                     <option th:each="studio : *{studios}"
-                            th:value="${studio.key}"
-                            th:text="${studio.value}"
-                            th:selected="${studio.key}==*{studioId}">
+                            th:value="${studio.studioId}"
+                            th:text="${studio.name}"
+                            th:selected="${studio.studioId}==*{studioId}">
                     </option>
                 </select>
             </div>
@@ -133,11 +133,11 @@
                     </thead>
                     <tbody>
                         <tr th:each="equipment, start : *{equipments}">
-                            <td th:text="${equipment.typeName}"></td>
+                            <td th:text="${equipment.categoryName}"></td>
                             <td th:text="${equipment.name}"></td>
                             <td><input type="number" th:value="${equipment.quantity}" th:field="*{equipments[__${start.index}__].quantity}"></td>
                             <td><input type="text" hidden th:value="${equipment.id}" th:field="*{equipments[__${start.index}__].id}"></td>
-                            <td><input type="text" hidden th:value="${equipment.typeName}" th:field="*{equipments[__${start.index}__].typeName}"></td>
+                            <td><input type="text" hidden th:value="${equipment.categoryName}" th:field="*{equipments[__${start.index}__].categoryName}"></td>
                             <td><input type="text" hidden th:value="${equipment.name}" th:field="*{equipments[__${start.index}__].name}"></td>
                         </tr>
                     </tbody>

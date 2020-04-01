@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.taonaw.identityaccess.domain.model.accounts.IAccountRepository;
-import org.taonaw.identityaccess.query.account.GetAccountsResponse;
-import org.taonaw.identityaccess.query.account.IAccountQuery;
 import org.taonaw.identityaccess.query.account.AccountDto;
+import org.taonaw.identityaccess.query.account.IAccountQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class AccountQuery implements IAccountQuery {
     @Autowired
     private final IAccountRepository accountRepository;
 
-    public GetAccountsResponse getAccounts() {
+    public List<AccountDto> getAccounts() {
         var accounts = new ArrayList<AccountDto>();
         for (var account : accountRepository.findAll()) {
             var accountDto = AccountDto.builder()
@@ -31,9 +30,7 @@ public class AccountQuery implements IAccountQuery {
                     .build();
             accounts.add(accountDto);
         }
-        return GetAccountsResponse.builder()
-                .accounts(accounts)
-                .build();
+        return accounts;
     }
 
     public List<AccountDto> findAll() {

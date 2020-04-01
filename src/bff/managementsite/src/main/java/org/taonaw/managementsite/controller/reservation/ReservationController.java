@@ -9,19 +9,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.taonaw.managementsite.application.facilitymanagement.FacilityManagementService;
+import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 import org.taonaw.managementsite.application.reservation.ReservationService;
-import org.taonaw.managementsite.application.reservation.reservestudio.ReserveStudioRequest;
+import org.taonaw.managementsite.application.reservation.command.reserve_studio.ReserveStudioRequest;
 import org.taonaw.managementsite.controller.reservation.form.Equipment;
 import org.taonaw.managementsite.controller.reservation.form.ReserveStudioForm;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class ReservationController {
-
     @Autowired
     private final ReservationService reservationService;
+    @Autowired
+    private final FacilityManagementService facilityManagementService;
 
     @GetMapping("/reservations")
     public String list(Model model) {
@@ -31,7 +35,7 @@ public class ReservationController {
     @GetMapping("/reservations/new")
     public String newReservation(Model model) {
         var form = new ReserveStudioForm();
-        form.getStudios().putAll(getAccounts());
+        form.getStudios().addAll(getAccounts());
         form.getEquipments().addAll(getEquipments());
         model.addAttribute("reserveStudioForm", form);
         return "reservation/new";
@@ -42,7 +46,7 @@ public class ReservationController {
                                  BindingResult bindingResult,
                                  Model model) {
         if (bindingResult.hasErrors()) {
-            form.getStudios().putAll(getAccounts());
+            form.getStudios().addAll(getAccounts());
             model.addAttribute("validationError", "不正な入力があります。");
             return "reservation/new";
         }
@@ -68,17 +72,16 @@ public class ReservationController {
     }
 
     private List<Equipment> getEquipments() {
-        var equipments = new ArrayList<Equipment>();
-        equipments.add(new Equipment("1", "アンプ", "マーシャル", 0));
-        equipments.add(new Equipment("1", "アンプ", "ローランド", 0));
-        return equipments;
+        var response = facilityManagementService.getEquipments();
+        var equipmentDtoList = response.getBody();
+        Objects.requireNonNull(equipmentDtoList);
+        return equipmentDtoList.stream().map(Equipment::from).collect(Collectors.toList());
     }
 
-    private Map<String, String> getAccounts() {
-        var accounts = new HashMap<String, String>();
-        accounts.put("1", "A（10 畳）");
-        accounts.put("2", "A（13 畳）");
-        accounts.put("3", "A（15 畳）");
-        return accounts;
+    private List<StudioDto> getAccounts() {
+        var response = facilityManagementService.getStudios();
+        var studioDtoList = response.getBody();
+        Objects.requireNonNull(studioDtoList);
+        return studioDtoList;
     }
 }

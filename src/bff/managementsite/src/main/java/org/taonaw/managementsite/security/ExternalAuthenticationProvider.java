@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
-import org.taonaw.managementsite.application.identityaccess.loginaccount.LoginAccountRequest;
+import org.taonaw.managementsite.application.identityaccess.command.login_account.LoginAccountRequest;
 
 @Component
 @AllArgsConstructor
