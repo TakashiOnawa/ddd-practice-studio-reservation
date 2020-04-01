@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.domain.model.accounts;
+package org.taonaw.identityaccess.domain.model.account;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

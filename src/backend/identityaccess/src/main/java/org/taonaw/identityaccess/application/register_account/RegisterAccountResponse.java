@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.application.registeraccount;
+package org.taonaw.identityaccess.application.register_account;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

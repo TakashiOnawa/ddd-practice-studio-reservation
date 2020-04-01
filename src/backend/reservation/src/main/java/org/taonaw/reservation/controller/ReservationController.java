@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.reservation.application.reservestudio.ReserveStudioAppService;
-import org.taonaw.reservation.application.reservestudio.ReserveStudioRequest;
-import org.taonaw.reservation.application.reservestudio.ReserveStudioResponse;
+import org.taonaw.reservation.application.reserve_studio.ReserveStudioAppService;
+import org.taonaw.reservation.application.reserve_studio.ReserveStudioRequest;
+import org.taonaw.reservation.application.reserve_studio.ReserveStudioResponse;
 
 @RestController
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package org.taonaw.reservation.application.reservestudio;
+package org.taonaw.reservation.application.reserve_studio;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

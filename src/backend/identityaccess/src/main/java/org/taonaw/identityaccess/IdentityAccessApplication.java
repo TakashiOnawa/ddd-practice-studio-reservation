@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.taonaw.identityaccess.domain.model.accounts.*;
+import org.taonaw.identityaccess.domain.model.account.*;
 import org.taonaw.identityaccess.infrastructure.repository.AccountRepository;
 import org.taonaw.identityaccess.infrastructure.service.BCryptPasswordEncoder;
 

@@ -1,9 +1,9 @@
-package org.taonaw.identityaccess.application.loginaccount;
+package org.taonaw.identityaccess.application.login_account;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.taonaw.identityaccess.domain.model.accounts.*;
+import org.taonaw.identityaccess.domain.model.account.*;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
 

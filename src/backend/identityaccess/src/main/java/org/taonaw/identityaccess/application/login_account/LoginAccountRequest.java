@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.application.loginaccount;
+package org.taonaw.identityaccess.application.login_account;
 
 import lombok.*;
 

@@ -3,7 +3,7 @@ package org.taonaw.identityaccess.infrastructure.repository;
 import com.google.gson.Gson;
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
-import org.taonaw.identityaccess.domain.model.accounts.*;
+import org.taonaw.identityaccess.domain.model.account.*;
 
 import java.util.ArrayList;
 import java.util.List;

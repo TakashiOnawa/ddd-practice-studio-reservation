@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.domain.model.roles;
+package org.taonaw.identityaccess.domain.model.role;
 
 import lombok.NonNull;
 import org.taonaw.identityaccess.domain.shared.Assertion;
