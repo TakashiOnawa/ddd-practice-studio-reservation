@@ -96,14 +96,22 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
 |POST|/accounts|アカウントを登録する|
 
+## Facility Management
+|Method|URI|説明|
+|---|---|---|
+|POST|equipment_categories|機材カテゴリを登録する。|
+|GET|equipments|すべての機材を取得する。|
+|PUT|equipments|機材を登録する。|
+|GET|reservation_setting|予約の検証に関する設定を取得する。|
+|GET|studios|すべてのスタジオを取得する。|
+|PUT|studios|スタジオを登録する。|
+|GET|/tenant_setting|店舗に関する設定を取得する。|
+|PUT|/tenant_setting|店舗に関する設定を更新する。|
+
 ## Reservation
 |Method|URI|説明|
 |---|---|---|
 |POST|/reservations|スタジオを予約する。|
-
-## Facility Management
-|Method|URI|説明|
-|---|---|---|
 
 # その他やりたいこと
 ### 料金の管理
