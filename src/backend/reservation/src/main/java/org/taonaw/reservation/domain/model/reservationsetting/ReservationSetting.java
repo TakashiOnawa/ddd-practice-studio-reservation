@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservationsetting;
 
 import lombok.NonNull;
-import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.reservation.NumberOfUsers;
 import org.taonaw.reservation.domain.model.reservation.PracticeType;
 import org.taonaw.reservation.domain.model.reservation.UseTime;

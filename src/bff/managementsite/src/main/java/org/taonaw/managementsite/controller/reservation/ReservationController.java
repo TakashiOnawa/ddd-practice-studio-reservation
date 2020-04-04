@@ -16,7 +16,8 @@ import org.taonaw.managementsite.application.reservation.command.reserve_studio.
 import org.taonaw.managementsite.controller.reservation.form.Equipment;
 import org.taonaw.managementsite.controller.reservation.form.ReserveStudioForm;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -54,7 +55,7 @@ public class ReservationController {
         var request = ReserveStudioRequest.builder()
                 .studioId(form.getStudioId())
                 .startDateTime(form.getStartDateTime())
-                .endDateTime(form.getEndDateTime())
+                .hourQuantity(form.getHourQuantity())
                 .userName(form.getUserName())
                 .userPhoneNumber(form.getUserPhoneNumber())
                 .numberOfUsers(form.getNumberOfUsers())

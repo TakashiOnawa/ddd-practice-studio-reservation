@@ -23,8 +23,9 @@ public class ReservationSettingRepository implements IReservationSettingReposito
 
     @Override
     public ReservationSetting findBy(@NonNull StudioId studioId, @NonNull PracticeType practiceType) {
-        var uri = "/reservation_setting";
-        var response = facilityManagementRestOptions.getForEntity(uri, ReservationSettingDto.class);
+        var uri = "/reservation_setting?studio_id={studioId}&practice_type={practice_type}";
+        var response = facilityManagementRestOptions
+                .getForEntity(uri, ReservationSettingDto.class, studioId.getValue(), practiceType.getValue());
         var dto = response.getBody();
         Objects.requireNonNull(dto);
         return new ReservationSetting(

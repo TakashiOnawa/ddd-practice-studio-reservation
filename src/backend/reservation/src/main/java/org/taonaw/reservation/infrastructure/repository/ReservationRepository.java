@@ -1,8 +1,8 @@
 package org.taonaw.reservation.infrastructure.repository;
 
-import com.google.gson.Gson;
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
+import org.taonaw.reservation.common.DeepCopy;
 import org.taonaw.reservation.domain.model.reservation.IReservationRepository;
 import org.taonaw.reservation.domain.model.reservation.Reservation;
 import org.taonaw.reservation.domain.model.reservation.ReservationId;
@@ -31,7 +31,7 @@ public class ReservationRepository implements IReservationRepository {
         if (reservation.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(deepCopy(reservation.get()));
+        return Optional.of(DeepCopy.clone(reservation.get(), Reservation.class));
     }
 
     @Override
@@ -40,17 +40,12 @@ public class ReservationRepository implements IReservationRepository {
         var endDateTime = end.atTime(LocalTime.MAX);
         return reservations.stream()
                 .filter(item -> item.getUseTime().inRange(startDateTime, endDateTime))
-                .map(this::deepCopy)
+                .map(item -> DeepCopy.clone(item, Reservation.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public void add(@NonNull Reservation reservation) {
-        reservations.add(deepCopy(reservation));
-    }
-
-    private Reservation deepCopy(Reservation reservation) {
-        var gson = new Gson();
-        return gson.fromJson(gson.toJson(reservation), Reservation.class);
+        reservations.add(DeepCopy.clone(reservation, Reservation.class));
     }
 }

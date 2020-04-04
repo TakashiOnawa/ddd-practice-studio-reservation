@@ -31,7 +31,7 @@ public enum StartTimeType {
 
     public static void validateStartTime(@NonNull LocalTime startTime) {
         var minutes = startTime.getMinute();
-        if (Arrays.stream(values()).allMatch(value -> value.startMinutes == minutes)) {
+        if (Arrays.stream(values()).anyMatch(value -> value.startMinutes == minutes)) {
             return;
         }
         throw new IllegalArgumentException("スタート時間は 0 分か 30 分である必要があります。");

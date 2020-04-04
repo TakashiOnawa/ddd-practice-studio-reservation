@@ -1,4 +1,4 @@
-package org.taonaw.reservation.common.date;
+package org.taonaw.reservation.common;
 
 import org.springframework.stereotype.Component;
 

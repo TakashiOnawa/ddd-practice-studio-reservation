@@ -3,7 +3,7 @@ package org.taonaw.reservation.application.reserve_studio;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.equipment.IEquipmentRepository;
 import org.taonaw.reservation.domain.model.reservation.*;
 import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;

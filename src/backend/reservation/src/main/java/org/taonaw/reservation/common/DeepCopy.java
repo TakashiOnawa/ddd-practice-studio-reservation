@@ -1,4 +1,4 @@
-package org.taonaw.facilitymanagement.common;
+package org.taonaw.reservation.common;
 
 import com.google.gson.GsonBuilder;
 

@@ -2,7 +2,9 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum PracticeType {
     BAND(1),

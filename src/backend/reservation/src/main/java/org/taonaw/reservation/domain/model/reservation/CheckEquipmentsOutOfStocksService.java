@@ -20,10 +20,10 @@ public class CheckEquipmentsOutOfStocksService {
             var equipment = equipmentRepository.findBy(useEquipment.getEquipmentId()).orElseThrow();
             var reservedEquipmentQuantity = overlappedReservedEquipments.getQuantity(equipment.getEquipmentId());
             if (equipment.isOutOfStocks(reservedEquipmentQuantity)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void validate(@NonNull Reservation reservation) {

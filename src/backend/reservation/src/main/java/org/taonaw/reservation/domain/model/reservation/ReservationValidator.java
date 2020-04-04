@@ -2,7 +2,7 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.reservation.common.date.CurrentDate;
+import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;
 import org.taonaw.reservation.domain.shared.exception.DomainException;
 import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;

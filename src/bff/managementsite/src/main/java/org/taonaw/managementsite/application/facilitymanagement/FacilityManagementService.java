@@ -17,7 +17,6 @@ import org.taonaw.managementsite.application.facilitymanagement.command.register
 import org.taonaw.managementsite.application.facilitymanagement.command.register_studio.RegisterStudioRequest;
 import org.taonaw.managementsite.application.facilitymanagement.command.register_studio.RegisterStudioResponse;
 import org.taonaw.managementsite.application.facilitymanagement.query.EquipmentDto;
-import org.taonaw.managementsite.application.facilitymanagement.query.ReservationSettingDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.TenantSettingDto;
 
@@ -53,22 +52,17 @@ public class FacilityManagementService {
     public ResponseEntity<List<StudioDto>> getStudios() {
         var uri = "/studios";
         return facilityManagementRestOptions.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<StudioDto>>() {});
+                new ParameterizedTypeReference<>() {});
     }
 
     public ResponseEntity<List<EquipmentDto>> getEquipments() {
         var uri = "/equipments";
         return facilityManagementRestOptions.exchange(uri, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<EquipmentDto>>() {});
+                new ParameterizedTypeReference<>() {});
     }
 
     public ResponseEntity<TenantSettingDto> getTenantSetting() {
         var uri = "/tenant_setting";
         return facilityManagementRestOptions.getForEntity(uri, TenantSettingDto.class);
-    }
-
-    public ResponseEntity<ReservationSettingDto> getReservationSetting() {
-        var uri = "/reservation_setting";
-        return facilityManagementRestOptions.getForEntity(uri, ReservationSettingDto.class);
     }
 }

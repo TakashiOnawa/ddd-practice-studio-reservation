@@ -3,10 +3,7 @@ package org.taonaw.facilitymanagement.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentAppService;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentRequest;
@@ -37,5 +34,11 @@ public class EquipmentController {
     public ResponseEntity<List<EquipmentDto>> getEquipments() {
         var equipments = equipmentQuery.getAll();
         return ResponseEntity.ok(equipments);
+    }
+
+    @GetMapping("/equipments/{equipmentId}")
+    public ResponseEntity<EquipmentDto> getEquipment(@PathVariable String equipmentId) {
+        var equipment = equipmentQuery.getByEquipmentId(equipmentId);
+        return equipment.map(ResponseEntity::ok).orElseGet(() ->ResponseEntity.notFound().build());
     }
 }

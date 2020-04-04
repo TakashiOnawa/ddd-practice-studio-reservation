@@ -18,6 +18,10 @@ public class UseEquipment {
         this.quantity = quantity;
     }
 
+    public UseEquipment incrementQuantity() {
+        return addQuantity(1);
+    }
+
     public UseEquipment addQuantity(int addQuantity) {
         Assertion.argumentMin(quantity, 1);
         return new UseEquipment(equipmentId, quantity + addQuantity);

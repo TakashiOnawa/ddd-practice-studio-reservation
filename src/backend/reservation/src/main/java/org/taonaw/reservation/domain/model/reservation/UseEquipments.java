@@ -3,10 +3,7 @@ package org.taonaw.reservation.domain.model.reservation;
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.equipment.EquipmentId;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UseEquipments {
     private final Map<EquipmentId, UseEquipment> equipments = new HashMap<>();
@@ -24,7 +21,7 @@ public class UseEquipments {
     void add(@NonNull EquipmentId equipmentId) {
         if (equipments.containsKey(equipmentId)) {
             var useEquipment = equipments.get(equipmentId);
-            useEquipment = useEquipment.addQuantity(1);
+            useEquipment = useEquipment.incrementQuantity();
             equipments.replace(equipmentId, useEquipment);
         } else {
             var equipmentOfUsage = new UseEquipment(equipmentId, 1);

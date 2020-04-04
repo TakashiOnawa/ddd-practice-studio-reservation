@@ -1,9 +1,11 @@
 package org.taonaw.identityaccess.infrastructure.repository;
 
-import com.google.gson.Gson;
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
-import org.taonaw.identityaccess.domain.model.account.*;
+import org.taonaw.identityaccess.common.DeepCopy;
+import org.taonaw.identityaccess.domain.model.account.Account;
+import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
+import org.taonaw.identityaccess.domain.model.account.LoginId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class AccountRepository implements IAccountRepository {
 
     public List<Account> findAll() {
         return accounts.stream()
-                .map(this::deepCopy)
+                .map(item -> DeepCopy.clone(item, Account.class))
                 .collect(Collectors.toList());
     }
 
@@ -29,15 +31,10 @@ public class AccountRepository implements IAccountRepository {
         if (account.isEmpty())
             return account;
 
-        return Optional.of(deepCopy(account.get()));
+        return Optional.of(DeepCopy.clone(account.get(), Account.class));
     }
 
     public void save(@NonNull Account account) {
-        accounts.add(deepCopy(account));
-    }
-
-    private Account deepCopy(Account account) {
-        var gson = new Gson();
-        return gson.fromJson(gson.toJson(account), Account.class);
+        accounts.add(DeepCopy.clone(account, Account.class));
     }
 }

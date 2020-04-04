@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -13,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ReserveStudioRequest {
     @NonNull private String studioId;
-    @NonNull private Date startDateTime;
-    @NonNull private Date endDateTime;
+    @NonNull private LocalDateTime startDateTime;
+    private int hourQuantity;
     @NonNull private String userName;
     @NonNull private String userPhoneNumber;
     private int numberOfUsers;

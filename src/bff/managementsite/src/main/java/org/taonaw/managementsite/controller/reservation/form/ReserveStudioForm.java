@@ -4,15 +4,16 @@ import lombok.Data;
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 
 import javax.validation.constraints.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 public class ReserveStudioForm {
 
-    private static final String DATE_TIME_FORMAT = "yyyy/MM/dd hh:mm";
+    private static final String DATE_TIME_FORMAT = "yyyy/mm/dd hh:mm";
 
     public ReserveStudioForm(){}
 
@@ -25,11 +26,8 @@ public class ReserveStudioForm {
     @NotEmpty(message = "利用開始時間を入力してください")
     private String startTime;
 
-    @NotEmpty(message = "利用終了日を入力してください")
-    private String endDate;
-
-    @NotEmpty(message = "利用終了時間を入力してください")
-    private String endTime;
+    @Min(value = 1, message = "利用時間数は 1 時間以上を入力してください")
+    private int hourQuantity;
 
     @NotEmpty(message = "利用者名を入力してください")
     private String userName;
@@ -48,12 +46,8 @@ public class ReserveStudioForm {
 
     private final List<StudioDto> studios = new ArrayList<>();
 
-    public Date getStartDateTime() {
-        return toDate(startDate, startTime);
-    }
-
-    public Date getEndDateTime() {
-        return toDate(endDate, endTime);
+    public LocalDateTime getStartDateTime() {
+        return toLocalDateTime(startDate, startTime);
     }
 
     public List<String> getEquipmentIds() {
@@ -62,13 +56,8 @@ public class ReserveStudioForm {
                 .collect(Collectors.toList());
     }
 
-    private Date toDate(String date, String time) {
-        try {
-            var format = new SimpleDateFormat(DATE_TIME_FORMAT);
-            return format.parse(date + " " + time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    private LocalDateTime toLocalDateTime(String date, String time) {
+        var format = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        return LocalDateTime.parse(date + " " + time, format);
     }
 }

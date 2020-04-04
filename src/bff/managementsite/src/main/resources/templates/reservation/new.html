@@ -27,11 +27,14 @@
             });
             $('#startTime').calendar({
                 type: 'time',
-                ampm: false
-            });
-            $('#endTime').calendar({
-                type: 'time',
-                ampm: false
+                ampm: false,
+                formatter: {
+                    time: function (date) {
+                        var hour = ('0' + date.getHours()).slice(-2);
+                        var minute = ('0' + date.getMinutes()).slice(-2);
+                        return hour + ':' + minute;
+                    }
+                }
             });
         });
     </script>
@@ -76,27 +79,10 @@
                     </div>
                 </div>
             </div>
-            <div class="two fields">
-                <div class="field">
-                    <label>利用終了日</label>
-                    <span style="color:red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
-                    <div class="ui calendar" id="endDate">
-                        <div class="ui input left icon">
-                            <i class="calendar icon"></i>
-                            <input type="text" th:field="*{endDate}" placeholder="">
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>利用終了時間</label>
-                    <span style="color:red" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></span>
-                    <div class="ui calendar" id="endTime">
-                        <div class="ui input left icon">
-                            <i class="time icon"></i>
-                            <input type="text" th:field="*{endTime}" placeholder="">
-                        </div>
-                    </div>
-                </div>
+            <div class="field">
+                <label>利用時間数</label>
+                <span style="color:red" th:if="${#fields.hasErrors('hourQuantity')}" th:errors="*{hourQuantity}"></span>
+                <input type="number" th:field="*{hourQuantity}" placeholder=""/>
             </div>
             <div class="field">
                 <label>利用者情報</label>

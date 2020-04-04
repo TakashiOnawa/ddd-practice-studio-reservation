@@ -14,11 +14,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class ReserveStudioRequest {
-    @NonNull private String tenantId;
     @NonNull private String studioId;
     @NonNull private LocalDateTime startDateTime;
     private int hourQuantity;
-    @NonNull private LocalDateTime endDateTime;
     @NonNull private String userName;
     @NonNull private String userPhoneNumber;
     private int numberOfUsers;
