@@ -104,6 +104,7 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |Method|URI|説明|
 |---|---|---|
 |POST|/equipment_categories|機材カテゴリを登録する。|
+|PUT|/equipment_categories/{equipmentCategoryId}|機材カテゴリ情報を更新する。|
 |GET|/equipments|すべての機材を取得する。|
 |POST|/equipments|機材を登録する。|
 |PUT|/equipments/{equipmentId}|機材情報を更新する。|

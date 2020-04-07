@@ -9,4 +9,5 @@ public interface IEquipmentCategoryRepository {
     List<EquipmentCategory> findAll();
     Optional<EquipmentCategory> findBy(@NonNull EquipmentCategoryId equipmentCategoryId);
     void add(@NonNull EquipmentCategory equipmentCategory);
+    void update(@NonNull EquipmentCategory equipmentCategory);
 }

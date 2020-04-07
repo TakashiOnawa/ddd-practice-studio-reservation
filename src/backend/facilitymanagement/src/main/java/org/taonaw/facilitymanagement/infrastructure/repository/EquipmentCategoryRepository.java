@@ -37,4 +37,9 @@ public class EquipmentCategoryRepository implements IEquipmentCategoryRepository
     public void add(@NonNull EquipmentCategory equipmentCategory) {
         values.put(equipmentCategory.getEquipmentCategoryId(), DeepCopy.clone(equipmentCategory, EquipmentCategory.class));
     }
+
+    @Override
+    public void update(@NonNull EquipmentCategory equipmentCategory) {
+        values.replace(equipmentCategory.getEquipmentCategoryId(), DeepCopy.clone(equipmentCategory, EquipmentCategory.class));
+    }
 }
