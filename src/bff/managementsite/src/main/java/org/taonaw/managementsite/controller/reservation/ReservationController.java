@@ -16,6 +16,8 @@ import org.taonaw.managementsite.application.reservation.command.reserve_studio.
 import org.taonaw.managementsite.controller.reservation.form.Equipment;
 import org.taonaw.managementsite.controller.reservation.form.ReserveStudioForm;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -83,6 +85,7 @@ public class ReservationController {
         var response = facilityManagementService.getStudios();
         var studioDtoList = response.getBody();
         Objects.requireNonNull(studioDtoList);
+        studioDtoList.sort(Comparator.comparing(StudioDto::getName));
         return studioDtoList;
     }
 }
