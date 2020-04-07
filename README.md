@@ -27,8 +27,9 @@ RDRA 2.0 に沿って要件定義をします。
 
 ## 設備管理（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
-* スタッフが、スタジオの管理を行う「スタジオ管理」。
-* スタッフが、機材の在庫管理を行う「機材管理」。
+* スタッフが店舗の官吏を行う「店舗管理」。
+* スタッフがスタジオの管理を行う「スタジオ管理」。
+* スタッフが機材の在庫管理を行う「機材管理」。
 
 ## スタジオ利用（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
@@ -58,6 +59,9 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ![](./modeling/05_Usecase_店頭予約/Usecase.png)
 
 ## 設備管理（ビジネスコンテキスト）
+### 店舗管理
+![](./modeling/05_Usecase_店舗管理/Usecase.png)
+
 ### スタジオ管理
 ![](./modeling/05_Usecase_スタジオ管理/Usecase.png)
 
@@ -85,7 +89,7 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |GET|/accounts/new|アカウント登録画面を表示する。|
 |POST|/accounts|アカウントを登録する。|
 |GET|/reservations|予約一覧画面を表示する。|
-|GET|/reservations/new|スタジオ予約画面を表示する。|
+|GET|/reservations/new|スタジオ予約画面を表示する。|
 |POST|/reservations|スタジオを予約する。|
 
 ## Identity Access
@@ -99,12 +103,13 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 ## Facility Management
 |Method|URI|説明|
 |---|---|---|
-|POST|equipment_categories|機材カテゴリを登録する。|
-|GET|equipments|すべての機材を取得する。|
-|PUT|equipments|機材を登録する。|
-|GET|reservation_setting|予約の検証に関する設定を取得する。|
-|GET|studios|すべてのスタジオを取得する。|
-|PUT|studios|スタジオを登録する。|
+|POST|/equipment_categories|機材カテゴリを登録する。|
+|GET|/equipments|すべての機材を取得する。|
+|POST|/equipments|機材を登録する。|
+|GET|/reservation_setting|予約の検証に関する設定を取得する。|
+|GET|/studios|すべてのスタジオを取得する。|
+|POST|/studios|スタジオを登録する。|
+|PUT|/studios/{studioId}|スタジオ情報を更新する。|
 |GET|/tenant_setting|店舗に関する設定を取得する。|
 |PUT|/tenant_setting|店舗に関する設定を更新する。|
 

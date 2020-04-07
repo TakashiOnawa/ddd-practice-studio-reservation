@@ -3,11 +3,11 @@ package org.taonaw.facilitymanagement.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioAppService;
+import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioRequest;
+import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioResponse;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioAppService;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioRequest;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioResponse;
@@ -22,15 +22,24 @@ public class StudioController {
     @Autowired
     private final RegisterStudioAppService registerStudioAppService;
     @Autowired
+    private final ChangeStudioAppService changeStudioAppService;
+    @Autowired
     private final IStudioQuery studioQuery;
 
     @PostMapping("/studios")
-    public ResponseEntity<RegisterStudioResponse> registerStudio
-            (@RequestBody RegisterStudioRequest request, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<RegisterStudioResponse> registerStudio(@RequestBody RegisterStudioRequest request,
+                                                                 UriComponentsBuilder uriComponentsBuilder) {
         var response = registerStudioAppService.handle(request);
         var uri = uriComponentsBuilder.path("/studios/{studioId}")
                 .buildAndExpand(response.getStudioId()).toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @PutMapping("/studios/{studioId}")
+    public ResponseEntity<ChangeStudioResponse> changeStudio(@PathVariable String studioId,
+                                                             @RequestBody ChangeStudioRequest request) {
+        var response = changeStudioAppService.handle(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/studios")

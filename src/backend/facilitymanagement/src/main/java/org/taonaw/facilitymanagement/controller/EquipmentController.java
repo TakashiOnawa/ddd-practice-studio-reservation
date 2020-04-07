@@ -22,8 +22,8 @@ public class EquipmentController {
     private final IEquipmentQuery equipmentQuery;
 
     @PostMapping("/equipments")
-    public ResponseEntity<RegisterEquipmentResponse> registerEquipment
-            (@RequestBody RegisterEquipmentRequest request, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<RegisterEquipmentResponse> registerEquipment(@RequestBody RegisterEquipmentRequest request,
+                                                                       UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipments/{equipmentId}")
                 .buildAndExpand(response.getEquipmentId()).toUri();

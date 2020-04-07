@@ -4,6 +4,7 @@ left to right direction
 
 actor スタッフ
 
+スタッフ -- (店舗管理)
 スタッフ -- (スタジオ管理)
 スタッフ -- (機材管理)
 

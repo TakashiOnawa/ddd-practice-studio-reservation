@@ -19,7 +19,8 @@ public class EquipmentCategoryController {
 
     @PostMapping("/equipment_categories")
     public ResponseEntity<RegisterEquipmentCategoryResponse> registerEquipmentCategory
-            (@RequestBody RegisterEquipmentCategoryRequest request, UriComponentsBuilder uriComponentsBuilder) {
+            (@RequestBody RegisterEquipmentCategoryRequest request,
+             UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentCategoryAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipment_categories/{equipmentCategoryId}")
                 .buildAndExpand(response.getEquipmentCategoryId()).toUri();

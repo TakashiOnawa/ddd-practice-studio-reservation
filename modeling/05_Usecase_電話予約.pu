@@ -13,6 +13,9 @@ note top of スタッフ
 * 名前
 * 電話番号
 * 生年月日
+
+大抵の場合「xx 日に xx 番スタジオを xx 時から xx 時間」
+といった感じで予約を受ける。
 end note
 
 rectangle 管理サイト {

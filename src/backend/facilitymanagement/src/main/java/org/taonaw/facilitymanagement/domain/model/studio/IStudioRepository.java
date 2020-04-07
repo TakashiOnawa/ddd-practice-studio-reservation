@@ -9,4 +9,5 @@ public interface IStudioRepository {
     List<Studio> findAll();
     void add(@NonNull Studio studio);
     Optional<Studio> findBy(StudioId studioId);
+    void update(@NonNull Studio studio);
 }
