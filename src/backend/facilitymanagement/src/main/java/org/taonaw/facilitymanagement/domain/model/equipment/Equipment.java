@@ -52,6 +52,18 @@ public class Equipment {
         return stocks;
     }
 
+    public void changeName(@NonNull EquipmentName name) {
+        this.name = name;
+    }
+
+    public void changeStocks(@NonNull EquipmentStocks stocks) {
+        this.stocks = stocks;
+    }
+
+    public void changeEquipmentCategory(@NonNull EquipmentCategoryId categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -9,4 +9,5 @@ public interface IEquipmentRepository {
     List<Equipment> findAll();
     Optional<Equipment> findBy(@NonNull EquipmentId equipmentId);
     void add(@NonNull Equipment equipment);
+    void update(@NonNull Equipment equipment);
 }

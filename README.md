@@ -106,6 +106,7 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |POST|/equipment_categories|機材カテゴリを登録する。|
 |GET|/equipments|すべての機材を取得する。|
 |POST|/equipments|機材を登録する。|
+|PUT|/equipments/{equipmentId}|機材情報を更新する。|
 |GET|/reservation_setting|予約の検証に関する設定を取得する。|
 |GET|/studios|すべてのスタジオを取得する。|
 |POST|/studios|スタジオを登録する。|

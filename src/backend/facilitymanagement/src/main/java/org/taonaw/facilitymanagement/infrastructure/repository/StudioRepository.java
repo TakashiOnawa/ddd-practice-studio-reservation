@@ -7,10 +7,7 @@ import org.taonaw.facilitymanagement.domain.model.studio.IStudioRepository;
 import org.taonaw.facilitymanagement.domain.model.studio.Studio;
 import org.taonaw.facilitymanagement.domain.model.studio.StudioId;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -36,5 +33,10 @@ public class StudioRepository implements IStudioRepository {
     @Override
     public void add(@NonNull Studio studio) {
         values.put(studio.getStudioId(), DeepCopy.clone(studio, Studio.class));
+    }
+
+    @Override
+    public void update(@NonNull Studio studio) {
+        values.replace(studio.getStudioId(), DeepCopy.clone(studio, Studio.class));
     }
 }

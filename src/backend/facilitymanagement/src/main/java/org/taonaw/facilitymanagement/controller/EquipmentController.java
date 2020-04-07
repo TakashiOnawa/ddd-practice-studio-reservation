@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentAppService;
+import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentRequest;
+import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentResponse;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentAppService;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentRequest;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentResponse;
@@ -19,6 +22,8 @@ public class EquipmentController {
     @Autowired
     private final RegisterEquipmentAppService registerEquipmentAppService;
     @Autowired
+    private final ChangeEquipmentAppService changeEquipmentAppService;
+    @Autowired
     private final IEquipmentQuery equipmentQuery;
 
     @PostMapping("/equipments")
@@ -28,6 +33,13 @@ public class EquipmentController {
         var uri = uriComponentsBuilder.path("/equipments/{equipmentId}")
                 .buildAndExpand(response.getEquipmentId()).toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @PutMapping("/equipments/{equipmentId}")
+    public ResponseEntity<ChangeEquipmentResponse> changeEquipment(@PathVariable String equipmentId,
+                                                                   @RequestBody ChangeEquipmentRequest request) {
+        var response = changeEquipmentAppService.handle(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/equipments")

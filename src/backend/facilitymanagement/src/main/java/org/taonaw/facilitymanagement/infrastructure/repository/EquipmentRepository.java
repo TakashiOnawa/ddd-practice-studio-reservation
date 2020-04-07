@@ -37,4 +37,9 @@ public class EquipmentRepository implements IEquipmentRepository {
     public void add(@NonNull Equipment equipment) {
         values.put(equipment.getEquipmentId(), DeepCopy.clone(equipment, Equipment.class));
     }
+
+    @Override
+    public void update(@NonNull Equipment equipment) {
+        values.replace(equipment.getEquipmentId(), DeepCopy.clone(equipment, Equipment.class));
+    }
 }
