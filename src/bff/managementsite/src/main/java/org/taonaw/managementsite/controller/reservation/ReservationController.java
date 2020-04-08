@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.taonaw.managementsite.application.facilitymanagement.FacilityManagementService;
+import org.taonaw.managementsite.application.facilitymanagement.query.EquipmentDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 import org.taonaw.managementsite.application.reservation.ReservationService;
 import org.taonaw.managementsite.application.reservation.command.reserve_studio.ReserveStudioRequest;
@@ -78,6 +79,7 @@ public class ReservationController {
         var response = facilityManagementService.getEquipments();
         var equipmentDtoList = response.getBody();
         Objects.requireNonNull(equipmentDtoList);
+        equipmentDtoList.sort(Comparator.comparing(EquipmentDto::getCategoryName).thenComparing(EquipmentDto::getName));
         return equipmentDtoList.stream().map(Equipment::from).collect(Collectors.toList());
     }
 
