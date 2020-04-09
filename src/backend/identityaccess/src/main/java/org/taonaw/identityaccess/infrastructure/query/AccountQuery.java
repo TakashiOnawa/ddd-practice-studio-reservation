@@ -22,11 +22,11 @@ public class AccountQuery implements IAccountQuery {
         var accounts = new ArrayList<AccountDto>();
         for (var account : accountRepository.findAll()) {
             var accountDto = AccountDto.builder()
-                    .accountId(account.accountId().getValue())
-                    .accountFirstName(account.accountName().getFirstName())
-                    .accountLastName(account.accountName().getLastName())
-                    .accountFullName(account.accountName().getFullName())
-                    .loginId(account.loginId().getValue())
+                    .accountId(account.getAccountId().getValue())
+                    .accountFirstName(account.getName().getFirstName())
+                    .accountLastName(account.getName().getLastName())
+                    .accountFullName(account.getName().asFormattedName())
+                    .loginId(account.getLoginId().getValue())
                     .build();
             accounts.add(accountDto);
         }
@@ -37,11 +37,11 @@ public class AccountQuery implements IAccountQuery {
         var accounts = new ArrayList<AccountDto>();
         for (var account : accountRepository.findAll()) {
             var accountDto = AccountDto.builder()
-                    .accountId(account.accountId().getValue())
-                    .accountFirstName(account.accountName().getFirstName())
-                    .accountLastName(account.accountName().getLastName())
-                    .accountFullName(account.accountName().getFullName())
-                    .loginId(account.loginId().getValue())
+                    .accountId(account.getAccountId().getValue())
+                    .accountFirstName(account.getName().getFirstName())
+                    .accountLastName(account.getName().getLastName())
+                    .accountFullName(account.getName().asFormattedName())
+                    .loginId(account.getLoginId().getValue())
                     .build();
             accounts.add(accountDto);
         }

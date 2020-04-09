@@ -1,12 +1,16 @@
 package org.taonaw.identityaccess.domain.model.account;
 
 import lombok.NonNull;
+import org.taonaw.identityaccess.domain.model.shared.FullName;
+import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
+import org.taonaw.identityaccess.domain.model.shared.Password;
+import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
 
 import java.util.Objects;
 
 public class Account {
     private final AccountId accountId;
-    private AccountName accountName;
+    private FullName name;
     private LoginId loginId;
     private Password password;
 
@@ -14,36 +18,47 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public static Account newAccount(@NonNull AccountName accountName,
+    public static Account newAccount(@NonNull FullName name,
                                      @NonNull LoginId loginId,
                                      @NonNull Password password) {
-        var account = new Account(new AccountId());
-        account.accountName = accountName;
+        var account = new Account(AccountId.newId());
+        account.name = name;
         account.loginId = loginId;
         account.password = password;
         return account;
     }
 
     public static Account reconstruct(@NonNull AccountId accountId,
-                                      @NonNull AccountName accountName,
+                                      @NonNull FullName name,
                                       @NonNull LoginId loginId,
                                       @NonNull Password password) {
         var account = new Account(accountId);
-        account.accountName = accountName;
+        account.name = name;
         account.loginId = loginId;
         account.password = password;
         return account;
     }
 
-    public AccountId accountId() { return accountId; }
-    public AccountName accountName() { return accountName; }
-    public LoginId loginId() { return loginId; }
-    public Password password() { return password; }
+    public AccountId getAccountId() {
+        return accountId;
+    }
+
+    public FullName getName() {
+        return name;
+    }
+
+    public LoginId getLoginId() {
+        return loginId;
+    }
+
+    public Password getPassword() {
+        return password;
+    }
 
     public boolean authenticate(@NonNull LoginId loginId,
                                 @NonNull PlainTextPassword plainTextPassword,
                                 @NonNull IPasswordEncoder passwordEncoder) {
-        return this.loginId.equals(loginId) && plainTextPassword.matches(this.password, passwordEncoder);
+        return this.loginId.equals(loginId) && password.matches(plainTextPassword, passwordEncoder);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.domain.model.account;
+package org.taonaw.identityaccess.domain.model.shared;
 
 import lombok.NonNull;
 

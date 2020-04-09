@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface IAccountRepository {
     List<Account> findAll();
-    Optional<Account> find(@NonNull LoginId loginId);
-    void save(@NonNull Account account);
+    Optional<Account> findBy(@NonNull LoginId loginId);
+    void add(@NonNull Account account);
 }

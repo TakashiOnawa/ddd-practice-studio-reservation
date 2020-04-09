@@ -6,6 +6,5 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class LoginAccountResponse {
-    @NonNull
-    private String loginId;
+    @NonNull private String loginId;
 }

@@ -8,7 +8,9 @@ import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 
 @AllArgsConstructor
 public class CheckEquipmentsOutOfStocksService {
+    @NonNull
     private final IReservationRepository reservationRepository;
+    @NonNull
     private final IEquipmentRepository equipmentRepository;
 
     public boolean isOutOfStocks(@NonNull Reservation reservation) {

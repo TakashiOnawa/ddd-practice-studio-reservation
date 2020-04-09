@@ -9,12 +9,5 @@ import lombok.NonNull;
 @Builder
 @AllArgsConstructor
 public class RegisterAccountResponse {
-    @NonNull
-    private String accountId;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
-    @NonNull
-    private String loginId;
+    @NonNull private String accountId;
 }

@@ -36,13 +36,13 @@ public class Reservation {
     }
 
     public static Reservation reconstruct(
-            ReservationId reservationId,
-            StudioId studioId,
-            UseTime useTime,
-            UserInformation userInformation,
-            NumberOfUsers numberOfUsers,
-            PracticeType practiceType,
-            UseEquipments useEquipments) {
+            @NonNull ReservationId reservationId,
+            @NonNull StudioId studioId,
+            @NonNull UseTime useTime,
+            @NonNull UserInformation userInformation,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull PracticeType practiceType,
+            @NonNull UseEquipments useEquipments) {
         var reservation = new Reservation();
         reservation.reservationId = reservationId;
         reservation.studioId = studioId;

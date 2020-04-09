@@ -1,9 +1,12 @@
-package org.taonaw.identityaccess.domain.model.account;
+package org.taonaw.identityaccess.domain.model.shared;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import org.taonaw.identityaccess.domain.shared.Assertion;
 
+@Getter(value = AccessLevel.PACKAGE)
 @EqualsAndHashCode
 public class PlainTextPassword {
     private final String value;
@@ -16,9 +19,5 @@ public class PlainTextPassword {
 
     public Password encode(@NonNull IPasswordEncoder passwordEncoder) {
         return new Password(passwordEncoder.encode(value));
-    }
-
-    public boolean matches(@NonNull Password password, @NonNull IPasswordEncoder passwordEncoder) {
-        return passwordEncoder.matches(value, password.getValue());
     }
 }

@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class AccountController {
-
     @Autowired
     private final LoginAccountAppService loginAccountAppService;
     @Autowired

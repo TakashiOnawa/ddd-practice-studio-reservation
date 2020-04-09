@@ -9,14 +9,15 @@ import org.taonaw.reservation.domain.model.reservation.ReservationId;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 public class ReservationRepository implements IReservationRepository {
-    private final static List<Reservation> reservations = new ArrayList<>();
+    private final static Map<ReservationId, Reservation> values = new HashMap<>();
 
     @Override
     public void lock() {
@@ -25,20 +26,18 @@ public class ReservationRepository implements IReservationRepository {
 
     @Override
     public Optional<Reservation> findBy(@NonNull ReservationId reservationId) {
-        var reservation = reservations.stream()
-                .filter(item -> item.getReservationId().equals(reservationId))
-                .findFirst();
-        if (reservation.isEmpty()) {
+        var reservation = values.get(reservationId);
+        if (reservation == null) {
             return Optional.empty();
         }
-        return Optional.of(DeepCopy.clone(reservation.get(), Reservation.class));
+        return Optional.of(DeepCopy.clone(reservation, Reservation.class));
     }
 
     @Override
     public List<Reservation> findByDateRange(@NonNull LocalDate start, @NonNull LocalDate end) {
         var startDateTime = start.atStartOfDay();
         var endDateTime = end.atTime(LocalTime.MAX);
-        return reservations.stream()
+        return values.values().stream()
                 .filter(item -> item.getUseTime().inRange(startDateTime, endDateTime))
                 .map(item -> DeepCopy.clone(item, Reservation.class))
                 .collect(Collectors.toList());
@@ -46,6 +45,6 @@ public class ReservationRepository implements IReservationRepository {
 
     @Override
     public void add(@NonNull Reservation reservation) {
-        reservations.add(DeepCopy.clone(reservation, Reservation.class));
+        values.put(reservation.getReservationId(), DeepCopy.clone(reservation, Reservation.class));
     }
 }

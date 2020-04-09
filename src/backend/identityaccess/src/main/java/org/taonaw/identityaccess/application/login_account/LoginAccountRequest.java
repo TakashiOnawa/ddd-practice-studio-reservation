@@ -6,8 +6,6 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class LoginAccountRequest {
-    @NonNull
-    private String loginId;
-    @NonNull
-    private String password;
+    @NonNull private String loginId;
+    @NonNull private String password;
 }

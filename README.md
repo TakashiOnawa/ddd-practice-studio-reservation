@@ -98,7 +98,9 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |POST|/accounts/login|ログインID、パスワードで認証を行う。|
 |GET|/accounts|すべてのアカウントを取得する。|
 |GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
-|POST|/accounts|アカウントを登録する|
+|POST|/accounts|アカウントを登録する。|
+|POST|/members/login|会員のメールアドレス、パスワードで認証を行う。|
+|POST|/members|会員を登録する。|
 
 ## Facility Management
 |Method|URI|説明|

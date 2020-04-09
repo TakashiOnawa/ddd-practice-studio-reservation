@@ -45,13 +45,8 @@ public class ReserveStudioAppService {
     }
 
     private void validate(Reservation reservation) {
-        var validator = new ReservationValidator(reservationSettingRepository, currentDate);
-        validator.validate(reservation);
-
-        var duplicateReservationService = new CheckDuplicateReservationService(reservationRepository);
-        duplicateReservationService.validate(reservation);
-
-        var equipmentsOutOfStocksService = new CheckEquipmentsOutOfStocksService(reservationRepository, equipmentRepository);
-        equipmentsOutOfStocksService.validate(reservation);
+        new ReservationValidator(reservationSettingRepository, currentDate).validate(reservation);
+        new CheckDuplicateReservationService(reservationRepository).validate(reservation);
+        new CheckEquipmentsOutOfStocksService(reservationRepository, equipmentRepository).validate(reservation);
     }
 }

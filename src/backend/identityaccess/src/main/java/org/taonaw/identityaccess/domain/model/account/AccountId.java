@@ -12,8 +12,8 @@ import java.util.UUID;
 public class AccountId {
     private final String value;
 
-    AccountId() {
-        this(UUID.randomUUID().toString());
+    public static AccountId newId() {
+        return new AccountId(UUID.randomUUID().toString());
     }
 
     public AccountId(@NonNull String value) {

@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.taonaw.identityaccess.domain.model.account.IPasswordEncoder;
+import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 
 @Service
 @AllArgsConstructor
