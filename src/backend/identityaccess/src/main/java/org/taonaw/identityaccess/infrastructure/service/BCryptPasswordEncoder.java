@@ -10,14 +10,15 @@ import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 @Service
 @AllArgsConstructor
 public class BCryptPasswordEncoder implements IPasswordEncoder {
-
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public String encode(@NonNull String plainTextPassword) {
         return passwordEncoder.encode(plainTextPassword);
     }
 
+    @Override
     public boolean matches(@NonNull String plainTextPassword, @NonNull String encodedPassword) {
         return passwordEncoder.matches(plainTextPassword, encodedPassword);
     }

@@ -26,6 +26,15 @@ public class MemberRepository implements IMemberRepository {
     }
 
     @Override
+    public Optional<Member> findBy(@NonNull MemberId memberId) {
+        var member = values.get(memberId);
+        if (member == null) {
+            return Optional.empty();
+        }
+        return Optional.of(DeepCopy.clone(member, Member.class));
+    }
+
+    @Override
     public Optional<Member> findBy(@NonNull EmailAddress emailAddress) {
         var member = values.values().stream()
                 .filter(item -> item.getDetail().getEmailAddress().equals(emailAddress))

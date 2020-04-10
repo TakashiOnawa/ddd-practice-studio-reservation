@@ -10,7 +10,6 @@ import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmen
 import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentResponse;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentAppService;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentRequest;
-import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentResponse;
 import org.taonaw.facilitymanagement.query.equipment.EquipmentDto;
 import org.taonaw.facilitymanagement.query.equipment.IEquipmentQuery;
 
@@ -27,17 +26,19 @@ public class EquipmentController {
     private final IEquipmentQuery equipmentQuery;
 
     @PostMapping("/equipments")
-    public ResponseEntity<RegisterEquipmentResponse> registerEquipment(@RequestBody RegisterEquipmentRequest request,
-                                                                       UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> registerEquipment(
+            @RequestBody RegisterEquipmentRequest request,
+            UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipments/{equipmentId}")
                 .buildAndExpand(response.getEquipmentId()).toUri();
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/equipments/{equipmentId}")
-    public ResponseEntity<ChangeEquipmentResponse> changeEquipment(@PathVariable String equipmentId,
-                                                                   @RequestBody ChangeEquipmentRequest request) {
+    public ResponseEntity<ChangeEquipmentResponse> changeEquipment(
+            @PathVariable String equipmentId,
+            @RequestBody ChangeEquipmentRequest request) {
         var response = changeEquipmentAppService.handle(request);
         return ResponseEntity.ok(response);
     }

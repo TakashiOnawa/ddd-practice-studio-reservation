@@ -11,11 +11,8 @@ import org.springframework.web.client.RestOperations;
 import org.taonaw.managementsite.application.facilitymanagement.command.change_tenantsetting.ChangeTenantSettingRequest;
 import org.taonaw.managementsite.application.facilitymanagement.command.change_tenantsetting.ChangeTenantSettingResponse;
 import org.taonaw.managementsite.application.facilitymanagement.command.register_equipment.RegisterEquipmentRequest;
-import org.taonaw.managementsite.application.facilitymanagement.command.register_equipment.RegisterEquipmentResponse;
 import org.taonaw.managementsite.application.facilitymanagement.command.register_equipmentcategory.RegisterEquipmentCategoryRequest;
-import org.taonaw.managementsite.application.facilitymanagement.command.register_equipmentcategory.RegisterEquipmentCategoryResponse;
 import org.taonaw.managementsite.application.facilitymanagement.command.register_studio.RegisterStudioRequest;
-import org.taonaw.managementsite.application.facilitymanagement.command.register_studio.RegisterStudioResponse;
 import org.taonaw.managementsite.application.facilitymanagement.query.EquipmentDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.TenantSettingDto;
@@ -34,19 +31,19 @@ public class FacilityManagementService {
         return facilityManagementRestOptions.postForEntity(uri, request, ChangeTenantSettingResponse.class);
     }
 
-    public ResponseEntity<RegisterEquipmentResponse> registerEquipment(RegisterEquipmentRequest request) {
+    public ResponseEntity<Void> registerEquipment(RegisterEquipmentRequest request) {
         var uri = "/equipments";
-        return facilityManagementRestOptions.postForEntity(uri, request, RegisterEquipmentResponse.class);
+        return facilityManagementRestOptions.postForEntity(uri, request, Void.class);
     }
 
-    public ResponseEntity<RegisterEquipmentCategoryResponse> registerEquipmentCategory(RegisterEquipmentCategoryRequest request) {
+    public ResponseEntity<Void> registerEquipmentCategory(RegisterEquipmentCategoryRequest request) {
         var uri = "/equipment_categories";
-        return facilityManagementRestOptions.postForEntity(uri, request, RegisterEquipmentCategoryResponse.class);
+        return facilityManagementRestOptions.postForEntity(uri, request, Void.class);
     }
 
-    public ResponseEntity<RegisterStudioResponse> registerStudio(RegisterStudioRequest request) {
+    public ResponseEntity<Void> registerStudio(RegisterStudioRequest request) {
         var uri = "/studios";
-        return facilityManagementRestOptions.postForEntity(uri, request, RegisterStudioResponse.class);
+        return facilityManagementRestOptions.postForEntity(uri, request, Void.class);
     }
 
     public ResponseEntity<List<StudioDto>> getStudios() {

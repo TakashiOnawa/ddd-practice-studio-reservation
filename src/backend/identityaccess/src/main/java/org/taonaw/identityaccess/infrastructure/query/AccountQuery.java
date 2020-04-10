@@ -14,18 +14,18 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 public class AccountQuery implements IAccountQuery {
-
     @Autowired
     private final IAccountRepository accountRepository;
 
-    public List<AccountDto> getAccounts() {
+    @Override
+    public List<AccountDto> getAll() {
         var accounts = new ArrayList<AccountDto>();
         for (var account : accountRepository.findAll()) {
             var accountDto = AccountDto.builder()
                     .accountId(account.getAccountId().getValue())
-                    .accountFirstName(account.getName().getFirstName())
-                    .accountLastName(account.getName().getLastName())
-                    .accountFullName(account.getName().asFormattedName())
+                    .firstName(account.getName().getFirstName())
+                    .lastName(account.getName().getLastName())
+                    .fullName(account.getName().asFormattedName())
                     .loginId(account.getLoginId().getValue())
                     .build();
             accounts.add(accountDto);
@@ -33,23 +33,9 @@ public class AccountQuery implements IAccountQuery {
         return accounts;
     }
 
-    public List<AccountDto> findAll() {
-        var accounts = new ArrayList<AccountDto>();
-        for (var account : accountRepository.findAll()) {
-            var accountDto = AccountDto.builder()
-                    .accountId(account.getAccountId().getValue())
-                    .accountFirstName(account.getName().getFirstName())
-                    .accountLastName(account.getName().getLastName())
-                    .accountFullName(account.getName().asFormattedName())
-                    .loginId(account.getLoginId().getValue())
-                    .build();
-            accounts.add(accountDto);
-        }
-        return accounts;
-    }
-
-    public Optional<AccountDto> getAccountById(String accountId) {
-        return findAll().stream()
+    @Override
+    public Optional<AccountDto> getByAccountId(String accountId) {
+        return getAll().stream()
                 .filter(item -> item.getAccountId().equals(accountId))
                 .findFirst();
     }

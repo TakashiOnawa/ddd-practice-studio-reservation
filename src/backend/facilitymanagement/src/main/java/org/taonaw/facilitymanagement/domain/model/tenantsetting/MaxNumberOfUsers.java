@@ -9,7 +9,7 @@ import org.taonaw.facilitymanagement.domain.shared.Assertion;
 public class MaxNumberOfUsers {
     private final int value;
 
-    public static MaxNumberOfUsers UN_LIMITED = new MaxNumberOfUsers(Integer.MAX_VALUE);
+    public static final MaxNumberOfUsers UN_LIMITED = new MaxNumberOfUsers(Integer.MAX_VALUE);
 
     public MaxNumberOfUsers(int value) {
         Assertion.argumentMin(value, 1);

@@ -1,6 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.NonNull;
+import org.taonaw.reservation.domain.model.member.Member;
 import org.taonaw.reservation.domain.model.studio.StudioId;
 
 import java.util.Collection;
@@ -52,6 +53,22 @@ public class Reservation {
         reservation.practiceType = practiceType;
         reservation.useEquipments = useEquipments;
         return reservation;
+    }
+
+    public static Reservation newReservationByMember(
+            @NonNull StudioId studioId,
+            @NonNull UseTime useTime,
+            @NonNull Member member,
+            @NonNull NumberOfUsers numberOfUsers,
+            @NonNull PracticeType practiceType,
+            @NonNull UseEquipments useEquipments) {
+        return newReservation(
+                studioId,
+                useTime,
+                member.createUserInformation(),
+                numberOfUsers,
+                practiceType,
+                useEquipments);
     }
 
     public ReservationId getReservationId() {

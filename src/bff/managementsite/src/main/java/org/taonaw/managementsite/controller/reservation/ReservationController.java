@@ -45,9 +45,10 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations")
-    public String newReservation(@ModelAttribute @Validated ReserveStudioForm form,
-                                 BindingResult bindingResult,
-                                 Model model) {
+    public String newReservation(
+            @ModelAttribute @Validated ReserveStudioForm form,
+            BindingResult bindingResult,
+            Model model) {
         if (bindingResult.hasErrors()) {
             form.getStudios().addAll(getAccounts());
             model.addAttribute("validationError", "不正な入力があります。");

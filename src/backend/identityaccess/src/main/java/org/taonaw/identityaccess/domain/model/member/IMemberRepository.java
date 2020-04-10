@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface IMemberRepository {
     List<Member> findAll();
+    Optional<Member> findBy(@NonNull MemberId memberId);
     Optional<Member> findBy(@NonNull EmailAddress emailAddress);
     void add(@NonNull Member member);
 }

@@ -8,6 +8,6 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ReserveStudioResponse {
+public class ReserveStudioResult {
     @NonNull private String reservationId;
 }

@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 public class AccountDto {
     @NonNull private String accountId;
-    @NonNull private String accountFirstName;
-    @NonNull private String accountLastName;
-    @NonNull private String accountFullName;
+    @NonNull private String firstName;
+    @NonNull private String lastName;
+    @NonNull private String fullName;
     @NonNull private String loginId;
 }

@@ -20,8 +20,8 @@ public class ReservationStartDateTime {
     }
 
     public boolean isSatisfiedBy(@NonNull UseTime useTime, @NonNull CurrentDate currentDate) {
-        var reservableDateTime =  startDateType
-                .getStartDate(useTime.getStart(), startDateValue).atTime(startHour, 0);
+        var reservableDateTime =
+                startDateType.getStartDate(useTime.getStart(), startDateValue).atTime(startHour, 0);
         return !currentDate.isBefore(reservableDateTime);
     }
 }

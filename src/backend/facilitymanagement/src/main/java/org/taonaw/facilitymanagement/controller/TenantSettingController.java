@@ -22,8 +22,8 @@ public class TenantSettingController {
     private final ITenantSettingQuery tenantSettingQuery;
 
     @PutMapping("/tenant_setting")
-    public ResponseEntity<ChangeTenantSettingResponse> changeTenantSetting
-            (@RequestBody ChangeTenantSettingRequest request) {
+    public ResponseEntity<ChangeTenantSettingResponse> changeTenantSetting(
+            @RequestBody ChangeTenantSettingRequest request) {
         var response = changeTenantSettingAppService.handle(request);
         return ResponseEntity.ok(response);
     }

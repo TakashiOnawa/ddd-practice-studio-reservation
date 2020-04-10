@@ -53,7 +53,7 @@ public class AccountController {
                 .password(form.getPassword())
                 .build();
 
-        identityAccessService.registerAccount(request);
+        var response = identityAccessService.registerAccount(request);
 
         return "redirect:/accounts";
     }

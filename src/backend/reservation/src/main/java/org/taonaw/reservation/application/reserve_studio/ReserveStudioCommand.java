@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ReserveStudioRequest {
+public class ReserveStudioCommand {
     @NonNull private String studioId;
     @NonNull private LocalDateTime startDateTime;
     private int hourQuantity;

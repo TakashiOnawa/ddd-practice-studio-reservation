@@ -11,7 +11,6 @@ import org.taonaw.identityaccess.application.login_account.LoginAccountRequest;
 import org.taonaw.identityaccess.application.login_account.LoginAccountResponse;
 import org.taonaw.identityaccess.application.register_account.RegisterAccountAppService;
 import org.taonaw.identityaccess.application.register_account.RegisterAccountRequest;
-import org.taonaw.identityaccess.application.register_account.RegisterAccountResponse;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
 import org.taonaw.identityaccess.query.account.AccountDto;
@@ -45,22 +44,22 @@ public class AccountController {
 
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable("accountId") String accountId) {
-        var account = accountQuery.getAccountById(accountId);
+        var account = accountQuery.getByAccountId(accountId);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
     @GetMapping("/accounts")
     public ResponseEntity<List<AccountDto>> getAccounts() {
-        var accounts = accountQuery.getAccounts();
+        var accounts = accountQuery.getAll();
         return ResponseEntity.ok(accounts);
     }
 
     @PostMapping("/accounts")
-    public ResponseEntity<RegisterAccountResponse> registerAccount(@RequestBody RegisterAccountRequest request,
+    public ResponseEntity<Void> registerAccount(@RequestBody RegisterAccountRequest request,
                                                                    UriComponentsBuilder uriComponentsBuilder) {
         var response = registerAccountAppService.handle(request);
         var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(response.getAccountId()).toUri();
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).build();
     }
 }

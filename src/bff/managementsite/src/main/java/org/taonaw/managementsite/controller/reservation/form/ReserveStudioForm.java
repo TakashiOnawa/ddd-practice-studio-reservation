@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Data
 public class ReserveStudioForm {
 
-    private static final String DATE_TIME_FORMAT = "yyyy/mm/dd hh:mm";
+    private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm";
 
     public ReserveStudioForm(){}
 

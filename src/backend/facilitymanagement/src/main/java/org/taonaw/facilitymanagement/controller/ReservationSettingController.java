@@ -16,9 +16,10 @@ public class ReservationSettingController {
     private final IReservationSettingQuery reservationSettingQuery;
 
     @GetMapping(value = "/reservation_setting", params = { "studio_id", "practice_type" })
-    public ResponseEntity<ReservationSettingDto> getReservationSetting(@RequestParam("studio_id") String studioId,
-                                                                       @RequestParam("practice_type") int practiceType) {
-        var dto = reservationSettingQuery.getByStudioAndPracticeType(studioId, practiceType);
+    public ResponseEntity<ReservationSettingDto> getReservationSetting(
+            @RequestParam("studio_id") String studioId,
+            @RequestParam("practice_type") int practiceType) {
+        var dto = reservationSettingQuery.getByStudioIdAndPracticeType(studioId, practiceType);
         return ResponseEntity.ok(dto);
     }
 }

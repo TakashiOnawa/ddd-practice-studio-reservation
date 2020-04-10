@@ -10,7 +10,6 @@ import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioReque
 import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioResponse;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioAppService;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioRequest;
-import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioResponse;
 import org.taonaw.facilitymanagement.query.studio.IStudioQuery;
 import org.taonaw.facilitymanagement.query.studio.StudioDto;
 
@@ -27,17 +26,19 @@ public class StudioController {
     private final IStudioQuery studioQuery;
 
     @PostMapping("/studios")
-    public ResponseEntity<RegisterStudioResponse> registerStudio(@RequestBody RegisterStudioRequest request,
-                                                                 UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> registerStudio(
+            @RequestBody RegisterStudioRequest request,
+            UriComponentsBuilder uriComponentsBuilder) {
         var response = registerStudioAppService.handle(request);
         var uri = uriComponentsBuilder.path("/studios/{studioId}")
                 .buildAndExpand(response.getStudioId()).toUri();
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/studios/{studioId}")
-    public ResponseEntity<ChangeStudioResponse> changeStudio(@PathVariable String studioId,
-                                                             @RequestBody ChangeStudioRequest request) {
+    public ResponseEntity<ChangeStudioResponse> changeStudio(
+            @PathVariable String studioId,
+            @RequestBody ChangeStudioRequest request) {
         var response = changeStudioAppService.handle(request);
         return ResponseEntity.ok(response);
     }

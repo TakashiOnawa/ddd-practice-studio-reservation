@@ -18,13 +18,15 @@ import java.util.stream.Collectors;
 public class AccountRepository implements IAccountRepository {
     private final static Map<AccountId, Account> values = new HashMap<>();
 
+    @Override
     public List<Account> findAll() {
         return values.values().stream()
                 .map(item -> DeepCopy.clone(item, Account.class))
                 .collect(Collectors.toList());
     }
 
-    public Optional<Account> findBy(LoginId loginId) {
+    @Override
+    public Optional<Account> findBy(@NonNull LoginId loginId) {
         var account = values.values().stream()
                 .filter(item -> item.getLoginId().equals(loginId))
                 .findFirst();
@@ -34,6 +36,7 @@ public class AccountRepository implements IAccountRepository {
         return Optional.of(DeepCopy.clone(account.get(), Account.class));
     }
 
+    @Override
     public void add(@NonNull Account account) {
         values.put(account.getAccountId(), DeepCopy.clone(account, Account.class));
     }

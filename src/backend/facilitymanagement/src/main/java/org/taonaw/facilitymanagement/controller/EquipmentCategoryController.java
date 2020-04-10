@@ -10,7 +10,6 @@ import org.taonaw.facilitymanagement.application.change_equipmentcategory.Change
 import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryResponse;
 import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryAppService;
 import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryRequest;
-import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryResponse;
 
 @RestController
 @AllArgsConstructor
@@ -21,18 +20,19 @@ public class EquipmentCategoryController {
     private final ChangeEquipmentCategoryAppService changeEquipmentCategoryAppService;
 
     @PostMapping("/equipment_categories")
-    public ResponseEntity<RegisterEquipmentCategoryResponse> registerEquipmentCategory
-            (@RequestBody RegisterEquipmentCategoryRequest request,
-             UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> registerEquipmentCategory(
+            @RequestBody RegisterEquipmentCategoryRequest request,
+            UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentCategoryAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipment_categories/{equipmentCategoryId}")
                 .buildAndExpand(response.getEquipmentCategoryId()).toUri();
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/equipment_categories/{equipmentCategoryId}")
-    public ResponseEntity<ChangeEquipmentCategoryResponse> changeEquipmentCategory
-            (@PathVariable String equipmentCategoryId, @RequestBody ChangeEquipmentCategoryRequest request) {
+    public ResponseEntity<ChangeEquipmentCategoryResponse> changeEquipmentCategory(
+            @PathVariable String equipmentCategoryId,
+            @RequestBody ChangeEquipmentCategoryRequest request) {
         var response = changeEquipmentCategoryAppService.handle(request);
         return ResponseEntity.ok(response);
     }

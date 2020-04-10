@@ -20,7 +20,7 @@ public class ReservationSettingQuery implements IReservationSettingQuery {
     private final ITenantSettingRepository tenantSettingRepository;
 
     @Override
-    public ReservationSettingDto getByStudioAndPracticeType(@NonNull String studioId, int practiceType) {
+    public ReservationSettingDto getByStudioIdAndPracticeType(@NonNull String studioId, int practiceType) {
         var studio = studioRepository.findBy(new StudioId(studioId)).orElseThrow();
         var tenantSetting = tenantSettingRepository.get();
 
