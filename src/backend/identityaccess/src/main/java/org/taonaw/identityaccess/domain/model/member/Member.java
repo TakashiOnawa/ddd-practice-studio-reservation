@@ -13,10 +13,13 @@ public class Member {
     private MemberDetail detail;
     private Password password;
 
+    private Member(@NonNull MemberId memberId) {
+        this.memberId = memberId;
+    }
+
     public static Member newMember(@NonNull MemberDetail detail,
                                    @NonNull Password password) {
-        var member = new Member();
-        member.memberId = MemberId.newId();
+        var member = new Member(MemberId.newId());
         member.detail = detail;
         member.password = password;
         return member;
@@ -25,8 +28,7 @@ public class Member {
     public static Member reconstruct(@NonNull MemberId memberId,
                                      @NonNull MemberDetail detail,
                                      @NonNull Password password) {
-        var member = new Member();
-        member.memberId = memberId;
+        var member = new Member(memberId);
         member.detail = detail;
         member.password = password;
         return member;

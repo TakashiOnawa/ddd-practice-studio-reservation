@@ -19,6 +19,11 @@ public class AccountRepository implements IAccountRepository {
     private final static Map<AccountId, Account> values = new HashMap<>();
 
     @Override
+    public void lock() {
+
+    }
+
+    @Override
     public List<Account> findAll() {
         return values.values().stream()
                 .map(item -> DeepCopy.clone(item, Account.class))

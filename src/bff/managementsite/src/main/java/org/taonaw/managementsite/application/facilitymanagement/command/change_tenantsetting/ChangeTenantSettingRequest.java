@@ -1,20 +1,16 @@
 package org.taonaw.managementsite.application.facilitymanagement.command.change_tenantsetting;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.time.LocalTime;
 
 @Getter
-@Builder
 @AllArgsConstructor
 public class ChangeTenantSettingRequest {
-    @NonNull
     private String tenantName;
-    @NonNull private LocalTime openingStartTime;
-    @NonNull private LocalTime openingEndTime;
+    private LocalTime openingStartTime;
+    private LocalTime openingEndTime;
     private int personalPracticeMaxNumberOfUsers;
     private int personalPracticeReservationStartDateValue;
     private int personalPracticeReservationStartDateType;

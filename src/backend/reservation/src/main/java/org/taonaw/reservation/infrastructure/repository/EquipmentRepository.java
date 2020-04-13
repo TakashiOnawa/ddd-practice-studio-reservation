@@ -38,10 +38,10 @@ public class EquipmentRepository implements IEquipmentRepository {
     @Getter
     @AllArgsConstructor
     private static class EquipmentDto {
-        @NonNull private String equipmentId;
-        @NonNull private String name;
+        private String equipmentId;
+        private String name;
         private int stocks;
-        @NonNull private String categoryId;
-        @NonNull private String categoryName;
+        private String categoryId;
+        private String categoryName;
     }
 }

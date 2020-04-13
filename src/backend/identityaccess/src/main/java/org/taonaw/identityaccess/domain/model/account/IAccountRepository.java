@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAccountRepository {
+    void lock();
     List<Account> findAll();
     Optional<Account> findBy(@NonNull LoginId loginId);
     void add(@NonNull Account account);

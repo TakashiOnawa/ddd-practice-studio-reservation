@@ -23,6 +23,7 @@ public class RegisterAccountAppService {
 
 //    @Transactional
     public RegisterAccountResult handle(RegisterAccountCommand command) {
+        accountRepository.lock();
 
         var account = Account.newAccount(
                 new FullName(command.getFirstName(), command.getLastName()),

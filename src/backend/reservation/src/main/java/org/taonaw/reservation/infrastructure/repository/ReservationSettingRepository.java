@@ -43,7 +43,7 @@ public class ReservationSettingRepository implements IReservationSettingReposito
     @Getter
     @AllArgsConstructor
     private static class ReservationSettingDto {
-        @NonNull private final String studioId;
+        private final String studioId;
         private final int practiceType;
         private final int startTimeType;
         private final int maxNumberOfUsers;
@@ -51,7 +51,7 @@ public class ReservationSettingRepository implements IReservationSettingReposito
         private final int reservationStartDateValue;
         private final int reservationStartDateType;
         private final int reservationStartHour;
-        @NonNull private final LocalTime openingStartTime;
-        @NonNull private final LocalTime openingEndTime;
+        private final LocalTime openingStartTime;
+        private final LocalTime openingEndTime;
     }
 }

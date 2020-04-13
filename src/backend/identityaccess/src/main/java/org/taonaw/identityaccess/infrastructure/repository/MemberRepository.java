@@ -19,6 +19,11 @@ public class MemberRepository implements IMemberRepository {
     private static Map<MemberId, Member> values = new HashMap<>();
 
     @Override
+    public void lock() {
+
+    }
+
+    @Override
     public List<Member> findAll() {
         return values.values().stream()
                 .map(item -> DeepCopy.clone(item, Member.class))

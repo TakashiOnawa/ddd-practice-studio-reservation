@@ -17,8 +17,9 @@ public class RegisterMemberAppService {
     @Autowired
     private final IPasswordEncoder passwordEncoder;
 
-
     public RegisterMemberResult handle(RegisterMemberCommand command) {
+        memberRepository.lock();
+
         var memberDetail = new MemberDetail(
                 new FullName(command.getFirstName(), command.getLastName()),
                 new PhoneNumber(command.getTelephoneAreaCode(), command.getTelephoneLocalNumber(), command.getTelephoneSubscriberNumber()),
@@ -29,6 +30,8 @@ public class RegisterMemberAppService {
                 new PlainTextPassword(command.getPassword()).encode(passwordEncoder));
 
         new CheckDuplicateMemberService(memberRepository).validate(member);
+
+        memberRepository.add(member);
 
         return RegisterMemberResult.builder()
                 .memberId(member.getMemberId().getValue())
