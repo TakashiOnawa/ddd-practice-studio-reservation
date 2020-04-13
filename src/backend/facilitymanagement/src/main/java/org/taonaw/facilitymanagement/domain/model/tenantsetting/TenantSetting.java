@@ -9,7 +9,6 @@ public class TenantSetting {
     private TenantName tenantName;
     private OpeningHours openingHours;
     private MaxNumberOfUsers personalPracticeMaxNumberOfUsers;
-    private ReservationStartDateTime bandReservationStartDateTime;
     private Map<PracticeType, ReservationStartDateTime> reservationStartTime = new HashMap<>();
 
     private TenantSetting() { }
@@ -32,7 +31,6 @@ public class TenantSetting {
         tenant.tenantName = tenantName;
         tenant.openingHours = openingHours;
         tenant.personalPracticeMaxNumberOfUsers = personalPracticeMaxNumberOfUsers;
-        tenant.bandReservationStartDateTime = bandReservationStartDateTime;
         tenant.reservationStartTime.put(PracticeType.BAND, bandReservationStartDateTime);
         tenant.reservationStartTime.put(PracticeType.PERSONAL, personalReservationStartDateTime);
         return tenant;
