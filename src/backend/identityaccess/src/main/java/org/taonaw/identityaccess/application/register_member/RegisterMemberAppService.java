@@ -22,6 +22,7 @@ public class RegisterMemberAppService {
 
         var memberDetail = new MemberDetail(
                 new FullName(command.getFirstName(), command.getLastName()),
+                new DateOfBirth(command.getDateOfBirth()),
                 new PhoneNumber(command.getTelephoneAreaCode(), command.getTelephoneLocalNumber(), command.getTelephoneSubscriberNumber()),
                 new EmailAddress(command.getEmailAddress()));
 

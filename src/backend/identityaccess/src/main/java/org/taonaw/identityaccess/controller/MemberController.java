@@ -47,8 +47,9 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity<Void> registerMember(@RequestBody RegisterMemberCommand request,
-                                                                  UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> registerMember(
+            @RequestBody RegisterMemberCommand request,
+            UriComponentsBuilder uriComponentsBuilder) {
         var response = registerMemberAppService.handle(request);
         var uri = uriComponentsBuilder.path("/members/{memberId}").buildAndExpand(response.getMemberId()).toUri();
         return ResponseEntity.created(uri).build();
