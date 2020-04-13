@@ -8,6 +8,6 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterEquipmentCategoryRequest {
-    @NonNull private String name;
+public class RegisterEquipmentCategoryResult {
+    @NonNull private String equipmentCategoryId;
 }

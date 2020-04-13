@@ -8,6 +8,6 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterMemberResponse {
+public class RegisterMemberResult {
     @NonNull private final String memberId;
 }

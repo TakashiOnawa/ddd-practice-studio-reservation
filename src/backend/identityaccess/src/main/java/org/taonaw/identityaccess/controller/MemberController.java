@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.identityaccess.application.login_member.LoginMemberAppService;
-import org.taonaw.identityaccess.application.login_member.LoginMemberRequest;
-import org.taonaw.identityaccess.application.login_member.LoginMemberResponse;
+import org.taonaw.identityaccess.application.login_member.LoginMemberCommand;
+import org.taonaw.identityaccess.application.login_member.LoginMemberResult;
 import org.taonaw.identityaccess.application.register_member.RegisterMemberAppService;
-import org.taonaw.identityaccess.application.register_member.RegisterMemberRequest;
+import org.taonaw.identityaccess.application.register_member.RegisterMemberCommand;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
 import org.taonaw.identityaccess.query.member.IMemberQuery;
@@ -27,7 +27,7 @@ public class MemberController {
     private final IMemberQuery memberQuery;
 
     @PostMapping("/members/login")
-    public ResponseEntity<LoginMemberResponse> login(@RequestBody LoginMemberRequest request) {
+    public ResponseEntity<LoginMemberResult> login(@RequestBody LoginMemberCommand request) {
         try {
             var response = loginMemberAppService.handle(request);
             return ResponseEntity.ok(response);
@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity<Void> registerMember(@RequestBody RegisterMemberRequest request,
+    public ResponseEntity<Void> registerMember(@RequestBody RegisterMemberCommand request,
                                                                   UriComponentsBuilder uriComponentsBuilder) {
         var response = registerMemberAppService.handle(request);
         var uri = uriComponentsBuilder.path("/members/{memberId}").buildAndExpand(response.getMemberId()).toUri();

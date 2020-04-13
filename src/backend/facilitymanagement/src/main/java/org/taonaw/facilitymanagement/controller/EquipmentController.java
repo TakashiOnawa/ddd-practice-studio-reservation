@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentAppService;
-import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentRequest;
-import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentResponse;
+import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentCommand;
+import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentResult;
 import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentAppService;
-import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentRequest;
+import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentCommand;
 import org.taonaw.facilitymanagement.query.equipment.EquipmentDto;
 import org.taonaw.facilitymanagement.query.equipment.IEquipmentQuery;
 
@@ -27,7 +27,7 @@ public class EquipmentController {
 
     @PostMapping("/equipments")
     public ResponseEntity<Void> registerEquipment(
-            @RequestBody RegisterEquipmentRequest request,
+            @RequestBody RegisterEquipmentCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipments/{equipmentId}")
@@ -36,9 +36,9 @@ public class EquipmentController {
     }
 
     @PutMapping("/equipments/{equipmentId}")
-    public ResponseEntity<ChangeEquipmentResponse> changeEquipment(
+    public ResponseEntity<ChangeEquipmentResult> changeEquipment(
             @PathVariable String equipmentId,
-            @RequestBody ChangeEquipmentRequest request) {
+            @RequestBody ChangeEquipmentCommand request) {
         var response = changeEquipmentAppService.handle(request);
         return ResponseEntity.ok(response);
     }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NegativeOrZero;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ChangeEquipmentCategoryRequest {
+public class ChangeEquipmentCategoryCommand {
     @NonNull private String equipmentCategoryId;
     @NonNull private String name;
 }

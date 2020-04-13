@@ -12,15 +12,15 @@ public class RegisterEquipmentAppService {
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 
-    public RegisterEquipmentResponse handle(RegisterEquipmentRequest request) {
+    public RegisterEquipmentResult handle(RegisterEquipmentCommand command) {
         var equipment = Equipment.newEquipment(
-                new EquipmentName(request.getName()),
-                new EquipmentCategoryId(request.getCategoryId()),
-                new EquipmentStocks(request.getStocks()));
+                new EquipmentName(command.getName()),
+                new EquipmentCategoryId(command.getCategoryId()),
+                new EquipmentStocks(command.getStocks()));
 
         equipmentRepository.add(equipment);
 
-        return RegisterEquipmentResponse.builder()
+        return RegisterEquipmentResult.builder()
                 .equipmentId(equipment.getEquipmentId().getValue())
                 .build();
     }

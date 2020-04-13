@@ -8,7 +8,7 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterStudioRequest {
+public class RegisterStudioCommand {
     @NonNull private String name;
     private double roomSize;
     private int startTimeType;

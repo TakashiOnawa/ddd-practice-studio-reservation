@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryAppService;
-import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryRequest;
-import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryResponse;
+import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryCommand;
+import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryResult;
 import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryAppService;
-import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryRequest;
+import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryCommand;
 
 @RestController
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class EquipmentCategoryController {
 
     @PostMapping("/equipment_categories")
     public ResponseEntity<Void> registerEquipmentCategory(
-            @RequestBody RegisterEquipmentCategoryRequest request,
+            @RequestBody RegisterEquipmentCategoryCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
         var response = registerEquipmentCategoryAppService.handle(request);
         var uri = uriComponentsBuilder.path("/equipment_categories/{equipmentCategoryId}")
@@ -30,9 +30,9 @@ public class EquipmentCategoryController {
     }
 
     @PutMapping("/equipment_categories/{equipmentCategoryId}")
-    public ResponseEntity<ChangeEquipmentCategoryResponse> changeEquipmentCategory(
+    public ResponseEntity<ChangeEquipmentCategoryResult> changeEquipmentCategory(
             @PathVariable String equipmentCategoryId,
-            @RequestBody ChangeEquipmentCategoryRequest request) {
+            @RequestBody ChangeEquipmentCategoryCommand request) {
         var response = changeEquipmentCategoryAppService.handle(request);
         return ResponseEntity.ok(response);
     }

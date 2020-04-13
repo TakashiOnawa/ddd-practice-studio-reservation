@@ -18,9 +18,9 @@ public class LoginMemberAppService {
     @Autowired
     private final IPasswordEncoder passwordEncoder;
 
-    public LoginMemberResponse handle(LoginMemberRequest request) {
-        var emailAddress = new EmailAddress(request.getEmailAddress());
-        var plainTextPassword = new PlainTextPassword(request.getPassword());
+    public LoginMemberResult handle(LoginMemberCommand command) {
+        var emailAddress = new EmailAddress(command.getEmailAddress());
+        var plainTextPassword = new PlainTextPassword(command.getPassword());
 
         var member = memberRepository.findBy(emailAddress);
         if (member.isEmpty()) {
@@ -31,6 +31,6 @@ public class LoginMemberAppService {
             throw new DomainException(DomainExceptionCodes.LoginMemberPasswordNotMatched);
         }
 
-        return LoginMemberResponse.builder().build();
+        return LoginMemberResult.builder().build();
     }
 }

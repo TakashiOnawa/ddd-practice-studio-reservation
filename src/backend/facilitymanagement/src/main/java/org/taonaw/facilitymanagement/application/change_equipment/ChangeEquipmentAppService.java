@@ -15,14 +15,14 @@ public class ChangeEquipmentAppService {
     @Autowired
     private final IEquipmentRepository equipmentRepository;
 
-    public ChangeEquipmentResponse handle(ChangeEquipmentRequest request) {
-        var equipment = equipmentRepository.findBy(new EquipmentId(request.getEquipmentId())).orElseThrow();
-        equipment.changeName(new EquipmentName(request.getName()));
-        equipment.changeStocks(new EquipmentStocks(request.getStocks()));
-        equipment.changeEquipmentCategory(new EquipmentCategoryId(request.getCategoryId()));
+    public ChangeEquipmentResult handle(ChangeEquipmentCommand command) {
+        var equipment = equipmentRepository.findBy(new EquipmentId(command.getEquipmentId())).orElseThrow();
+        equipment.changeName(new EquipmentName(command.getName()));
+        equipment.changeStocks(new EquipmentStocks(command.getStocks()));
+        equipment.changeEquipmentCategory(new EquipmentCategoryId(command.getCategoryId()));
         equipmentRepository.update(equipment);
 
-        return ChangeEquipmentResponse.builder()
+        return ChangeEquipmentResult.builder()
                 .equipmentId(equipment.getEquipmentId().getValue())
                 .name(equipment.getName().getValue())
                 .stocks(equipment.getStocks().getValue())

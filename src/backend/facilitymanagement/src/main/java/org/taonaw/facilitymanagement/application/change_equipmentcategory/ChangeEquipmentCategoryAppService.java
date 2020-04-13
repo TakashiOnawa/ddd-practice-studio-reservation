@@ -13,13 +13,13 @@ public class ChangeEquipmentCategoryAppService {
     @Autowired
     private final IEquipmentCategoryRepository equipmentCategoryRepository;
 
-    public ChangeEquipmentCategoryResponse handle(ChangeEquipmentCategoryRequest request) {
+    public ChangeEquipmentCategoryResult handle(ChangeEquipmentCategoryCommand command) {
         var equipmentCategory = equipmentCategoryRepository
-                .findBy(new EquipmentCategoryId(request.getEquipmentCategoryId())).orElseThrow();
-        equipmentCategory.changeName(new EquipmentCategoryName(request.getName()));
+                .findBy(new EquipmentCategoryId(command.getEquipmentCategoryId())).orElseThrow();
+        equipmentCategory.changeName(new EquipmentCategoryName(command.getName()));
         equipmentCategoryRepository.update(equipmentCategory);
 
-        return ChangeEquipmentCategoryResponse.builder()
+        return ChangeEquipmentCategoryResult.builder()
                 .equipmentCategoryId(equipmentCategory.getEquipmentCategoryId().getValue())
                 .name(equipmentCategory.getName().getValue())
                 .build();

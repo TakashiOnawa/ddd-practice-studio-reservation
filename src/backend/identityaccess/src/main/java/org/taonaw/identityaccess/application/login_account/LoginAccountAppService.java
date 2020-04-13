@@ -17,9 +17,9 @@ public class LoginAccountAppService {
     @Autowired
     private final IPasswordEncoder passwordEncoder;
 
-    public LoginAccountResponse handle(LoginAccountRequest request) {
-        var loginId = new LoginId(request.getLoginId());
-        var plainTextPassword = new PlainTextPassword(request.getPassword());
+    public LoginAccountResult handle(LoginAccountCommand command) {
+        var loginId = new LoginId(command.getLoginId());
+        var plainTextPassword = new PlainTextPassword(command.getPassword());
 
         var account = accountRepository.findBy(loginId);
         if (account.isEmpty()) {
@@ -30,8 +30,8 @@ public class LoginAccountAppService {
             throw new DomainException(DomainExceptionCodes.LoginAccountPasswordNotMatched);
         }
 
-        return LoginAccountResponse.builder()
-                .loginId(request.getLoginId())
+        return LoginAccountResult.builder()
+                .loginId(command.getLoginId())
                 .build();
     }
 }

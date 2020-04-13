@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.identityaccess.application.login_account.LoginAccountAppService;
-import org.taonaw.identityaccess.application.login_account.LoginAccountRequest;
-import org.taonaw.identityaccess.application.login_account.LoginAccountResponse;
+import org.taonaw.identityaccess.application.login_account.LoginAccountCommand;
+import org.taonaw.identityaccess.application.login_account.LoginAccountResult;
 import org.taonaw.identityaccess.application.register_account.RegisterAccountAppService;
-import org.taonaw.identityaccess.application.register_account.RegisterAccountRequest;
+import org.taonaw.identityaccess.application.register_account.RegisterAccountCommand;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
 import org.taonaw.identityaccess.query.account.AccountDto;
@@ -29,7 +29,7 @@ public class AccountController {
     private final IAccountQuery accountQuery;
 
     @PostMapping("/accounts/login")
-    public ResponseEntity<LoginAccountResponse> login(@RequestBody LoginAccountRequest request) {
+    public ResponseEntity<LoginAccountResult> login(@RequestBody LoginAccountCommand request) {
         try {
             var response = loginAccountAppService.handle(request);
             return ResponseEntity.ok(response);
@@ -56,8 +56,9 @@ public class AccountController {
     }
 
     @PostMapping("/accounts")
-    public ResponseEntity<Void> registerAccount(@RequestBody RegisterAccountRequest request,
-                                                                   UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> registerAccount(
+            @RequestBody RegisterAccountCommand request,
+            UriComponentsBuilder uriComponentsBuilder) {
         var response = registerAccountAppService.handle(request);
         var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(response.getAccountId()).toUri();
         return ResponseEntity.created(uri).build();

@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.application.register_account;
+package org.taonaw.facilitymanagement.application.register_studio;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +8,6 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterAccountResponse {
-    @NonNull private String accountId;
+public class RegisterStudioResult {
+    @NonNull private String studioId;
 }

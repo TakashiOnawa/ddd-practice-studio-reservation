@@ -8,7 +8,7 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ChangeEquipmentRequest {
+public class ChangeEquipmentCommand {
     @NonNull private String equipmentId;
     @NonNull private String name;
     private int stocks;

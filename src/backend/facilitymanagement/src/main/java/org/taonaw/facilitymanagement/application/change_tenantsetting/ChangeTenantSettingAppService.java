@@ -11,24 +11,24 @@ public class ChangeTenantSettingAppService {
     @Autowired
     private final ITenantSettingRepository tenantSettingRepository;
 
-    public ChangeTenantSettingResponse handle(ChangeTenantSettingRequest request) {
+    public ChangeTenantSettingResult handle(ChangeTenantSettingCommand command) {
         var tenantSetting = tenantSettingRepository.get();
 
-        tenantSetting.changeTenantName(new TenantName(request.getTenantName()));
-        tenantSetting.changeOpeningHours(new OpeningHours(request.getOpeningStartTime(), request.getOpeningEndTime()));
-        tenantSetting.changePersonalPracticeMaxNumberOfUsers(new MaxNumberOfUsers(request.getPersonalPracticeMaxNumberOfUsers()));
+        tenantSetting.changeTenantName(new TenantName(command.getTenantName()));
+        tenantSetting.changeOpeningHours(new OpeningHours(command.getOpeningStartTime(), command.getOpeningEndTime()));
+        tenantSetting.changePersonalPracticeMaxNumberOfUsers(new MaxNumberOfUsers(command.getPersonalPracticeMaxNumberOfUsers()));
         tenantSetting.changeReservationStartDateTime(PracticeType.BAND, new ReservationStartDateTime(
-                        request.getBandPracticeReservationStartDateValue(),
-                        ReservationStartDateType.from(request.getBandPracticeReservationStartDateType()),
-                        request.getBandPracticeReservationStartHour()));
+                        command.getBandPracticeReservationStartDateValue(),
+                        ReservationStartDateType.from(command.getBandPracticeReservationStartDateType()),
+                        command.getBandPracticeReservationStartHour()));
         tenantSetting.changeReservationStartDateTime(PracticeType.PERSONAL, new ReservationStartDateTime(
-                request.getPersonalPracticeReservationStartDateValue(),
-                ReservationStartDateType.from(request.getPersonalPracticeReservationStartDateType()),
-                request.getPersonalPracticeReservationStartHour()));
+                command.getPersonalPracticeReservationStartDateValue(),
+                ReservationStartDateType.from(command.getPersonalPracticeReservationStartDateType()),
+                command.getPersonalPracticeReservationStartHour()));
 
         tenantSettingRepository.update(tenantSetting);
 
-        return ChangeTenantSettingResponse.builder()
+        return ChangeTenantSettingResult.builder()
                 .tenantName(tenantSetting.getTenantName().getValue())
                 .openingStartTime(tenantSetting.getOpeningHours().getStart())
                 .openingEndTime(tenantSetting.getOpeningHours().getEnd())

@@ -18,19 +18,19 @@ public class RegisterMemberAppService {
     private final IPasswordEncoder passwordEncoder;
 
 
-    public RegisterMemberResponse handle(RegisterMemberRequest request) {
+    public RegisterMemberResult handle(RegisterMemberCommand command) {
         var memberDetail = new MemberDetail(
-                new FullName(request.getFirstName(), request.getLastName()),
-                new PhoneNumber(request.getTelephoneAreaCode(), request.getTelephoneLocalNumber(), request.getTelephoneSubscriberNumber()),
-                new EmailAddress(request.getEmailAddress()));
+                new FullName(command.getFirstName(), command.getLastName()),
+                new PhoneNumber(command.getTelephoneAreaCode(), command.getTelephoneLocalNumber(), command.getTelephoneSubscriberNumber()),
+                new EmailAddress(command.getEmailAddress()));
 
         var member = Member.newMember(
                 memberDetail,
-                new PlainTextPassword(request.getPassword()).encode(passwordEncoder));
+                new PlainTextPassword(command.getPassword()).encode(passwordEncoder));
 
         new CheckDuplicateMemberService(memberRepository).validate(member);
 
-        return RegisterMemberResponse.builder()
+        return RegisterMemberResult.builder()
                 .memberId(member.getMemberId().getValue())
                 .build();
     }

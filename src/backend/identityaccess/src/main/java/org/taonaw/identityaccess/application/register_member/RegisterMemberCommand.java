@@ -8,7 +8,7 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterMemberRequest {
+public class RegisterMemberCommand {
     @NonNull private String firstName;
     @NonNull private String lastName;
     @NonNull private String password;

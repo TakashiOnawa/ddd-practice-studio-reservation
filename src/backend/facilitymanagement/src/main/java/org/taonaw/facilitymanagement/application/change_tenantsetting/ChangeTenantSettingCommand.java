@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ChangeTenantSettingRequest {
+public class ChangeTenantSettingCommand {
     @NonNull private String tenantName;
     @NonNull private LocalTime openingStartTime;
     @NonNull private LocalTime openingEndTime;

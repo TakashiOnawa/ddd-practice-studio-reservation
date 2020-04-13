@@ -11,15 +11,15 @@ public class RegisterStudioAppService {
     @Autowired
     private final IStudioRepository studioRepository;
 
-    public RegisterStudioResponse handle(RegisterStudioRequest request) {
+    public RegisterStudioResult handle(RegisterStudioCommand command) {
         var studio = Studio.newStudio(
-                new StudioName(request.getName()),
-                new StudioRoomSize(request.getRoomSize()),
-                StartTimeType.from(request.getStartTimeType()));
+                new StudioName(command.getName()),
+                new StudioRoomSize(command.getRoomSize()),
+                StartTimeType.from(command.getStartTimeType()));
 
         studioRepository.add(studio);
 
-        return RegisterStudioResponse.builder()
+        return RegisterStudioResult.builder()
                 .studioId(studio.getStudioId().getValue())
                 .build();
     }

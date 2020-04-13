@@ -3,7 +3,6 @@ package org.taonaw.facilitymanagement.infrastructure.query;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResponse;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.ITenantSettingRepository;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.PracticeType;
 import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;

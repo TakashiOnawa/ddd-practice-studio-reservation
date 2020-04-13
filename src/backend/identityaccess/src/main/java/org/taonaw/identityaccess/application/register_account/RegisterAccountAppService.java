@@ -22,18 +22,18 @@ public class RegisterAccountAppService {
     private final IPasswordEncoder passwordEncoder;
 
 //    @Transactional
-    public RegisterAccountResponse handle(RegisterAccountRequest request) {
+    public RegisterAccountResult handle(RegisterAccountCommand command) {
 
         var account = Account.newAccount(
-                new FullName(request.getFirstName(), request.getLastName()),
-                new LoginId(request.getLoginId()),
-                new PlainTextPassword(request.getPassword()).encode(passwordEncoder));
+                new FullName(command.getFirstName(), command.getLastName()),
+                new LoginId(command.getLoginId()),
+                new PlainTextPassword(command.getPassword()).encode(passwordEncoder));
 
         new CheckDuplicateAccountService(accountRepository).validate(account);
 
         accountRepository.add(account);
 
-        return RegisterAccountResponse.builder()
+        return RegisterAccountResult.builder()
                 .accountId(account.getAccountId().getValue())
                 .build();
     }

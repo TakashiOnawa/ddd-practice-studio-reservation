@@ -5,6 +5,6 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-public class LoginAccountResponse {
+public class LoginAccountResult {
     @NonNull private String loginId;
 }

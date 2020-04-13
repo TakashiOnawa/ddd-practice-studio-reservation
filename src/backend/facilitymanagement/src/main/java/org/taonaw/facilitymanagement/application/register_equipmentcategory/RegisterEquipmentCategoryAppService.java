@@ -13,12 +13,12 @@ public class RegisterEquipmentCategoryAppService {
     @Autowired
     private final IEquipmentCategoryRepository equipmentCategoryRepository;
 
-    public RegisterEquipmentCategoryResponse handle(RegisterEquipmentCategoryRequest request) {
-        var equipmentCategory = EquipmentCategory.newEquipmentCategory(new EquipmentCategoryName(request.getName()));
+    public RegisterEquipmentCategoryResult handle(RegisterEquipmentCategoryCommand command) {
+        var equipmentCategory = EquipmentCategory.newEquipmentCategory(new EquipmentCategoryName(command.getName()));
 
         equipmentCategoryRepository.add(equipmentCategory);
 
-        return RegisterEquipmentCategoryResponse.builder()
+        return RegisterEquipmentCategoryResult.builder()
                 .equipmentCategoryId(equipmentCategory.getEquipmentCategoryId().getValue())
                 .build();
     }

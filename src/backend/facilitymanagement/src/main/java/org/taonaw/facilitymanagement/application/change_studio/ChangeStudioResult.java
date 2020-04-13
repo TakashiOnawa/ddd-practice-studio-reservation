@@ -8,7 +8,7 @@ import lombok.NonNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ChangeStudioResponse {
+public class ChangeStudioResult {
     @NonNull private String studioId;
     @NonNull private String name;
     private double roomSize;

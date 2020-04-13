@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioAppService;
-import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioRequest;
-import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioResponse;
+import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioCommand;
+import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioResult;
 import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioAppService;
-import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioRequest;
+import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioCommand;
 import org.taonaw.facilitymanagement.query.studio.IStudioQuery;
 import org.taonaw.facilitymanagement.query.studio.StudioDto;
 
@@ -27,7 +27,7 @@ public class StudioController {
 
     @PostMapping("/studios")
     public ResponseEntity<Void> registerStudio(
-            @RequestBody RegisterStudioRequest request,
+            @RequestBody RegisterStudioCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
         var response = registerStudioAppService.handle(request);
         var uri = uriComponentsBuilder.path("/studios/{studioId}")
@@ -36,9 +36,9 @@ public class StudioController {
     }
 
     @PutMapping("/studios/{studioId}")
-    public ResponseEntity<ChangeStudioResponse> changeStudio(
+    public ResponseEntity<ChangeStudioResult> changeStudio(
             @PathVariable String studioId,
-            @RequestBody ChangeStudioRequest request) {
+            @RequestBody ChangeStudioCommand request) {
         var response = changeStudioAppService.handle(request);
         return ResponseEntity.ok(response);
     }

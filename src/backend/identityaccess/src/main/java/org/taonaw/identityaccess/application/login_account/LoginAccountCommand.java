@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-public class LoginAccountRequest {
+public class LoginAccountCommand {
     @NonNull private String loginId;
     @NonNull private String password;
 }

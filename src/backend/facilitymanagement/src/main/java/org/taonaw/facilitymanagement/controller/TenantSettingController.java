@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingAppService;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingRequest;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResponse;
+import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingCommand;
+import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResult;
 import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;
 import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
 
@@ -22,8 +22,8 @@ public class TenantSettingController {
     private final ITenantSettingQuery tenantSettingQuery;
 
     @PutMapping("/tenant_setting")
-    public ResponseEntity<ChangeTenantSettingResponse> changeTenantSetting(
-            @RequestBody ChangeTenantSettingRequest request) {
+    public ResponseEntity<ChangeTenantSettingResult> changeTenantSetting(
+            @RequestBody ChangeTenantSettingCommand request) {
         var response = changeTenantSettingAppService.handle(request);
         return ResponseEntity.ok(response);
     }
