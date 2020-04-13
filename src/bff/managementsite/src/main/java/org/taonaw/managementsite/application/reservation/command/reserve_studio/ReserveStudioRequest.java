@@ -13,7 +13,7 @@ import java.util.List;
 public class ReserveStudioRequest {
     private String studioId;
     private LocalDateTime startDateTime;
-    private int hourQuantity;
+    private LocalDateTime endDateTime;
     private String memberId;
     private String userName;
     private String userPhoneNumber;

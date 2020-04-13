@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ReserveStudioCommand {
     @NonNull private String studioId;
     @NonNull private LocalDateTime startDateTime;
-    private int hourQuantity;
+    @NonNull private LocalDateTime endDateTime;
     @NonNull private String userName;
     @NonNull private String userPhoneNumber;
     private int numberOfUsers;

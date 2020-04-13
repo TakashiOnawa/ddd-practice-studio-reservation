@@ -15,7 +15,7 @@ import java.util.List;
 public class ReserveStudioRequest {
     private String studioId;
     private LocalDateTime startDateTime;
-    private int hourQuantity;
+    private LocalDateTime endDateTime;
     private String memberId;
     private String userName;
     private String userPhoneNumber;
@@ -31,7 +31,7 @@ public class ReserveStudioRequest {
         return ReserveStudioCommand.builder()
                 .studioId(studioId)
                 .startDateTime(startDateTime)
-                .hourQuantity(hourQuantity)
+                .endDateTime(endDateTime)
                 .userName(userName)
                 .userPhoneNumber(userPhoneNumber)
                 .numberOfUsers(numberOfUsers)
@@ -44,7 +44,7 @@ public class ReserveStudioRequest {
         return ReserveStudioByMemberCommand.builder()
                 .studioId(studioId)
                 .startDateTime(startDateTime)
-                .hourQuantity(hourQuantity)
+                .endDateTime(endDateTime)
                 .memberId(memberId)
                 .numberOfUsers(numberOfUsers)
                 .practiceType(practiceType)

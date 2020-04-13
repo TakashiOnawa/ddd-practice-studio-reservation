@@ -58,7 +58,7 @@ public class ReservationController {
         var request = ReserveStudioRequest.builder()
                 .studioId(form.getStudioId())
                 .startDateTime(form.getStartDateTime())
-                .hourQuantity(form.getHourQuantity())
+                .endDateTime(form.getEndDateTime())
                 .userName(form.getUserName())
                 .userPhoneNumber(form.getUserPhoneNumber())
                 .numberOfUsers(form.getNumberOfUsers())

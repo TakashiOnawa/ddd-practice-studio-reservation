@@ -33,7 +33,7 @@ public class ReserveStudioAppService {
 
         var reservation = Reservation.newReservation(
                 new StudioId(command.getStudioId()),
-                new UseTime(command.getStartDateTime(), command.getHourQuantity()),
+                new UseTime(command.getStartDateTime(), command.getEndDateTime()),
                 new UserInformation(command.getUserName(), command.getUserPhoneNumber()),
                 new NumberOfUsers(command.getNumberOfUsers()),
                 PracticeType.from(command.getPracticeType()),
@@ -55,7 +55,7 @@ public class ReserveStudioAppService {
 
         var reservation = Reservation.newReservationByMember(
                 new StudioId(command.getStudioId()),
-                new UseTime(command.getStartDateTime(), command.getHourQuantity()),
+                new UseTime(command.getStartDateTime(), command.getEndDateTime()),
                 member,
                 new NumberOfUsers(command.getNumberOfUsers()),
                 PracticeType.from(command.getPracticeType()),

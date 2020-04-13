@@ -50,6 +50,10 @@ public class ReserveStudioForm {
         return toLocalDateTime(startDate, startTime);
     }
 
+    public LocalDateTime getEndDateTime() {
+        return getStartDateTime().plusHours(hourQuantity);
+    }
+
     public List<String> getEquipmentIds() {
         return equipments.stream()
                 .flatMap(item -> item.getIds().stream())
