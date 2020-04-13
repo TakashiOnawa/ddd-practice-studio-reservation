@@ -1,5 +1,6 @@
 package org.taonaw.reservation.domain.model.reservationsetting;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.reservation.UseTime;
@@ -7,14 +8,12 @@ import org.taonaw.reservation.domain.model.reservation.UseTime;
 import java.time.LocalTime;
 
 @EqualsAndHashCode
+@AllArgsConstructor
 public class OpeningHours {
+    @NonNull
     private final LocalTime start;
+    @NonNull
     private final LocalTime end;
-
-    public OpeningHours(@NonNull LocalTime start, @NonNull LocalTime end) {
-        this.start = start;
-        this.end = end;
-    }
 
     public boolean isSatisfiedBy(@NonNull UseTime useTime) {
         var usableStart = useTime.getStart().toLocalDate().atTime(start);

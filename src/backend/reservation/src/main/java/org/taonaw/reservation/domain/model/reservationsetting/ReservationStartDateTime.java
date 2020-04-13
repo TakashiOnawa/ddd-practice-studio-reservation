@@ -1,23 +1,18 @@
 package org.taonaw.reservation.domain.model.reservationsetting;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.reservation.UseTime;
 
 @EqualsAndHashCode
+@AllArgsConstructor
 public class ReservationStartDateTime {
     private final int startDateValue;
+    @NonNull
     private final ReservationStartDateType startDateType;
     private final int startHour;
-
-    public ReservationStartDateTime(int startDateValue,
-                                    @NonNull ReservationStartDateType startDateType,
-                                    int startHour) {
-        this.startDateValue = startDateValue;
-        this.startDateType = startDateType;
-        this.startHour = startHour;
-    }
 
     public boolean isSatisfiedBy(@NonNull UseTime useTime, @NonNull CurrentDate currentDate) {
         var reservableDateTime =
