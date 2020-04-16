@@ -1,10 +1,12 @@
 package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import org.taonaw.reservation.domain.model.member.MemberId;
 import org.taonaw.reservation.domain.shared.Assertion;
 
+@Getter
 @EqualsAndHashCode
 public class UserInformation {
     private final MemberId memberId;
@@ -22,5 +24,9 @@ public class UserInformation {
         this.memberId = memberId;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isMembersInformation() {
+        return !memberId.isNonMember();
     }
 }

@@ -8,15 +8,15 @@ import org.taonaw.identityaccess.domain.model.account.AccountId;
 import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
 import org.taonaw.identityaccess.domain.model.account.LoginId;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
 public class AccountRepository implements IAccountRepository {
-    private final static Map<AccountId, Account> values = new HashMap<>();
+    private final static Map<AccountId, Account> values = new ConcurrentHashMap<>();
 
     @Override
     public void lock() {

@@ -8,7 +8,9 @@ import lombok.Getter;
 public enum DomainExceptionCodes {
     LoginAccountNotFound(20000, "ログインアカウントが存在しません。"),
     LoginAccountPasswordNotMatched(20001, "ログインパスワードが一致しません。"),
-    AccountDuplicated(20002, "アカウントが重複しています。");
+    AccountDuplicated(20002, "アカウントが重複しています。"),
+
+    InvalidOperation(9999, "不正な操作です。");
 
     private final int code;
     private final String defaultMessage;

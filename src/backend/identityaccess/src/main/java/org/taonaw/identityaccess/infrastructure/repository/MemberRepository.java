@@ -8,15 +8,15 @@ import org.taonaw.identityaccess.domain.model.member.Member;
 import org.taonaw.identityaccess.domain.model.member.MemberId;
 import org.taonaw.identityaccess.domain.model.shared.EmailAddress;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
 public class MemberRepository implements IMemberRepository {
-    private static Map<MemberId, Member> values = new HashMap<>();
+    private static Map<MemberId, Member> values = new ConcurrentHashMap<>();
 
     @Override
     public void lock() {

@@ -9,15 +9,16 @@ import org.taonaw.reservation.domain.model.reservation.ReservationId;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
 public class ReservationRepository implements IReservationRepository {
-    private final static Map<ReservationId, Reservation> values = new HashMap<>();
+    private final static Map<ReservationId, Reservation> values = new ConcurrentHashMap<>();
+    private final static Map<ReservationId, Reservation> canceledValues = new ConcurrentHashMap<>();
 
     @Override
     public void lock() {
@@ -45,6 +46,16 @@ public class ReservationRepository implements IReservationRepository {
 
     @Override
     public void add(@NonNull Reservation reservation) {
+        values.put(reservation.getReservationId(), DeepCopy.clone(reservation, Reservation.class));
+    }
+
+    @Override
+    public void update(@NonNull Reservation reservation) {
+        if (reservation.isCanceled()) {
+            values.remove(reservation.getReservationId());
+            canceledValues.put(reservation.getReservationId(), DeepCopy.clone(reservation, Reservation.class));
+            return;
+        }
         values.put(reservation.getReservationId(), DeepCopy.clone(reservation, Reservation.class));
     }
 }

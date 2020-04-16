@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -21,4 +22,5 @@ public class TenantSettingDto {
     private int bandPracticeReservationStartDateValue;
     private int bandPracticeReservationStartDateType;
     private int bandPracticeReservationStartHour;
+    @NonNull private List<CancellationFeeRateDto> cancellationFeeRates;
 }

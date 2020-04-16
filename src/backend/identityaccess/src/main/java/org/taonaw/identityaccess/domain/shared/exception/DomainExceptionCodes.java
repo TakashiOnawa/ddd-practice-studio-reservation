@@ -11,7 +11,9 @@ public enum DomainExceptionCodes {
     AccountDuplicated(20002, "アカウントが重複しています。"),
     LoginMemberNotFound(2003, "会員が存在しません。"),
     LoginMemberPasswordNotMatched(2004, "会員のパスワードが一致しません。"),
-    MemberDuplicated(2005, "会員が重複しています。");
+    MemberDuplicated(2005, "会員が重複しています。"),
+
+    InvalidOperation(9999, "不正な操作です。");
 
     private final int code;
     private final String defaultMessage;

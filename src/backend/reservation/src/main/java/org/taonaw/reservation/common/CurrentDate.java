@@ -10,8 +10,4 @@ public class CurrentDate {
     public LocalDateTime now() {
         return LocalDateTime.now();
     }
-
-    public boolean isBefore(LocalDateTime dateTime) {
-        return now().isBefore(dateTime);
-    }
 }

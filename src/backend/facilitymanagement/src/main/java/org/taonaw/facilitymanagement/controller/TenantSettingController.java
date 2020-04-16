@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingAppService;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingCommand;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResult;
+import org.taonaw.facilitymanagement.query.tenantsetting.CancellationFeeRateDto;
 import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;
 import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -32,5 +35,11 @@ public class TenantSettingController {
     public ResponseEntity<TenantSettingDto> getTenantSetting() {
         var dto = tenantSettingQuery.get();
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/tenant_setting/cancellation_fee_rates")
+    public ResponseEntity<List<CancellationFeeRateDto>> getCancellationFeeRates() {
+        var dto = tenantSettingQuery.get();
+        return ResponseEntity.ok(dto.getCancellationFeeRates());
     }
 }

@@ -1,9 +1,14 @@
 package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.NonNull;
+import org.taonaw.reservation.domain.model.cancellationfeesetting.CancellationFeeSetting;
 import org.taonaw.reservation.domain.model.member.Member;
+import org.taonaw.reservation.domain.model.member.MemberId;
 import org.taonaw.reservation.domain.model.studio.StudioId;
+import org.taonaw.reservation.domain.shared.exception.DomainException;
+import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,6 +20,7 @@ public class Reservation {
     private NumberOfUsers numberOfUsers;
     private PracticeType practiceType;
     private UseEquipments useEquipments;
+    private boolean isCanceled;
 
     private Reservation() { }
 
@@ -99,8 +105,64 @@ public class Reservation {
         return useEquipments.getUseEquipments();
     }
 
+    public boolean isCanceled() {
+        return isCanceled;
+    }
+
     public boolean isOverlapped(@NonNull Reservation other) {
         return studioId.equals(other.studioId) && useTime.isOverlapped(other.useTime);
+    }
+
+    public void changeUseTime(
+            @NonNull UseTime useTime,
+            @NonNull CancellationFeeSetting cancellationFeeSetting,
+            @NonNull LocalDate currentDate) {
+        if (this.useTime.equals(useTime)) {
+            return;
+        }
+        if (!cancellationFeeSetting.isFree(this.useTime, currentDate)) {
+            throw new DomainException(DomainExceptionCodes.CannotChangeUseTimeBecauseThereIsCancellationFee);
+        }
+        this.useTime = useTime;
+    }
+
+    public void changeUserInformation(@NonNull UserInformation userInformation) {
+        if (this.userInformation.equals(userInformation)) {
+            return;
+        }
+        if (this.userInformation.isMembersInformation() || userInformation.isMembersInformation()) {
+            throw new DomainException("会員の利用者情報は変更できません。");
+        }
+        this.userInformation = userInformation;
+    }
+
+    public void changeNumberOfUsers(@NonNull NumberOfUsers numberOfUsers) {
+        this.numberOfUsers = numberOfUsers;
+    }
+
+    public void changePracticeType(@NonNull PracticeType practiceType) {
+        this.practiceType = practiceType;
+    }
+
+    public void changeUseEquipments(@NonNull UseEquipments useEquipments) {
+        this.useEquipments = useEquipments;
+    }
+
+    public void cancel() {
+        this.isCanceled = true;
+    }
+
+    public void cancelByMember(
+            @NonNull MemberId memberId,
+            @NonNull CancellationFeeSetting cancellationFeeSetting,
+            @NonNull LocalDate currentDate) {
+        if (!userInformation.getMemberId().equals(memberId)) {
+            throw new DomainException("異なる会員によるキャンセルはできません。");
+        }
+        if (!cancellationFeeSetting.isFree(useTime, currentDate)) {
+            throw new DomainException(DomainExceptionCodes.CannotCancelBecauseThereIsCancellationFee);
+        }
+        this.isCanceled = true;
     }
 
     @Override

@@ -11,4 +11,5 @@ public interface IReservationRepository {
     Optional<Reservation> findBy(@NonNull ReservationId reservationId);
     List<Reservation> findByDateRange(@NonNull LocalDate start, @NonNull LocalDate end);
     void add(@NonNull Reservation reservation);
+    void update(@NonNull Reservation reservation);
 }

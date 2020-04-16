@@ -5,7 +5,6 @@ import lombok.NonNull;
 import java.util.Arrays;
 
 public class DomainException extends RuntimeException {
-
     private final DomainExceptionCodes code;
 
     public DomainException(@NonNull DomainExceptionCodes code) {
@@ -13,8 +12,12 @@ public class DomainException extends RuntimeException {
     }
 
     public DomainException(@NonNull DomainExceptionCodes code, String message) {
-        super(code.getDefaultMessage());
+        super(message);
         this.code = code;
+    }
+
+    public DomainException(@NonNull String message) {
+        this(DomainExceptionCodes.InvalidOperation, message);
     }
 
     public boolean in(@NonNull DomainExceptionCodes... codes) {

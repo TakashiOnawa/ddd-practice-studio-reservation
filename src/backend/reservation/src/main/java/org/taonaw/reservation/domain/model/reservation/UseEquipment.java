@@ -23,7 +23,7 @@ public class UseEquipment {
     }
 
     public UseEquipment addQuantity(int addQuantity) {
-        Assertion.argumentMin(quantity, 1);
+        Assertion.argumentMin(addQuantity, 1);
         return new UseEquipment(equipmentId, quantity + addQuantity);
     }
 }

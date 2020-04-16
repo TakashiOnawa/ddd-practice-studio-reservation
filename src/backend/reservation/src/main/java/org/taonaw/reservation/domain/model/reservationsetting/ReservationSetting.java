@@ -1,12 +1,12 @@
 package org.taonaw.reservation.domain.model.reservationsetting;
 
 import lombok.NonNull;
-import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.reservation.NumberOfUsers;
 import org.taonaw.reservation.domain.model.reservation.PracticeType;
 import org.taonaw.reservation.domain.model.reservation.UseTime;
 import org.taonaw.reservation.domain.model.studio.StudioId;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ReservationSetting {
@@ -41,8 +41,8 @@ public class ReservationSetting {
     }
 
     public boolean isReservationStartDateTimeSatisfiedBy(@NonNull UseTime useTime,
-                                                         @NonNull CurrentDate currentDate) {
-        return reservationStartDateTime.isSatisfiedBy(useTime, currentDate);
+                                                         @NonNull LocalDateTime currentDateTime) {
+        return reservationStartDateTime.isSatisfiedBy(useTime, currentDateTime);
     }
 
     public boolean isOpeningHoursSatisfiedBy(@NonNull UseTime useTime) {

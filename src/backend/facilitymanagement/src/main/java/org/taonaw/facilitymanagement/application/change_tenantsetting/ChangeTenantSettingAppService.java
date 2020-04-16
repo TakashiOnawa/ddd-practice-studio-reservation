@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.*;
 
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ChangeTenantSettingAppService {
@@ -25,6 +27,9 @@ public class ChangeTenantSettingAppService {
                 command.getPersonalPracticeReservationStartDateValue(),
                 ReservationStartDateType.from(command.getPersonalPracticeReservationStartDateType()),
                 command.getPersonalPracticeReservationStartHour()));
+        tenantSetting.changeCancellationFeeRates(command.getCancellationFeeRates().stream()
+                .map(item -> new CancellationFeeRate(item.getDaysAgo(), item.getRate()))
+                .collect(Collectors.toSet()));
 
         tenantSettingRepository.update(tenantSetting);
 

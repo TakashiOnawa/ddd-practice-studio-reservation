@@ -11,6 +11,8 @@ import org.taonaw.reservation.domain.model.reservation.*;
 import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;
 import org.taonaw.reservation.domain.model.studio.StudioId;
 
+import java.time.LocalDateTime;
+
 //import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -31,6 +33,8 @@ public class ReserveStudioAppService {
     public ReserveStudioResult handle(ReserveStudioCommand command) {
         reservationRepository.lock();
 
+        var currentDateTime = currentDate.now();
+
         var reservation = Reservation.newReservation(
                 new StudioId(command.getStudioId()),
                 new UseTime(command.getStartDateTime(), command.getEndDateTime()),
@@ -39,7 +43,7 @@ public class ReserveStudioAppService {
                 PracticeType.from(command.getPracticeType()),
                 UseEquipments.of(command.getEquipmentIds()));
 
-        validate(reservation);
+        validate(reservation, currentDateTime);
 
         reservationRepository.add(reservation);
 
@@ -51,6 +55,8 @@ public class ReserveStudioAppService {
     public ReserveStudioResult handle(ReserveStudioByMemberCommand command) {
         reservationRepository.lock();
 
+        var currentDateTime = currentDate.now();
+
         var member = memberRepository.findBy(new MemberId(command.getMemberId())).orElseThrow();
 
         var reservation = Reservation.newReservationByMember(
@@ -61,7 +67,7 @@ public class ReserveStudioAppService {
                 PracticeType.from(command.getPracticeType()),
                 UseEquipments.of(command.getEquipmentIds()));
 
-        validate(reservation);
+        validate(reservation, currentDateTime);
 
         reservationRepository.add(reservation);
 
@@ -70,8 +76,8 @@ public class ReserveStudioAppService {
                 .build();
     }
 
-    private void validate(Reservation reservation) {
-        new ReservationValidator(reservationSettingRepository, currentDate).validate(reservation);
+    private void validate(Reservation reservation, LocalDateTime currentDateTime) {
+        new ReservationValidator(reservationSettingRepository, currentDateTime).validate(reservation);
 
         new CheckDuplicateReservationService(reservationRepository).validate(reservation);
         new CheckEquipmentsOutOfStocksService(reservationRepository, equipmentRepository).validate(reservation);

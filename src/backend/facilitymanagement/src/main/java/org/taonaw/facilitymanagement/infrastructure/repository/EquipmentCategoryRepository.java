@@ -7,15 +7,15 @@ import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCat
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCategoryId;
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.IEquipmentCategoryRepository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
 public class EquipmentCategoryRepository implements IEquipmentCategoryRepository {
-    private final static Map<EquipmentCategoryId, EquipmentCategory> values = new HashMap<>();
+    private final static Map<EquipmentCategoryId, EquipmentCategory> values = new ConcurrentHashMap<>();
 
     @Override
     public List<EquipmentCategory> findAll() {

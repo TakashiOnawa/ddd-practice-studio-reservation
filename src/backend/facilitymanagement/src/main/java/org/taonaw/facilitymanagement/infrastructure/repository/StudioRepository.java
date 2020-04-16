@@ -7,12 +7,15 @@ import org.taonaw.facilitymanagement.domain.model.studio.IStudioRepository;
 import org.taonaw.facilitymanagement.domain.model.studio.Studio;
 import org.taonaw.facilitymanagement.domain.model.studio.StudioId;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Repository
 public class StudioRepository implements IStudioRepository {
-    private final static Map<StudioId, Studio> values = new HashMap<>();
+    private final static Map<StudioId, Studio> values = new ConcurrentHashMap<>();
 
     @Override
     public List<Studio> findAll() {

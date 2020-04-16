@@ -2,15 +2,16 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.reservation.common.CurrentDate;
 import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;
 import org.taonaw.reservation.domain.shared.exception.DomainException;
 import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 public class ReservationValidator {
     private final IReservationSettingRepository reservationSettingRepository;
-    private final CurrentDate currentDate;
+    private final LocalDateTime currentDateTime;
 
     public void validate(@NonNull Reservation reservation) {
         var reservationSetting = reservationSettingRepository
@@ -19,7 +20,7 @@ public class ReservationValidator {
         if (!reservationSetting.isMaxNumberOfUsersSatisfiedBy(reservation.getNumberOfUsers())) {
             throw new DomainException(DomainExceptionCodes.OverMaxNumberOfUsers);
         }
-        if (!reservationSetting.isReservationStartDateTimeSatisfiedBy(reservation.getUseTime(), currentDate)) {
+        if (!reservationSetting.isReservationStartDateTimeSatisfiedBy(reservation.getUseTime(), currentDateTime)) {
             throw new DomainException(DomainExceptionCodes.ReservationNotStarted);
         }
         if (!reservationSetting.isOpeningHoursSatisfiedBy(reservation.getUseTime())) {
