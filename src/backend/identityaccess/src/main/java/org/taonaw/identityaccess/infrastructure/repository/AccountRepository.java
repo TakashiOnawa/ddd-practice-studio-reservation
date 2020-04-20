@@ -20,7 +20,7 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public void lock() {
-
+        // アカウントテーブルをロックする。
     }
 
     @Override

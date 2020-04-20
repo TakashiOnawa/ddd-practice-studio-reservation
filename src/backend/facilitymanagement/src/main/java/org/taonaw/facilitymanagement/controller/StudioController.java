@@ -16,6 +16,7 @@ import org.taonaw.facilitymanagement.query.studio.StudioDto;
 import java.util.List;
 
 @RestController
+@RequestMapping("/studios")
 @AllArgsConstructor
 public class StudioController {
     @Autowired
@@ -25,7 +26,7 @@ public class StudioController {
     @Autowired
     private final IStudioQuery studioQuery;
 
-    @PostMapping("/studios")
+    @PostMapping
     public ResponseEntity<Void> registerStudio(
             @RequestBody RegisterStudioCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
@@ -35,7 +36,7 @@ public class StudioController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/studios/{studioId}")
+    @PutMapping("/{studioId}")
     public ResponseEntity<ChangeStudioResult> changeStudio(
             @PathVariable String studioId,
             @RequestBody ChangeStudioCommand request) {
@@ -43,7 +44,7 @@ public class StudioController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/studios")
+    @GetMapping
     public ResponseEntity<List<StudioDto>> getStudios() {
         var studios = studioQuery.getAll();
         return ResponseEntity.ok(studios);

@@ -16,6 +16,7 @@ import org.taonaw.facilitymanagement.query.equipment.IEquipmentQuery;
 import java.util.List;
 
 @RestController
+@RequestMapping("/equipments")
 @AllArgsConstructor
 public class EquipmentController {
     @Autowired
@@ -25,7 +26,7 @@ public class EquipmentController {
     @Autowired
     private final IEquipmentQuery equipmentQuery;
 
-    @PostMapping("/equipments")
+    @PostMapping
     public ResponseEntity<Void> registerEquipment(
             @RequestBody RegisterEquipmentCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
@@ -35,7 +36,7 @@ public class EquipmentController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/equipments/{equipmentId}")
+    @PutMapping("/{equipmentId}")
     public ResponseEntity<ChangeEquipmentResult> changeEquipment(
             @PathVariable String equipmentId,
             @RequestBody ChangeEquipmentCommand request) {
@@ -43,13 +44,13 @@ public class EquipmentController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/equipments")
+    @GetMapping
     public ResponseEntity<List<EquipmentDto>> getEquipments() {
         var equipments = equipmentQuery.getAll();
         return ResponseEntity.ok(equipments);
     }
 
-    @GetMapping("/equipments/{equipmentId}")
+    @GetMapping("/{equipmentId}")
     public ResponseEntity<EquipmentDto> getEquipment(@PathVariable String equipmentId) {
         var equipment = equipmentQuery.getByEquipmentId(equipmentId);
         return equipment.map(ResponseEntity::ok).orElseGet(() ->ResponseEntity.notFound().build());

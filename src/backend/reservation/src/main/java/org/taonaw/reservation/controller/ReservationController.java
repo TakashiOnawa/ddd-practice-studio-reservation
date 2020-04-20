@@ -15,7 +15,8 @@ import org.taonaw.reservation.application.change_reservation.ChangeReservationRe
 import org.taonaw.reservation.application.reserve_studio.ReserveStudioAppService;
 import org.taonaw.reservation.application.reserve_studio.ReserveStudioCommand;
 
-@RestController("/reservations")
+@RestController
+@RequestMapping("/reservations")
 @AllArgsConstructor
 public class ReservationController {
     @Autowired
@@ -25,7 +26,7 @@ public class ReservationController {
     @Autowired
     private final CancelReservationAppService cancelReservationAppService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Void> reserveStudio(
             @RequestBody ReserveStudioCommand request,
             UriComponentsBuilder uriComponentsBuilder) {

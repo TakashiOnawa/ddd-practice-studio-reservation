@@ -22,7 +22,7 @@ public class ReservationRepository implements IReservationRepository {
 
     @Override
     public void lock() {
-
+        // 予約テーブルをロックする。
     }
 
     @Override

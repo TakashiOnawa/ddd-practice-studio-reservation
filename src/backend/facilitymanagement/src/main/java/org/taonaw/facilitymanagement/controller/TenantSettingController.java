@@ -3,10 +3,7 @@ package org.taonaw.facilitymanagement.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingAppService;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingCommand;
 import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResult;
@@ -17,6 +14,7 @@ import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tenant_setting")
 @AllArgsConstructor
 public class TenantSettingController {
     @Autowired
@@ -24,20 +22,20 @@ public class TenantSettingController {
     @Autowired
     private final ITenantSettingQuery tenantSettingQuery;
 
-    @PutMapping("/tenant_setting")
+    @PutMapping
     public ResponseEntity<ChangeTenantSettingResult> changeTenantSetting(
             @RequestBody ChangeTenantSettingCommand request) {
         var response = changeTenantSettingAppService.handle(request);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/tenant_setting")
+    @GetMapping
     public ResponseEntity<TenantSettingDto> getTenantSetting() {
         var dto = tenantSettingQuery.get();
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/tenant_setting/cancellation_fee_rates")
+    @GetMapping("/cancellation_fee_rates")
     public ResponseEntity<List<CancellationFeeRateDto>> getCancellationFeeRates() {
         var dto = tenantSettingQuery.get();
         return ResponseEntity.ok(dto.getCancellationFeeRates());

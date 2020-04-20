@@ -12,6 +12,7 @@ import org.taonaw.facilitymanagement.application.register_equipmentcategory.Regi
 import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryCommand;
 
 @RestController
+@RequestMapping("/equipment_categories")
 @AllArgsConstructor
 public class EquipmentCategoryController {
     @Autowired
@@ -19,7 +20,7 @@ public class EquipmentCategoryController {
     @Autowired
     private final ChangeEquipmentCategoryAppService changeEquipmentCategoryAppService;
 
-    @PostMapping("/equipment_categories")
+    @PostMapping
     public ResponseEntity<Void> registerEquipmentCategory(
             @RequestBody RegisterEquipmentCategoryCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
@@ -29,7 +30,7 @@ public class EquipmentCategoryController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/equipment_categories/{equipmentCategoryId}")
+    @PutMapping("/{equipmentCategoryId}")
     public ResponseEntity<ChangeEquipmentCategoryResult> changeEquipmentCategory(
             @PathVariable String equipmentCategoryId,
             @RequestBody ChangeEquipmentCategoryCommand request) {

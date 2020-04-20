@@ -20,7 +20,7 @@ public class MemberRepository implements IMemberRepository {
 
     @Override
     public void lock() {
-
+        // 会員テーブルをロックする。
     }
 
     @Override
