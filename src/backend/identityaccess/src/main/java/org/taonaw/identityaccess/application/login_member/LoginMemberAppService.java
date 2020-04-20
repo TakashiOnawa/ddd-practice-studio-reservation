@@ -31,6 +31,6 @@ public class LoginMemberAppService {
             throw new DomainException(DomainExceptionCodes.LoginMemberPasswordNotMatched);
         }
 
-        return LoginMemberResult.builder().build();
+        return LoginMemberResult.of(member.get());
     }
 }

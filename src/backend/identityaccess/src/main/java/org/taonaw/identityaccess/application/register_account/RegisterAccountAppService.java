@@ -34,8 +34,6 @@ public class RegisterAccountAppService {
 
         accountRepository.add(account);
 
-        return RegisterAccountResult.builder()
-                .accountId(account.getAccountId().getValue())
-                .build();
+        return RegisterAccountResult.of(account);
     }
 }

@@ -14,7 +14,6 @@ public class ReserveStudioRequest {
     private String studioId;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private String memberId;
     private String userName;
     private String userPhoneNumber;
     private int numberOfUsers;

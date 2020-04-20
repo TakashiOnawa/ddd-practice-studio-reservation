@@ -19,8 +19,6 @@ public class RegisterStudioAppService {
 
         studioRepository.add(studio);
 
-        return RegisterStudioResult.builder()
-                .studioId(studio.getStudioId().getValue())
-                .build();
+        return RegisterStudioResult.of(studio);
     }
 }

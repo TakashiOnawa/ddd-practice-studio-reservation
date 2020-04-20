@@ -123,6 +123,10 @@ TODO：ビジネスユースケースごとに業務フローを洗い出しシ�
 |Method|URI|説明|
 |---|---|---|
 |POST|/reservations|スタジオを予約する。|
+|POST|/reservations?memberId={memberId}|会員がスタジオを予約する。|
+|PUT|/reservations/{reservationId}|予約を変更する。|
+|POST|/reservations/{reservationId}/cancel|予約をキャンセルする。|
+|POST|/reservations/{reservationId}/cancel?memberId={memberId}|会員が予約をキャンセルする。|
 
 # その他やりたいこと
 ### 料金の管理

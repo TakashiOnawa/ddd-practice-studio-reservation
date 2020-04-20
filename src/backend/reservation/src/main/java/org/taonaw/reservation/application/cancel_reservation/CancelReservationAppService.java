@@ -20,16 +20,18 @@ public class CancelReservationAppService {
     private final CurrentDate currentDate;
 
     //    @Transactional
-    public void handle(CancelReservationCommand command) {
+    public CancelReservationResult handle(CancelReservationCommand command) {
         var reservation = reservationRepository.findBy(new ReservationId(command.getReservationId())).orElseThrow();
 
         reservation.cancel();
 
         reservationRepository.update(reservation);
+
+        return CancelReservationResult.of(reservation);
     }
 
     //    @Transactional
-    public void handle(CancelReservationByMemberCommand command) {
+    public CancelReservationResult handle(CancelReservationByMemberCommand command) {
         var currentDateTime = currentDate.now();
         var cancellationFeeSetting = cancellationFeeSettingRepository.get();
 
@@ -40,5 +42,7 @@ public class CancelReservationAppService {
         reservation.cancelByMember(memberId, cancellationFeeSetting, currentDateTime.toLocalDate());
 
         reservationRepository.update(reservation);
+
+        return CancelReservationResult.of(reservation);
     }
 }

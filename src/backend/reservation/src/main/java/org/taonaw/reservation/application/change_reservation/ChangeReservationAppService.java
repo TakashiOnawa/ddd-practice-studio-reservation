@@ -21,7 +21,7 @@ public class ChangeReservationAppService {
     private final CurrentDate currentDate;
 
     //    @Transactional
-    public void handle(ChangeReservationCommand command) {
+    public ChangeReservationResult handle(ChangeReservationCommand command) {
         reservationRepository.lock();
 
         var currentDateTime = currentDate.now();
@@ -40,5 +40,7 @@ public class ChangeReservationAppService {
         new ReservationValidator(reservationSettingRepository, currentDateTime).validate(reservation);
 
         reservationRepository.update(reservation);
+
+        return ChangeReservationResult.of(reservation);
     }
 }

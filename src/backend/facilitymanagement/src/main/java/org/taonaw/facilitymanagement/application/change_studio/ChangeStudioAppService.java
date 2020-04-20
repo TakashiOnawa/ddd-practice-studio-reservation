@@ -18,11 +18,6 @@ public class ChangeStudioAppService {
         studio.changeStartTimeType(StartTimeType.from(command.getStartTimeType()));
         studioRepository.update(studio);
 
-        return ChangeStudioResult.builder()
-                .studioId(studio.getStudioId().getValue())
-                .name(studio.getName().getValue())
-                .roomSize(studio.getRoomSize().getValue())
-                .startTimeType(studio.getStartTimeType().getValue())
-                .build();
+        return ChangeStudioResult.of(studio);
     }
 }

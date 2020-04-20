@@ -3,7 +3,8 @@ package org.taonaw.identityaccess.application.login_account;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.taonaw.identityaccess.domain.model.account.*;
+import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
+import org.taonaw.identityaccess.domain.model.account.LoginId;
 import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
@@ -30,8 +31,6 @@ public class LoginAccountAppService {
             throw new DomainException(DomainExceptionCodes.LoginAccountPasswordNotMatched);
         }
 
-        return LoginAccountResult.builder()
-                .loginId(command.getLoginId())
-                .build();
+        return LoginAccountResult.of(account.get());
     }
 }

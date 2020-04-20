@@ -34,8 +34,6 @@ public class RegisterMemberAppService {
 
         memberRepository.add(member);
 
-        return RegisterMemberResult.builder()
-                .memberId(member.getMemberId().getValue())
-                .build();
+        return RegisterMemberResult.of(member);
     }
 }

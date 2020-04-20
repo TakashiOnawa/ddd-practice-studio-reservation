@@ -19,9 +19,6 @@ public class ChangeEquipmentCategoryAppService {
         equipmentCategory.changeName(new EquipmentCategoryName(command.getName()));
         equipmentCategoryRepository.update(equipmentCategory);
 
-        return ChangeEquipmentCategoryResult.builder()
-                .equipmentCategoryId(equipmentCategory.getEquipmentCategoryId().getValue())
-                .name(equipmentCategory.getName().getValue())
-                .build();
+        return ChangeEquipmentCategoryResult.of(equipmentCategory);
     }
 }

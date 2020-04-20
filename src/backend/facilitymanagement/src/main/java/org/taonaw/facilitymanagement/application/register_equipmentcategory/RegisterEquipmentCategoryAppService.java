@@ -18,8 +18,6 @@ public class RegisterEquipmentCategoryAppService {
 
         equipmentCategoryRepository.add(equipmentCategory);
 
-        return RegisterEquipmentCategoryResult.builder()
-                .equipmentCategoryId(equipmentCategory.getEquipmentCategoryId().getValue())
-                .build();
+        return RegisterEquipmentCategoryResult.of(equipmentCategory);
     }
 }

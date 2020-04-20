@@ -47,9 +47,7 @@ public class ReserveStudioAppService {
 
         reservationRepository.add(reservation);
 
-        return ReserveStudioResult.builder()
-                .reservationId(reservation.getReservationId().getValue())
-                .build();
+        return ReserveStudioResult.of(reservation);
     }
 
     public ReserveStudioResult handle(ReserveStudioByMemberCommand command) {
@@ -71,9 +69,7 @@ public class ReserveStudioAppService {
 
         reservationRepository.add(reservation);
 
-        return ReserveStudioResult.builder()
-                .reservationId(reservation.getReservationId().getValue())
-                .build();
+        return ReserveStudioResult.of(reservation);
     }
 
     private void validate(Reservation reservation, LocalDateTime currentDateTime) {

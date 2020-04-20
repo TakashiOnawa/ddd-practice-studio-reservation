@@ -22,11 +22,6 @@ public class ChangeEquipmentAppService {
         equipment.changeEquipmentCategory(new EquipmentCategoryId(command.getCategoryId()));
         equipmentRepository.update(equipment);
 
-        return ChangeEquipmentResult.builder()
-                .equipmentId(equipment.getEquipmentId().getValue())
-                .name(equipment.getName().getValue())
-                .stocks(equipment.getStocks().getValue())
-                .categoryId(equipment.getCategoryId().getValue())
-                .build();
+        return ChangeEquipmentResult.of(equipment);
     }
 }
