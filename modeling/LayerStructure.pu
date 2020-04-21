@@ -1,4 +1,4 @@
-@startuml Architecture
+@startuml LayerStructure
 
 package domain
 {

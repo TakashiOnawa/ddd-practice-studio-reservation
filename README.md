@@ -130,6 +130,40 @@ RDRA 2.0 に沿って要件定義をします。
 |POST|/reservations/{reservationId}/cancel|予約をキャンセルする。|
 |POST|/reservations/{reservationId}/cancel?memberId={memberId}|会員が予約をキャンセルする。|
 
+# アーキテクチャ
+* コンテキストごとにアプリケーションを作成する。（マイクロサービスアーキテクチャ）
+* サービス間の通信は同期通信とし、REST で通信する。
+![](./modeling/Architecture/Architecture.png)
+
+# レイヤー構造（バックエンド）
+バックエンドの各サービスのレイヤー構造は基本的に以下の構造とする。
+![](./modeling/LayerStructure/LayerStructure.png)
+
+## api 層
+* REST API を提供する Controller を配置する。
+
+## application 層
+* ユースケースを実現する。
+* command と query でパッケージを分ける。
+
+**＜command パッケージ＞**
+* DomainObject を利用してユースケースを実現する AppService を配置する。
+* パラメータクラス（XxxCommand）、戻り値クラス（XxxResult）もここに配置される。
+* 基本的にユースケースごとに AppService を分け、各 AppService にはメソッドが 1 つになるようにする。例えば、ReservationAppService に reserveStudio()、cancelReservation() といったメソッドを定義するのではなく、ReserveStudioAppService、CancelReservationAppService といったようにクラスを分ける。
+
+**＜query パッケージ＞**
+* データ取得のためインターフェース IQuery を配置する。
+* 戻り値クラス（XxxDto）もここに配置される。
+* 戻り値の型ごとにインターフェースを作成する。
+
+## domain 層
+* DDD における戦術的設計を利用してドメインモデルを表現する。
+* 集約ごとにパッケージを作成し、集約単位で Repository のインターフェースを定義する。
+* ライブラリに依存しないことが理想ではあるが、hashCode, equals の実装やうや null チェックを簡略化するため lombok への依存のみは許可する。
+
+## infrastructure 層
+* domain 層の IRepository、application 層の IQuery の実装クラスを配置する。
+
 # その他やりたいこと
 ### 料金の管理
 * スタジオ、曜日区分、時間帯で料金が決まる
