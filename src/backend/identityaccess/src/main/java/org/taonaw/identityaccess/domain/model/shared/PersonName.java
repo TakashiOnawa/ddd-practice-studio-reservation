@@ -7,11 +7,11 @@ import org.taonaw.identityaccess.domain.shared.Assertion;
 
 @Getter
 @EqualsAndHashCode
-public class FullName {
+public class PersonName {
     private final String firstName;
     private final String lastName;
 
-    public FullName(@NonNull String firstName, @NonNull String lastName) {
+    public PersonName(@NonNull String firstName, @NonNull String lastName) {
         Assertion.argumentRange(firstName, 1, 50);
         Assertion.argumentRange(lastName, 1, 50);
         this.firstName = firstName;

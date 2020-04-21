@@ -1,4 +1,4 @@
-package org.taonaw.managementsite.controller.account.form;
+package org.taonaw.managementsite.presentation.account.form;
 
 import lombok.Data;
 

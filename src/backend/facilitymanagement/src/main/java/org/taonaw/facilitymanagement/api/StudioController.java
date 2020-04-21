@@ -1,4 +1,4 @@
-package org.taonaw.facilitymanagement.controller;
+package org.taonaw.facilitymanagement.api;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

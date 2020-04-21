@@ -7,7 +7,7 @@ import org.taonaw.identityaccess.domain.model.account.Account;
 import org.taonaw.identityaccess.domain.model.account.CheckDuplicateAccountService;
 import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
 import org.taonaw.identityaccess.domain.model.account.LoginId;
-import org.taonaw.identityaccess.domain.model.shared.FullName;
+import org.taonaw.identityaccess.domain.model.shared.PersonName;
 import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
 
@@ -26,7 +26,7 @@ public class RegisterAccountAppService {
         accountRepository.lock();
 
         var account = Account.newAccount(
-                new FullName(command.getFirstName(), command.getLastName()),
+                new PersonName(command.getFirstName(), command.getLastName()),
                 new LoginId(command.getLoginId()),
                 new PlainTextPassword(command.getPassword()).encode(passwordEncoder));
 

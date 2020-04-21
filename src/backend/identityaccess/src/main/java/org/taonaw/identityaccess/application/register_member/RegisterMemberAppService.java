@@ -21,7 +21,7 @@ public class RegisterMemberAppService {
         memberRepository.lock();
 
         var memberDetail = new MemberDetail(
-                new FullName(command.getFirstName(), command.getLastName()),
+                new PersonName(command.getFirstName(), command.getLastName()),
                 new DateOfBirth(command.getDateOfBirth()),
                 new PhoneNumber(command.getTelephoneAreaCode(), command.getTelephoneLocalNumber(), command.getTelephoneSubscriberNumber()),
                 new EmailAddress(command.getEmailAddress()));

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.taonaw.identityaccess.domain.model.account.*;
-import org.taonaw.identityaccess.domain.model.shared.FullName;
+import org.taonaw.identityaccess.domain.model.shared.PersonName;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
 import org.taonaw.identityaccess.infrastructure.repository.AccountRepository;
 import org.taonaw.identityaccess.infrastructure.service.BCryptPasswordEncoder;
@@ -28,7 +28,7 @@ public class IdentityAccessApplication implements CommandLineRunner {
 		var encoder = new BCryptPasswordEncoder(passwordEncoder);
 		var testAccount = Account.reconstruct(
 				new AccountId("1"),
-				new FullName("太郎", "テスト"),
+				new PersonName("太郎", "テスト"),
 				new LoginId("test"),
 				new PlainTextPassword("12345678").encode(encoder));
 		new AccountRepository().add(testAccount);

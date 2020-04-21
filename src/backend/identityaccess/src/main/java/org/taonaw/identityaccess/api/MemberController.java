@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.controller;
+package org.taonaw.identityaccess.api;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

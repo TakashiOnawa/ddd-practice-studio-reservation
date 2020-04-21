@@ -1,4 +1,4 @@
-package org.taonaw.reservation.controller;
+package org.taonaw.reservation.api;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

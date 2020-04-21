@@ -1,4 +1,4 @@
-package org.taonaw.managementsite.controller.account;
+package org.taonaw.managementsite.presentation.account;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
 import org.taonaw.managementsite.application.identityaccess.command.register_account.RegisterAccountRequest;
-import org.taonaw.managementsite.controller.account.form.AccountRegistrationForm;
+import org.taonaw.managementsite.presentation.account.form.AccountRegistrationForm;
 
 import java.util.Objects;
 

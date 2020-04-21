@@ -1,4 +1,4 @@
-package org.taonaw.reservation.controller;
+package org.taonaw.reservation.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

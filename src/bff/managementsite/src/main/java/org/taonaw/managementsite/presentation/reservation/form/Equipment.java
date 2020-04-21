@@ -1,4 +1,4 @@
-package org.taonaw.managementsite.controller.reservation.form;
+package org.taonaw.managementsite.presentation.reservation.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package org.taonaw.managementsite.controller.reservation;
+package org.taonaw.managementsite.presentation.reservation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ import org.taonaw.managementsite.application.facilitymanagement.query.EquipmentD
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
 import org.taonaw.managementsite.application.reservation.ReservationService;
 import org.taonaw.managementsite.application.reservation.command.reserve_studio.ReserveStudioRequest;
-import org.taonaw.managementsite.controller.reservation.form.Equipment;
-import org.taonaw.managementsite.controller.reservation.form.ReserveStudioForm;
+import org.taonaw.managementsite.presentation.reservation.form.Equipment;
+import org.taonaw.managementsite.presentation.reservation.form.ReserveStudioForm;
 
 import java.util.Comparator;
 import java.util.List;

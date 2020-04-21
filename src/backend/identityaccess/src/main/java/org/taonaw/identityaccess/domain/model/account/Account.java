@@ -1,7 +1,7 @@
 package org.taonaw.identityaccess.domain.model.account;
 
 import lombok.NonNull;
-import org.taonaw.identityaccess.domain.model.shared.FullName;
+import org.taonaw.identityaccess.domain.model.shared.PersonName;
 import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 import org.taonaw.identityaccess.domain.model.shared.Password;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Account {
     private final AccountId accountId;
-    private FullName name;
+    private PersonName name;
     private LoginId loginId;
     private Password password;
 
@@ -18,7 +18,7 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public static Account newAccount(@NonNull FullName name,
+    public static Account newAccount(@NonNull PersonName name,
                                      @NonNull LoginId loginId,
                                      @NonNull Password password) {
         var account = new Account(AccountId.newId());
@@ -29,7 +29,7 @@ public class Account {
     }
 
     public static Account reconstruct(@NonNull AccountId accountId,
-                                      @NonNull FullName name,
+                                      @NonNull PersonName name,
                                       @NonNull LoginId loginId,
                                       @NonNull Password password) {
         var account = new Account(accountId);
@@ -43,7 +43,7 @@ public class Account {
         return accountId;
     }
 
-    public FullName getName() {
+    public PersonName getName() {
         return name;
     }
 
