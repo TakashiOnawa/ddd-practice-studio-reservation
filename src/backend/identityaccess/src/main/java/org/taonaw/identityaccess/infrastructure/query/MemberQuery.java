@@ -5,8 +5,8 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.taonaw.identityaccess.domain.model.member.IMemberRepository;
-import org.taonaw.identityaccess.query.member.IMemberQuery;
-import org.taonaw.identityaccess.query.member.MemberDto;
+import org.taonaw.identityaccess.application.query.member.IMemberQuery;
+import org.taonaw.identityaccess.application.query.member.MemberDto;
 
 import java.util.ArrayList;
 import java.util.List;

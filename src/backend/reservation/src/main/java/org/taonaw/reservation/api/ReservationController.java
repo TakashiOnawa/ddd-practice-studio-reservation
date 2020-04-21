@@ -5,15 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.reservation.application.cancel_reservation.CancelReservationAppService;
-import org.taonaw.reservation.application.cancel_reservation.CancelReservationByMemberCommand;
-import org.taonaw.reservation.application.cancel_reservation.CancelReservationCommand;
-import org.taonaw.reservation.application.cancel_reservation.CancelReservationResult;
-import org.taonaw.reservation.application.change_reservation.ChangeReservationAppService;
-import org.taonaw.reservation.application.change_reservation.ChangeReservationCommand;
-import org.taonaw.reservation.application.change_reservation.ChangeReservationResult;
-import org.taonaw.reservation.application.reserve_studio.ReserveStudioAppService;
-import org.taonaw.reservation.application.reserve_studio.ReserveStudioCommand;
+import org.taonaw.reservation.application.command.cancel_reservation.CancelReservationAppService;
+import org.taonaw.reservation.application.command.cancel_reservation.CancelReservationByMemberCommand;
+import org.taonaw.reservation.application.command.cancel_reservation.CancelReservationCommand;
+import org.taonaw.reservation.application.command.cancel_reservation.CancelReservationResult;
+import org.taonaw.reservation.application.command.change_reservation.ChangeReservationAppService;
+import org.taonaw.reservation.application.command.change_reservation.ChangeReservationCommand;
+import org.taonaw.reservation.application.command.change_reservation.ChangeReservationResult;
+import org.taonaw.reservation.application.command.reserve_studio.ReserveStudioAppService;
+import org.taonaw.reservation.application.command.reserve_studio.ReserveStudioCommand;
 
 @RestController
 @RequestMapping("/reservations")

@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentAppService;
-import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentCommand;
-import org.taonaw.facilitymanagement.application.change_equipment.ChangeEquipmentResult;
-import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentAppService;
-import org.taonaw.facilitymanagement.application.register_equipment.RegisterEquipmentCommand;
-import org.taonaw.facilitymanagement.query.equipment.EquipmentDto;
-import org.taonaw.facilitymanagement.query.equipment.IEquipmentQuery;
+import org.taonaw.facilitymanagement.application.command.change_equipment.ChangeEquipmentAppService;
+import org.taonaw.facilitymanagement.application.command.change_equipment.ChangeEquipmentCommand;
+import org.taonaw.facilitymanagement.application.command.change_equipment.ChangeEquipmentResult;
+import org.taonaw.facilitymanagement.application.command.register_equipment.RegisterEquipmentAppService;
+import org.taonaw.facilitymanagement.application.command.register_equipment.RegisterEquipmentCommand;
+import org.taonaw.facilitymanagement.application.query.equipment.EquipmentDto;
+import org.taonaw.facilitymanagement.application.query.equipment.IEquipmentQuery;
 
 import java.util.List;
 

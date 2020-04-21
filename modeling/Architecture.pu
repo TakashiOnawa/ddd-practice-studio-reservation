@@ -1,0 +1,52 @@
+@startuml Architecture
+
+package domain
+{
+    interface IRepository
+    class DomainService
+    class DomainObject
+    {
+        Entity
+        ValueObject
+    }
+}
+
+package application
+{
+    package command {
+        class AppService
+    }
+
+    package query {
+        interface IQuery
+    }
+}
+
+
+package infrastructure
+{
+    class Repository
+    class Query
+}
+
+package api
+{
+    class Controller
+}
+
+DomainService -> IRepository
+DomainService --> DomainObject
+IRepository --> DomainObject
+
+AppService --> IRepository
+AppService --> DomainObject
+AppService --> DomainService
+
+IRepository <|---- Repository
+IQuery <|---- Query
+Repository --> DomainObject
+
+Controller --> AppService
+Controller --> IQuery
+
+@enduml

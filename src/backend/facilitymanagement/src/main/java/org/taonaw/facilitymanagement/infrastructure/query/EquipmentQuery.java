@@ -9,8 +9,8 @@ import org.taonaw.facilitymanagement.domain.model.equipment.EquipmentId;
 import org.taonaw.facilitymanagement.domain.model.equipment.IEquipmentRepository;
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.EquipmentCategory;
 import org.taonaw.facilitymanagement.domain.model.equipmentcategory.IEquipmentCategoryRepository;
-import org.taonaw.facilitymanagement.query.equipment.EquipmentDto;
-import org.taonaw.facilitymanagement.query.equipment.IEquipmentQuery;
+import org.taonaw.facilitymanagement.application.query.equipment.EquipmentDto;
+import org.taonaw.facilitymanagement.application.query.equipment.IEquipmentQuery;
 
 import java.util.List;
 import java.util.Optional;

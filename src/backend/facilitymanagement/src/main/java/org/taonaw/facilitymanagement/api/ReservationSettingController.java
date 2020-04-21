@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.taonaw.facilitymanagement.query.reservationsetting.IReservationSettingQuery;
-import org.taonaw.facilitymanagement.query.reservationsetting.ReservationSettingDto;
+import org.taonaw.facilitymanagement.application.query.reservationsetting.IReservationSettingQuery;
+import org.taonaw.facilitymanagement.application.query.reservationsetting.ReservationSettingDto;
 
 @RestController
 @RequestMapping("/reservation_setting")

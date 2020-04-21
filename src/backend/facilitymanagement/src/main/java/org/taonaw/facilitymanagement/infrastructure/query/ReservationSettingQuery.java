@@ -8,8 +8,8 @@ import org.taonaw.facilitymanagement.domain.model.studio.IStudioRepository;
 import org.taonaw.facilitymanagement.domain.model.studio.StudioId;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.ITenantSettingRepository;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.PracticeType;
-import org.taonaw.facilitymanagement.query.reservationsetting.IReservationSettingQuery;
-import org.taonaw.facilitymanagement.query.reservationsetting.ReservationSettingDto;
+import org.taonaw.facilitymanagement.application.query.reservationsetting.IReservationSettingQuery;
+import org.taonaw.facilitymanagement.application.query.reservationsetting.ReservationSettingDto;
 
 @Repository
 @AllArgsConstructor

@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
-import org.taonaw.identityaccess.query.account.AccountDto;
-import org.taonaw.identityaccess.query.account.IAccountQuery;
+import org.taonaw.identityaccess.application.query.account.AccountDto;
+import org.taonaw.identityaccess.application.query.account.IAccountQuery;
 
 import java.util.ArrayList;
 import java.util.List;

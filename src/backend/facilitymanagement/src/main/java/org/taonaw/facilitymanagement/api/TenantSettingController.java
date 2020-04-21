@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingAppService;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingCommand;
-import org.taonaw.facilitymanagement.application.change_tenantsetting.ChangeTenantSettingResult;
-import org.taonaw.facilitymanagement.query.tenantsetting.CancellationFeeRateDto;
-import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;
-import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
+import org.taonaw.facilitymanagement.application.command.change_tenantsetting.ChangeTenantSettingAppService;
+import org.taonaw.facilitymanagement.application.command.change_tenantsetting.ChangeTenantSettingCommand;
+import org.taonaw.facilitymanagement.application.command.change_tenantsetting.ChangeTenantSettingResult;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.CancellationFeeRateDto;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.ITenantSettingQuery;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.TenantSettingDto;
 
 import java.util.List;
 

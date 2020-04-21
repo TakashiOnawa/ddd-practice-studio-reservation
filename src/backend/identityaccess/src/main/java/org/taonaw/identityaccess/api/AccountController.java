@@ -6,15 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.identityaccess.application.login_account.LoginAccountAppService;
-import org.taonaw.identityaccess.application.login_account.LoginAccountCommand;
-import org.taonaw.identityaccess.application.login_account.LoginAccountResult;
-import org.taonaw.identityaccess.application.register_account.RegisterAccountAppService;
-import org.taonaw.identityaccess.application.register_account.RegisterAccountCommand;
+import org.taonaw.identityaccess.application.command.login_account.LoginAccountAppService;
+import org.taonaw.identityaccess.application.command.login_account.LoginAccountCommand;
+import org.taonaw.identityaccess.application.command.login_account.LoginAccountResult;
+import org.taonaw.identityaccess.application.command.register_account.RegisterAccountAppService;
+import org.taonaw.identityaccess.application.command.register_account.RegisterAccountCommand;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
-import org.taonaw.identityaccess.query.account.AccountDto;
-import org.taonaw.identityaccess.query.account.IAccountQuery;
+import org.taonaw.identityaccess.application.query.account.AccountDto;
+import org.taonaw.identityaccess.application.query.account.IAccountQuery;
 
 import java.util.List;
 

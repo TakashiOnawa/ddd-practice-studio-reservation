@@ -6,15 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.identityaccess.application.login_member.LoginMemberAppService;
-import org.taonaw.identityaccess.application.login_member.LoginMemberCommand;
-import org.taonaw.identityaccess.application.login_member.LoginMemberResult;
-import org.taonaw.identityaccess.application.register_member.RegisterMemberAppService;
-import org.taonaw.identityaccess.application.register_member.RegisterMemberCommand;
+import org.taonaw.identityaccess.application.command.login_member.LoginMemberAppService;
+import org.taonaw.identityaccess.application.command.login_member.LoginMemberCommand;
+import org.taonaw.identityaccess.application.command.login_member.LoginMemberResult;
+import org.taonaw.identityaccess.application.command.register_member.RegisterMemberAppService;
+import org.taonaw.identityaccess.application.command.register_member.RegisterMemberCommand;
 import org.taonaw.identityaccess.domain.shared.exception.DomainException;
 import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
-import org.taonaw.identityaccess.query.member.IMemberQuery;
-import org.taonaw.identityaccess.query.member.MemberDto;
+import org.taonaw.identityaccess.application.query.member.IMemberQuery;
+import org.taonaw.identityaccess.application.query.member.MemberDto;
 
 @RestController
 @AllArgsConstructor

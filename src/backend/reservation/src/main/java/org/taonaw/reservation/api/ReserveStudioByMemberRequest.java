@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.reservation.application.reserve_studio.ReserveStudioByMemberCommand;
+import org.taonaw.reservation.application.command.reserve_studio.ReserveStudioByMemberCommand;
 
 import java.time.LocalDateTime;
 import java.util.List;

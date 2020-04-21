@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.ITenantSettingRepository;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.PracticeType;
 import org.taonaw.facilitymanagement.domain.model.tenantsetting.TenantSetting;
-import org.taonaw.facilitymanagement.query.tenantsetting.CancellationFeeRateDto;
-import org.taonaw.facilitymanagement.query.tenantsetting.ITenantSettingQuery;
-import org.taonaw.facilitymanagement.query.tenantsetting.TenantSettingDto;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.CancellationFeeRateDto;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.ITenantSettingQuery;
+import org.taonaw.facilitymanagement.application.query.tenantsetting.TenantSettingDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

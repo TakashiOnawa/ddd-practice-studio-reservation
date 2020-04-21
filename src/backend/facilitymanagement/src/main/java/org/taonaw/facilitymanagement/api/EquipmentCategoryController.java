@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryAppService;
-import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryCommand;
-import org.taonaw.facilitymanagement.application.change_equipmentcategory.ChangeEquipmentCategoryResult;
-import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryAppService;
-import org.taonaw.facilitymanagement.application.register_equipmentcategory.RegisterEquipmentCategoryCommand;
+import org.taonaw.facilitymanagement.application.command.change_equipmentcategory.ChangeEquipmentCategoryAppService;
+import org.taonaw.facilitymanagement.application.command.change_equipmentcategory.ChangeEquipmentCategoryCommand;
+import org.taonaw.facilitymanagement.application.command.change_equipmentcategory.ChangeEquipmentCategoryResult;
+import org.taonaw.facilitymanagement.application.command.register_equipmentcategory.RegisterEquipmentCategoryAppService;
+import org.taonaw.facilitymanagement.application.command.register_equipmentcategory.RegisterEquipmentCategoryCommand;
 
 @RestController
 @RequestMapping("/equipment_categories")

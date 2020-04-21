@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.taonaw.facilitymanagement.domain.model.studio.IStudioRepository;
 import org.taonaw.facilitymanagement.domain.model.studio.Studio;
 import org.taonaw.facilitymanagement.domain.model.studio.StudioId;
-import org.taonaw.facilitymanagement.query.studio.IStudioQuery;
-import org.taonaw.facilitymanagement.query.studio.StudioDto;
+import org.taonaw.facilitymanagement.application.query.studio.IStudioQuery;
+import org.taonaw.facilitymanagement.application.query.studio.StudioDto;
 
 import java.util.List;
 import java.util.Optional;

@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioAppService;
-import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioCommand;
-import org.taonaw.facilitymanagement.application.change_studio.ChangeStudioResult;
-import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioAppService;
-import org.taonaw.facilitymanagement.application.register_studio.RegisterStudioCommand;
-import org.taonaw.facilitymanagement.query.studio.IStudioQuery;
-import org.taonaw.facilitymanagement.query.studio.StudioDto;
+import org.taonaw.facilitymanagement.application.command.change_studio.ChangeStudioAppService;
+import org.taonaw.facilitymanagement.application.command.change_studio.ChangeStudioCommand;
+import org.taonaw.facilitymanagement.application.command.change_studio.ChangeStudioResult;
+import org.taonaw.facilitymanagement.application.command.register_studio.RegisterStudioAppService;
+import org.taonaw.facilitymanagement.application.command.register_studio.RegisterStudioCommand;
+import org.taonaw.facilitymanagement.application.query.studio.IStudioQuery;
+import org.taonaw.facilitymanagement.application.query.studio.StudioDto;
 
 import java.util.List;
 
