@@ -1,0 +1,14 @@
+@startuml　Usecase
+
+left to right direction
+
+actor 管理者
+
+rectangle 管理サイト {
+    管理者 --> (ログインする)
+    管理者 --> (管理画面を開く)
+    管理者 --> (アカウントを登録する)
+    管理者 --> (アカウント情報を変更する)
+}
+
+@enduml

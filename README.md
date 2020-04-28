@@ -27,9 +27,10 @@ RDRA 2.0 に沿って要件定義をします。
 
 ## 設備管理（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
-* スタッフが店舗の管理を行う「店舗管理」。
-* スタッフがスタジオの管理を行う「スタジオ管理」。
-* スタッフが機材の在庫管理を行う「機材管理」。
+* 管理者が店舗の管理を行う「店舗管理」。
+* 管理者がスタジオの管理を行う「スタジオ管理」。
+* 管理者が機材の在庫管理を行う「機材管理」。
+* 管理者がスタッフの管理を行う「スタッフ管理」。
 
 ## スタジオ利用（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
@@ -69,6 +70,9 @@ RDRA 2.0 に沿って要件定義をします。
 
 ### 機材管理
 ![](./modeling/05_Usecase_機材管理/Usecase.png)
+
+### スタッフ管理
+![](./modeling/05_Usecase_スタッフ管理/Usecase.png)
 
 # コンテキストマップ
 ![](./modeling/06_ContextMap/ContextMap.png)
