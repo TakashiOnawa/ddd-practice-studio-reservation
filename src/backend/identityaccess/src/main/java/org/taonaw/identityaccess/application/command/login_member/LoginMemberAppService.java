@@ -7,8 +7,8 @@ import org.taonaw.identityaccess.domain.model.member.IMemberRepository;
 import org.taonaw.identityaccess.domain.model.shared.EmailAddress;
 import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
-import org.taonaw.identityaccess.domain.shared.exception.DomainException;
-import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
+import org.taonaw.identityaccess.domain.exception.LoginMemberNotFoundException;
+import org.taonaw.identityaccess.domain.exception.LoginMemberUnAuthenticatedException;
 
 @Service
 @AllArgsConstructor
@@ -22,15 +22,13 @@ public class LoginMemberAppService {
         var emailAddress = new EmailAddress(command.getEmailAddress());
         var plainTextPassword = new PlainTextPassword(command.getPassword());
 
-        var member = memberRepository.findBy(emailAddress);
-        if (member.isEmpty()) {
-            throw new DomainException(DomainExceptionCodes.LoginMemberNotFound);
+        var member = memberRepository.findBy(emailAddress)
+                .orElseThrow(() -> new LoginMemberNotFoundException(emailAddress));
+
+        if (!member.authenticate(emailAddress, plainTextPassword, passwordEncoder)) {
+            throw new LoginMemberUnAuthenticatedException(emailAddress, command.getPassword());
         }
 
-        if (!member.get().authenticate(emailAddress, plainTextPassword, passwordEncoder)) {
-            throw new DomainException(DomainExceptionCodes.LoginMemberPasswordNotMatched);
-        }
-
-        return LoginMemberResult.of(member.get());
+        return LoginMemberResult.of(member);
     }
 }

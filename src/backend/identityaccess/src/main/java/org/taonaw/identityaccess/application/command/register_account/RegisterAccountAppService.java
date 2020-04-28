@@ -7,8 +7,8 @@ import org.taonaw.identityaccess.domain.model.account.Account;
 import org.taonaw.identityaccess.domain.model.account.CheckDuplicateAccountService;
 import org.taonaw.identityaccess.domain.model.account.IAccountRepository;
 import org.taonaw.identityaccess.domain.model.account.LoginId;
-import org.taonaw.identityaccess.domain.model.shared.PersonName;
 import org.taonaw.identityaccess.domain.model.shared.IPasswordEncoder;
+import org.taonaw.identityaccess.domain.model.shared.PersonName;
 import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword;
 
 //import org.springframework.transaction.annotation.Transactional;

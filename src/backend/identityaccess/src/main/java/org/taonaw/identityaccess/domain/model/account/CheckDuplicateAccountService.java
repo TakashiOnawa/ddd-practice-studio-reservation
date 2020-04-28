@@ -2,8 +2,7 @@ package org.taonaw.identityaccess.domain.model.account;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.identityaccess.domain.shared.exception.DomainException;
-import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
+import org.taonaw.identityaccess.domain.exception.AccountDuplicatedException;
 
 @AllArgsConstructor
 public class CheckDuplicateAccountService {
@@ -16,7 +15,7 @@ public class CheckDuplicateAccountService {
 
     public void validate(@NonNull Account account) {
         if (isDuplicated(account)) {
-            throw new DomainException(DomainExceptionCodes.AccountDuplicated);
+            throw new AccountDuplicatedException(account.getLoginId());
         }
     }
 }

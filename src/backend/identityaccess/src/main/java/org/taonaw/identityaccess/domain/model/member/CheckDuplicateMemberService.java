@@ -2,8 +2,7 @@ package org.taonaw.identityaccess.domain.model.member;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.identityaccess.domain.shared.exception.DomainException;
-import org.taonaw.identityaccess.domain.shared.exception.DomainExceptionCodes;
+import org.taonaw.identityaccess.domain.exception.MemberDuplicatedException;
 
 @AllArgsConstructor
 public class CheckDuplicateMemberService {
@@ -16,7 +15,7 @@ public class CheckDuplicateMemberService {
 
     public void validate(Member member) {
         if (isDuplicated(member)) {
-            throw new DomainException(DomainExceptionCodes.MemberDuplicated);
+            throw new MemberDuplicatedException(member.getDetail().getEmailAddress());
         }
     }
 }
