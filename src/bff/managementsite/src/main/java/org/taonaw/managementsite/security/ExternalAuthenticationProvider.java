@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
 import org.taonaw.managementsite.application.identityaccess.command.login_account.LoginAccountRequest;
 
@@ -47,17 +48,19 @@ public class ExternalAuthenticationProvider extends AbstractUserDetailsAuthentic
                 .password(password)
                 .build();
 
-        var response = identityAccessService.loginAccount(request);
-
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
-            throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "Bad credentials"));
+        try {
+            var response = identityAccessService.loginAccount(request);
+            return User.withUsername(response.getBody().getLoginId())
+                    .password("")
+                    .authorities("GENERAL")
+                    .build();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
+                throw new BadCredentialsException(messages.getMessage(
+                        "AbstractUserDetailsAuthenticationProvider.badCredentials",
+                        "Bad credentials"));
+            }
+            throw e;
         }
-
-        return User.withUsername(response.getBody().getLoginId())
-                .password("")
-                .authorities("GENERAL")
-                .build();
     }
 }

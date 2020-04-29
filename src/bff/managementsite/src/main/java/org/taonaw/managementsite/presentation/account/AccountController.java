@@ -9,6 +9,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.HttpClientErrorException;
+import org.taonaw.managementsite.application.error.ErrorCode;
+import org.taonaw.managementsite.application.error.ErrorResponse;
 import org.taonaw.managementsite.application.identityaccess.IdentityAccessService;
 import org.taonaw.managementsite.application.identityaccess.command.register_account.RegisterAccountRequest;
 import org.taonaw.managementsite.presentation.account.form.AccountRegistrationForm;
@@ -53,7 +56,16 @@ public class AccountController {
                 .password(form.getPassword())
                 .build();
 
-        var response = identityAccessService.registerAccount(request);
+        try {
+            identityAccessService.registerAccount(request);
+        } catch (HttpClientErrorException e) {
+            var errorResponse = ErrorResponse.of(e);
+            if (errorResponse.isPresent() && errorResponse.get().exists(ErrorCode.AccountDuplicated)) {
+                model.addAttribute("validationError", "入力されたログインIDは既に存在します。");
+                return "account/new";
+            }
+            throw e;
+        }
 
         return "redirect:/accounts";
     }
