@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 
 @Data
 public class AccountRegistrationForm {
-
     @NotEmpty(message = "ログインIDを入力してください")
     @Size(max = 16, message = "ログインIDは 16 文字以内で入力してください")
     @Pattern(regexp = "[a-zA-Z0-9]*", message = "ログインIDは英数のみで入力してください")

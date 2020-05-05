@@ -59,8 +59,8 @@ public class AccountController {
         try {
             identityAccessService.registerAccount(request);
         } catch (HttpClientErrorException e) {
-            var errorResponse = ErrorResponse.of(e);
-            if (errorResponse.isPresent() && errorResponse.get().exists(ErrorCode.AccountDuplicated)) {
+            var errorResponse = ErrorResponse.ofOrElseThrow(e);
+            if (errorResponse.exists(ErrorCode.AccountDuplicated)) {
                 model.addAttribute("validationError", "入力されたログインIDは既に存在します。");
                 return "account/new";
             }

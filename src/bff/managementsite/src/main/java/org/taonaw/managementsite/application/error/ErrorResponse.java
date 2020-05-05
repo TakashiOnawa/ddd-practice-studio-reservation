@@ -15,17 +15,17 @@ import java.util.Optional;
 public class ErrorResponse {
     private List<ErrorInfo> errors;
 
-    public static Optional<ErrorResponse> of(@NonNull RestClientResponseException e) {
+    public static ErrorResponse ofOrElseThrow(@NonNull RestClientResponseException e) {
         var responseBodyAsString = e.getResponseBodyAsString();
         if (responseBodyAsString.isEmpty()) {
-            return Optional.empty();
+            throw e;
         }
 
         try {
             var gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-            return Optional.of(gson.fromJson(responseBodyAsString, ErrorResponse.class));
+            return gson.fromJson(responseBodyAsString, ErrorResponse.class);
         } catch (JsonSyntaxException ex) {
-            return Optional.empty();
+            throw e;
         }
     }
 

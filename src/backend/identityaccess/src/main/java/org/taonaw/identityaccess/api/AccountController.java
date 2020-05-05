@@ -68,7 +68,7 @@ public class AccountController {
                 .message("ログインアカウントが見つかりません。")
                 .build();
         var response = new ErrorResponse(error);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(LoginAccountUnAuthenticatedException.class)
@@ -78,7 +78,7 @@ public class AccountController {
                 .message("ログインパスワードが一致しません。")
                 .build();
         var response = new ErrorResponse(error);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(AccountDuplicatedException.class)

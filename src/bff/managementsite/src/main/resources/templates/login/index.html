@@ -20,6 +20,9 @@
             <h2 class="ui header">スタジオ管理システム</h2>
             <form class="ui large form segment" method="post" th:action="@{/login}">
                 <div class="field">
+                    <span class="ui large" style="color:red" th:if="${validationError}" th:text="${validationError}"></span>
+                </div>
+                <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
                         <input type="text" name="loginId" placeholder="ログイン ID">
