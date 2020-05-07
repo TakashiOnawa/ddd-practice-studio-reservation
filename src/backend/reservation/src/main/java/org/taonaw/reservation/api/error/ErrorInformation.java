@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.api.error;
+package org.taonaw.reservation.api.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

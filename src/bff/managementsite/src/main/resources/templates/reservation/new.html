@@ -109,6 +109,7 @@
             </div>
             <div class="field">
                 <label>利用機材</label>
+                <span class="ui large" style="color:red" th:if="${equipmentError}" th:text="${equipmentError}"></span>
                 <table class="ui table" th:if="equipments">
                     <thead>
                         <tr>
@@ -121,7 +122,7 @@
                         <tr th:each="equipment, start : *{equipments}">
                             <td th:text="${equipment.categoryName}"></td>
                             <td th:text="${equipment.name}"></td>
-                            <td><input type="number" th:value="${equipment.quantity}" th:field="*{equipments[__${start.index}__].quantity}"></td>
+                            <td><input type="number" th:value="${equipment.quantity}" th:field="*{equipments[__${start.index}__].quantity}" th:style="*{equipments[__${start.index}__].outOfStocks} ? ${'color:red;'}"></td>
                             <td><input type="text" hidden th:value="${equipment.id}" th:field="*{equipments[__${start.index}__].id}"></td>
                             <td><input type="text" hidden th:value="${equipment.categoryName}" th:field="*{equipments[__${start.index}__].categoryName}"></td>
                             <td><input type="text" hidden th:value="${equipment.name}" th:field="*{equipments[__${start.index}__].name}"></td>

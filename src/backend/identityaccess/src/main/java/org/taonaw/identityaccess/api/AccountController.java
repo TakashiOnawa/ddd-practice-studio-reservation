@@ -45,7 +45,6 @@ public class AccountController {
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
     @GetMapping("/accounts")
     public ResponseEntity<List<AccountDto>> getAccounts() {
         var accounts = accountQuery.getAll();
@@ -60,6 +59,8 @@ public class AccountController {
         var uri = uriComponentsBuilder.path("/accounts/{accountId}").buildAndExpand(response.getAccountId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+
 
     @ExceptionHandler(LoginAccountNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleException(LoginAccountNotFoundException exception) {

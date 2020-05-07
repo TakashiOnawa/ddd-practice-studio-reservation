@@ -125,6 +125,7 @@ RDRA 2.0 に沿って要件定義をします。
 |Method|URI|説明|
 |---|---|---|
 |GET|/login|ログイン画面を表示する。|
+|GET|/login?error|ログイン画面（認証失敗メッセージ）を表示する。|
 |GET|/accounts|アカウント一覧画面を表示する。|
 |GET|/accounts/new|アカウント登録画面を表示する。|
 |POST|/accounts|アカウントを登録する。|

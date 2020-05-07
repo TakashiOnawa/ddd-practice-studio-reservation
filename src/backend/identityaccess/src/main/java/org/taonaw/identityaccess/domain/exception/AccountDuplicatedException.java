@@ -9,7 +9,7 @@ public class AccountDuplicatedException extends DomainException {
     private final String loginId;
 
     public AccountDuplicatedException(@NonNull LoginId loginId) {
-        super(String.format("アカウントが重複しています。loginId=%s", loginId.getValue()));
+        super("アカウントが重複しています。");
         this.loginId = loginId.getValue();
     }
 }

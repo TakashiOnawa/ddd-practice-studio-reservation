@@ -64,4 +64,14 @@ public class ReserveStudioForm {
         var format = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         return LocalDateTime.parse(date + " " + time, format);
     }
+
+    public void refreshEquipmentsOutOfStocks(List<String> outOfStocksEquipmentIds) {
+        for (var equipment : equipments) {
+            if (outOfStocksEquipmentIds.contains(equipment.getId())) {
+                equipment.setOutOfStocks(true);
+            } else {
+                equipment.setOutOfStocks(false);
+            }
+        }
+    }
 }

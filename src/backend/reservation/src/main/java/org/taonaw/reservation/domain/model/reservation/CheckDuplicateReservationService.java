@@ -2,8 +2,7 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.taonaw.reservation.domain.shared.exception.DomainException;
-import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
+import org.taonaw.reservation.domain.exception.ReservationDuplicatedException;
 
 @AllArgsConstructor
 public class CheckDuplicateReservationService {
@@ -15,7 +14,7 @@ public class CheckDuplicateReservationService {
 
     public void validate(@NonNull Reservation reservation) {
         if (isDuplicated(reservation)) {
-            throw new DomainException(DomainExceptionCodes.ReservationDuplicated);
+            throw new ReservationDuplicatedException(reservation.getStudioId(), reservation.getUseTime());
         }
     }
 }

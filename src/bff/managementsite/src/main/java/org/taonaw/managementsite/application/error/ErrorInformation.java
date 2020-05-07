@@ -1,16 +1,17 @@
 package org.taonaw.managementsite.application.error;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
 @AllArgsConstructor
-public class ErrorInfo {
-    private int code;
-    private String message;
+public class ErrorInformation {
+    protected int code;
+    protected String message;
 
-    public boolean is(@NonNull ErrorCode errorCode) {
+    boolean is(@NonNull ErrorCode errorCode) {
         return code == errorCode.getCode();
     }
 }

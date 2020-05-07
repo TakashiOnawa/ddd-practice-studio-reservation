@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.domain.exception;
+package org.taonaw.reservation.domain.exception;
 
 import lombok.NonNull;
 

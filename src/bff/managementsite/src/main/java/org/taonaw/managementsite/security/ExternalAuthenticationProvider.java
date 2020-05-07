@@ -86,7 +86,7 @@ public class ExternalAuthenticationProvider extends AbstractUserDetailsAuthentic
                     .build();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-                var errorResponse = ErrorResponse.ofOrElseThrow(e);
+                var errorResponse = ErrorResponse.of(e);
 
                 if (errorResponse.exists(ErrorCode.LoginAccountNotFound)) {
                     throw new UsernameNotFoundException("user not found", e);

@@ -2,9 +2,8 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.taonaw.reservation.domain.exception.ReservationValidationException;
 import org.taonaw.reservation.domain.model.reservationsetting.IReservationSettingRepository;
-import org.taonaw.reservation.domain.shared.exception.DomainException;
-import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 
 import java.time.LocalDateTime;
 
@@ -17,17 +16,21 @@ public class ReservationValidator {
         var reservationSetting = reservationSettingRepository
                 .findBy(reservation.getStudioId(), reservation.getPracticeType());
 
+        var exceptionBuilder = new ReservationValidationException.Builder();
+
         if (!reservationSetting.isMaxNumberOfUsersSatisfiedBy(reservation.getNumberOfUsers())) {
-            throw new DomainException(DomainExceptionCodes.OverMaxNumberOfUsers);
+            exceptionBuilder.overMaxNumberOfUsers(reservation.getNumberOfUsers());
         }
         if (!reservationSetting.isReservationStartDateTimeSatisfiedBy(reservation.getUseTime(), currentDateTime)) {
-            throw new DomainException(DomainExceptionCodes.ReservationNotStarted);
+            exceptionBuilder.reservationNotStarted(reservation.getUseTime());
         }
         if (!reservationSetting.isOpeningHoursSatisfiedBy(reservation.getUseTime())) {
-            throw new DomainException(DomainExceptionCodes.OutOfOpeningHours);
+            exceptionBuilder.outOfOpeningHours(reservation.getUseTime());
         }
         if (!reservationSetting.isStartTimeSatisfiedBy(reservation.getUseTime())) {
-            throw new DomainException(DomainExceptionCodes.StartTimeTypeNotSatisfied);
+            exceptionBuilder.startTimeTypeNotSatisfied(reservation.getUseTime());
         }
+
+        exceptionBuilder.throwIfErrorExists();
     }
 }

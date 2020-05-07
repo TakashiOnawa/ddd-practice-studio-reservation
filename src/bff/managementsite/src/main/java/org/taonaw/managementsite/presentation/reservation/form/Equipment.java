@@ -16,6 +16,7 @@ public class Equipment {
     private String name;
     private String categoryName;
     private int quantity;
+    private boolean outOfStocks;
 
     public List<String> getIds() {
         var ids = new ArrayList<String>();

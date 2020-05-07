@@ -1,12 +1,13 @@
 package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.NonNull;
+import org.taonaw.reservation.domain.exception.CanNotCancelReservationException;
+import org.taonaw.reservation.domain.exception.CanNotChangeUseTimeException;
+import org.taonaw.reservation.domain.exception.CanNotChangeUserInformationException;
 import org.taonaw.reservation.domain.model.cancellationfeesetting.CancellationFeeSetting;
 import org.taonaw.reservation.domain.model.member.Member;
 import org.taonaw.reservation.domain.model.member.MemberId;
 import org.taonaw.reservation.domain.model.studio.StudioId;
-import org.taonaw.reservation.domain.shared.exception.DomainException;
-import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -121,7 +122,7 @@ public class Reservation {
             return;
         }
         if (!cancellationFeeSetting.isFree(this.useTime, currentDate)) {
-            throw new DomainException(DomainExceptionCodes.CannotChangeUseTimeBecauseThereIsCancellationFee);
+            throw new CanNotChangeUseTimeException(reservationId);
         }
         this.useTime = useTime;
     }
@@ -131,7 +132,7 @@ public class Reservation {
             return;
         }
         if (this.userInformation.isMembersInformation() || userInformation.isMembersInformation()) {
-            throw new DomainException("会員の利用者情報は変更できません。");
+            throw new CanNotChangeUserInformationException(reservationId);
         }
         this.userInformation = userInformation;
     }
@@ -156,12 +157,18 @@ public class Reservation {
             @NonNull MemberId memberId,
             @NonNull CancellationFeeSetting cancellationFeeSetting,
             @NonNull LocalDate currentDate) {
+
+        var exceptionBuilder = new CanNotCancelReservationException.Builder(reservationId);
+
         if (!userInformation.getMemberId().equals(memberId)) {
-            throw new DomainException("異なる会員によるキャンセルはできません。");
+            exceptionBuilder.cancelByDifferentMember(memberId);
         }
         if (!cancellationFeeSetting.isFree(useTime, currentDate)) {
-            throw new DomainException(DomainExceptionCodes.CannotCancelBecauseThereIsCancellationFee);
+            exceptionBuilder.thereIsCancellationFee();
         }
+
+        exceptionBuilder.throwIfErrorExists();
+
         this.isCanceled = true;
     }
 

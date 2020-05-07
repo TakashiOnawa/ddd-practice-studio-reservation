@@ -2,9 +2,12 @@ package org.taonaw.reservation.domain.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.taonaw.reservation.domain.exception.EquipmentOutOfStocksException;
+import org.taonaw.reservation.domain.model.equipment.EquipmentId;
 import org.taonaw.reservation.domain.model.equipment.IEquipmentRepository;
-import org.taonaw.reservation.domain.shared.exception.DomainException;
-import org.taonaw.reservation.domain.shared.exception.DomainExceptionCodes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 public class CheckEquipmentsOutOfStocksService {
@@ -13,7 +16,16 @@ public class CheckEquipmentsOutOfStocksService {
     @NonNull
     private final IEquipmentRepository equipmentRepository;
 
-    public boolean isOutOfStocks(@NonNull Reservation reservation) {
+    public void validate(@NonNull Reservation reservation) {
+        var outOfStocksEquipmentIds = getOutOfStocksEquipmentIds(reservation);
+        if (outOfStocksEquipmentIds.size() > 0) {
+            throw new EquipmentOutOfStocksException(outOfStocksEquipmentIds);
+        }
+    }
+
+    private List<EquipmentId> getOutOfStocksEquipmentIds(Reservation reservation) {
+        var outOfStocksEquipmentIds = new ArrayList<EquipmentId>();
+
         var overlappedReservedEquipments = Reservations
                 .createOverlappedReservations(reservationRepository, reservation)
                 .getReservedEquipments();
@@ -22,15 +34,10 @@ public class CheckEquipmentsOutOfStocksService {
             var equipment = equipmentRepository.findBy(useEquipment.getEquipmentId()).orElseThrow();
             var reservedEquipmentQuantity = overlappedReservedEquipments.getQuantity(equipment.getEquipmentId());
             if (equipment.isOutOfStocks(reservedEquipmentQuantity)) {
-                return true;
+                outOfStocksEquipmentIds.add(equipment.getEquipmentId());
             }
         }
-        return false;
-    }
 
-    public void validate(@NonNull Reservation reservation) {
-        if (isOutOfStocks(reservation)) {
-            throw new DomainException(DomainExceptionCodes.EquipmentOutOfStocks);
-        }
+        return outOfStocksEquipmentIds;
     }
 }

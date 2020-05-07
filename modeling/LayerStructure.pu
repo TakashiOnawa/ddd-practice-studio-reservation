@@ -2,12 +2,18 @@
 
 package domain
 {
-    interface IRepository
-    class DomainService
-    class DomainObject
-    {
-        Entity
-        ValueObject
+    package model {
+        interface IRepository
+        class DomainService
+        class DomainObject
+        {
+            Entity
+            ValueObject
+        }
+    }
+
+    package exception {
+        class DomainException
     }
 }
 
@@ -41,6 +47,7 @@ IRepository --> DomainObject
 AppService --> IRepository
 AppService --> DomainObject
 AppService --> DomainService
+AppService --> DomainException
 
 IRepository <|---- Repository
 IQuery <|---- Query
@@ -48,5 +55,6 @@ Repository --> DomainObject
 
 Controller --> AppService
 Controller --> IQuery
+Controller --> DomainException
 
 @enduml

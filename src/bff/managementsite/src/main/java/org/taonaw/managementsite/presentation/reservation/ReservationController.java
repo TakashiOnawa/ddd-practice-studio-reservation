@@ -9,6 +9,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.HttpClientErrorException;
+import org.taonaw.managementsite.application.error.EquipmentOutOfStocksError;
+import org.taonaw.managementsite.application.error.ErrorCode;
+import org.taonaw.managementsite.application.error.ErrorResponse;
 import org.taonaw.managementsite.application.facilitymanagement.FacilityManagementService;
 import org.taonaw.managementsite.application.facilitymanagement.query.EquipmentDto;
 import org.taonaw.managementsite.application.facilitymanagement.query.StudioDto;
@@ -38,7 +42,7 @@ public class ReservationController {
     @GetMapping("/reservations/new")
     public String newReservation(Model model) {
         var form = new ReserveStudioForm();
-        form.getStudios().addAll(getAccounts());
+        form.getStudios().addAll(getStudios());
         form.getEquipments().addAll(getEquipments());
         model.addAttribute("reserveStudioForm", form);
         return "reservation/new";
@@ -50,9 +54,7 @@ public class ReservationController {
             BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
-            form.getStudios().addAll(getAccounts());
-            model.addAttribute("validationError", "不正な入力があります。");
-            return "reservation/new";
+            return newReservationErrorProcess(form, model, "不正な入力があります。");
         }
 
         var request = ReserveStudioRequest.builder()
@@ -66,13 +68,36 @@ public class ReservationController {
                 .equipmentIds(form.getEquipmentIds())
                 .build();
 
-        var response = reservationService.reserveStudio(request);
+        try {
+            reservationService.reserveStudio(request);
+        } catch (HttpClientErrorException e) {
+            var errorResponse = ErrorResponse.of(e);
 
-        // TODO：予約の重複エラーチェック
+            if (errorResponse.exists(ErrorCode.ReservationDuplicated)) {
+                return newReservationErrorProcess(form, model, "予約が重複しています。");
+            }
 
-        // TODO：機材の在庫切れエラーチェック
+            if (errorResponse.exists(ErrorCode.EquipmentOutOfStocks)) {
+                var equipmentOutOfStocksError = errorResponse
+                        .getError(ErrorCode.EquipmentOutOfStocks, EquipmentOutOfStocksError.class)
+                        .orElseThrow();
+                model.addAttribute("equipmentError", "機材の在庫が余っていません。");
+                form.refreshEquipmentsOutOfStocks(equipmentOutOfStocksError.getEquipmentIds());
+                return newReservationErrorProcess(form, model, "不正な入力があります。");
+            }
+
+            // TODO:予約確認エラーのチェック
+
+            throw e;
+        }
 
         return "redirect:/reservations";
+    }
+
+    private String newReservationErrorProcess(ReserveStudioForm form, Model model, String errorMessage) {
+        form.getStudios().addAll(getStudios());
+        model.addAttribute("validationError", errorMessage);
+        return "reservation/new";
     }
 
     private List<Equipment> getEquipments() {
@@ -83,7 +108,7 @@ public class ReservationController {
         return equipmentDtoList.stream().map(Equipment::from).collect(Collectors.toList());
     }
 
-    private List<StudioDto> getAccounts() {
+    private List<StudioDto> getStudios() {
         var response = facilityManagementService.getStudios();
         var studioDtoList = response.getBody();
         Objects.requireNonNull(studioDtoList);
