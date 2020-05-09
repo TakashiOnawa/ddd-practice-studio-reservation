@@ -121,7 +121,7 @@ public class Reservation {
         if (this.useTime.equals(useTime)) {
             return;
         }
-        if (!cancellationFeeSetting.isFree(this.useTime, currentDate)) {
+        if (cancellationFeeSetting.isNotFree(this.useTime, currentDate)) {
             throw new CanNotChangeUseTimeException(reservationId);
         }
         this.useTime = useTime;
@@ -163,7 +163,7 @@ public class Reservation {
         if (!userInformation.getMemberId().equals(memberId)) {
             exceptionBuilder.cancelByDifferentMember(memberId);
         }
-        if (!cancellationFeeSetting.isFree(useTime, currentDate)) {
+        if (cancellationFeeSetting.isNotFree(useTime, currentDate)) {
             exceptionBuilder.thereIsCancellationFee();
         }
 

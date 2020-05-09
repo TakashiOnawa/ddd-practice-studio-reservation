@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.identityaccess.api.error.ErrorCode;
-import org.taonaw.identityaccess.api.error.ErrorInformation;
 import org.taonaw.identityaccess.api.error.ErrorResponse;
 import org.taonaw.identityaccess.application.command.login_member.LoginMemberAppService;
 import org.taonaw.identityaccess.application.command.login_member.LoginMemberCommand;
@@ -52,33 +51,23 @@ public class MemberController {
         return ResponseEntity.created(uri).build();
     }
 
+
+
     @ExceptionHandler(LoginMemberNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleException(LoginMemberNotFoundException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.LoginMemberNotFound.getCode())
-                .message("会員が存在しません。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(LoginMemberNotFoundException e) {
+        var response = new ErrorResponse(ErrorCode.LoginMemberNotFound);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     @ExceptionHandler(LoginMemberUnAuthenticatedException.class)
-    public ResponseEntity<ErrorResponse> handleException(LoginMemberUnAuthenticatedException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.LoginMemberUnAuthenticated.getCode())
-                .message("会員のログインパスワードが一致しません。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(LoginMemberUnAuthenticatedException e) {
+        var response = new ErrorResponse(ErrorCode.LoginMemberUnAuthenticated);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     @ExceptionHandler(MemberDuplicatedException.class)
-    public ResponseEntity<ErrorResponse> handleException(MemberDuplicatedException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.MemberDuplicated.getCode())
-                .message("会員が重複しています。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(MemberDuplicatedException e) {
+        var response = new ErrorResponse(ErrorCode.MemberDuplicated);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

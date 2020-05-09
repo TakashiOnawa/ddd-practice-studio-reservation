@@ -14,10 +14,14 @@ public class CancellationFeeSetting {
 
     public boolean isFree(@NonNull UseTime useTime, @NonNull LocalDate currentDate) {
         for (var cancellationFeeRate : cancellationFeeRates) {
-            if (cancellationFeeRate.isApplied(useTime, currentDate) && !cancellationFeeRate.isFree()) {
+            if (cancellationFeeRate.isApplied(useTime, currentDate) && cancellationFeeRate.isNotFree()) {
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean isNotFree(@NonNull UseTime useTime, @NonNull LocalDate currentDate) {
+        return !isFree(useTime, currentDate);
     }
 }

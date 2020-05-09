@@ -16,7 +16,7 @@ public class ReservationValidationException extends MultipleDomainException {
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class OverMaxNumberOfUsers extends Reason {
-        @NonNull private final int numberOfUsers;
+        private final int numberOfUsers;
 
         @Override
         public String getMessage() {

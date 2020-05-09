@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
     private final List<ErrorInformation> errors = new ArrayList<>();
 
+    public ErrorResponse(@NonNull ErrorCode errorCode) {
+        errors.add(new ErrorInformation(errorCode));
+    }
+
     public ErrorResponse(@NonNull ErrorInformation error) {
         errors.add(error);
     }

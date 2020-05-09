@@ -13,6 +13,14 @@ public enum ErrorCode {
 
     ReservationDuplicated(30000),
     EquipmentOutOfStocks(30001),
+    OverMaxNumberOfUsers(30001),
+    OutOfOpeningHours(30002),
+    ReservationNotStarted(30003),
+    StartTimeTypeNotSatisfied(30004),
+    CanNotChangeUseTime(30005),
+    CanNotChangeUserInformation(30006),
+    CanNotCancelByDifferentMember(30007),
+    CanNotCancelThereIsCancellationFee(30008),
     ;
 
     private final int code;

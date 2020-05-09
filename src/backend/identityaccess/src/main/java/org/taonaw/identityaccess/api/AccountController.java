@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.taonaw.identityaccess.api.error.ErrorCode;
-import org.taonaw.identityaccess.api.error.ErrorInformation;
 import org.taonaw.identityaccess.api.error.ErrorResponse;
 import org.taonaw.identityaccess.application.command.login_account.LoginAccountAppService;
 import org.taonaw.identityaccess.application.command.login_account.LoginAccountCommand;
@@ -63,32 +62,20 @@ public class AccountController {
 
 
     @ExceptionHandler(LoginAccountNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleException(LoginAccountNotFoundException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.LoginAccountNotFound.getCode())
-                .message("ログインアカウントが見つかりません。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(LoginAccountNotFoundException e) {
+        var response = new ErrorResponse(ErrorCode.LoginAccountNotFound);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(LoginAccountUnAuthenticatedException.class)
-    public ResponseEntity<ErrorResponse> handleException(LoginAccountUnAuthenticatedException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.LoginAccountNotFound.getCode())
-                .message("ログインパスワードが一致しません。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(LoginAccountUnAuthenticatedException e) {
+        var response = new ErrorResponse(ErrorCode.LoginAccountNotFound);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(AccountDuplicatedException.class)
-    public ResponseEntity<ErrorResponse> handleException(AccountDuplicatedException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.AccountDuplicated.getCode())
-                .message("アカウントが重複しています。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(AccountDuplicatedException e) {
+        var response = new ErrorResponse(ErrorCode.AccountDuplicated);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

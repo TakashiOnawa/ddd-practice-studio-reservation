@@ -86,7 +86,7 @@ public class ReservationController {
                 return newReservationErrorProcess(form, model, "不正な入力があります。");
             }
 
-            // TODO:予約確認エラーのチェック
+            // その他予約検証エラーのチェックなど。
 
             throw e;
         }

@@ -19,8 +19,7 @@ import org.taonaw.reservation.application.command.change_reservation.ChangeReser
 import org.taonaw.reservation.application.command.change_reservation.ChangeReservationResult;
 import org.taonaw.reservation.application.command.reserve_studio.ReserveStudioAppService;
 import org.taonaw.reservation.application.command.reserve_studio.ReserveStudioCommand;
-import org.taonaw.reservation.domain.exception.EquipmentOutOfStocksException;
-import org.taonaw.reservation.domain.exception.ReservationDuplicatedException;
+import org.taonaw.reservation.domain.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,21 +88,61 @@ public class ReservationController {
 
 
     @ExceptionHandler(ReservationDuplicatedException.class)
-    public ResponseEntity<ErrorResponse> handleException(ReservationDuplicatedException exception) {
-        var error = ErrorInformation.builder()
-                .code(ErrorCode.ReservationDuplicated.getCode())
-                .message("予約が重複しています。")
-                .build();
-        var response = new ErrorResponse(error);
+    public ResponseEntity<ErrorResponse> handleException(ReservationDuplicatedException e) {
+        var response = new ErrorResponse(ErrorCode.ReservationDuplicated);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(EquipmentOutOfStocksException.class)
-    public ResponseEntity<ErrorResponse> handleException(EquipmentOutOfStocksException exception) {
-        var error = new ErrorInformation(ErrorCode.EquipmentOutOfStocks.getCode(), "予約機材の在庫が余っていません") {
-            @Getter private final List<String> equipmentIds = new ArrayList<>(exception.getEquipmentIds());
+    public ResponseEntity<ErrorResponse> handleException(EquipmentOutOfStocksException e) {
+        var error = new ErrorInformation(ErrorCode.EquipmentOutOfStocks) {
+            @Getter private final List<String> equipmentIds = new ArrayList<>(e.getEquipmentIds());
         };
         var response = new ErrorResponse(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(ReservationValidationException.class)
+    public ResponseEntity<ErrorResponse> handleException(ReservationValidationException e) {
+        var errorList = new ArrayList<ErrorInformation>();
+        if (e.isReasonExists(ReservationValidationException.OverMaxNumberOfUsers.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.OverMaxNumberOfUsers));
+        }
+        if (e.isReasonExists(ReservationValidationException.OutOfOpeningHours.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.OutOfOpeningHours));
+        }
+        if (e.isReasonExists(ReservationValidationException.ReservationNotStarted.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.ReservationNotStarted));
+        }
+        if (e.isReasonExists(ReservationValidationException.StartTimeTypeNotSatisfied.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.StartTimeTypeNotSatisfied));
+        }
+        var response = new ErrorResponse(errorList);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(CanNotChangeUseTimeException.class)
+    public ResponseEntity<ErrorResponse> handleException(CanNotChangeUseTimeException e) {
+        var response = new ErrorResponse(ErrorCode.CanNotChangeUseTime);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    
+    @ExceptionHandler(CanNotChangeUserInformationException.class)
+    public ResponseEntity<ErrorResponse> handleException(CanNotChangeUserInformationException e) {
+        var response = new ErrorResponse(ErrorCode.CanNotChangeUserInformation);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(CanNotCancelReservationException.class)
+    public ResponseEntity<ErrorResponse> handleException(CanNotCancelReservationException e) {
+        var errorList = new ArrayList<ErrorInformation>();
+        if (e.isReasonExists(CanNotCancelReservationException.CancelByDifferentMember.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.CanNotCancelByDifferentMember));
+        }
+        if (e.isReasonExists(CanNotCancelReservationException.ThereIsCancellationFee.class)) {
+            errorList.add(new ErrorInformation(ErrorCode.CanNotCancelThereIsCancellationFee));
+        }
+        var response = new ErrorResponse(errorList);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

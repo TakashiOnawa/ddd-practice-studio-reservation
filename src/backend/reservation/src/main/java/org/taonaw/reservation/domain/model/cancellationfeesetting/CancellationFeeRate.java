@@ -23,4 +23,8 @@ public class CancellationFeeRate {
     public boolean isFree() {
         return rate == 0;
     }
+
+    public boolean isNotFree() {
+        return !isFree();
+    }
 }
