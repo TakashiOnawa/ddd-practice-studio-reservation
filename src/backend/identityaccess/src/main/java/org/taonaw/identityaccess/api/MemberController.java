@@ -20,6 +20,7 @@ import org.taonaw.identityaccess.domain.exception.LoginMemberUnAuthenticatedExce
 import org.taonaw.identityaccess.domain.exception.MemberDuplicatedException;
 
 @RestController
+@RequestMapping("/members")
 @AllArgsConstructor
 @ControllerAdvice
 public class MemberController {
@@ -30,19 +31,19 @@ public class MemberController {
     @Autowired
     private final IMemberQuery memberQuery;
 
-    @PostMapping("/members/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginMemberResult> login(@RequestBody LoginMemberCommand request) {
         var response = loginMemberAppService.handle(request);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/members/{memberId}")
+    @GetMapping("/{memberId}")
     public ResponseEntity<MemberDto> getMember(@PathVariable("memberId") String memberId) {
         var member = memberQuery.getByMemberId(memberId);
         return member.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/members")
+    @PostMapping
     public ResponseEntity<Void> registerMember(
             @RequestBody RegisterMemberCommand request,
             UriComponentsBuilder uriComponentsBuilder) {

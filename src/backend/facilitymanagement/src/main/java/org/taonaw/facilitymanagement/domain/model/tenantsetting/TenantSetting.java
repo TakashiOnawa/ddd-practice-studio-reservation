@@ -1,7 +1,7 @@
 package org.taonaw.facilitymanagement.domain.model.tenantsetting;
 
 import lombok.NonNull;
-import org.taonaw.facilitymanagement.domain.shared.exception.DomainException;
+import org.taonaw.facilitymanagement.domain.exception.ChangeCancellationFeeRatesException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -90,14 +90,14 @@ public class TenantSetting {
                 .collect(groupingBy(CancellationFeeRate::getDaysAgo)).values().stream()
                 .anyMatch(rates -> rates.size() > 1);
         if (sameDaysAgoExists) {
-            throw new DomainException("同じ日付に対してキャンセル料金を設定することはできません。");
+            throw new ChangeCancellationFeeRatesException("同じ日付に対してキャンセル料金を設定することはできません。");
         }
 
         var sameRateExists = cancellationFeeRates.stream()
                 .collect(groupingBy(CancellationFeeRate::getRate)).values().stream()
                 .anyMatch(rates -> rates.size() > 1);
         if (sameRateExists) {
-            throw new DomainException("複数の日付に同じキャンセル料金を設定することはできません。");
+            throw new ChangeCancellationFeeRatesException("複数の日付に同じキャンセル料金を設定することはできません。");
         }
 
         var sortedRates = cancellationFeeRates.stream()
@@ -107,7 +107,7 @@ public class TenantSetting {
         var currentRate = CancellationFeeRate.maxRate();
         for (var cancellationFeeRate : sortedRates) {
             if (currentRate < cancellationFeeRate.getRate()) {
-                throw new DomainException("キャンセル料金は徐々に高くする必要があります。");
+                throw new ChangeCancellationFeeRatesException("キャンセル料金は徐々に高くする必要があります。");
             }
             currentRate = cancellationFeeRate.getRate();
         }

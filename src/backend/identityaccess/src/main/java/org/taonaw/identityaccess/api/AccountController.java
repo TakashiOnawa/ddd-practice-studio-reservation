@@ -22,6 +22,7 @@ import org.taonaw.identityaccess.domain.exception.LoginAccountUnAuthenticatedExc
 import java.util.List;
 
 @RestController
+@RequestMapping("/accounts")
 @AllArgsConstructor
 @ControllerAdvice
 public class AccountController {
@@ -32,25 +33,25 @@ public class AccountController {
     @Autowired
     private final IAccountQuery accountQuery;
 
-    @PostMapping("/accounts/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginAccountResult> login(@RequestBody LoginAccountCommand request) {
         var response = loginAccountAppService.handle(request);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/accounts/{accountId}")
+    @GetMapping("/{accountId}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable("accountId") String accountId) {
         var account = accountQuery.getByAccountId(accountId);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/accounts")
+    @GetMapping
     public ResponseEntity<List<AccountDto>> getAccounts() {
         var accounts = accountQuery.getAll();
         return ResponseEntity.ok(accounts);
     }
 
-    @PostMapping("/accounts")
+    @PostMapping
     public ResponseEntity<Void> registerAccount(
             @RequestBody RegisterAccountCommand request,
             UriComponentsBuilder uriComponentsBuilder) {
