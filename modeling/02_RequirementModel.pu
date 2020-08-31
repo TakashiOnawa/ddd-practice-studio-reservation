@@ -3,19 +3,17 @@
 left to right direction
 
 actor 利用者
-note right : スタジオ、機材の空き情報を確認したい。
+note right : スタジオ、機材の空き情報を確認したい。（予約するため。）
 actor 利用者
-note right : スタジオ、機材の利用料金を確認したい。
+note right : スタジオ、機材の利用料金を確認したい。（予約するため。）
 actor 利用者
-note right : 借りたいスタジオ、機材を Web で予約したい。
-actor 利用者
-note right : 個人練習だとしても Web で予約したい。
+note right : 借りたいスタジオ、機材を Web で予約したい。（電話が手間であるため。）
 
 actor スタッフ
 note right : 予約当日の電話受付をしたくない。（スタジオの転換作業で忙しいため。）
 actor スタッフ
-note right : 利用予定機材をあらかじめ把握しておきたい。（空いた時間で次の予約の準備をしたいため。）
+note right : 予約内容を確認したい。（空いた時間で準備をしたいため。）
 actor スタッフ
-note right : スタジオ、機材の空き状況をリアルタイムで把握したい。（当日予約に対応するため。）
+note right : スタジオ、機材の空き状況を把握したい。（電話予約、当日予約に対応するため。）
 
 @enduml

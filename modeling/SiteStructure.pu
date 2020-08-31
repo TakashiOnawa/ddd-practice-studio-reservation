@@ -2,14 +2,14 @@
 
 left to right direction
 
-actor 会員
+actor 利用者
 actor スタッフ
 actor 管理スタッフ
 
 rectangle 会員サイト
 rectangle 管理サイト
 
-会員 --> 会員サイト
+利用者 --> 会員サイト
 スタッフ --> 管理サイト
 管理スタッフ --> 管理サイト
 管理スタッフ --> 会員サイト
@@ -20,9 +20,10 @@ note right of 会員サイト
 end note
 
 note right of 管理サイト
-* 予約スケジュール確認
-* スタジオ予約（電話、店頭での予約）
-* 各種マスタ管理
+* スタッフ管理
+* スタジオ管理
+* 機材管理
+* 予約管理（スケジュール確認、予約）
 end note
 
 @enduml

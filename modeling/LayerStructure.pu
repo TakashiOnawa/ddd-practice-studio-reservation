@@ -3,7 +3,7 @@
 package domain
 {
     package model {
-        interface IRepository
+        interface Repository
         class DomainService
         class DomainObject
         {
@@ -11,28 +11,23 @@ package domain
             ValueObject
         }
     }
-
-    package exception {
-        class DomainException
-    }
 }
 
-package application
+package usecase
 {
     package command {
-        class AppService
+        class CommandService
     }
 
     package query {
-        interface IQuery
+        interface QueryService
     }
 }
 
-
 package infrastructure
 {
-    class Repository
-    class Query
+    class RepositoryImpl
+    class QueryServiceImpl
 }
 
 package api
@@ -40,21 +35,18 @@ package api
     class Controller
 }
 
-DomainService -> IRepository
-DomainService --> DomainObject
-IRepository --> DomainObject
-
-AppService --> IRepository
-AppService --> DomainObject
-AppService --> DomainService
-AppService --> DomainException
-
-IRepository <|---- Repository
-IQuery <|---- Query
+DomainService -> Repository
+DomainService -> DomainObject
 Repository --> DomainObject
 
-Controller --> AppService
-Controller --> IQuery
-Controller --> DomainException
+CommandService --> Repository
+CommandService --> DomainObject
+CommandService --> DomainService
+
+Repository <|--- RepositoryImpl
+QueryService <|--- QueryServiceImpl
+
+Controller --> CommandService
+Controller --> QueryService
 
 @enduml

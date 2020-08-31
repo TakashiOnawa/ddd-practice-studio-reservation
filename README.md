@@ -1,49 +1,45 @@
 # 概要
 スタジオ予約を題材とした DDD の練習プロジェクトです。
 
-RDRA 2.0 に沿って要件定義をします。
+要件定義は RADRA 2.0 を参考にしています。
 
 # システムコンテキスト
 ![](./modeling/01_SystemContext/SystemContext.png)
 
 # 要求モデル
-### 要望
+## 要望
 ![](./modeling/02_RequirementModel/RequirementModel.png)
 
-### 要件
-* Web でスタジオ、機材の空き状況が確認でき、予約ができること。
-* バンド練習、個人練習両方の予約ができること。
-* スタジオ、機材の在庫数が管理できること。
+## 要件
+* スタジオ、機材の空き状況を確認できること。
+* スタジオ、機材を予約できること。
 
 # ビジネスコンテキスト・ビジネスユースケース
 ## 予約（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_予約/BusinessUsecase.png)
-* ユーザーが Web で予約する「Web予約」。（Web での会員登録が必要。）
-* ユーザーが電話で予約する「電話予約」。
-* ユーザーが店頭で直接予約する「店頭予約」。
-
-＜補足＞
-* スタジオ利用終了後に次回の予約を行うこともある。
+* 利用者が Web で会員登録する「会員登録」。
+* 利用者が Web で予約する「Web予約」。
+* 利用者が電話で予約する「電話予約」。（スタッフが Web 予約を代行する。）
+* 利用者が店頭で直接予約する「店頭予約」。(スタッフが Web 予約を代行する。）
 
 ## 設備管理（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
-* 管理者が店舗の管理を行う「店舗管理」。
-* 管理者がスタジオの管理を行う「スタジオ管理」。
-* 管理者が機材の在庫管理を行う「機材管理」。
 * 管理者がスタッフの管理を行う「スタッフ管理」。
+* 管理者がスタジオの管理を行う「スタジオ管理」。
+* 管理者が機材の管理を行う「機材管理」。
 
 ## スタジオ利用（ビジネスコンテキスト）
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
 * スタッフが機材貸出や転換などを行う「スタジオ準備」。
-* 利用者がスタジオを利用する「練習」。
+* 利用者がスタジオで練習する「スタジオ利用」。
 * 利用者が支払いを行う「会計」。
 
 ＜補足＞
 * 練習中に追加で機材を借りることもある。
-* スタッフは機材が返却されたときにすべて返却されているか確認する。
+* スタッフは会計の際に機材が全て返却されていることを確認する。
 
 # 業務フロー
-ビジネスユースケースごとに業務フローを洗い出しシステムのユースケースを洗い出す。ユースケースはユースケース複合図で示す。
+- ユースケースを洗い出すために、ビジネスユースケースごとに業務フロー図を作成する。
 
 今回は省略。
 
@@ -52,6 +48,9 @@ RDRA 2.0 に沿って要件定義をします。
 
 # ユースケース
 ## 予約（ビジネスコンテキスト）
+### 会員登録
+![](./modeling/05_Usecase_会員登録/Usecase.png)
+
 ### Web 予約
 ![](./modeling/05_Usecase_Web予約/Usecase.png)
 
@@ -62,8 +61,8 @@ RDRA 2.0 に沿って要件定義をします。
 ![](./modeling/05_Usecase_店頭予約/Usecase.png)
 
 ## 設備管理（ビジネスコンテキスト）
-### 店舗管理
-![](./modeling/05_Usecase_店舗管理/Usecase.png)
+### スタッフ管理
+![](./modeling/05_Usecase_スタッフ管理/Usecase.png)
 
 ### スタジオ管理
 ![](./modeling/05_Usecase_スタジオ管理/Usecase.png)
@@ -71,115 +70,46 @@ RDRA 2.0 に沿って要件定義をします。
 ### 機材管理
 ![](./modeling/05_Usecase_機材管理/Usecase.png)
 
-### スタッフ管理
-![](./modeling/05_Usecase_スタッフ管理/Usecase.png)
+# 画面設計
+- 作るものをイメージしやすくするために画面のラフ画を作る。
+- ユースケースを満たすように作っていく。
 
-# コンテキストマップ
-![](./modeling/06_ContextMap/ContextMap.png)
+# ドメインモデル
+- ドメインモデル図とビジネスルールをまとめていく。
 
-# ドメインモデル（予約）
-![](./modeling/07_DomainModel_予約/DomainModel.png)
+## ドメインモデル図
+![](./modeling/07_DomainModel/DomainModel.png)
 
-# ドメインモデル（設備管理）
-![](./modeling/07_DomainModel_設備管理/DomainModel.png)
+## 用語集
+- ドメインに登場する概念とそれが何を示すかの説明をまとめ、開発者間で認識齟齬が生まれないようにする。（ユビキタス言語を定義する。）
 
-# ドメインモデル（認証）
-![](./modeling/07_DomainModel_認証/DomainModel.png)
+## ビジネスルール
+### 予約
+- 予約時間の単位は 1 時間
+- スタジオごとにスタート時間（0 分スタート、30 分スタート）が決まる
+- 練習区分としてバンド練習と個人練習がある。
+- 個人練習の最大利用人数は 2 名まで。
+- 練習区分ごとに予約受付開始日時が決まる。（個人練習は前日 21 時から、バンド練習は 2 ヶ月前からなど。）
+- スタジオごとに各機材種別の最大利用数を決められる。
+- 会員による Web でのキャンセルは、キャンセル料金がかからない場合のみ可能。
+- キャンセル料金は利用日の何日前から何%といったように決められる。
+- 営業時間を超えた予約を行うことはできない。
 
-# アーキテクチャ
-* コンテキストごとにアプリケーションを作成する。（マイクロサービスアーキテクチャ）
-* サービス間の通信は同期通信とし、REST で通信する。
-![](./modeling/Architecture/Architecture.png)
+### 会員アカウント
+- ログインID とパスワードでシステムにログインする。
+- パスワードは 8 文字以上 16 文字以内で、半角英数記号がそれぞれ 1 文字以上含まれていなければならない。
+- ログインID の重複は許さない。
 
-# レイヤー構造（バックエンド）
-バックエンドの各サービスのレイヤー構造は基本的に以下の構造とする。
-![](./modeling/LayerStructure/LayerStructure.png)
+### スタッフアカウント
+- メールアドレスとパスワードでシステムにログインする。
+- パスワードは 8 文字以上 16 文字以内で、半角英数記号がそれぞれ 1 文字以上含まれていなければならない。
+- メールアドレス の重複は許さない。
 
-## api 層
-* REST API を提供する Controller を配置する。
+### 利用料金
+* 基本料金は、スタジオ、曜日、時間帯、練習区分できまる。
 
-## application 層
-* ユースケースを実現する。
-* command と query でパッケージを分ける。
-
-**＜command パッケージ＞**
-* DomainObject を利用してユースケースを実現する AppService を配置する。
-* パラメータクラス（XxxCommand）、戻り値クラス（XxxResult）もここに配置される。
-* 基本的にユースケースごとに AppService を分け、各 AppService にはメソッドが 1 つになるようにする。例えば、ReservationAppService に reserveStudio()、cancelReservation() といったメソッドを定義するのではなく、ReserveStudioAppService、CancelReservationAppService といったようにクラスを分ける。
-
-**＜query パッケージ＞**
-* データ取得のためインターフェース IQuery を配置する。
-* 戻り値クラス（XxxDto）もここに配置される。
-* 戻り値の型ごとにインターフェースを作成する。
-
-## domain 層
-* DDD における戦術的設計を利用してドメインモデルを表現する。
-* 集約ごとにパッケージを作成し、集約単位で Repository のインターフェースを定義する。
-* ライブラリに依存しないことが理想ではあるが、hashCode, equals の実装やうや null チェックを簡略化するため lombok への依存のみは許可する。
-
-## infrastructure 層
-* domain 層の IRepository、application 層の IQuery の実装クラスを配置する。
-
-# API
-## Management Site
-|Method|URI|説明|
-|---|---|---|
-|GET|/login|ログイン画面を表示する。|
-|GET|/login?error|ログイン画面（認証失敗メッセージ）を表示する。|
-|GET|/accounts|アカウント一覧画面を表示する。|
-|GET|/accounts/new|アカウント登録画面を表示する。|
-|POST|/accounts|アカウントを登録する。|
-|GET|/reservations|予約一覧画面を表示する。|
-|GET|/reservations/new|スタジオ予約画面を表示する。|
-|POST|/reservations|スタジオを予約する。|
-
-## Identity Access
-|Method|URI|説明|
-|---|---|---|
-|POST|/accounts/login|ログインID、パスワードで認証を行う。|
-|GET|/accounts|すべてのアカウントを取得する。|
-|GET|/accounts/{accountId}|指定されたIDのアカウントを取得する。|
-|POST|/accounts|アカウントを登録する。|
-|POST|/members/login|会員のメールアドレス、パスワードで認証を行う。|
-|POST|/members|会員を登録する。|
-|GET|/members/{memberId}|指定されたIDの会員を取得する。|
-
-## Facility Management
-|Method|URI|説明|
-|---|---|---|
-|POST|/equipment_categories|機材カテゴリを登録する。|
-|PUT|/equipment_categories/{equipmentCategoryId}|機材カテゴリ情報を更新する。|
-|GET|/equipments|すべての機材を取得する。|
-|POST|/equipments|機材を登録する。|
-|PUT|/equipments/{equipmentId}|機材情報を更新する。|
-|GET|/reservation_setting|予約の検証に関する設定を取得する。|
-|GET|/studios|すべてのスタジオを取得する。|
-|POST|/studios|スタジオを登録する。|
-|PUT|/studios/{studioId}|スタジオ情報を更新する。|
-|GET|/tenant_setting|店舗に関する設定を取得する。|
-|PUT|/tenant_setting|店舗に関する設定を更新する。|
-|GET|/tenant_setting/cancellatin_fee_rates|キャンセル料金レートを取得する。|
-
-## Reservation
-|Method|URI|説明|
-|---|---|---|
-|POST|/reservations|スタジオを予約する。|
-|POST|/reservations?memberId={memberId}|会員がスタジオを予約する。|
-|PUT|/reservations/{reservationId}|予約を変更する。|
-|POST|/reservations/{reservationId}/cancel|予約をキャンセルする。|
-|POST|/reservations/{reservationId}/cancel?memberId={memberId}|会員が予約をキャンセルする。|
-
-# その他やりたいこと
-### 料金の管理
-* スタジオ、曜日区分、時間帯で料金が決まる
-* パック料金計算
-* 料金は、スタジオ、バンド練習/個人練習、土日祭、利用時間で決まる。
-* 学生は 10 % OFF
-* キャンセルは 1 週間前までは無料、前日までは半額、当日は全額。
-* キャンセル料は個別に支払うか、次回利用の支払い時に上乗せされる。
-
-### 料金表
-#### バンド練習
+#### 料金例
+##### バンド練習
 |スタジオ|曜日区分|10 - 19|19 - 10|
 |---|---|---|---|
 |Studio A（9 畳）|平日|￥1,000/1h|￥1,500/1h|
@@ -191,13 +121,42 @@ RDRA 2.0 に沿って要件定義をします。
 |Studio D（20 畳）|平日|￥2,000/1h|￥2,500/1h|
 ||土日祭|￥2,500/1h|￥2,500/1h|
 
-#### 個人練習
+##### 個人練習
 |人数|曜日区分|10 - 19|19 - 10|
 |---|---|---|---|
 |1 名|平日|￥500/1h|￥700/1h|
 ||土日祭|￥700/1h|￥700/1h|
 |2 名|平日|￥800/1h|￥1,000/1h|
 ||土日祭|￥1,000/1h|￥1,000/1h|
+
+# レイヤー構造（バックエンド）
+バックエンドの各サービスのレイヤー構造は基本的に以下の構造とする。
+![](./modeling/LayerStructure/LayerStructure.png)
+
+## api 層
+* API を提供する Controller を配置する。
+
+## usecase 層
+* データ登録/更新系の CommandService とデータ参照系の QueryService に別れる。
+
+**＜CommandService＞**
+* domain 層の DomainObject を利用してユースケースを実現する。
+
+**＜QueryService＞**
+* 画面に特化した形式でデータを取得するためのインターフェース。
+
+## domain 層
+* ドメインモデルを表現したもの。
+* DomainObject を永続領域から取得、永続化を行うための Repository（インターフェース）を配置する。
+
+## infrastructure 層
+* データベースや特定の技術に依存した処理が行われる。
+* domain 層の Repository の実装クラスを配置し、DomainObject と永続領域間の変換を行う。
+* usecase 層の QueryService の実装クラスを配置し、永続領域から画面に特化した形式でデータを取得する。
+
+# TODO
+* パック料金計算。
+* 学生のディスカウント。（10 % OFFなど。）
 
 # 参考
 * [PlantUML Example for RDRA 2.0 ハンドブック](https://qiita.com/ogomr/items/97058a87337eaa2ba21a)
