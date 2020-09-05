@@ -1,4 +1,4 @@
-package org.taonaw.studio_reservation.usecase.command.staffLogin;
+package org.taonaw.studio_reservation.usecase.command.staff.loginStaffAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.taonaw.studio_reservation.domain.model.staffAccount.LoginId;
 @Getter
 @Builder
 @AllArgsConstructor
-public class StaffLoginCommand {
+public class LoginStaffAccountCommand {
     private LoginId loginId;
     private PlainTextPassword plainTextPassword;
 }

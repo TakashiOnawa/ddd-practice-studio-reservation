@@ -35,7 +35,7 @@ dependencies {
 	}
 	implementation 'org.apache.commons:commons-lang3:3.4'
 	implementation 'com.google.code.gson:gson:2.8.6'
-	implementation 'de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.2.0'
+	compile group: 'de.huxhorn.sulky', name: 'de.huxhorn.sulky.ulid', version: '8.2.0'
 }
 
 test {

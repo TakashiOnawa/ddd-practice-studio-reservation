@@ -1,5 +1,6 @@
 package org.taonaw.studio_reservation.domain.model.staffAccount;
 
+import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.shared.HashedPassword;
 import org.taonaw.studio_reservation.domain.model.shared.PasswordEncoder;
 import org.taonaw.studio_reservation.domain.model.shared.PersonName;
@@ -13,7 +14,24 @@ public class StaffAccount {
     private LoginId loginId;
     private HashedPassword password;
 
-    public boolean authenticate(LoginId loginId, PlainTextPassword plainTextPassword, PasswordEncoder passwordEncoder) {
+    public static StaffAccount create(
+            @NonNull PersonName staffName,
+            @NonNull LoginId loginId,
+            @NonNull HashedPassword hashedPassword) {
+
+        var instance = new StaffAccount();
+        instance.id = StaffAccountId.newId();
+        instance.name = staffName;
+        instance.loginId = loginId;
+        instance.password = hashedPassword;
+        return instance;
+    }
+
+    public boolean authenticate(
+            LoginId loginId,
+            PlainTextPassword plainTextPassword,
+            PasswordEncoder passwordEncoder) {
+
         return this.loginId.equals(loginId) && plainTextPassword.matches(this.password, passwordEncoder);
     }
 

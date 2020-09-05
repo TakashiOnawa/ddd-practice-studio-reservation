@@ -53,7 +53,7 @@ public final class Assertion {
         }
     }
 
-    public static void argumentPatternMatches(String value, String regex, String message) {
+    public static void argumentPattern(String value, String regex, String message) {
         if (!Pattern.matches(regex, value)) {
             throw new IllegalArgumentException(message);
         }
