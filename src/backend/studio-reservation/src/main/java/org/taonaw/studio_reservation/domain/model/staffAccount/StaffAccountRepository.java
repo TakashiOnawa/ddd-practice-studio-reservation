@@ -6,7 +6,6 @@ public interface StaffAccountRepository {
     Optional<StaffAccount> findBy(LoginId loginId);
     AddResults add(StaffAccount staffAccount);
 
-
     enum AddResults {
         SUCCEEDED,
         DUPLICATED;

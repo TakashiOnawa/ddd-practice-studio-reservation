@@ -18,7 +18,7 @@ public class RegisterStaffAccountService {
 
     private void handle(RegisterStaffAccountCommand command) {
         var staffAccount = StaffAccount.create(
-                command.getStaffName(),
+                command.getName(),
                 command.getLoginId(),
                 command.getPlainTextPassword().createHashedPassword(passwordEncoder));
 
@@ -29,7 +29,7 @@ public class RegisterStaffAccountService {
         }
 
         if (!addResult.isSucceeded()) {
-            throw new IllegalStateException("StaffAccount の永続化に失敗しました。");
+            throw new IllegalStateException("スタッフアカウントの永続化に失敗しました。");
         }
     }
 }

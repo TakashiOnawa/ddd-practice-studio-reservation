@@ -11,7 +11,7 @@ import org.taonaw.studio_reservation.domain.model.staffAccount.LoginId;
 @Builder
 @AllArgsConstructor
 public class RegisterStaffAccountCommand {
-    private PersonName staffName;
+    private PersonName name;
     private LoginId loginId;
     private PlainTextPassword plainTextPassword;
 }

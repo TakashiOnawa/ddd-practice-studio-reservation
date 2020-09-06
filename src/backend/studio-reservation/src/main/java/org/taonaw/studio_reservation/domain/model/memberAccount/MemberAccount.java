@@ -13,6 +13,23 @@ public class MemberAccount {
     private DateOfBirth dateOfBirth;
     private PhoneNumber phoneNumber;
 
+    public static MemberAccount create(
+            @NonNull PersonName name,
+            @NonNull EmailAddress emailAddress,
+            @NonNull HashedPassword hashedPassword,
+            @NonNull DateOfBirth dateOfBirth,
+            @NonNull PhoneNumber phoneNumber) {
+
+        var instance = new MemberAccount();
+        instance.id = MemberAccountId.newId();
+        instance.name = name;
+        instance.emailAddress = emailAddress;
+        instance.password = hashedPassword;
+        instance.dateOfBirth = dateOfBirth;
+        instance.phoneNumber = phoneNumber;
+        return instance;
+    }
+
     public boolean authenticate(
             @NonNull EmailAddress emailAddress,
             @NonNull PlainTextPassword plainTextPassword,
