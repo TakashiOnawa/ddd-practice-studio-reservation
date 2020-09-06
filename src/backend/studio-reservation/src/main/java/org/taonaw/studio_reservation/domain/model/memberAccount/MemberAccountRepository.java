@@ -6,7 +6,6 @@ import java.util.Optional;
 
 public interface MemberAccountRepository {
     Optional<MemberAccount> findBy(EmailAddress emailAddress);
-
     AddResults add(MemberAccount memberAccount);
 
     enum AddResults {
