@@ -28,9 +28,9 @@ public class StaffAccount {
     }
 
     public boolean authenticate(
-            LoginId loginId,
-            PlainTextPassword plainTextPassword,
-            PasswordEncoder passwordEncoder) {
+            @NonNull LoginId loginId,
+            @NonNull PlainTextPassword plainTextPassword,
+            @NonNull PasswordEncoder passwordEncoder) {
 
         return this.loginId.equals(loginId) && plainTextPassword.matches(this.password, passwordEncoder);
     }
