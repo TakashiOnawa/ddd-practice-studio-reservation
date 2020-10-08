@@ -24,6 +24,22 @@ public class Equipment {
         return instance;
     }
 
+    public EquipmentId getId() {
+        return id;
+    }
+
+    public EquipmentName getName() {
+        return name;
+    }
+
+    public EquipmentCategoryId getCategoryId() {
+        return categoryId;
+    }
+
+    public EquipmentStockCount getStockCount() {
+        return stockCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -26,4 +26,8 @@ public class PhoneNumber {
         this.localNumber = localNumber;
         this.subscriberNumber = subscriberNumber;
     }
+
+    public String asFormattedNumber() {
+        return areaCode + "-" + localNumber + "-" + subscriberNumber;
+    }
 }

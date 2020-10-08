@@ -38,6 +38,30 @@ public class MemberAccount {
         return this.emailAddress.equals(emailAddress) && plainTextPassword.matches(this.password, passwordEncoder);
     }
 
+    public MemberAccountId getId() {
+        return id;
+    }
+
+    public PersonName getName() {
+        return name;
+    }
+
+    public EmailAddress getEmailAddress() {
+        return emailAddress;
+    }
+
+    public HashedPassword getPassword() {
+        return password;
+    }
+
+    public DateOfBirth getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

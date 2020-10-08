@@ -3,6 +3,9 @@ package org.taonaw.studio_reservation.domain.model.reservation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
+import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDateTime;
+import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -29,5 +32,21 @@ public class UsageTime {
 
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+    }
+
+    public boolean isOverlapped(@NonNull UsageTime other) {
+        return startDateTime.isBefore(other.endDateTime) && other.startDateTime.isBefore(endDateTime);
+    }
+
+    public boolean satisfy(@NonNull OpeningHour openingHour) {
+        return false;
+    }
+
+    public boolean satisfy(@NonNull ReservationStartDateTime reservationStartDateTime) {
+        return false;
+    }
+
+    public boolean satisfy(@NonNull StartTimes startTime) {
+        return false;
     }
 }

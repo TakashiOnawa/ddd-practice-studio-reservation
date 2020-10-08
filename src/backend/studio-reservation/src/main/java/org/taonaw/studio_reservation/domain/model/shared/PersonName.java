@@ -16,4 +16,8 @@ public class PersonName {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public String asFormattedName() {
+        return lastName + " " + firstName;
+    }
 }
