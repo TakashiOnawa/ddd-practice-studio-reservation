@@ -1,4 +1,4 @@
-package org.taonaw.studio_reservation.usecase.command.reservation;
+package org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
