@@ -2,7 +2,6 @@ package org.taonaw.studio_reservation.domain.model.shared;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 
 @Getter
@@ -12,9 +11,9 @@ public class PhoneNumber {
     private final String localNumber;
     private final String subscriberNumber;
 
-    public PhoneNumber(@NonNull String areaCode,
-                       @NonNull String localNumber,
-                       @NonNull String subscriberNumber) {
+    public PhoneNumber(String areaCode,
+                       String localNumber,
+                       String subscriberNumber) {
 
         Assertion.argumentPattern(areaCode, "[0-9]*", "市外局番は半角数字でなければなりません。");
         Assertion.argumentRange(areaCode, 2, 4);

@@ -8,9 +8,12 @@ public class EquipmentCategory {
     private EquipmentCategoryId id;
     private EquipmentCategoryName name;
 
+    private EquipmentCategory(@NonNull EquipmentCategoryId id) {
+        this.id = id;
+    }
+
     public static EquipmentCategory create(@NonNull EquipmentCategoryName name) {
-        var instance = new EquipmentCategory();
-        instance.id = EquipmentCategoryId.newId();
+        var instance = new EquipmentCategory(EquipmentCategoryId.newId());
         instance.name = name;
         return instance;
     }

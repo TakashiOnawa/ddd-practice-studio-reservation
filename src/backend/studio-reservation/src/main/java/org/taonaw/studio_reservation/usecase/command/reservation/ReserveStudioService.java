@@ -12,7 +12,7 @@ import org.taonaw.studio_reservation.domain.model.reservation.usageEquipment.Usa
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 import org.taonaw.studio_reservation.usecase.command.exception.EquipmentNotFoundException;
 import org.taonaw.studio_reservation.usecase.command.exception.MemberAccountNotFoundException;
-import org.taonaw.studio_reservation.usecase.command.exception.ReservationSettingNotFoundException;
+import org.taonaw.studio_reservation.usecase.command.exception.ReservationRuleFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +32,8 @@ public class ReserveStudioService {
     public void handle(@NonNull ReserveStudioCommand command) {
         reservationRepository.lock();
 
-        var reservationSetting = reservationRuleFactory.create(command.getStudioId(), command.getPracticeType())
-                .orElseThrow(ReservationSettingNotFoundException::new);
+        var reservationRule = reservationRuleFactory.create(command.getStudioId(), command.getPracticeType())
+                .orElseThrow(ReservationRuleFoundException::new);
 
         var equipments = getEquipments(command.getUsageEquipments());
 
@@ -44,7 +44,7 @@ public class ReserveStudioService {
                 command.getUserInformation(),
                 command.getPracticeType(),
                 createUsageEquipments(command.getUsageEquipments(), equipments),
-                reservationSetting);
+                reservationRule);
 
         validateReservation(reservation, equipments);
 
@@ -58,7 +58,7 @@ public class ReserveStudioService {
                 .orElseThrow(MemberAccountNotFoundException::new);
 
         var reservationSetting = reservationRuleFactory.create(command.getStudioId(), command.getPracticeType())
-                .orElseThrow(ReservationSettingNotFoundException::new);
+                .orElseThrow(ReservationRuleFoundException::new);
 
         var equipments = getEquipments(command.getUsageEquipments());
 
@@ -76,13 +76,13 @@ public class ReserveStudioService {
         reservationRepository.add(reservation);
     }
 
-    private List<Equipment> getEquipments(List<UsageEquipmentDto> usageEquipments) {
+    private List<Equipment> getEquipments(List<UsageEquipmentDto> usageEquipmentDtoList) {
         var equipmentMap = new HashMap<EquipmentId, Equipment>();
-        for (var usageEquipment : usageEquipments) {
-            if (equipmentMap.containsKey(usageEquipment.getEquipmentId()))
+        for (var usageEquipmentDto : usageEquipmentDtoList) {
+            if (equipmentMap.containsKey(usageEquipmentDto.getEquipmentId()))
                 continue;
 
-            var equipment = equipmentRepository.findBy(usageEquipment.getEquipmentId())
+            var equipment = equipmentRepository.findBy(usageEquipmentDto.getEquipmentId())
                     .orElseThrow(EquipmentNotFoundException::new);
 
             equipmentMap.put(equipment.getId(), equipment);
@@ -102,7 +102,7 @@ public class ReserveStudioService {
                     .orElseThrow();
 
             var usageEquipment = UsageEquipment.create(
-                    usageEquipmentDto.getEquipmentId(),
+                    equipment.getId(),
                     equipment.getCategoryId(),
                     usageEquipmentDto.getQuantity());
 

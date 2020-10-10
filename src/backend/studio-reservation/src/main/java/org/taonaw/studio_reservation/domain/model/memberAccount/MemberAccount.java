@@ -13,6 +13,10 @@ public class MemberAccount {
     private DateOfBirth dateOfBirth;
     private PhoneNumber phoneNumber;
 
+    private MemberAccount(@NonNull MemberAccountId id) {
+        this.id = id;
+    }
+
     public static MemberAccount create(
             @NonNull PersonName name,
             @NonNull EmailAddress emailAddress,
@@ -20,8 +24,7 @@ public class MemberAccount {
             @NonNull DateOfBirth dateOfBirth,
             @NonNull PhoneNumber phoneNumber) {
 
-        var instance = new MemberAccount();
-        instance.id = MemberAccountId.newId();
+        var instance = new MemberAccount(MemberAccountId.newId());
         instance.name = name;
         instance.emailAddress = emailAddress;
         instance.password = hashedPassword;

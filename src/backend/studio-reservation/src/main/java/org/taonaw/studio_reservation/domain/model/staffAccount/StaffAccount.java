@@ -14,13 +14,16 @@ public class StaffAccount {
     private LoginId loginId;
     private HashedPassword password;
 
+    private StaffAccount(@NonNull StaffAccountId id) {
+        this.id = id;
+    }
+
     public static StaffAccount create(
             @NonNull PersonName staffName,
             @NonNull LoginId loginId,
             @NonNull HashedPassword hashedPassword) {
 
-        var instance = new StaffAccount();
-        instance.id = StaffAccountId.newId();
+        var instance = new StaffAccount(StaffAccountId.newId());
         instance.name = staffName;
         instance.loginId = loginId;
         instance.password = hashedPassword;

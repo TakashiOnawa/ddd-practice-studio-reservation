@@ -13,6 +13,8 @@ public class UsageEquipments {
 
     public UsageEquipments(@NonNull List<UsageEquipment> usageEquipments) {
         // TODO: 利用機材のマージ。
+
+        items.addAll(usageEquipments);
     }
 
     public List<EquipmentId> notSatisfyEquipments(@NonNull List<EquipmentMaxUsableCount> equipmentMaxUsableCounts) {

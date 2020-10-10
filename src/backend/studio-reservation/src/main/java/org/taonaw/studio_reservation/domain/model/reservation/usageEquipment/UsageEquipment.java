@@ -8,8 +8,8 @@ import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount
 import java.util.Objects;
 
 public class UsageEquipment {
-    private EquipmentId equipmentId;
-    private EquipmentCategoryId equipmentCategoryId;
+    private final EquipmentId equipmentId;
+    private final EquipmentCategoryId equipmentCategoryId;
     private UsageEquipmentQuantity quantity;
 
     private UsageEquipment(@NonNull EquipmentId equipmentId, @NonNull EquipmentCategoryId equipmentCategoryId) {

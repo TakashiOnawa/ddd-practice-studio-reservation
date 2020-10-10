@@ -8,13 +8,17 @@ import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 import java.util.Objects;
 
 public class Reservation {
-    private ReservationId id;
+    private final ReservationId id;
     private StudioId studioId;
     private UsageTime usageTime;
     private UserCount userCount;
     private UserInformation userInformation;
     private PracticeTypes practiceType;
     private UsageEquipments usageEquipments;
+
+    private Reservation(ReservationId id) {
+        this.id = id;
+    }
 
     public static Reservation create(
             StudioId studioId,
@@ -35,8 +39,7 @@ public class Reservation {
         errorNotification.addError(reservationRule.validateEquipmentMaxUsableCount(usageEquipments));
         errorNotification.throwIfHasErrors("予約内容に不備があります。");
 
-        var instance = new Reservation();
-        instance.id = ReservationId.newId();
+        var instance = new Reservation(ReservationId.newId());
         instance.studioId = studioId;
         instance.usageTime = usageTime;
         instance.userCount = userCount;

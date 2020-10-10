@@ -11,13 +11,16 @@ public class Equipment {
     private EquipmentCategoryId categoryId;
     private EquipmentStockCount stockCount;
 
+    private Equipment(@NonNull EquipmentId id) {
+        this.id = id;
+    }
+
     public static Equipment create(
             @NonNull EquipmentName name,
             @NonNull EquipmentCategoryId categoryId,
             @NonNull EquipmentStockCount stockCount) {
 
-        var instance = new Equipment();
-        instance.id = EquipmentId.newId();
+        var instance = new Equipment(EquipmentId.newId());
         instance.name = name;
         instance.categoryId = categoryId;
         instance.stockCount = stockCount;

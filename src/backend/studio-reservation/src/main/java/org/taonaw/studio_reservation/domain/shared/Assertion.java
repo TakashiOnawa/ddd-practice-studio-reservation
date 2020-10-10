@@ -53,6 +53,34 @@ public final class Assertion {
         }
     }
 
+    public static void argumentRange(double value, double min, double max) {
+        argumentRange(value, min, max, null);
+    }
+
+    public static void argumentRange(double value, double min, double max, String message) {
+        String exceptionMessage = message;
+        if (StringUtils.isEmpty(message)) {
+            exceptionMessage = String.format("%f 以上 %f 以下でなければなりません。", min ,max);
+        }
+        if (value < min || max < value) {
+            throw new IllegalArgumentException(exceptionMessage);
+        }
+    }
+
+    public static void argumentMin(double value, double min) {
+        argumentMin(value, min, null);
+    }
+
+    public static void argumentMin(double value, double min, String message) {
+        String exceptionMessage = message;
+        if (StringUtils.isEmpty(message)) {
+            exceptionMessage = String.format("%f 以上でなければなりません。", min);
+        }
+        if (value < min) {
+            throw new IllegalArgumentException(exceptionMessage);
+        }
+    }
+
     public static void argumentPattern(String value, String regex, String message) {
         if (!Pattern.matches(regex, value)) {
             throw new IllegalArgumentException(message);

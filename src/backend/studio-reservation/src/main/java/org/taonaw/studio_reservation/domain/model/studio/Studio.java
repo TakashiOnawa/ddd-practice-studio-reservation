@@ -12,13 +12,16 @@ public class Studio {
     private StartTimes startTime;
     private Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts;
 
+    private Studio(@NonNull StudioId id) {
+        this.id = id;
+    }
+
     public static Studio create(
             @NonNull StudioName name,
             @NonNull StartTimes startTime,
             @NonNull Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts) {
 
-        var instance = new Studio();
-        instance.id = StudioId.newId();
+        var instance = new Studio(StudioId.newId());
         instance.name = name;
         instance.startTime = startTime;
         instance.equipmentMaxUsableCounts = new HashSet<>(equipmentMaxUsableCounts);
