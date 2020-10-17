@@ -68,6 +68,10 @@ public class Reservation {
         return usageTime;
     }
 
+    public UsageEquipments usageEquipments() {
+        return usageEquipments.copy();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

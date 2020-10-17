@@ -20,6 +20,13 @@ public class UsageEquipment {
         this.quantity = quantity;
     }
 
+    public UsageEquipment add(@NonNull UsageEquipment other) {
+        if (this.equipmentId != other.getEquipmentId())
+            throw new IllegalArgumentException("異なる機材の数量は追加できません。");
+
+        return new UsageEquipment(this.equipmentId,this.quantity + other.quantity);
+    }
+
     public boolean satisfy(@NonNull EquipmentMaxUsableCount equipmentMaxUsableCount) {
         return false;
     }

@@ -4,9 +4,10 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.equipment.EquipmentId;
 import org.taonaw.studio_reservation.domain.model.equipment.EquipmentStockCount;
 import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
-import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDateTime;
+import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.UserMaxCount;
 import org.taonaw.studio_reservation.domain.model.reservation.error.*;
+import org.taonaw.studio_reservation.domain.model.shared.CurrentDate;
 import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount;
 import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
@@ -18,62 +19,65 @@ import java.util.Optional;
 
 public class ReservationRule {
     private final OpeningHour openingHour;
-    private final ReservationStartDateTime reservationStartDateTime;
+    private final ReservationStartDate reservationStartDate;
     private final UserMaxCount userMaxCount;
     private final StartTimes startTime;
     private final Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts;
     private final Map<EquipmentId, EquipmentStockCount> equipmentStockCounts;
+    private final CurrentDate currentDate;
 
     public ReservationRule(
             @NonNull OpeningHour openingHour,
-            @NonNull ReservationStartDateTime reservationStartDateTime,
+            @NonNull ReservationStartDate reservationStartDate,
             @NonNull UserMaxCount userMaxCount,
             @NonNull StartTimes startTime,
             @NonNull Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts,
-            @NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts) {
+            @NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts,
+            @NonNull CurrentDate currentDate) {
 
         this.openingHour = openingHour;
-        this.reservationStartDateTime = reservationStartDateTime;
+        this.reservationStartDate = reservationStartDate;
         this.userMaxCount = userMaxCount;
         this.startTime = startTime;
         this.equipmentMaxUsableCounts = new HashMap<>(equipmentMaxUsableCounts);
         this.equipmentStockCounts = new HashMap<>(equipmentStockCounts);
+        this.currentDate = currentDate;
     }
 
     public Optional<Error> validateOpeningHour(@NonNull UsageTime usageTime) {
-        if (!usageTime.satisfy(openingHour))
-            return Optional.of(new OutOfOpeningHourError());
-        else
+        if (usageTime.satisfy(openingHour))
             return Optional.empty();
+        else
+            return Optional.of(new OutOfOpeningHourError());
     }
 
     public Optional<Error> validateReservationStartDateTime(@NonNull UsageTime usageTime) {
-        if (!usageTime.satisfy(reservationStartDateTime))
-            return Optional.of(new NotStartReservationError());
-        else
+        if (usageTime.satisfy(reservationStartDate, currentDate.now()))
             return Optional.empty();
+        else
+            return Optional.of(new NotStartReservationError());
     }
 
     public Optional<Error> validateUserMaxCount(@NonNull UserCount userCount) {
-        if (!userCount.satisfy(userMaxCount))
-            return Optional.of(new OverUserMaxCountError());
-        else
+        if (userCount.satisfy(userMaxCount))
             return Optional.empty();
+        else
+            return Optional.of(new OverUserMaxCountError());
     }
 
     public Optional<Error> validateStartTime(@NonNull UsageTime usageTime) {
-        if (!usageTime.satisfy(startTime))
-            return Optional.of(new StartTimeInvalidError());
-        else
+        if (usageTime.satisfy(startTime))
             return Optional.empty();
+        else
+            return Optional.of(new StartTimeInvalidError());
     }
 
     public Optional<Error> validateEquipmentMaxUsableCount(@NonNull UsageEquipments usageEquipments) {
         var errorEquipmentIds = usageEquipments.notSatisfyEquipments(equipmentMaxUsableCounts);
-        if (!errorEquipmentIds.isEmpty())
-            return Optional.of(new OverEquipmentMaxCountError(errorEquipmentIds));
-        else
+        if (errorEquipmentIds.isEmpty())
             return Optional.empty();
+        else
+            return Optional.of(new OverEquipmentMaxCountError(errorEquipmentIds));
     }
 
     public Optional<Error> validateReservationDuplication(
@@ -86,10 +90,11 @@ public class ReservationRule {
         return Optional.empty();
     }
 
-    public Optional<Error> validateUsageEquipmentsOutOfStocks(
-            @NonNull Reservation reservation,
-            @NonNull List<Reservation> overlappedReservations) {
-
-        return Optional.empty();
+    public Optional<Error> validateUsageEquipmentsOutOfStocks(@NonNull ReservedUsageEquipments reservedUsageEquipments) {
+        var errorEquipmentIds = reservedUsageEquipments.notSatisfyEquipments(equipmentStockCounts);
+        if (errorEquipmentIds.isEmpty())
+            return Optional.empty();
+        else
+            return Optional.of(new EquipmentOutOfStocksError(errorEquipmentIds));
     }
 }

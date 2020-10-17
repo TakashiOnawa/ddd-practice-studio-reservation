@@ -40,7 +40,7 @@ public class ReserveStudioService {
         reservationRule.validateReservationDuplication(reservation, overlappedReservations)
                 .ifPresent(Error::throwError);
 
-        reservationRule.validateUsageEquipmentsOutOfStocks(reservation, overlappedReservations)
+        reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
                 .ifPresent(Error::throwError);
 
         reservationRepository.add(reservation);
@@ -72,7 +72,7 @@ public class ReserveStudioService {
         reservationRule.validateReservationDuplication(reservation, overlappedReservations)
                 .ifPresent(Error::throwError);
 
-        reservationRule.validateUsageEquipmentsOutOfStocks(reservation, overlappedReservations)
+        reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
                 .ifPresent(Error::throwError);
 
         reservationRepository.add(reservation);

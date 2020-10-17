@@ -12,11 +12,11 @@ public class UserCount {
     private final int value;
 
     public UserCount(int value) {
-        Assertion.argumentMin(value, 1);
+        Assertion.argumentRange(value, 1, 99);
         this.value = value;
     }
 
     public boolean satisfy(@NonNull UserMaxCount userMaxCount) {
-        return false;
+        return value <= userMaxCount.getValue();
     }
 }
