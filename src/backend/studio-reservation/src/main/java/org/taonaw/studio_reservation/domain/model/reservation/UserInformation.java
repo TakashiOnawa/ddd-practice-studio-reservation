@@ -2,7 +2,6 @@ package org.taonaw.studio_reservation.domain.model.reservation;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.shared.PersonName;
 import org.taonaw.studio_reservation.domain.model.shared.PhoneNumber;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
@@ -20,7 +19,10 @@ public class UserInformation {
         this.userPhoneNumber = userPhoneNumber;
     }
 
-    public UserInformation(@NonNull PersonName personName, @NonNull PhoneNumber phoneNumber) {
-        this(personName.asFormattedName(), phoneNumber.asFormattedNumber());
+    public UserInformation(PersonName personName, PhoneNumber phoneNumber) {
+        Assertion.required(personName);
+        Assertion.required(phoneNumber);
+        this.userName = personName.asFormattedName();
+        this.userPhoneNumber = phoneNumber.asFormattedNumber();
     }
 }

@@ -3,6 +3,7 @@ package org.taonaw.studio_reservation.domain.model.reservation;
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypes;
 import org.taonaw.studio_reservation.domain.model.studio.StudioId;
+import org.taonaw.studio_reservation.domain.shared.Assertion;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class Reservation {
     private UsageEquipments usageEquipments;
 
     private Reservation(ReservationId id) {
+        Assertion.required(id, "id は必須です。");
         this.id = id;
     }
 
@@ -29,7 +31,13 @@ public class Reservation {
             UsageEquipments usageEquipments,
             ReservationRule reservationRule) {
 
-        // TODO: 必須チェック。
+        Assertion.required(studioId, "studioId は必須です。");
+        Assertion.required(usageTime, "usageTime は必須です。");
+        Assertion.required(userCount, "userCount は必須です。");
+        Assertion.required(userInformation, "userInformation は必須です。");
+        Assertion.required(practiceType, "practiceType は必須です。");
+        Assertion.required(usageEquipments, "usageEquipments は必須です。");
+        Assertion.required(reservationRule, "reservationRule は必須です。");
 
         var errorNotification = new ErrorNotification();
         errorNotification.addError(reservationRule.validateOpeningHour(usageTime));
@@ -56,7 +64,7 @@ public class Reservation {
         return studioId.equals(other.studioId) && usageTime.isOverlapped(other.usageTime);
     }
 
-    public UsageTime getUsageTime() {
+    public UsageTime usageTime() {
         return usageTime;
     }
 

@@ -5,6 +5,20 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Pattern;
 
 public final class Assertion {
+    public static void required(Object obj) {
+        required(obj, null);
+    }
+
+    public static void required(Object obj, String message) {
+        String exceptionMessage = message;
+        if (StringUtils.isEmpty(message)) {
+            exceptionMessage = "必須です。";
+        }
+        if (obj == null) {
+            throw new IllegalArgumentException(exceptionMessage);
+        }
+    }
+
     public static void argumentNotEmpty(String value, String message) {
         if (StringUtils.isEmpty(value)) {
             throw new IllegalArgumentException(message);

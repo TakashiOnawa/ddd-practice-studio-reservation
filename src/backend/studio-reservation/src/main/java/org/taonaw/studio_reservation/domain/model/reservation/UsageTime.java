@@ -6,6 +6,7 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDateTime;
 import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
+import org.taonaw.studio_reservation.domain.shared.Assertion;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -16,7 +17,10 @@ public class UsageTime {
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
 
-    public UsageTime(@NonNull LocalDateTime startDateTime, @NonNull LocalDateTime endDateTime) {
+    public UsageTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Assertion.required(startDateTime);
+        Assertion.required(endDateTime);
+
         if (startDateTime.getSecond() != 0 || startDateTime.getNano() != 0) {
             throw new IllegalArgumentException("開始日時に秒の指定はできません。");
         }

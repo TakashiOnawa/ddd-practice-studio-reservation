@@ -11,9 +11,10 @@ public class PhoneNumber {
     private final String localNumber;
     private final String subscriberNumber;
 
-    public PhoneNumber(String areaCode,
-                       String localNumber,
-                       String subscriberNumber) {
+    public PhoneNumber(
+            String areaCode,
+            String localNumber,
+            String subscriberNumber) {
 
         Assertion.argumentPattern(areaCode, "[0-9]*", "市外局番は半角数字でなければなりません。");
         Assertion.argumentRange(areaCode, 2, 4);
