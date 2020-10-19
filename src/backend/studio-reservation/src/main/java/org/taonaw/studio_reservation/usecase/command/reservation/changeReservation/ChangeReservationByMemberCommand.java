@@ -1,11 +1,12 @@
-package org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio;
+package org.taonaw.studio_reservation.usecase.command.reservation.changeReservation;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.taonaw.studio_reservation.domain.model.equipment.EquipmentId;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountId;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypes;
+import org.taonaw.studio_reservation.domain.model.reservation.ReservationId;
 import org.taonaw.studio_reservation.domain.model.reservation.UsageEquipment;
 import org.taonaw.studio_reservation.domain.model.reservation.UsageTime;
 import org.taonaw.studio_reservation.domain.model.reservation.UserCount;
@@ -17,8 +18,9 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@EqualsAndHashCode
-public class ReserveStudioByMemberCommand {
+@AllArgsConstructor
+public class ChangeReservationByMemberCommand {
+    private ReservationId reservationId;
     private MemberAccountId memberAccountId;
     private StudioId studioId;
     private UsageTime usageTime;

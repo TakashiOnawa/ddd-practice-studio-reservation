@@ -6,9 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CancellationFeeRates {
-    private final List<CancellationFeeRate> cancellationFeeRates = new ArrayList<>();
+    private final List<CancellationFeeRate> items = new ArrayList<>();
+
+    private CancellationFeeRates() {
+    }
 
     public CancellationFeeRates(@NonNull List<CancellationFeeRate> cancellationFeeRates) {
-        this.cancellationFeeRates.addAll(cancellationFeeRates);
+        this.items.addAll(cancellationFeeRates);
+    }
+
+    public CancellationFeeRates copy() {
+        var copy = new CancellationFeeRates();
+        copy.items.addAll(this.items);
+        return copy;
     }
 }

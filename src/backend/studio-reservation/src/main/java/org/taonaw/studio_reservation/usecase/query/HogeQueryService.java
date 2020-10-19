@@ -1,4 +1,4 @@
 package org.taonaw.studio_reservation.usecase.query;
 
-public class HogeQueryUseCase {
+public interface HogeQueryService {
 }

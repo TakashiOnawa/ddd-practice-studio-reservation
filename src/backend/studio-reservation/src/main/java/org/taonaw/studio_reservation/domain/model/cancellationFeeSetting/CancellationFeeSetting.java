@@ -10,4 +10,8 @@ public class CancellationFeeSetting {
         instance.cancellationFeeRates = new CancellationFeeRates(cancellationFeeRates);
         return instance;
     }
+
+    public CancellationFeeRates cancellationFeeRates() {
+        return cancellationFeeRates.copy();
+    }
 }

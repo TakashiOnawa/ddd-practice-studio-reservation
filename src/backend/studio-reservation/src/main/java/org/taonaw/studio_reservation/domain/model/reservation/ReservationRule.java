@@ -7,11 +7,12 @@ import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.UserMaxCount;
 import org.taonaw.studio_reservation.domain.model.reservation.error.*;
-import org.taonaw.studio_reservation.domain.model.shared.CurrentDate;
+import org.taonaw.studio_reservation.shared.CurrentDate;
 import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount;
 import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,6 @@ public class ReservationRule {
     private final StartTimes startTime;
     private final Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts;
     private final Map<EquipmentId, EquipmentStockCount> equipmentStockCounts;
-    private final CurrentDate currentDate;
 
     public ReservationRule(
             @NonNull OpeningHour openingHour,
@@ -41,7 +41,6 @@ public class ReservationRule {
         this.startTime = startTime;
         this.equipmentMaxUsableCounts = new HashMap<>(equipmentMaxUsableCounts);
         this.equipmentStockCounts = new HashMap<>(equipmentStockCounts);
-        this.currentDate = currentDate;
     }
 
     public Optional<Error> validateOpeningHour(@NonNull UsageTime usageTime) {
@@ -51,8 +50,8 @@ public class ReservationRule {
             return Optional.of(new OutOfOpeningHourError());
     }
 
-    public Optional<Error> validateReservationStartDateTime(@NonNull UsageTime usageTime) {
-        if (usageTime.satisfy(reservationStartDate, currentDate.now()))
+    public Optional<Error> validateReservationStartDateTime(@NonNull UsageTime usageTime, LocalDateTime currentDateTime) {
+        if (usageTime.satisfy(reservationStartDate, currentDateTime))
             return Optional.empty();
         else
             return Optional.of(new NotStartReservationError());

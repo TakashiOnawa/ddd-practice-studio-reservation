@@ -17,7 +17,7 @@ public class RegisterStaffAccountService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    private void handle(@NonNull RegisterStaffAccountCommand command) {
+    public void handle(@NonNull RegisterStaffAccountCommand command) {
         var staffAccount = StaffAccount.create(
                 command.getName(),
                 command.getLoginId(),
