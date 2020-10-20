@@ -5,8 +5,11 @@ import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.Cancell
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccount;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountId;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypes;
+import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeForAlreadyStartedError;
+import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangePracticeTypeError;
+import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeUsageStudioError;
+import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeUsageTimeError;
 import org.taonaw.studio_reservation.domain.model.studio.StudioId;
-import org.taonaw.studio_reservation.domain.shared.Assertion;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
 import java.time.LocalDateTime;
@@ -22,29 +25,19 @@ public class Reservation {
     private PracticeTypes practiceType;
     private UsageEquipments usageEquipments;
 
-    private Reservation(ReservationId id) {
-        Assertion.required(id, "id は必須です。");
+    private Reservation(@NonNull ReservationId id) {
         this.id = id;
     }
 
     public static Reservation create(
-            StudioId studioId,
-            UsageTime usageTime,
-            UserCount userCount,
-            UserInformation userInformation,
-            PracticeTypes practiceType,
-            UsageEquipments usageEquipments,
-            ReservationRule reservationRule,
-            LocalDateTime currentDateTime) {
-
-        Assertion.required(studioId, "studioId は必須です。");
-        Assertion.required(usageTime, "usageTime は必須です。");
-        Assertion.required(userCount, "userCount は必須です。");
-        Assertion.required(userInformation, "userInformation は必須です。");
-        Assertion.required(practiceType, "practiceType は必須です。");
-        Assertion.required(usageEquipments, "usageEquipments は必須です。");
-        Assertion.required(reservationRule, "reservationRule は必須です。");
-        Assertion.required(currentDateTime, "currentDateTime は必須です。");
+            @NonNull StudioId studioId,
+            @NonNull UsageTime usageTime,
+            @NonNull UserCount userCount,
+            @NonNull UserInformation userInformation,
+            @NonNull PracticeTypes practiceType,
+            @NonNull UsageEquipments usageEquipments,
+            @NonNull ReservationRule reservationRule,
+            @NonNull LocalDateTime currentDateTime) {
 
         var errorNotification = new ErrorNotification();
         errorNotification.addError(reservationRule.validateOpeningHour(usageTime));
@@ -60,21 +53,19 @@ public class Reservation {
         instance.userCount = userCount;
         instance.userInformation = userInformation;
         instance.practiceType = practiceType;
-        instance.usageEquipments = usageEquipments;
+        instance.usageEquipments = usageEquipments.copy();
         return instance;
     }
 
     public static Reservation createByMember(
-            StudioId studioId,
-            UsageTime usageTime,
-            UserCount userCount,
-            MemberAccount memberAccount,
-            PracticeTypes practiceType,
-            UsageEquipments usageEquipments,
-            ReservationRule reservationRule,
-            LocalDateTime currentDateTime) {
-
-        Assertion.required(memberAccount, "memberAccount は必須です。");
+            @NonNull StudioId studioId,
+            @NonNull UsageTime usageTime,
+            @NonNull UserCount userCount,
+            @NonNull MemberAccount memberAccount,
+            @NonNull PracticeTypes practiceType,
+            @NonNull UsageEquipments usageEquipments,
+            @NonNull ReservationRule reservationRule,
+            @NonNull LocalDateTime currentDateTime) {
 
         return create(
                 studioId,
@@ -88,21 +79,38 @@ public class Reservation {
     }
 
     public void changeByMember(
-            MemberAccountId memberAccountId,
-            StudioId studioId,
-            UserCount userCount,
-            PracticeTypes practiceType,
-            UsageEquipments usageEquipments,
-            CancellationFeeRates cancellationFeeRates,
-            LocalDateTime currentDateTime) {
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull StudioId studioId,
+            @NonNull UsageTime usageTime,
+            @NonNull UserCount userCount,
+            @NonNull PracticeTypes practiceType,
+            @NonNull UsageEquipments usageEquipments,
+            @NonNull CancellationFeeRates cancellationFeeRates,
+            @NonNull LocalDateTime currentDateTime) {
 
         if (this.memberAccountId == null)
             throw new IllegalArgumentException("会員による予約ではないため変更できません。");
-
         if (!this.memberAccountId.equals(memberAccountId))
             throw new IllegalArgumentException("異なる会員による変更はできません。");
 
-        // TODO: 各種変更処理
+        if (this.usageTime.isPassed(currentDateTime))
+            new CanNotChangeForAlreadyStartedError().throwError();
+
+        var isCancellationFeeFree = this.usageTime.isCancellationFeeFree(cancellationFeeRates, currentDateTime);
+        var errorNotification = new ErrorNotification();
+        if (!this.studioId.equals(studioId) && !isCancellationFeeFree)
+            errorNotification.addError(new CanNotChangeUsageStudioError());
+        if (!this.usageTime.equals(usageTime) && !isCancellationFeeFree)
+            errorNotification.addError(new CanNotChangeUsageTimeError());
+        if (!this.practiceType.equals(practiceType) && !isCancellationFeeFree)
+            errorNotification.addError(new CanNotChangePracticeTypeError());
+        errorNotification.throwIfHasErrors("予約を変更できません。");
+
+        this.studioId = studioId;
+        this.usageTime = usageTime;
+        this.userCount = userCount;
+        this.practiceType = practiceType;
+        this.usageEquipments = usageEquipments.copy();
     }
 
     public boolean isDuplicated(@NonNull Reservation other) {

@@ -3,6 +3,7 @@ package org.taonaw.studio_reservation.domain.model.reservation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.CancellationFeeRates;
 import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
 import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
@@ -40,6 +41,14 @@ public class UsageTime {
 
     public boolean isOverlapped(@NonNull UsageTime other) {
         return startDateTime.isBefore(other.endDateTime) && other.startDateTime.isBefore(endDateTime);
+    }
+
+    public boolean isPassed(@NonNull LocalDateTime currentDateTime) {
+        return !startDateTime.isBefore(currentDateTime);
+    }
+
+    public boolean isCancellationFeeFree(@NonNull CancellationFeeRates cancellationFeeRates, @NonNull LocalDateTime currentDateTime) {
+        return cancellationFeeRates.isFree(startDateTime, currentDateTime);
     }
 
     public boolean satisfy(@NonNull OpeningHour openingHour) {
