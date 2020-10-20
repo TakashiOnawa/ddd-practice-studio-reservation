@@ -15,7 +15,7 @@ import org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio.R
 import org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio.ReserveStudioCommand;
 
 @AllArgsConstructor
-public class ReserveService {
+public class ReservationService {
     @Autowired
     private final ReservationRepository reservationRepository;
     @Autowired
@@ -107,6 +107,7 @@ public class ReserveService {
         reservation.changeByMember(
                 command.getMemberAccountId(),
                 command.getStudioId(),
+                command.getUsageTime(),
                 command.getUserCount(),
                 command.getPracticeType(),
                 new UsageEquipments(command.getUsageEquipments()),
