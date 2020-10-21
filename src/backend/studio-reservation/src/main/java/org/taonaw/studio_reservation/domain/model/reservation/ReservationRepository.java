@@ -8,4 +8,14 @@ public interface ReservationRepository {
     Optional<Reservation> findBy(ReservationId reservationId);
     List<Reservation> findBy(UsageTime usageTime);
     void add(Reservation reservation);
+    UpdateResults update(Reservation reservation);
+
+    enum UpdateResults {
+        SUCCEEDED,
+        CHANGED_BY_OTHER;
+
+        public boolean isSucceeded() {
+            return this == SUCCEEDED;
+        }
+    }
 }
