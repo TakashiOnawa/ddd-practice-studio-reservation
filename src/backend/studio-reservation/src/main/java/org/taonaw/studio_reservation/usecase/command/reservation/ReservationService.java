@@ -10,6 +10,8 @@ import org.taonaw.studio_reservation.domain.shared.exception.Error;
 import org.taonaw.studio_reservation.shared.CurrentDate;
 import org.taonaw.studio_reservation.usecase.command.exception.MemberAccountNotFoundException;
 import org.taonaw.studio_reservation.usecase.command.exception.ReservationNotFoundException;
+import org.taonaw.studio_reservation.usecase.command.exception.ReservationOptimisticLockException;
+import org.taonaw.studio_reservation.usecase.command.reservation.cancelReservation.CancelReservationByMemberCommand;
 import org.taonaw.studio_reservation.usecase.command.reservation.changeReservation.ChangeReservationByMemberCommand;
 import org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio.ReserveStudioByMemberCommand;
 import org.taonaw.studio_reservation.usecase.command.reservation.reserveStudio.ReserveStudioCommand;
@@ -122,6 +124,26 @@ public class ReservationService {
         reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
                 .ifPresent(Error::throwError);
 
-        reservationRepository.add(reservation);
+        reservationRepository.update(reservation);
+    }
+
+    public void handle(@NonNull CancelReservationByMemberCommand command) {
+        var reservation = reservationRepository.findBy(command.getReservationId())
+                .orElseThrow(ReservationNotFoundException::new);
+
+        if (reservation.changedByOther(command.getVersion()))
+            throw new ReservationOptimisticLockException();
+
+        var cancellationFeeSetting = cancellationFeeSettingRepository.find();
+
+        reservation.cancelByMember(
+                command.getMemberAccountId(),
+                currentDate.now(),
+                cancellationFeeSetting.cancellationFeeRates());
+
+        var updateResult = reservationRepository.update(reservation);
+
+        if (updateResult == ReservationRepository.UpdateResults.CHANGED_BY_OTHER)
+            throw new ReservationOptimisticLockException();
     }
 }

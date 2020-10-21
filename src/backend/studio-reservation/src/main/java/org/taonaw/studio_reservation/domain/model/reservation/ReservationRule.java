@@ -83,7 +83,7 @@ public class ReservationRule {
             @NonNull Reservation reservation,
             @NonNull List<Reservation> overlappedReservations) {
 
-        if (overlappedReservations.stream().anyMatch(item -> item.isDuplicated(reservation))) {
+        if (overlappedReservations.stream().anyMatch(item -> item.duplicateWith(reservation))) {
             return Optional.of(new ReservationDuplicatedError());
         }
         return Optional.empty();

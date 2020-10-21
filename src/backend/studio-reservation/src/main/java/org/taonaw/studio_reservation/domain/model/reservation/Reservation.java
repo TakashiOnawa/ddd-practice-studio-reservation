@@ -5,10 +5,7 @@ import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.Cancell
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccount;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountId;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypes;
-import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeForAlreadyStartedError;
-import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangePracticeTypeError;
-import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeUsageStudioError;
-import org.taonaw.studio_reservation.domain.model.reservation.error.CanNotChangeUsageTimeError;
+import org.taonaw.studio_reservation.domain.model.reservation.error.*;
 import org.taonaw.studio_reservation.domain.model.studio.StudioId;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
@@ -24,6 +21,8 @@ public class Reservation {
     private UserInformation userInformation;
     private PracticeTypes practiceType;
     private UsageEquipments usageEquipments;
+    private ReservationStatus status = ReservationStatus.RESERVED;
+    private long version = 0;
 
     private Reservation(@NonNull ReservationId id) {
         this.id = id;
@@ -78,6 +77,31 @@ public class Reservation {
                 currentDateTime);
     }
 
+    public static Reservation reconstruct(
+            ReservationId id,
+            StudioId studioId,
+            MemberAccountId memberAccountId,
+            UsageTime usageTime,
+            UserCount userCount,
+            UserInformation userInformation,
+            PracticeTypes practiceType,
+            UsageEquipments usageEquipments,
+            ReservationStatus status,
+            long version) {
+
+        var instance = new Reservation(id);
+        instance.studioId = studioId;
+        instance.memberAccountId = memberAccountId;
+        instance.usageTime = usageTime;
+        instance.userCount = userCount;
+        instance.userInformation = userInformation;
+        instance.practiceType = practiceType;
+        instance.usageEquipments = usageEquipments.copy();
+        instance.status = status;
+        instance.version = version;
+        return instance;
+    }
+
     public void changeByMember(
             @NonNull MemberAccountId memberAccountId,
             @NonNull StudioId studioId,
@@ -113,11 +137,41 @@ public class Reservation {
         this.usageEquipments = usageEquipments.copy();
     }
 
-    public boolean isDuplicated(@NonNull Reservation other) {
+    public void cancelByMember(
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull LocalDateTime canceledOn,
+            @NonNull CancellationFeeRates cancellationFeeRates) {
+
+        if (this.memberAccountId == null)
+            throw new IllegalArgumentException("会員による予約ではないためキャンセルできません。");
+        if (!this.memberAccountId.equals(memberAccountId))
+            throw new IllegalArgumentException("異なる会員によるキャンセルはできません。");
+        if (status == ReservationStatus.CANCELED)
+            throw new IllegalStateException("既にキャンセルされています。");
+
+        if (this.usageTime.isPassed(canceledOn))
+            new CanNotCancelForAlreadyStartedError().throwError();
+
+        var isCancellationFeeFree = this.usageTime.isCancellationFeeFree(cancellationFeeRates, canceledOn);
+        var errorNotification = new ErrorNotification();
+        if (!isCancellationFeeFree)
+            errorNotification.addError(new CanNotCancelForCancellationFeeNotFreeError());
+        errorNotification.throwIfHasErrors("予約をキャンセルできません。");
+
+        status = ReservationStatus.CANCELED;
+    }
+
+    public boolean duplicateWith(@NonNull Reservation other) {
         if (this.equals(other))
             return false;
 
-        return studioId.equals(other.studioId) && usageTime.isOverlapped(other.usageTime);
+        return status != ReservationStatus.CANCELED &&
+                studioId.equals(other.studioId) &&
+                usageTime.isOverlapped(other.usageTime);
+    }
+
+    public boolean changedByOther(long version) {
+        return this.version != version;
     }
 
     public UsageTime usageTime() {
