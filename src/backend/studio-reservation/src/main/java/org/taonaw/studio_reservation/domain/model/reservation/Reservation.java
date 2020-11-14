@@ -161,7 +161,7 @@ public class Reservation {
         status = ReservationStatus.CANCELED;
     }
 
-    public boolean duplicateWith(@NonNull Reservation other) {
+    public boolean isDuplicated(@NonNull Reservation other) {
         if (this.equals(other))
             return false;
 
@@ -170,7 +170,7 @@ public class Reservation {
                 usageTime.isOverlapped(other.usageTime);
     }
 
-    public boolean changedByOther(long version) {
+    public boolean isChangedByOther(long version) {
         return this.version != version;
     }
 

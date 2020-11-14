@@ -104,7 +104,7 @@ public class ReservationService {
                 command.getUsageEquipmentIds())
                 .orElseThrow();
 
-        var cancellationFeeSetting = cancellationFeeSettingRepository.find();
+        var cancellationFeeSetting = cancellationFeeSettingRepository.get();
 
         reservation.changeByMember(
                 command.getMemberAccountId(),
@@ -131,10 +131,10 @@ public class ReservationService {
         var reservation = reservationRepository.findBy(command.getReservationId())
                 .orElseThrow(ReservationNotFoundException::new);
 
-        if (reservation.changedByOther(command.getVersion()))
+        if (reservation.isChangedByOther(command.getVersion()))
             throw new ReservationOptimisticLockException();
 
-        var cancellationFeeSetting = cancellationFeeSettingRepository.find();
+        var cancellationFeeSetting = cancellationFeeSettingRepository.get();
 
         reservation.cancelByMember(
                 command.getMemberAccountId(),

@@ -7,7 +7,6 @@ import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.UserMaxCount;
 import org.taonaw.studio_reservation.domain.model.reservation.error.*;
-import org.taonaw.studio_reservation.shared.CurrentDate;
 import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount;
 import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
@@ -32,8 +31,7 @@ public class ReservationRule {
             @NonNull UserMaxCount userMaxCount,
             @NonNull StartTimes startTime,
             @NonNull Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts,
-            @NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts,
-            @NonNull CurrentDate currentDate) {
+            @NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts) {
 
         this.openingHour = openingHour;
         this.reservationStartDate = reservationStartDate;
@@ -83,7 +81,7 @@ public class ReservationRule {
             @NonNull Reservation reservation,
             @NonNull List<Reservation> overlappedReservations) {
 
-        if (overlappedReservations.stream().anyMatch(item -> item.duplicateWith(reservation))) {
+        if (overlappedReservations.stream().anyMatch(item -> item.isDuplicated(reservation))) {
             return Optional.of(new ReservationDuplicatedError());
         }
         return Optional.empty();

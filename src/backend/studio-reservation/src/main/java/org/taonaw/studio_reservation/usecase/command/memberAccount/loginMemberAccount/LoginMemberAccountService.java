@@ -1,4 +1,4 @@
-package org.taonaw.studio_reservation.usecase.command.member.loginMemberAccount;
+package org.taonaw.studio_reservation.usecase.command.memberAccount.loginMemberAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;

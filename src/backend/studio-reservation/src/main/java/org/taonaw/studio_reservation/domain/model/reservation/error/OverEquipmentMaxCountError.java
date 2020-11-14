@@ -16,6 +16,6 @@ public class OverEquipmentMaxCountError extends Error {
     }
 
     public List<EquipmentId> getErrorEquipmentIds() {
-        return new ArrayList<>(errorEquipmentIds);
+        return errorEquipmentIds;
     }
 }

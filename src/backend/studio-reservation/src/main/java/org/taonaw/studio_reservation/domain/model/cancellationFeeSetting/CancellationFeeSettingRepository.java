@@ -1,6 +1,6 @@
 package org.taonaw.studio_reservation.domain.model.cancellationFeeSetting;
 
 public interface CancellationFeeSettingRepository {
-    CancellationFeeSetting find();
+    CancellationFeeSetting get();
     void update(CancellationFeeSetting cancellationFeeSetting);
 }
