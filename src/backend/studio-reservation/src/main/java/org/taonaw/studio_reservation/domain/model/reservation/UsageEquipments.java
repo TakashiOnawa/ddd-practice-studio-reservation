@@ -1,5 +1,6 @@
 package org.taonaw.studio_reservation.domain.model.reservation;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.equipment.EquipmentId;
 import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount;
@@ -9,12 +10,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@EqualsAndHashCode
 public class UsageEquipments {
     private final List<UsageEquipment> items = new ArrayList<>();
-
-    private UsageEquipments() {
-    }
 
     public UsageEquipments(List<UsageEquipment> usageEquipments) {
         Assertion.required(usageEquipments);
@@ -32,6 +32,14 @@ public class UsageEquipments {
         items.addAll(map.values());
     }
 
+    public List<UsageEquipment> items() {
+        return new ArrayList<>(items);
+    }
+
+    public List<EquipmentId> getUsageEquipmentIds() {
+        return items.stream().map(UsageEquipment::getEquipmentId).collect(Collectors.toList());
+    }
+
     public List<EquipmentId> notSatisfyEquipments(@NonNull Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts) {
         var notSatisfyEquipmentIds = new ArrayList<EquipmentId>();
 
@@ -47,15 +55,5 @@ public class UsageEquipments {
         }
 
         return notSatisfyEquipmentIds;
-    }
-
-    public List<UsageEquipment> items() {
-        return new ArrayList<>(items);
-    }
-
-    public UsageEquipments copy() {
-        var copy = new UsageEquipments();
-        copy.items.addAll(this.items);
-        return copy;
     }
 }

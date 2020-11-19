@@ -9,7 +9,7 @@ import java.util.Set;
 public class Studio {
     private StudioId id;
     private StudioName name;
-    private StartTimes startTime;
+    private StartTime startTime;
     private Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts;
 
     private Studio(@NonNull StudioId id) {
@@ -18,7 +18,7 @@ public class Studio {
 
     public static Studio create(
             @NonNull StudioName name,
-            @NonNull StartTimes startTime,
+            @NonNull StartTime startTime,
             @NonNull Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts) {
 
         var instance = new Studio(StudioId.newId());

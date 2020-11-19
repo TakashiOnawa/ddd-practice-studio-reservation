@@ -6,7 +6,7 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.CancellationFeeRates;
 import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
-import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
+import org.taonaw.studio_reservation.domain.model.studio.StartTime;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 
 import java.time.LocalDateTime;
@@ -62,7 +62,7 @@ public class UsageTime {
         return !startDateTime.isBefore(reservationStartDate.startDate(currentDateTime).atStartOfDay());
     }
 
-    public boolean satisfy(@NonNull StartTimes startTime) {
+    public boolean satisfy(@NonNull StartTime startTime) {
         return startDateTime.getMinute() == startTime.getStartMinutes();
     }
 }

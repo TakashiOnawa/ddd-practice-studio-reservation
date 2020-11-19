@@ -8,7 +8,7 @@ import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.Reservatio
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.UserMaxCount;
 import org.taonaw.studio_reservation.domain.model.reservation.error.*;
 import org.taonaw.studio_reservation.domain.model.studio.EquipmentMaxUsableCount;
-import org.taonaw.studio_reservation.domain.model.studio.StartTimes;
+import org.taonaw.studio_reservation.domain.model.studio.StartTime;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class ReservationRule {
     private final OpeningHour openingHour;
     private final ReservationStartDate reservationStartDate;
     private final UserMaxCount userMaxCount;
-    private final StartTimes startTime;
+    private final StartTime startTime;
     private final Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts;
     private final Map<EquipmentId, EquipmentStockCount> equipmentStockCounts;
 
@@ -29,7 +29,7 @@ public class ReservationRule {
             @NonNull OpeningHour openingHour,
             @NonNull ReservationStartDate reservationStartDate,
             @NonNull UserMaxCount userMaxCount,
-            @NonNull StartTimes startTime,
+            @NonNull StartTime startTime,
             @NonNull Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts,
             @NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts) {
 

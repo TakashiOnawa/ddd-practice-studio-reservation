@@ -1,11 +1,11 @@
-package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeConditions;
+package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum DayTypes {
+public enum DayType {
     /** 平日 */
     WEEK_DAYS(1),
     /** 土日 */
@@ -25,7 +25,7 @@ public enum DayTypes {
 
     private final int value;
 
-    DayTypes(int value) {
+    DayType(int value) {
         this.value = value;
     }
 
@@ -43,13 +43,13 @@ public enum DayTypes {
     }
 
     public static class DayTypePattern {
-        private final List<DayTypes> dayTypes;
+        private final List<DayType> dayTypes;
 
-        private DayTypePattern(DayTypes... dayTypes) {
+        private DayTypePattern(DayType... dayTypes) {
             this.dayTypes = new ArrayList<>(Arrays.asList(dayTypes));
         }
 
-        public List<DayTypes> getDayTypes() {
+        public List<DayType> getDayTypes() {
             return new ArrayList<>(dayTypes);
         }
     }

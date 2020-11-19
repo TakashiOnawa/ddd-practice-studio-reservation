@@ -1,7 +1,7 @@
 package org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSetting;
 
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.UsageFee;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.UsageFeeCondition;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFee;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeCondition;
 
 import java.util.ArrayList;
 import java.util.List;

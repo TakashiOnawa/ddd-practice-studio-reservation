@@ -4,7 +4,7 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.CancellationFeeRates;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccount;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountId;
-import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypes;
+import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
 import org.taonaw.studio_reservation.domain.model.reservation.error.*;
 import org.taonaw.studio_reservation.domain.model.studio.StudioId;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
@@ -19,7 +19,7 @@ public class Reservation {
     private UsageTime usageTime;
     private UserCount userCount;
     private UserInformation userInformation;
-    private PracticeTypes practiceType;
+    private PracticeType practiceType;
     private UsageEquipments usageEquipments;
     private ReservationStatus status = ReservationStatus.RESERVED;
     private long version = 0;
@@ -33,7 +33,7 @@ public class Reservation {
             @NonNull UsageTime usageTime,
             @NonNull UserCount userCount,
             @NonNull UserInformation userInformation,
-            @NonNull PracticeTypes practiceType,
+            @NonNull PracticeType practiceType,
             @NonNull UsageEquipments usageEquipments,
             @NonNull ReservationRule reservationRule,
             @NonNull LocalDateTime currentDateTime) {
@@ -52,7 +52,7 @@ public class Reservation {
         instance.userCount = userCount;
         instance.userInformation = userInformation;
         instance.practiceType = practiceType;
-        instance.usageEquipments = usageEquipments.copy();
+        instance.usageEquipments = usageEquipments;
         return instance;
     }
 
@@ -61,7 +61,7 @@ public class Reservation {
             @NonNull UsageTime usageTime,
             @NonNull UserCount userCount,
             @NonNull MemberAccount memberAccount,
-            @NonNull PracticeTypes practiceType,
+            @NonNull PracticeType practiceType,
             @NonNull UsageEquipments usageEquipments,
             @NonNull ReservationRule reservationRule,
             @NonNull LocalDateTime currentDateTime) {
@@ -84,7 +84,7 @@ public class Reservation {
             UsageTime usageTime,
             UserCount userCount,
             UserInformation userInformation,
-            PracticeTypes practiceType,
+            PracticeType practiceType,
             UsageEquipments usageEquipments,
             ReservationStatus status,
             long version) {
@@ -96,7 +96,7 @@ public class Reservation {
         instance.userCount = userCount;
         instance.userInformation = userInformation;
         instance.practiceType = practiceType;
-        instance.usageEquipments = usageEquipments.copy();
+        instance.usageEquipments = usageEquipments;
         instance.status = status;
         instance.version = version;
         return instance;
@@ -107,7 +107,7 @@ public class Reservation {
             @NonNull StudioId studioId,
             @NonNull UsageTime usageTime,
             @NonNull UserCount userCount,
-            @NonNull PracticeTypes practiceType,
+            @NonNull PracticeType practiceType,
             @NonNull UsageEquipments usageEquipments,
             @NonNull CancellationFeeRates cancellationFeeRates,
             @NonNull LocalDateTime currentDateTime) {
@@ -134,7 +134,7 @@ public class Reservation {
         this.usageTime = usageTime;
         this.userCount = userCount;
         this.practiceType = practiceType;
-        this.usageEquipments = usageEquipments.copy();
+        this.usageEquipments = usageEquipments;
     }
 
     public void cancelByMember(
@@ -179,7 +179,7 @@ public class Reservation {
     }
 
     public UsageEquipments usageEquipments() {
-        return usageEquipments.copy();
+        return usageEquipments;
     }
 
     @Override

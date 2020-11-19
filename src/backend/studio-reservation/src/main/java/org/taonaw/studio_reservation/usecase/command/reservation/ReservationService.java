@@ -5,7 +5,10 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.CancellationFeeSettingRepository;
 import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountRepository;
-import org.taonaw.studio_reservation.domain.model.reservation.*;
+import org.taonaw.studio_reservation.domain.model.reservation.Reservation;
+import org.taonaw.studio_reservation.domain.model.reservation.ReservationRepository;
+import org.taonaw.studio_reservation.domain.model.reservation.ReservationRuleFactory;
+import org.taonaw.studio_reservation.domain.model.reservation.ReservedUsageEquipments;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 import org.taonaw.studio_reservation.shared.CurrentDate;
 import org.taonaw.studio_reservation.usecase.command.exception.MemberAccountNotFoundException;
@@ -35,7 +38,7 @@ public class ReservationService {
         var reservationRule = reservationRuleFactory.create(
                 command.getStudioId(),
                 command.getPracticeType(),
-                command.getUsageEquipmentIds())
+                command.getUsageEquipments().getUsageEquipmentIds())
                 .orElseThrow();
 
         var reservation = Reservation.create(
@@ -44,7 +47,7 @@ public class ReservationService {
                 command.getUserCount(),
                 command.getUserInformation(),
                 command.getPracticeType(),
-                new UsageEquipments(command.getUsageEquipments()),
+                command.getUsageEquipments(),
                 reservationRule,
                 currentDate.now());
 
@@ -68,7 +71,7 @@ public class ReservationService {
         var reservationRule = reservationRuleFactory.create(
                 command.getStudioId(),
                 command.getPracticeType(),
-                command.getUsageEquipmentIds())
+                command.getUsageEquipments().getUsageEquipmentIds())
                 .orElseThrow();
 
         var reservation = Reservation.createByMember(
@@ -77,7 +80,7 @@ public class ReservationService {
                 command.getUserCount(),
                 memberAccount,
                 command.getPracticeType(),
-                new UsageEquipments(command.getUsageEquipments()),
+                command.getUsageEquipments(),
                 reservationRule,
                 currentDate.now());
 
@@ -101,7 +104,7 @@ public class ReservationService {
         var reservationRule = reservationRuleFactory.create(
                 command.getStudioId(),
                 command.getPracticeType(),
-                command.getUsageEquipmentIds())
+                command.getUsageEquipments().getUsageEquipmentIds())
                 .orElseThrow();
 
         var cancellationFeeSetting = cancellationFeeSettingRepository.get();
@@ -112,7 +115,7 @@ public class ReservationService {
                 command.getUsageTime(),
                 command.getUserCount(),
                 command.getPracticeType(),
-                new UsageEquipments(command.getUsageEquipments()),
+                command.getUsageEquipments(),
                 cancellationFeeSetting.cancellationFeeRates(),
                 currentDate.now());
 

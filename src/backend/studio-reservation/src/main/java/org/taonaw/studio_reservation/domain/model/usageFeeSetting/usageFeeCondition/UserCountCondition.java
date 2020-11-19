@@ -1,16 +1,18 @@
-package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeConditions;
+package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.UserMaxCount;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.UsageFeeCondition;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 
-@EqualsAndHashCode
-public class UserCountCondition implements UsageFeeCondition {
+@Getter
+@EqualsAndHashCode(callSuper = true)
+public class UserCountCondition extends UsageFeeCondition {
     private final int userCount;
 
-    public UserCountCondition(int userCount) {
+    public UserCountCondition(UsageFeeConditionType type, int userCount) {
+        super(type);
         Assertion.argumentRange(userCount, 1, 99);
         this.userCount = userCount;
     }

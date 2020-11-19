@@ -1,21 +1,21 @@
-package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeConditions;
+package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.UsageFeeCondition;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Getter
-@EqualsAndHashCode
-public class TimePeriodCondition implements UsageFeeCondition {
+@EqualsAndHashCode(callSuper = true)
+public class TimePeriodCondition extends UsageFeeCondition {
     private final LocalDateTime startDateTime;
     private final LocalDateTime endDateTime;
 
-    public TimePeriodCondition(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public TimePeriodCondition(UsageFeeConditionType type, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        super(type);
         Assertion.required(startDateTime);
         Assertion.required(endDateTime);
 
@@ -38,7 +38,7 @@ public class TimePeriodCondition implements UsageFeeCondition {
 
     @Override
     public boolean isDuplicated(@NonNull UsageFeeCondition other) {
-        if (UsageFeeCondition.super.isDuplicated(other)) return true;
+        if (super.isDuplicated(other)) return true;
         if (other.getClass() != this.getClass()) return false;
         return isOverlapped((TimePeriodCondition)other);
     }
