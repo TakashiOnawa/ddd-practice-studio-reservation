@@ -26,16 +26,12 @@ public class PracticeTypeBasicUsageFeeSetting {
         this.basicUsageFees = this.basicUsageFees.removeBasicUsageFeeCondition(decreasedUsageFeeConditionTypes);
     }
 
-    public void setBasicFees(
-            @NonNull BasicUsageFees basicUsageFees,
-            @NonNull BasicUsageFeeSettingRule basicUsageFeeSettingRule) {
-
+    public void setBasicFees(@NonNull BasicUsageFees basicUsageFees) {
         var errorNotification = new ErrorNotification();
         // 利用料金条件区分が、設定された値とい異なってはならない。
         errorNotification.addError(basicUsageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
         // 基本利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
         errorNotification.addError(basicUsageFees.validateDuplicated());
-        // TODO: ここから（バリデーション条件足りてる？）
         errorNotification.throwIfHasErrors("基本利用料金設定に不備があります。");
 
         this.basicUsageFees = basicUsageFees;

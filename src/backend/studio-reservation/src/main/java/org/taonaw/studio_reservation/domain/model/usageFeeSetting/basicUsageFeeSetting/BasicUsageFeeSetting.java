@@ -24,18 +24,11 @@ public class BasicUsageFeeSetting {
         return instance;
     }
 
-    public void setUsageFeeConditionTypes(
-            @NonNull PracticeType practiceType,
-            @NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-
+    public void setUsageFeeConditionTypes(@NonNull PracticeType practiceType, @NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         practiceTypeBasicFeeSettings.get(practiceType).setUsageFeeConditionTypes(usageFeeConditionTypes);
     }
 
-    public void setBasicUsageFees(
-            @NonNull PracticeType practiceType,
-            @NonNull BasicUsageFees basicUsageFees,
-            @NonNull BasicUsageFeeSettingRule basicUsageFeeSettingRule) {
-
-        practiceTypeBasicFeeSettings.get(practiceType).setBasicFees(basicUsageFees, basicUsageFeeSettingRule);
+    public void setBasicUsageFees(@NonNull PracticeType practiceType, @NonNull BasicUsageFees basicUsageFees) {
+        practiceTypeBasicFeeSettings.get(practiceType).setBasicFees(basicUsageFees);
     }
 }

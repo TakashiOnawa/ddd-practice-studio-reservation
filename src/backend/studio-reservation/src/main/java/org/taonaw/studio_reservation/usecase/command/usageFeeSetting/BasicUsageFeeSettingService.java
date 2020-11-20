@@ -13,6 +13,8 @@ public class BasicUsageFeeSettingService {
     private final BasicUsageFeeSettingRepository basicUsageFeeSettingRepository;
 
     public void handle(@NonNull SetBasicUsageFeeConditionTypesCommand command) {
+        // TODO: 排他制御
+
         var basicUsageFeeSetting = basicUsageFeeSettingRepository.get();
 
         basicUsageFeeSetting.setUsageFeeConditionTypes(command.getPracticeType(), command.getUsageFeeConditionTypes());
@@ -21,9 +23,11 @@ public class BasicUsageFeeSettingService {
     }
 
     public void handle(@NonNull SetBasicUsageFeesCommand command) {
+        // TODO: 排他制御
+        
         var basicFeeSetting = basicUsageFeeSettingRepository.get();
 
-        basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getBasicUsageFees(), null);
+        basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getBasicUsageFees());
 
         basicUsageFeeSettingRepository.update(basicFeeSetting);
     }
