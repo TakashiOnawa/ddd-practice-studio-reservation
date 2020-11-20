@@ -2,7 +2,7 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondi
 
 import org.taonaw.studio_reservation.domain.model.studio.StudioId;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public enum UsageFeeConditionType {
     STUDIO(1),
@@ -24,8 +24,8 @@ public enum UsageFeeConditionType {
         return new DayTypeCondition(DAY_TYPE, dayType);
     }
 
-    public static UsageFeeCondition createTimePeriodCondition(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return new TimePeriodCondition(TIME_PERIOD, startDateTime, endDateTime);
+    public static UsageFeeCondition createTimeRangeCondition(LocalTime startTime, LocalTime endTime) {
+        return new TimeRangeCondition(TIME_PERIOD, startTime, endTime);
     }
 
     public static UserCountCondition createUserCountCondition(int userCount) {

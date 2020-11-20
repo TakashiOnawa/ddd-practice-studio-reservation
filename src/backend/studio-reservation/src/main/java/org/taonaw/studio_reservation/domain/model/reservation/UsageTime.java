@@ -6,6 +6,7 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.cancellationFeeSetting.CancellationFeeRates;
 import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHour;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.ReservationStartDate;
+import org.taonaw.studio_reservation.domain.model.shared.DateTimeRange;
 import org.taonaw.studio_reservation.domain.model.studio.StartTime;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 
@@ -13,12 +14,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Getter
-@EqualsAndHashCode
-public class UsageTime {
-    private final LocalDateTime startDateTime;
-    private final LocalDateTime endDateTime;
-
+@EqualsAndHashCode(callSuper = true)
+public class UsageTime extends DateTimeRange {
     public UsageTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        super(startDateTime, endDateTime);
         Assertion.required(startDateTime);
         Assertion.required(endDateTime);
 
@@ -28,41 +27,27 @@ public class UsageTime {
         if (endDateTime.getSecond() != 0 || endDateTime.getNano() != 0) {
             throw new IllegalArgumentException("終了日時に秒の指定はできません。");
         }
-        if (!startDateTime.isBefore(endDateTime)) {
-            throw new IllegalArgumentException("終了日時が開始日時以前です。");
-        }
         if (ChronoUnit.MINUTES.between(startDateTime, endDateTime) % 60 != 0) {
             throw new IllegalArgumentException("1 時間単位でなければなりません。");
         }
-
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-    }
-
-    public boolean isOverlapped(@NonNull UsageTime other) {
-        return startDateTime.isBefore(other.endDateTime) && other.startDateTime.isBefore(endDateTime);
-    }
-
-    public boolean isPassed(@NonNull LocalDateTime currentDateTime) {
-        return !startDateTime.isBefore(currentDateTime);
     }
 
     public boolean isCancellationFeeFree(@NonNull CancellationFeeRates cancellationFeeRates, @NonNull LocalDateTime currentDateTime) {
-        return cancellationFeeRates.isFree(startDateTime, currentDateTime);
+        return cancellationFeeRates.isFree(getStartDateTime(), currentDateTime);
     }
 
     public boolean satisfy(@NonNull OpeningHour openingHour) {
-        if (openingHour.allDay())
+        if (openingHour.isAllDay())
             return true;
         else
-            return !startDateTime.isBefore(openingHour.getStartDateTime()) && !endDateTime.isAfter(openingHour.getEndDateTime());
+            return this.isIn(openingHour.toDateTimeRange(getStartDateTime().toLocalDate()));
     }
 
     public boolean satisfy(@NonNull ReservationStartDate reservationStartDate, LocalDateTime currentDateTime) {
-        return !startDateTime.isBefore(reservationStartDate.startDate(currentDateTime).atStartOfDay());
+        return !getStartDateTime().isBefore(reservationStartDate.startDate(currentDateTime).atStartOfDay());
     }
 
     public boolean satisfy(@NonNull StartTime startTime) {
-        return startDateTime.getMinute() == startTime.getStartMinutes();
+        return getStartDateTime().getMinute() == startTime.getStartMinutes();
     }
 }

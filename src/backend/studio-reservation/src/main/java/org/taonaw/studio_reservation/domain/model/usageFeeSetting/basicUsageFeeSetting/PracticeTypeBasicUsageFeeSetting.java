@@ -35,6 +35,7 @@ public class PracticeTypeBasicUsageFeeSetting {
         errorNotification.addError(basicUsageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
         // 基本利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
         errorNotification.addError(basicUsageFees.validateDuplicated());
+        // TODO: ここから（バリデーション条件足りてる？）
         errorNotification.throwIfHasErrors("基本利用料金設定に不備があります。");
 
         this.basicUsageFees = basicUsageFees;
