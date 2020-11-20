@@ -24,7 +24,7 @@ public class BasicUsageFeeSettingService {
 
     public void handle(@NonNull SetBasicUsageFeesCommand command) {
         // TODO: 排他制御
-        
+
         var basicFeeSetting = basicUsageFeeSettingRepository.get();
 
         basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getBasicUsageFees());

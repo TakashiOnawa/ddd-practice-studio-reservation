@@ -2,14 +2,12 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSettin
 
 import lombok.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class PackFeeSetting {
     private final PackFeeSettingId id;
     private PackName packName;
-    private final List<PackFee> packFees = new ArrayList<>();
+    private PackFees packFees;
 
     private PackFeeSetting(@NonNull PackFeeSettingId id) {
         this.id = id;
