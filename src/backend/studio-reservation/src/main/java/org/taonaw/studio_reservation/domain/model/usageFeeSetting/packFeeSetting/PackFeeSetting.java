@@ -44,6 +44,7 @@ public class PackFeeSetting {
         return instance;
     }
 
+    // TODO: ErrorNotification を使う
     public void setUsageFeeConditionTypes(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         var errorNotification = new ErrorNotification();
         errorNotification.addError(usageFeeConditionTypes.validateDuplicated());
@@ -54,6 +55,7 @@ public class PackFeeSetting {
         this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
     }
 
+    // TODO: ErrorNotification を使う
     public void setUsageFees(@NonNull UsageFees usageFees) {
         var errorNotification = new ErrorNotification();
         // 利用料金条件区分が、設定された値とい異なってはならない。

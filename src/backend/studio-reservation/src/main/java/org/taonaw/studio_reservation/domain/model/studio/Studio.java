@@ -1,16 +1,15 @@
 package org.taonaw.studio_reservation.domain.model.studio;
 
 import lombok.NonNull;
+import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Studio {
     private StudioId id;
     private StudioName name;
     private StartTime startTime;
-    private Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts;
+    private EquipmentMaxUsableCounts equipmentMaxUsableCounts = EquipmentMaxUsableCounts.empty();
 
     private Studio(@NonNull StudioId id) {
         this.id = id;
@@ -19,12 +18,16 @@ public class Studio {
     public static Studio create(
             @NonNull StudioName name,
             @NonNull StartTime startTime,
-            @NonNull Set<EquipmentMaxUsableCount> equipmentMaxUsableCounts) {
+            @NonNull EquipmentMaxUsableCounts equipmentMaxUsableCounts) {
+
+        var errorNotification = new ErrorNotification();
+        errorNotification.addError(equipmentMaxUsableCounts.validateDuplicated());
+        errorNotification.throwIfHasErrors("スタジオ内容に不備があります。");
 
         var instance = new Studio(StudioId.newId());
         instance.name = name;
         instance.startTime = startTime;
-        instance.equipmentMaxUsableCounts = new HashSet<>(equipmentMaxUsableCounts);
+        instance.equipmentMaxUsableCounts = equipmentMaxUsableCounts;
         return instance;
     }
 
