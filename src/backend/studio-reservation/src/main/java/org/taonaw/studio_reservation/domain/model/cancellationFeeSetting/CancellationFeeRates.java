@@ -18,6 +18,14 @@ public class CancellationFeeRates {
         this.items = new ArrayList<>(items);
     }
 
+    public static CancellationFeeRates empty() {
+        return new CancellationFeeRates(new ArrayList<>());
+    }
+
+    public List<CancellationFeeRate> items() {
+        return new ArrayList<>(items);
+    }
+
     public boolean isFree(@NonNull LocalDateTime targetDateTime, @NonNull LocalDateTime currentDateTime) {
         for (var cancellationFeeRate : items) {
             if (cancellationFeeRate.isApplied(targetDateTime, currentDateTime) && !cancellationFeeRate.isFree()) {

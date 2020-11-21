@@ -1,7 +1,7 @@
 package org.taonaw.studio_reservation.domain.model.cancellationFeeSetting;
 
 public class CancellationFeeSetting {
-    private CancellationFeeRates cancellationFeeRates;
+    private CancellationFeeRates cancellationFeeRates = CancellationFeeRates.empty();
 
     public static CancellationFeeSetting reconstruct(CancellationFeeRates cancellationFeeRates) {
         CancellationFeeSetting instance = new CancellationFeeSetting();
