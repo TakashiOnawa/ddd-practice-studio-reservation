@@ -9,14 +9,11 @@ import java.util.List;
 public class CancellationFeeRates {
     private final List<CancellationFeeRate> items = new ArrayList<>();
 
-    private CancellationFeeRates() {
-    }
-
-    public CancellationFeeRates(@NonNull List<CancellationFeeRate> cancellationFeeRates) {
+    public CancellationFeeRates(@NonNull List<CancellationFeeRate> items) {
         // TODO: 何日前の値は重複してはならない。
         // TODO: 何日前の値の順にソートして保持する。
         // TODO: キャンセル料金のレートは徐々に高くなっていかなけれがならない。
-        this.items.addAll(cancellationFeeRates);
+        this.items.addAll(items);
     }
 
     public boolean isFree(@NonNull LocalDateTime targetDateTime, @NonNull LocalDateTime currentDateTime) {
@@ -26,11 +23,5 @@ public class CancellationFeeRates {
             }
         }
         return true;
-    }
-
-    public CancellationFeeRates copy() {
-        var copy = new CancellationFeeRates();
-        copy.items.addAll(this.items);
-        return copy;
     }
 }
