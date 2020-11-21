@@ -14,22 +14,26 @@ import java.util.stream.Collectors;
 
 @EqualsAndHashCode
 public class UsageEquipments {
-    private final List<UsageEquipment> items = new ArrayList<>();
+    private final List<UsageEquipment> items;
 
-    public UsageEquipments(List<UsageEquipment> usageEquipments) {
-        Assertion.required(usageEquipments);
+    public UsageEquipments(List<UsageEquipment> items) {
+        Assertion.required(items);
 
         // 同じ機材の数量をマージする。
         Map<EquipmentId, UsageEquipment> map = new HashMap<>();
-        for (var usageEquipment : usageEquipments) {
-            var mappedUsageEquipment = map.get(usageEquipment.getEquipmentId());
+        for (var item : items) {
+            var mappedUsageEquipment = map.get(item.getEquipmentId());
             if (mappedUsageEquipment == null) {
-                map.put(usageEquipment.getEquipmentId(), usageEquipment);
+                map.put(item.getEquipmentId(), item);
             } else {
-                map.put(usageEquipment.getEquipmentId(), usageEquipment.add(usageEquipment));
+                map.put(item.getEquipmentId(), item.add(item));
             }
         }
-        items.addAll(map.values());
+        this.items = new ArrayList<>(map.values());
+    }
+
+    public static UsageEquipments empty() {
+        return new UsageEquipments(new ArrayList<>());
     }
 
     public List<UsageEquipment> items() {
@@ -43,14 +47,14 @@ public class UsageEquipments {
     public List<EquipmentId> notSatisfyEquipments(@NonNull Map<EquipmentId, EquipmentMaxUsableCount> equipmentMaxUsableCounts) {
         var notSatisfyEquipmentIds = new ArrayList<EquipmentId>();
 
-        for (var usageEquipment : items) {
-            var equipmentMaxUsableCount = equipmentMaxUsableCounts.get(usageEquipment.getEquipmentId());
+        for (var item : items) {
+            var equipmentMaxUsableCount = equipmentMaxUsableCounts.get(item.getEquipmentId());
 
             if (equipmentMaxUsableCount == null)
                 continue;
 
-            if (!usageEquipment.satisfy(equipmentMaxUsableCount)) {
-                notSatisfyEquipmentIds.add(usageEquipment.getEquipmentId());
+            if (!item.satisfy(equipmentMaxUsableCount)) {
+                notSatisfyEquipmentIds.add(item.getEquipmentId());
             }
         }
 

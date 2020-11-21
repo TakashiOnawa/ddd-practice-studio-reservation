@@ -3,6 +3,7 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondi
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeConditionTypeDuplicatedError;
+import org.taonaw.studio_reservation.domain.shared.Assertion;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ import java.util.stream.Collectors;
 public class UsageFeeConditionTypes {
     private final List<UsageFeeConditionType> items;
 
-    public UsageFeeConditionTypes(@NonNull List<UsageFeeConditionType> items) {
+    public UsageFeeConditionTypes(List<UsageFeeConditionType> items) {
+        Assertion.required(items);
         this.items = new ArrayList<>(items);
     }
 

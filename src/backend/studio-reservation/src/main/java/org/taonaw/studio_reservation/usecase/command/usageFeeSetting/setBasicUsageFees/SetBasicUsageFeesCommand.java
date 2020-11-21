@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting.BasicUsageFees;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class SetBasicUsageFeesCommand {
     private PracticeType practiceType;
-    private BasicUsageFees basicUsageFees;
+    private UsageFees usageFees;
 }

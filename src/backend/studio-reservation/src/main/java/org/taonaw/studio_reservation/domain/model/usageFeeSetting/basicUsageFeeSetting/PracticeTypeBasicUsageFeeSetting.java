@@ -2,6 +2,7 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFee
 
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 public class PracticeTypeBasicUsageFeeSetting {
     private final PracticeType practiceType;
     private UsageFeeConditionTypes usageFeeConditionTypes = UsageFeeConditionTypes.empty();
-    private BasicUsageFees basicUsageFees = BasicUsageFees.empty();
+    private UsageFees usageFees = UsageFees.empty();
 
     public PracticeTypeBasicUsageFeeSetting(@NonNull PracticeType practiceType) {
         this.practiceType = practiceType;
@@ -23,18 +24,18 @@ public class PracticeTypeBasicUsageFeeSetting {
 
         var decreasedUsageFeeConditionTypes = this.usageFeeConditionTypes.remove(usageFeeConditionTypes);
         this.usageFeeConditionTypes = usageFeeConditionTypes;
-        this.basicUsageFees = this.basicUsageFees.removeBasicUsageFeeCondition(decreasedUsageFeeConditionTypes);
+        this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
     }
 
-    public void setBasicFees(@NonNull BasicUsageFees basicUsageFees) {
+    public void setBasicFees(@NonNull UsageFees usageFees) {
         var errorNotification = new ErrorNotification();
         // 利用料金条件区分が、設定された値とい異なってはならない。
-        errorNotification.addError(basicUsageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
+        errorNotification.addError(usageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
         // 基本利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
-        errorNotification.addError(basicUsageFees.validateDuplicated());
+        errorNotification.addError(usageFees.validateDuplicated());
         errorNotification.throwIfHasErrors("基本利用料金設定に不備があります。");
 
-        this.basicUsageFees = basicUsageFees;
+        this.usageFees = usageFees;
     }
 
     public PracticeType practiceType() {

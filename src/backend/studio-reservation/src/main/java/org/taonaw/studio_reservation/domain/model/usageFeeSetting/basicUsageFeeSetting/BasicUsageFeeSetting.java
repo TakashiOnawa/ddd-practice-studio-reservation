@@ -2,6 +2,7 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFee
 
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class BasicUsageFeeSetting {
         practiceTypeBasicFeeSettings.get(practiceType).setUsageFeeConditionTypes(usageFeeConditionTypes);
     }
 
-    public void setBasicUsageFees(@NonNull PracticeType practiceType, @NonNull BasicUsageFees basicUsageFees) {
-        practiceTypeBasicFeeSettings.get(practiceType).setBasicFees(basicUsageFees);
+    public void setBasicUsageFees(@NonNull PracticeType practiceType, @NonNull UsageFees usageFees) {
+        practiceTypeBasicFeeSettings.get(practiceType).setBasicFees(usageFees);
     }
 }

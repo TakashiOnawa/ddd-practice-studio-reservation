@@ -27,7 +27,7 @@ public class BasicUsageFeeSettingService {
 
         var basicFeeSetting = basicUsageFeeSettingRepository.get();
 
-        basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getBasicUsageFees());
+        basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getUsageFees());
 
         basicUsageFeeSettingRepository.update(basicFeeSetting);
     }

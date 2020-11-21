@@ -1,10 +1,11 @@
-package org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting;
+package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.BasicUsageFeeDuplicatedError;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeConditionTypeDifferentError;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
+import org.taonaw.studio_reservation.domain.shared.Assertion;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 
 import java.util.ArrayList;
@@ -13,18 +14,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode
-public class BasicUsageFees {
-    private final List<BasicUsageFee> items;
+public class UsageFees {
+    private final List<UsageFee> items;
 
-    public BasicUsageFees(@NonNull List<BasicUsageFee> items) {
+    public UsageFees(List<UsageFee> items) {
+        Assertion.required(items);
         this.items = new ArrayList<>(items);
     }
 
-    public static BasicUsageFees empty() {
-        return new BasicUsageFees(new ArrayList<>());
+    public static UsageFees empty() {
+        return new UsageFees(new ArrayList<>());
     }
 
-    public List<BasicUsageFee> items() {
+    public List<UsageFee> items() {
         return new ArrayList<>(items);
     }
 
@@ -48,10 +50,10 @@ public class BasicUsageFees {
             return Optional.of(new BasicUsageFeeDuplicatedError(errorItems));
     }
 
-    public BasicUsageFees removeBasicUsageFeeCondition(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
+    public UsageFees removeUsageFeeCondition(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         var removedConditionTypesItems = items.stream()
                 .map(item -> item.removeBasicUsageFeeCondition(usageFeeConditionTypes))
                 .collect(Collectors.toList());
-        return new BasicUsageFees(removedConditionTypesItems);
+        return new UsageFees(removedConditionTypesItems);
     }
 }
