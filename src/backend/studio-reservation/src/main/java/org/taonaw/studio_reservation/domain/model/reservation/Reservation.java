@@ -102,63 +102,105 @@ public class Reservation {
         return instance;
     }
 
-    public void changeByMember(
+    public void changeStudioByMember(
             @NonNull MemberAccountId memberAccountId,
             @NonNull StudioId studioId,
-            @NonNull UsageTime usageTime,
-            @NonNull UserCount userCount,
-            @NonNull PracticeType practiceType,
-            @NonNull UsageEquipments usageEquipments,
             @NonNull CancellationFeeRates cancellationFeeRates,
+            @NonNull LocalDateTime currentDateTime,
+            @NonNull ErrorNotification errorNotification) {
+
+        validateChangeByMember(memberAccountId, currentDateTime);
+        if (!this.studioId.equals(studioId)) {
+            if (isCancellationFeeApplied(cancellationFeeRates, currentDateTime))
+                errorNotification.addError(new CanNotChangeUsageStudioError());
+            if (errorNotification.noErrors())
+                this.studioId = studioId;
+        }
+    }
+
+    public void changeUsageTimeByMember(
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull UsageTime usageTime,
+            @NonNull CancellationFeeRates cancellationFeeRates,
+            @NonNull LocalDateTime currentDateTime,
+            @NonNull ErrorNotification errorNotification) {
+
+        validateChangeByMember(memberAccountId, currentDateTime);
+        if (!this.usageTime.equals(usageTime)) {
+            if (isCancellationFeeApplied(cancellationFeeRates, currentDateTime))
+                errorNotification.addError(new CanNotChangeUsageTimeError());
+            if (errorNotification.noErrors())
+                this.usageTime = usageTime;
+        }
+    }
+
+    public void changeUserCountByMember(
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull UserCount userCount,
             @NonNull LocalDateTime currentDateTime) {
 
-        if (this.memberAccountId == null)
-            throw new IllegalArgumentException("会員による予約ではないため変更できません。");
-        if (!this.memberAccountId.equals(memberAccountId))
-            throw new IllegalArgumentException("異なる会員による変更はできません。");
+        validateChangeByMember(memberAccountId, currentDateTime);
+        this.userCount = userCount;
+    }
 
+    public void changePracticeTypeByMember(
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull PracticeType practiceType,
+            @NonNull CancellationFeeRates cancellationFeeRates,
+            @NonNull LocalDateTime currentDateTime,
+            @NonNull ErrorNotification errorNotification) {
+
+        validateChangeByMember(memberAccountId, currentDateTime);
+        if (!this.practiceType.equals(practiceType)) {
+            if (isCancellationFeeApplied(cancellationFeeRates, currentDateTime))
+                errorNotification.addError(new CanNotChangePracticeTypeError());
+            if (errorNotification.noErrors())
+                this.practiceType = practiceType;
+        }
+    }
+
+    public void changeUsageEquipmentsByMember(
+            @NonNull MemberAccountId memberAccountId,
+            @NonNull UsageEquipments usageEquipments,
+            @NonNull LocalDateTime currentDateTime) {
+
+        validateChangeByMember(memberAccountId, currentDateTime);
+        this.usageEquipments = usageEquipments;
+    }
+
+    private void validateChangeByMember(MemberAccountId memberAccountId, LocalDateTime currentDateTime) {
+        validateOperationByMember(memberAccountId);
         if (this.usageTime.isPassed(currentDateTime))
             new CanNotChangeForAlreadyStartedError().throwError();
-
-        var isCancellationFeeFree = this.usageTime.isCancellationFeeFree(cancellationFeeRates, currentDateTime);
-        var errorNotification = new ErrorNotification();
-        if (!this.studioId.equals(studioId) && !isCancellationFeeFree)
-            errorNotification.addError(new CanNotChangeUsageStudioError());
-        if (!this.usageTime.equals(usageTime) && !isCancellationFeeFree)
-            errorNotification.addError(new CanNotChangeUsageTimeError());
-        if (!this.practiceType.equals(practiceType) && !isCancellationFeeFree)
-            errorNotification.addError(new CanNotChangePracticeTypeError());
-        errorNotification.throwIfHasErrors("予約を変更できません。");
-
-        this.studioId = studioId;
-        this.usageTime = usageTime;
-        this.userCount = userCount;
-        this.practiceType = practiceType;
-        this.usageEquipments = usageEquipments;
     }
 
     public void cancelByMember(
             @NonNull MemberAccountId memberAccountId,
             @NonNull LocalDateTime canceledOn,
-            @NonNull CancellationFeeRates cancellationFeeRates) {
+            @NonNull CancellationFeeRates cancellationFeeRates,
+            @NonNull ErrorNotification errorNotification) {
 
-        if (this.memberAccountId == null)
-            throw new IllegalArgumentException("会員による予約ではないためキャンセルできません。");
-        if (!this.memberAccountId.equals(memberAccountId))
-            throw new IllegalArgumentException("異なる会員によるキャンセルはできません。");
+        validateOperationByMember(memberAccountId);
         if (status == ReservationStatus.CANCELED)
             throw new IllegalStateException("既にキャンセルされています。");
-
         if (this.usageTime.isPassed(canceledOn))
             new CanNotCancelForAlreadyStartedError().throwError();
 
-        var isCancellationFeeFree = this.usageTime.isCancellationFeeFree(cancellationFeeRates, canceledOn);
-        var errorNotification = new ErrorNotification();
-        if (!isCancellationFeeFree)
+        if (isCancellationFeeApplied(cancellationFeeRates, canceledOn))
             errorNotification.addError(new CanNotCancelForCancellationFeeNotFreeError());
-        errorNotification.throwIfHasErrors("予約をキャンセルできません。");
+        if (errorNotification.noErrors())
+            status = ReservationStatus.CANCELED;
+    }
 
-        status = ReservationStatus.CANCELED;
+    private void validateOperationByMember(MemberAccountId memberAccountId) {
+        if (this.memberAccountId == null)
+            throw new IllegalArgumentException("会員による予約ではないため変更できません。");
+        if (!this.memberAccountId.equals(memberAccountId))
+            throw new IllegalArgumentException("異なる会員による変更はできません。");
+    }
+
+    private boolean isCancellationFeeApplied(CancellationFeeRates cancellationFeeRates, LocalDateTime currentDateTime) {
+        return !this.usageTime.isCancellationFeeFree(cancellationFeeRates, currentDateTime);
     }
 
     public boolean isDuplicated(@NonNull Reservation other) {

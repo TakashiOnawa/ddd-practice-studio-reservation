@@ -17,24 +17,15 @@ public class ErrorNotification {
         errors.add(new Error(message));
     }
 
-    public void addError(Error error) {
-        if (error == null)
-            return;
-
+    public void addError(@NonNull Error error) {
         errors.add(error);
     }
 
-    public void addError(Optional<Error> error) {
-        if (error.isEmpty())
-            return;
-
-        errors.add(error.get());
+    public void addError(@NonNull Optional<Error> error) {
+        error.ifPresent(errors::add);
     }
 
-    public void addError(ErrorNotification errorNotification) {
-        if (errorNotification == null)
-            return;
-
+    public void addError(@NonNull ErrorNotification errorNotification) {
         errors.addAll(errorNotification.errors);
     }
 
@@ -51,8 +42,12 @@ public class ErrorNotification {
                 .collect(Collectors.joining(", "));
     }
 
+    public boolean noErrors() {
+        return errors.isEmpty();
+    }
+
     public boolean hasErrors() {
-        return !errors.isEmpty();
+        return !noErrors();
     }
 
     public void throwIfHasErrors(String message) {

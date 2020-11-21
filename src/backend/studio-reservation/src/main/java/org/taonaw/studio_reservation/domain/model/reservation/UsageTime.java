@@ -43,7 +43,7 @@ public class UsageTime extends DateTimeRange {
             return this.isIn(openingHour.toDateTimeRange(getStartDateTime().toLocalDate()));
     }
 
-    public boolean satisfy(@NonNull ReservationStartDate reservationStartDate, LocalDateTime currentDateTime) {
+    public boolean satisfy(@NonNull ReservationStartDate reservationStartDate, @NonNull LocalDateTime currentDateTime) {
         return !getStartDateTime().isBefore(reservationStartDate.startDate(currentDateTime).atStartOfDay());
     }
 

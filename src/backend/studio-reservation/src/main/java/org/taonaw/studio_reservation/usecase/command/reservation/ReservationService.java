@@ -10,6 +10,7 @@ import org.taonaw.studio_reservation.domain.model.reservation.ReservationReposit
 import org.taonaw.studio_reservation.domain.model.reservation.ReservationRuleFactory;
 import org.taonaw.studio_reservation.domain.model.reservation.ReservedUsageEquipments;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
+import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 import org.taonaw.studio_reservation.shared.CurrentDate;
 import org.taonaw.studio_reservation.usecase.command.exception.MemberAccountNotFoundException;
 import org.taonaw.studio_reservation.usecase.command.exception.ReservationNotFoundException;
@@ -109,15 +110,42 @@ public class ReservationService {
 
         var cancellationFeeSetting = cancellationFeeSettingRepository.get();
 
-        reservation.changeByMember(
+        var currentDateTime = currentDate.now();
+
+        var errorNotification = new ErrorNotification();
+
+        reservation.changeStudioByMember(
                 command.getMemberAccountId(),
                 command.getStudioId(),
-                command.getUsageTime(),
-                command.getUserCount(),
-                command.getPracticeType(),
-                command.getUsageEquipments(),
                 cancellationFeeSetting.cancellationFeeRates(),
-                currentDate.now());
+                currentDateTime,
+                errorNotification);
+
+        reservation.changeUsageTimeByMember(
+                command.getMemberAccountId(),
+                command.getUsageTime(),
+                cancellationFeeSetting.cancellationFeeRates(),
+                currentDateTime,
+                errorNotification);
+
+        reservation.changeUserCountByMember(
+                command.getMemberAccountId(),
+                command.getUserCount(),
+                currentDateTime);
+
+        reservation.changePracticeTypeByMember(
+                command.getMemberAccountId(),
+                command.getPracticeType(),
+                cancellationFeeSetting.cancellationFeeRates(),
+                currentDateTime,
+                errorNotification);
+
+        reservation.changeUsageEquipmentsByMember(
+                command.getMemberAccountId(),
+                command.getUsageEquipments(),
+                currentDateTime);
+
+        errorNotification.throwIfHasErrors("予約を変更できません。");
 
         var overlappedReservations = reservationRepository.findBy(reservation.usageTime());
 
@@ -139,10 +167,15 @@ public class ReservationService {
 
         var cancellationFeeSetting = cancellationFeeSettingRepository.get();
 
+        var errorNotification = new ErrorNotification();
+
         reservation.cancelByMember(
                 command.getMemberAccountId(),
                 currentDate.now(),
-                cancellationFeeSetting.cancellationFeeRates());
+                cancellationFeeSetting.cancellationFeeRates(),
+                errorNotification);
+
+        errorNotification.throwIfHasErrors("予約をキャンセルできません。");
 
         var updateResult = reservationRepository.update(reservation);
 
