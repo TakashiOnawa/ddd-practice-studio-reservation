@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
+import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +26,19 @@ public class BasicUsageFeeSetting {
         return instance;
     }
 
-    public void setUsageFeeConditionTypes(@NonNull PracticeType practiceType, @NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-        practiceTypeBasicFeeSettings.get(practiceType).setUsageFeeConditionTypes(usageFeeConditionTypes);
+    public void setUsageFeeConditionTypes(
+            @NonNull PracticeType practiceType,
+            @NonNull UsageFeeConditionTypes usageFeeConditionTypes,
+            @NonNull ErrorNotification errorNotification) {
+
+        practiceTypeBasicFeeSettings.get(practiceType).setUsageFeeConditionTypes(usageFeeConditionTypes, errorNotification);
     }
 
-    public void setBasicUsageFees(@NonNull PracticeType practiceType, @NonNull UsageFees usageFees) {
-        practiceTypeBasicFeeSettings.get(practiceType).setUsageFees(usageFees);
+    public void setBasicUsageFees(
+            @NonNull PracticeType practiceType,
+            @NonNull UsageFees usageFees,
+            @NonNull ErrorNotification errorNotification) {
+
+        practiceTypeBasicFeeSettings.get(practiceType).setUsageFees(usageFees, errorNotification);
     }
 }

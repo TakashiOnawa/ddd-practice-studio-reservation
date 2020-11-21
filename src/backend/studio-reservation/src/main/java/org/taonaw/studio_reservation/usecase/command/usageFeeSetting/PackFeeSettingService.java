@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSetting.PackFeeSetting;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSetting.PackFeeSettingRepository;
+import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 import org.taonaw.studio_reservation.usecase.command.exception.PackFeeSettingNotFoundException;
 import org.taonaw.studio_reservation.usecase.command.usageFeeSetting.createPackFeeSetting.CreatePackFeeSettingCommand;
 import org.taonaw.studio_reservation.usecase.command.usageFeeSetting.setPackFeeConditionTypes.SetPackFeeConditionTypesCommand;
@@ -27,7 +28,11 @@ public class PackFeeSettingService {
         var packFeeSetting = packFeeSettingRepository.findBy(command.getPackFeeSettingId())
                 .orElseThrow(PackFeeSettingNotFoundException::new);
 
-        packFeeSetting.setUsageFeeConditionTypes(command.getUsageFeeConditionTypes());
+        var errorNotification = new ErrorNotification();
+
+        packFeeSetting.setUsageFeeConditionTypes(command.getUsageFeeConditionTypes(), errorNotification);
+
+        errorNotification.throwIfHasErrors("パック料金条件区分を設定できません。");
 
         packFeeSettingRepository.update(packFeeSetting);
     }
@@ -38,7 +43,11 @@ public class PackFeeSettingService {
         var packFeeSetting = packFeeSettingRepository.findBy(command.getPackFeeSettingId())
                 .orElseThrow(PackFeeSettingNotFoundException::new);
 
-        packFeeSetting.setUsageFees(command.getUsageFees());
+        var errorNotification = new ErrorNotification();
+
+        packFeeSetting.setUsageFees(command.getUsageFees(), errorNotification);
+
+        errorNotification.throwIfHasErrors("パック料金を設定できません。");
 
         packFeeSettingRepository.update(packFeeSetting);
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting.BasicUsageFeeSettingRepository;
+import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 import org.taonaw.studio_reservation.usecase.command.usageFeeSetting.setBasicUsageFeeConditionTypes.SetBasicUsageFeeConditionTypesCommand;
 import org.taonaw.studio_reservation.usecase.command.usageFeeSetting.setBasicUsageFees.SetBasicUsageFeesCommand;
 
@@ -17,7 +18,14 @@ public class BasicUsageFeeSettingService {
 
         var basicUsageFeeSetting = basicUsageFeeSettingRepository.get();
 
-        basicUsageFeeSetting.setUsageFeeConditionTypes(command.getPracticeType(), command.getUsageFeeConditionTypes());
+        var errorNotification = new ErrorNotification();
+
+        basicUsageFeeSetting.setUsageFeeConditionTypes(
+                command.getPracticeType(),
+                command.getUsageFeeConditionTypes(),
+                errorNotification);
+
+        errorNotification.throwIfHasErrors("基本利用料金条件区分を設定できません。");
 
         basicUsageFeeSettingRepository.update(basicUsageFeeSetting);
     }
@@ -27,7 +35,14 @@ public class BasicUsageFeeSettingService {
 
         var basicFeeSetting = basicUsageFeeSettingRepository.get();
 
-        basicFeeSetting.setBasicUsageFees(command.getPracticeType(), command.getUsageFees());
+        var errorNotification = new ErrorNotification();
+
+        basicFeeSetting.setBasicUsageFees(
+                command.getPracticeType(),
+                command.getUsageFees(),
+                errorNotification);
+
+        errorNotification.throwIfHasErrors("基本利用料金を設定できません。");
 
         basicUsageFeeSettingRepository.update(basicFeeSetting);
     }

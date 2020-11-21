@@ -13,31 +13,38 @@ public class PracticeTypeBasicUsageFeeSetting {
     private UsageFeeConditionTypes usageFeeConditionTypes = UsageFeeConditionTypes.empty();
     private UsageFees usageFees = UsageFees.empty();
 
-    public PracticeTypeBasicUsageFeeSetting(@NonNull PracticeType practiceType) {
+    PracticeTypeBasicUsageFeeSetting(@NonNull PracticeType practiceType) {
         this.practiceType = practiceType;
     }
 
-    // TODO: ErrorNotification を使う
-    public void setUsageFeeConditionTypes(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-        var errorNotification = new ErrorNotification();
-        errorNotification.addError(usageFeeConditionTypes.validateDuplicated());
-        errorNotification.throwIfHasErrors("利用料金条件を変更できません。");
+    public static PracticeTypeBasicUsageFeeSetting reconstruct(
+            PracticeType practiceType,
+            UsageFeeConditionTypes usageFeeConditionTypes,
+            UsageFees usageFees) {
 
-        var decreasedUsageFeeConditionTypes = this.usageFeeConditionTypes.remove(usageFeeConditionTypes);
-        this.usageFeeConditionTypes = usageFeeConditionTypes;
-        this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
+        var instance = new PracticeTypeBasicUsageFeeSetting(practiceType);
+        instance.usageFeeConditionTypes = usageFeeConditionTypes;
+        instance.usageFees = usageFees;
+        return instance;
     }
 
-    // TODO: ErrorNotification を使う
-    public void setUsageFees(@NonNull UsageFees usageFees) {
-        var errorNotification = new ErrorNotification();
-        // 利用料金条件区分が、設定された値とい異なってはならない。
-        errorNotification.addError(usageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
-        // 利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
-        errorNotification.addError(usageFees.validateDuplicated());
-        errorNotification.throwIfHasErrors("利用料金設定に不備があります。");
+    void setUsageFeeConditionTypes(
+            @NonNull UsageFeeConditionTypes usageFeeConditionTypes,
+            @NonNull ErrorNotification errorNotification) {
 
-        this.usageFees = usageFees;
+        errorNotification.addError(usageFeeConditionTypes.validateDuplicated());
+        if (errorNotification.noErrors()) {
+            var decreasedUsageFeeConditionTypes = this.usageFeeConditionTypes.remove(usageFeeConditionTypes);
+            this.usageFeeConditionTypes = usageFeeConditionTypes;
+            this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
+        }
+    }
+
+    void setUsageFees(@NonNull UsageFees usageFees, @NonNull ErrorNotification errorNotification) {
+        errorNotification.addError(usageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
+        errorNotification.addError(usageFees.validateDuplicated());
+        if (errorNotification.noErrors())
+            this.usageFees = usageFees;
     }
 
     public PracticeType practiceType() {
