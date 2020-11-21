@@ -2,7 +2,7 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.BasicUsageFeeDuplicatedError;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeDuplicatedError;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeConditionTypeDifferentError;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
@@ -47,7 +47,7 @@ public class UsageFees {
         if (errorItems.isEmpty())
             return Optional.empty();
         else
-            return Optional.of(new BasicUsageFeeDuplicatedError(errorItems));
+            return Optional.of(new UsageFeeDuplicatedError(errorItems));
     }
 
     public UsageFees removeUsageFeeCondition(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {

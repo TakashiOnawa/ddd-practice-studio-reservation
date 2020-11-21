@@ -8,10 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BasicUsageFeeDuplicatedError extends Error {
+public class UsageFeeDuplicatedError extends Error {
     private final Set<UsageFee> errorUsageFees = new HashSet<>();
 
-    public BasicUsageFeeDuplicatedError(@NonNull List<UsageFee> errorUsageFees) {
+    public UsageFeeDuplicatedError(@NonNull List<UsageFee> errorUsageFees) {
         super("利用料金が重複しています。");
         this.errorUsageFees.addAll(errorUsageFees);
     }

@@ -44,7 +44,7 @@ public class PackFeeSetting {
         return instance;
     }
 
-    public void changeUsageFeeConditionTypes(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
+    public void setUsageFeeConditionTypes(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         var errorNotification = new ErrorNotification();
         errorNotification.addError(usageFeeConditionTypes.validateDuplicated());
         errorNotification.throwIfHasErrors("利用料金条件を変更できません。");
@@ -52,6 +52,17 @@ public class PackFeeSetting {
         var decreasedUsageFeeConditionTypes = this.usageFeeConditionTypes.remove(usageFeeConditionTypes);
         this.usageFeeConditionTypes = usageFeeConditionTypes;
         this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
+    }
+
+    public void setUsageFees(@NonNull UsageFees usageFees) {
+        var errorNotification = new ErrorNotification();
+        // 利用料金条件区分が、設定された値とい異なってはならない。
+        errorNotification.addError(usageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
+        // 利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
+        errorNotification.addError(usageFees.validateDuplicated());
+        errorNotification.throwIfHasErrors("利用料金設定に不備があります。");
+
+        this.usageFees = usageFees;
     }
 
     @Override

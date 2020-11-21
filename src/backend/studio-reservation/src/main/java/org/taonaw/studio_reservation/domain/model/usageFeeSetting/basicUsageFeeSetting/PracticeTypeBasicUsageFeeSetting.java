@@ -27,13 +27,13 @@ public class PracticeTypeBasicUsageFeeSetting {
         this.usageFees = this.usageFees.removeUsageFeeCondition(decreasedUsageFeeConditionTypes);
     }
 
-    public void setBasicFees(@NonNull UsageFees usageFees) {
+    public void setUsageFees(@NonNull UsageFees usageFees) {
         var errorNotification = new ErrorNotification();
         // 利用料金条件区分が、設定された値とい異なってはならない。
         errorNotification.addError(usageFees.validateUsageFeeConditionTypesDifferent(usageFeeConditionTypes));
-        // 基本利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
+        // 利用料金が重複してはならない。（料金条件の組み合わせが重複してはならない。）
         errorNotification.addError(usageFees.validateDuplicated());
-        errorNotification.throwIfHasErrors("基本利用料金設定に不備があります。");
+        errorNotification.throwIfHasErrors("利用料金設定に不備があります。");
 
         this.usageFees = usageFees;
     }

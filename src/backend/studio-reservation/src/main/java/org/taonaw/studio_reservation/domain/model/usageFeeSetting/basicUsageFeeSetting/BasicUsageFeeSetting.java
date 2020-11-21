@@ -30,6 +30,6 @@ public class BasicUsageFeeSetting {
     }
 
     public void setBasicUsageFees(@NonNull PracticeType practiceType, @NonNull UsageFees usageFees) {
-        practiceTypeBasicFeeSettings.get(practiceType).setBasicFees(usageFees);
+        practiceTypeBasicFeeSettings.get(practiceType).setUsageFees(usageFees);
     }
 }
