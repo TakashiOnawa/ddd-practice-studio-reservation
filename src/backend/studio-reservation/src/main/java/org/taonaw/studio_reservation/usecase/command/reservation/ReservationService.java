@@ -54,10 +54,10 @@ public class ReservationService {
 
         var overlappedReservations = reservationRepository.findBy(reservation.usageTime());
 
-        reservationRule.validateReservationDuplication(reservation, overlappedReservations)
+        overlappedReservations.validateDuplicated(reservation)
                 .ifPresent(Error::throwError);
 
-        reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
+        overlappedReservations.validateUsageEquipmentsOutOfStocks(reservation, reservationRule)
                 .ifPresent(Error::throwError);
 
         reservationRepository.add(reservation);
@@ -87,10 +87,10 @@ public class ReservationService {
 
         var overlappedReservations = reservationRepository.findBy(reservation.usageTime());
 
-        reservationRule.validateReservationDuplication(reservation, overlappedReservations)
+        overlappedReservations.validateDuplicated(reservation)
                 .ifPresent(Error::throwError);
 
-        reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
+        overlappedReservations.validateUsageEquipmentsOutOfStocks(reservation, reservationRule)
                 .ifPresent(Error::throwError);
 
         reservationRepository.add(reservation);
@@ -149,10 +149,10 @@ public class ReservationService {
 
         var overlappedReservations = reservationRepository.findBy(reservation.usageTime());
 
-        reservationRule.validateReservationDuplication(reservation, overlappedReservations)
+        overlappedReservations.validateDuplicated(reservation)
                 .ifPresent(Error::throwError);
 
-        reservationRule.validateUsageEquipmentsOutOfStocks(ReservedUsageEquipments.create(overlappedReservations, reservation))
+        overlappedReservations.validateUsageEquipmentsOutOfStocks(reservation, reservationRule)
                 .ifPresent(Error::throwError);
 
         reservationRepository.update(reservation);

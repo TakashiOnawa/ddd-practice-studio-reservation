@@ -13,7 +13,6 @@ import org.taonaw.studio_reservation.domain.shared.exception.Error;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,35 +40,35 @@ public class ReservationRule {
         this.equipmentStockCounts = new HashMap<>(equipmentStockCounts);
     }
 
-    public Optional<Error> validateOpeningHour(@NonNull UsageTime usageTime) {
+    Optional<Error> validateOpeningHour(@NonNull UsageTime usageTime) {
         if (usageTime.satisfy(openingHour))
             return Optional.empty();
         else
             return Optional.of(new OutOfOpeningHourError());
     }
 
-    public Optional<Error> validateReservationStartDateTime(@NonNull UsageTime usageTime, LocalDateTime currentDateTime) {
+    Optional<Error> validateReservationStartDateTime(@NonNull UsageTime usageTime, LocalDateTime currentDateTime) {
         if (usageTime.satisfy(reservationStartDate, currentDateTime))
             return Optional.empty();
         else
             return Optional.of(new NotStartReservationError());
     }
 
-    public Optional<Error> validateUserMaxCount(@NonNull UserCount userCount) {
+    Optional<Error> validateUserMaxCount(@NonNull UserCount userCount) {
         if (userCount.satisfy(userMaxCount))
             return Optional.empty();
         else
             return Optional.of(new OverUserMaxCountError());
     }
 
-    public Optional<Error> validateStartTime(@NonNull UsageTime usageTime) {
+    Optional<Error> validateStartTime(@NonNull UsageTime usageTime) {
         if (usageTime.satisfy(startTime))
             return Optional.empty();
         else
             return Optional.of(new StartTimeInvalidError());
     }
 
-    public Optional<Error> validateEquipmentMaxUsableCount(@NonNull UsageEquipments usageEquipments) {
+    Optional<Error> validateEquipmentMaxUsableCount(@NonNull UsageEquipments usageEquipments) {
         var errorEquipmentIds = usageEquipments.notSatisfyEquipments(equipmentMaxUsableCounts);
         if (errorEquipmentIds.isEmpty())
             return Optional.empty();
@@ -77,17 +76,7 @@ public class ReservationRule {
             return Optional.of(new OverEquipmentMaxCountError(errorEquipmentIds));
     }
 
-    public Optional<Error> validateReservationDuplication(
-            @NonNull Reservation reservation,
-            @NonNull List<Reservation> overlappedReservations) {
-
-        if (overlappedReservations.stream().anyMatch(item -> item.isDuplicated(reservation))) {
-            return Optional.of(new ReservationDuplicatedError());
-        }
-        return Optional.empty();
-    }
-
-    public Optional<Error> validateUsageEquipmentsOutOfStocks(@NonNull ReservedUsageEquipments reservedUsageEquipments) {
+    Optional<Error> validateUsageEquipmentsOutOfStocks(@NonNull ReservedUsageEquipments reservedUsageEquipments) {
         var errorEquipmentIds = reservedUsageEquipments.notSatisfyEquipments(equipmentStockCounts);
         if (errorEquipmentIds.isEmpty())
             return Optional.empty();

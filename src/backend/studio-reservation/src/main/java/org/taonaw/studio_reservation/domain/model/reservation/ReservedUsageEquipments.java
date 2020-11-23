@@ -12,7 +12,10 @@ import java.util.Map;
 public class ReservedUsageEquipments {
     private final Map<EquipmentId, List<UsageEquipment>> items = new HashMap<>();
 
-    public static ReservedUsageEquipments create(@NonNull List<Reservation> reservations, @NonNull Reservation overWriteReservation) {
+    public static ReservedUsageEquipments create(
+            @NonNull List<Reservation> reservations,
+            @NonNull Reservation overWriteReservation) {
+
         var reservedUsageEquipments = new ReservedUsageEquipments();
 
         for (var reservation : reservations) {
@@ -30,7 +33,7 @@ public class ReservedUsageEquipments {
         return reservedUsageEquipments;
     }
 
-    public List<EquipmentId> notSatisfyEquipments(Map<EquipmentId, EquipmentStockCount> equipmentStockCounts) {
+    public List<EquipmentId> notSatisfyEquipments(@NonNull Map<EquipmentId, EquipmentStockCount> equipmentStockCounts) {
         var notSatisfyEquipmentIds = new ArrayList<EquipmentId>();
 
         for (var usageEquipmentsEntry : items.entrySet()) {
