@@ -20,7 +20,6 @@ public class EquipmentMaxUsableCount {
     }
 
     public boolean isDuplicated(@NonNull EquipmentMaxUsableCount other) {
-        return this != other &&
-                this.equipmentCategoryId.equals(other.equipmentCategoryId);
+        return this != other && this.equipmentCategoryId.equals(other.equipmentCategoryId);
     }
 }

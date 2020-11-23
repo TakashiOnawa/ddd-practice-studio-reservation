@@ -29,4 +29,8 @@ public class CancellationFeeRate {
     public boolean isFree() {
         return rate == 0;
     }
+
+    public boolean isDuplicated(@NonNull CancellationFeeRate other) {
+        return this != other && this.daysAgo == other.daysAgo;
+    }
 }
