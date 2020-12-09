@@ -1,0 +1,65 @@
+@startuml BusinessFlow
+
+|管理者|
+partition スタッフ登録 {
+    start
+    :スタッフを登録する;
+    note left
+    UC:
+    スタッフアカウントを登録する
+    end note
+    stop
+}
+
+
+|管理者|
+partition スタッフ削除 {
+    start
+    :スタッフを検索する;
+    note left
+    UC:
+    スタッフアカウントを検索する
+    end note
+
+    :スタッフ情報を確認する;
+    note left
+    UC:
+    スタッフアカウントの内容を確認する
+    end note
+
+    :スタッフを削除する;
+    note left
+    UC:
+    スタッフアカウントを削除する
+    end note
+    stop
+}
+
+
+|スタッフ（or 管理者）|
+partition スタッフ変更 {
+    start
+    :スタッフを検索する;
+    note right
+    UC:
+    スタッフアカウントを検索する
+    end note
+
+    :スタッフ情報を確認する;
+    note right
+    UC:
+    スタッフアカウントの内容を確認する
+    end note
+
+    :スタッフ情報を変更する;
+    note right
+    UC:
+    スタッフアカウントを変更する
+    
+    ＜note＞
+    * スタッフができることと管理者ができることは異なる
+    end note
+    stop
+}
+
+@enduml

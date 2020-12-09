@@ -156,12 +156,13 @@ package キャンセル料金設定 {
 
 package 請求 {
     object 請求 {
+        請求ID
         請求金額
     }
 
     object 請求明細 {
-        内容
-        請求金額
+        単価
+        数量
     }
 }
 

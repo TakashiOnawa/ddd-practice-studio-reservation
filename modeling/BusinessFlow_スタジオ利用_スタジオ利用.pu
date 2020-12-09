@@ -1,0 +1,26 @@
+@startuml BusinessFlow
+
+|利用者|
+start
+:スタジオで練習する;
+
+partition 必要に応じて {
+    :追加で機材をレンタルする;
+
+    |スタッフ|
+    :予約に機材を追加する;
+    note right
+    UC:
+    * 予約を特定する
+    * 予約を変更する
+    end note
+}
+
+:終了 5 分前のランプを点灯する;
+
+|利用者|
+:退出する;
+
+stop
+
+@enduml

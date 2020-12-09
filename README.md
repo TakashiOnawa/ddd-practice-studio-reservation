@@ -13,36 +13,104 @@
 ## 要件
 * スタジオ、機材の空き状況を確認できること。
 * スタジオ、機材を予約できること。
+* スタジオ、機材の利用料金を計算できること。
 
-# ビジネスコンテキスト・ビジネスユースケース
-## 予約（ビジネスコンテキスト）
+# ビジネスコンテキスト
+- トップレベルの業務を明らかにする。
+
+![](./modeling/03_BusinessContext/BusinessContext.png)
+
+# ビジネスユースケース
+- ビジネスコンテキストの業務ごとにブレークダウンする。
+- ビジネスユースケースが業務フローの単位となる。
+- 分割の粒度を調整しながら洗い出す。
+- 分割の根拠を明確にする。（業務フローが同じになるような場合は分割しすぎない。）
+
+## 会員管理
+![](./modeling/04_BusinessUsecase_会員管理/BusinessUsecase.png)
+- 会員登録
+  - 利用者がシステムを利用するための Web で会員登録を行う。
+- 会員管理
+  - スタッフが会員情報を管理する。
+
+## 予約
 ![](./modeling/04_BusinessUsecase_予約/BusinessUsecase.png)
-* 利用者が Web で会員登録する「会員登録」。
-* 利用者が Web で予約する「Web予約」。
-* 利用者が電話で予約する「電話予約」。（スタッフが Web 予約を代行する。）
-* 利用者が店頭で直接予約する「店頭予約」。(スタッフが Web 予約を代行する。）
+- Web予約
+  - 利用者が Web で予約する。
+- 電話/店頭予約
+  - 利用者が電話または店頭で予約する。（スタッフが Web 予約を代行する形になる。）
+  - 会員登録していなくても予約できる。
 
-## 設備管理（ビジネスコンテキスト）
-![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
-* 管理者がスタッフの管理を行う「スタッフ管理」。
-* 管理者がスタジオの管理を行う「スタジオ管理」。
-* 管理者が機材の管理を行う「機材管理」。
-* 管理者が利用料金の管理を行う「利用料金管理」。
-
-## スタジオ利用（ビジネスコンテキスト）
+## スタジオ利用
 ![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
-* スタッフが機材貸出や転換などを行う「スタジオ準備」。
-* 利用者がスタジオで練習する「スタジオ利用」。
-* 利用者が支払いを行う「会計」。
+- スタジオ準備
+  - スタッフが予約内容を元にスタジオの転換を行う。
+- 受付
+  - 利用者の予約があるかを確認し、レンタル機材を渡す。
+  - 追加のレンタル機材を受け付けることもある。
+- スタジオ利用
+  - 利用者が実際にスタジオを利用する。
+  - スタジオ利用中に追加機材を頼むこともある。  
+- 機材返却
+  - レンタル機材が全て返却されたかどうかを確認する。
 
-＜補足＞
-* 練習中に追加で機材を借りることもある。
-* スタッフは会計の際に機材が全て返却されていることを確認する。
+## 会計
+![](./modeling/04_BusinessUsecase_会計/BusinessUsecase.png)
+- 会計
+  - 利用者が支払いを行う。
 
-# 業務フロー
-- ユースケースを洗い出すために、ビジネスユースケースごとに業務フロー図を作成する。
+## 設備管理
+![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
+- スタッフ管理
+  - 管理者がスタッフの管理を行う。
+- スタジオ管理
+  - 管理者がスタジオの管理を行う。
+- 機材管理
+  - 管理者が機材の管理を行う。
+- 利用料金管理
+  - 管理者が利用料金の管理を行う。
 
-今回は省略。
+# 業務フロー/利用シーン
+- ユースケースを洗い出すために、ビジネスユースケースごとに業務フロー図、利用シーン図を作成する。
+
+## 会員管理
+### BUC: 会員登録
+![](./modeling/BusinessFlow_会員管理_会員登録/BusinessFlow.png)
+
+### BUC: 会員管理
+![](./modeling/BusinessFlow_会員管理_会員管理/BusinessFlow.png)
+
+## 予約
+### BUC: Web予約
+![](./modeling/BusinessFlow_予約_WEB予約/BusinessFlow.png)
+
+### BUC: 電話/店頭予約
+![](./modeling/BusinessFlow_予約_電話予約_店頭予約/BusinessFlow.png)
+
+## スタジオ利用
+### BUC: スタジオ準備
+![](./modeling/BusinessFlow_スタジオ利用_スタジオ準備/BusinessFlow.png)
+
+### BUC: 受付
+![](./modeling/BusinessFlow_スタジオ利用_受付/BusinessFlow.png)
+
+### BUC: スタジオ利用
+![](./modeling/BusinessFlow_スタジオ利用_スタジオ利用/BusinessFlow.png)
+
+## 会計
+### BUC: 会計
+![](./modeling/BusinessFlow_会計_会計/BusinessFlow.png)
+
+## 設備管理
+### BUC: スタッフ管理
+![](./modeling/BusinessFlow_設備管理_スタッフ管理/BusinessFlow.png)
+
+### BUC: スタジオ管理
+
+### BUC: 機材管理
+
+### BUC: 利用料金管理
+
 
 # サイト構成
 ![](./modeling/SiteStructure/SiteStructure.png)
@@ -133,7 +201,7 @@
 
 #### キャンセル料金例
 | 条件 | キャンセル料金レート |
-| --- | --- | --- |
+| --- | --- |
 | 1 週間前（7 日前）から | 20 % |
 | 前日（1 日前）から | 50 % |
 | 当日（0 日前）から | 100 % |
@@ -216,7 +284,14 @@
 
 # 参考
 * [PlantUML Example for RDRA 2.0 ハンドブック](https://qiita.com/ogomr/items/97058a87337eaa2ba21a)
-* [現場で役立つシステム設計の原則](https://www.amazon.co.jp/%E7%8F%BE%E5%A0%B4%E3%81%A7%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E8%A8%AD%E8%A8%88%E3%81%AE%E5%8E%9F%E5%89%87-%E5%A4%89%E6%9B%B4%E3%82%92%E6%A5%BD%E3%81%A7%E5%AE%89%E5%85%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E3%81%AE%E5%AE%9F%E8%B7%B5%E6%8A%80%E6%B3%95-%E5%A2%97%E7%94%B0-%E4%BA%A8/dp/477419087X)
+* [PlantUML で始めるリレーションシップ駆動要件分析 (RDRA)](https://qiita.com/nkenbou/items/86d5718b63f610dfd67f)
+* [RDRA2.0 ハンドブック: 軽く柔軟で精度の高い要件定義のモデリング手法](https://www.amazon.co.jp/RDRA2-0-%E3%83%8F%E3%83%B3%E3%83%89%E3%83%96%E3%83%83%E3%82%AF-%E8%BB%BD%E3%81%8F%E6%9F%94%E8%BB%9F%E3%81%A7%E7%B2%BE%E5%BA%A6%E3%81%AE%E9%AB%98%E3%81%84%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9%E3%81%AE%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0%E6%89%8B%E6%B3%95-%E7%A5%9E%E5%B4%8E%E5%96%84%E5%8F%B8-ebook/dp/B07STQZFBX)
+* [エリック・エヴァンスのドメイン駆動設計](https://www.amazon.co.jp/%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9%E3%81%AE%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Architects%E2%80%99Archive-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E5%AE%9F%E8%B7%B5-%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9/dp/4798121967/ref=pd_sbs_14_5/356-5413493-6590159?_encoding=UTF8&pd_rd_i=4798121967&pd_rd_r=aec16fb5-720a-4960-9f6d-0caf7ec16b51&pd_rd_w=3EeRt&pd_rd_wg=MV9lQ&pf_rd_p=c295905f-82f9-4d73-8142-c393a4211258&pf_rd_r=BNA0M68ZNEPMS2E6H57M&psc=1&refRID=BNA0M68ZNEPMS2E6H57M)
+* [実践ドメイン駆動設計](https://www.amazon.co.jp/%E5%AE%9F%E8%B7%B5%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Object-Oriented-SELECTION-%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%B3%E3%83%BB%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%8E%E3%83%B3/dp/479813161X/ref=pd_bxgy_img_2/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479813161X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
+* [現場で役立つシステム設計の原則 ~変更を楽で安全にするオブジェクト指向の実践技法](https://www.amazon.co.jp/%E7%8F%BE%E5%A0%B4%E3%81%A7%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E8%A8%AD%E8%A8%88%E3%81%AE%E5%8E%9F%E5%89%87-%E5%A4%89%E6%9B%B4%E3%82%92%E6%A5%BD%E3%81%A7%E5%AE%89%E5%85%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E3%81%AE%E5%AE%9F%E8%B7%B5%E6%8A%80%E6%B3%95-%E5%A2%97%E7%94%B0-%E4%BA%A8/dp/477419087X)
+* [ドメイン駆動設計入門 ボトムアップでわかる! ドメイン駆動設計の基本](https://www.amazon.co.jp/%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E5%85%A5%E9%96%80-%E3%83%9C%E3%83%88%E3%83%A0%E3%82%A2%E3%83%83%E3%83%97%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8B-%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E3%81%AE%E5%9F%BA%E6%9C%AC-%E6%88%90%E7%80%AC-%E5%85%81%E5%AE%A3/dp/479815072X/ref=pd_bxgy_img_3/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479815072X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
+* [ドメイン駆動設計 モデリング/実装ガイド](https://booth.pm/ja/items/1835632)
+
 
 # 気づき
 ## ファーストクラスコレクション

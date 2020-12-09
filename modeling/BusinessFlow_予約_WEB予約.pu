@@ -1,0 +1,61 @@
+@startuml BusinessFlow
+
+|利用者|
+partition 予約 {
+    start
+    :空きを調べる;
+    note left
+    UC:
+    * スタジオの空きを調べる
+    * 機材の空きを調べる
+    end note
+
+    :予約する;
+    note left
+    UC:
+    予約する
+    end note
+    stop
+}
+
+
+|利用者|
+partition 予約変更 {
+    start
+    :変更対象の予約を選ぶ;
+    note left
+    UC:
+    * 自分の予約を確認する
+    * 予約を選ぶ
+    end note
+
+    :予約を変更する;
+    note left
+    UC:
+    予約を変更する
+    end note
+    stop
+}
+
+
+|利用者|
+partition 予約キャンセル {
+    start
+    :キャンセル対象の予約を選ぶ;
+    note left
+    UC:
+    * 自分の予約を確認する
+    * 予約を選ぶ
+    end note
+
+    :予約をキャンセルする;
+    note left
+    UC:
+    予約をキャンセルする
+    end note
+    stop
+}
+
+|スタッフ|
+
+@enduml

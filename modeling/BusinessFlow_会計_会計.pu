@@ -1,0 +1,35 @@
+@startuml BusinessFlow
+
+|利用者|
+start
+:レンタル機材を返却する;
+
+|スタッフ|
+:レンタル機材が全て返却されているかどうかを確認する;
+note right
+UC:
+* 予約を特定する
+* 予約の内容を確認する
+end note
+
+:利用料金を確認する;
+note right
+UC:
+予約の利用料金を確認する
+end note
+
+:料金を伝える;
+
+|利用者|
+:料金を支払う;
+
+|スタッフ|
+:支払いを確認する;
+note right
+UC:
+予約を支払済にする
+end note
+
+stop
+
+@enduml

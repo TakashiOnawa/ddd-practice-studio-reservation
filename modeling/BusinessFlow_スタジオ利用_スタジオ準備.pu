@@ -1,0 +1,18 @@
+@startuml BusinessFlow
+
+|利用者|
+
+|スタッフ|
+start
+:次の予約を確認する;
+note right
+UC:
+* 予約を特定する
+* 予約の内容を確認する
+end note
+
+:スタジオを転換する;
+
+stop
+
+@enduml
