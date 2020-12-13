@@ -23,7 +23,7 @@ partition 予約 {
     UC:
     予約する
     
-    ＜note＞
+    ＜Note＞
     * 会員アカウントが見つからなかった場合は非会員として予約する。
     end note
     stop

@@ -11,9 +11,9 @@
 ![](./modeling/02_RequirementModel/RequirementModel.png)
 
 ## 要件
-* スタジオ、機材の空き状況を確認できること。
-* スタジオ、機材を予約できること。
-* スタジオ、機材の利用料金を計算できること。
+- スタジオ、機材の空き状況を確認できること。
+- スタジオ、機材を予約できること。
+- スタジオ、機材の利用料金を計算できること。
 
 # ビジネスコンテキスト
 - トップレベルの業務を明らかにする。
@@ -75,10 +75,10 @@
 
 ## 会員管理
 ### BUC: 会員登録
-![](./modeling/BusinessFlow_会員管理_会員登録/BusinessFlow.png)
+![](./modeling/UsageScene_会員管理_会員登録/UsageScene.png)
 
 ### BUC: 会員管理
-![](./modeling/BusinessFlow_会員管理_会員管理/BusinessFlow.png)
+![](./modeling/UsageScene_会員管理_会員管理/UsageScene.png)
 
 ## 予約
 ### BUC: Web予約
@@ -103,14 +103,16 @@
 
 ## 設備管理
 ### BUC: スタッフ管理
-![](./modeling/BusinessFlow_設備管理_スタッフ管理/BusinessFlow.png)
+![](./modeling/UsageScene_設備管理_スタッフ管理/UsageScene.png)
 
 ### BUC: スタジオ管理
+![](./modeling/UsageScene_設備管理_スタジオ管理/UsageScene.png)
 
 ### BUC: 機材管理
+![](./modeling/UsageScene_設備管理_機材管理/UsageScene.png)
 
 ### BUC: 利用料金管理
-
+![](./modeling/UsageScene_設備管理_利用料金管理/UsageScene.png)
 
 # サイト構成
 ![](./modeling/SiteStructure/SiteStructure.png)
@@ -259,38 +261,39 @@
 ![](./modeling/LayerStructure/LayerStructure.png)
 
 ## api 層
-* API を提供する Controller を配置する。
+- API を提供する Controller を配置する。
 
 ## usecase 層
-* データ登録/更新系の CommandService とデータ参照系の QueryService に別れる。
+- データ登録/更新系の CommandService とデータ参照系の QueryService に別れる。
 
 **＜CommandService＞**
-* domain 層の DomainObject を利用してユースケースを実現する。
+- domain 層の DomainObject を利用してユースケースを実現する。
 
 **＜QueryService＞**
-* 画面に特化した形式でデータを取得するためのインターフェース。
+- 画面に特化した形式でデータを取得するためのインターフェース。
 
 ## domain 層
-* ドメインモデルを表現したもの。
-* DomainObject を永続領域から取得、永続化を行うための Repository（インターフェース）を配置する。
+- ドメインモデルを表現したもの。
+- DomainObject を永続領域から取得、永続化を行うための Repository（インターフェース）を配置する。
 
 ## infrastructure 層
-* データベースや特定の技術に依存した処理が行われる。
-* domain 層の Repository の実装クラスを配置し、DomainObject と永続領域間の変換を行う。
-* usecase 層の QueryService の実装クラスを配置し、永続領域から画面に特化した形式でデータを取得する。
+- データベースや特定の技術に依存した処理が行われる。
+- domain 層の Repository の実装クラスを配置し、DomainObject と永続領域間の変換を行う。
+- usecase 層の QueryService の実装クラスを配置し、永続領域から画面に特化した形式でデータを取得する。
 
 # TODO
-* 学生のディスカウント。（10 % OFFなど。）
+- 学生のディスカウント。（10 % OFFなど。）
+- キャンセル料金未払い検索。
 
 # 参考
-* [PlantUML Example for RDRA 2.0 ハンドブック](https://qiita.com/ogomr/items/97058a87337eaa2ba21a)
-* [PlantUML で始めるリレーションシップ駆動要件分析 (RDRA)](https://qiita.com/nkenbou/items/86d5718b63f610dfd67f)
-* [RDRA2.0 ハンドブック: 軽く柔軟で精度の高い要件定義のモデリング手法](https://www.amazon.co.jp/RDRA2-0-%E3%83%8F%E3%83%B3%E3%83%89%E3%83%96%E3%83%83%E3%82%AF-%E8%BB%BD%E3%81%8F%E6%9F%94%E8%BB%9F%E3%81%A7%E7%B2%BE%E5%BA%A6%E3%81%AE%E9%AB%98%E3%81%84%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9%E3%81%AE%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0%E6%89%8B%E6%B3%95-%E7%A5%9E%E5%B4%8E%E5%96%84%E5%8F%B8-ebook/dp/B07STQZFBX)
-* [エリック・エヴァンスのドメイン駆動設計](https://www.amazon.co.jp/%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9%E3%81%AE%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Architects%E2%80%99Archive-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E5%AE%9F%E8%B7%B5-%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9/dp/4798121967/ref=pd_sbs_14_5/356-5413493-6590159?_encoding=UTF8&pd_rd_i=4798121967&pd_rd_r=aec16fb5-720a-4960-9f6d-0caf7ec16b51&pd_rd_w=3EeRt&pd_rd_wg=MV9lQ&pf_rd_p=c295905f-82f9-4d73-8142-c393a4211258&pf_rd_r=BNA0M68ZNEPMS2E6H57M&psc=1&refRID=BNA0M68ZNEPMS2E6H57M)
-* [実践ドメイン駆動設計](https://www.amazon.co.jp/%E5%AE%9F%E8%B7%B5%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Object-Oriented-SELECTION-%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%B3%E3%83%BB%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%8E%E3%83%B3/dp/479813161X/ref=pd_bxgy_img_2/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479813161X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
-* [現場で役立つシステム設計の原則 ~変更を楽で安全にするオブジェクト指向の実践技法](https://www.amazon.co.jp/%E7%8F%BE%E5%A0%B4%E3%81%A7%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E8%A8%AD%E8%A8%88%E3%81%AE%E5%8E%9F%E5%89%87-%E5%A4%89%E6%9B%B4%E3%82%92%E6%A5%BD%E3%81%A7%E5%AE%89%E5%85%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E3%81%AE%E5%AE%9F%E8%B7%B5%E6%8A%80%E6%B3%95-%E5%A2%97%E7%94%B0-%E4%BA%A8/dp/477419087X)
-* [ドメイン駆動設計入門 ボトムアップでわかる! ドメイン駆動設計の基本](https://www.amazon.co.jp/%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E5%85%A5%E9%96%80-%E3%83%9C%E3%83%88%E3%83%A0%E3%82%A2%E3%83%83%E3%83%97%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8B-%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E3%81%AE%E5%9F%BA%E6%9C%AC-%E6%88%90%E7%80%AC-%E5%85%81%E5%AE%A3/dp/479815072X/ref=pd_bxgy_img_3/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479815072X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
-* [ドメイン駆動設計 モデリング/実装ガイド](https://booth.pm/ja/items/1835632)
+- [PlantUML Example for RDRA 2.0 ハンドブック](https://qiita.com/ogomr/items/97058a87337eaa2ba21a)
+- [PlantUML で始めるリレーションシップ駆動要件分析 (RDRA)](https://qiita.com/nkenbou/items/86d5718b63f610dfd67f)
+- [RDRA2.0 ハンドブック: 軽く柔軟で精度の高い要件定義のモデリング手法](https://www.amazon.co.jp/RDRA2-0-%E3%83%8F%E3%83%B3%E3%83%89%E3%83%96%E3%83%83%E3%82%AF-%E8%BB%BD%E3%81%8F%E6%9F%94%E8%BB%9F%E3%81%A7%E7%B2%BE%E5%BA%A6%E3%81%AE%E9%AB%98%E3%81%84%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9%E3%81%AE%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0%E6%89%8B%E6%B3%95-%E7%A5%9E%E5%B4%8E%E5%96%84%E5%8F%B8-ebook/dp/B07STQZFBX)
+- [エリック・エヴァンスのドメイン駆動設計](https://www.amazon.co.jp/%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9%E3%81%AE%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Architects%E2%80%99Archive-%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E5%AE%9F%E8%B7%B5-%E3%82%A8%E3%83%AA%E3%83%83%E3%82%AF%E3%83%BB%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B9/dp/4798121967/ref=pd_sbs_14_5/356-5413493-6590159?_encoding=UTF8&pd_rd_i=4798121967&pd_rd_r=aec16fb5-720a-4960-9f6d-0caf7ec16b51&pd_rd_w=3EeRt&pd_rd_wg=MV9lQ&pf_rd_p=c295905f-82f9-4d73-8142-c393a4211258&pf_rd_r=BNA0M68ZNEPMS2E6H57M&psc=1&refRID=BNA0M68ZNEPMS2E6H57M)
+- [実践ドメイン駆動設計](https://www.amazon.co.jp/%E5%AE%9F%E8%B7%B5%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88-Object-Oriented-SELECTION-%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%B3%E3%83%BB%E3%83%B4%E3%82%A1%E3%83%BC%E3%83%8E%E3%83%B3/dp/479813161X/ref=pd_bxgy_img_2/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479813161X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
+- [現場で役立つシステム設計の原則 ~変更を楽で安全にするオブジェクト指向の実践技法](https://www.amazon.co.jp/%E7%8F%BE%E5%A0%B4%E3%81%A7%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E8%A8%AD%E8%A8%88%E3%81%AE%E5%8E%9F%E5%89%87-%E5%A4%89%E6%9B%B4%E3%82%92%E6%A5%BD%E3%81%A7%E5%AE%89%E5%85%A8%E3%81%AB%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%8C%87%E5%90%91%E3%81%AE%E5%AE%9F%E8%B7%B5%E6%8A%80%E6%B3%95-%E5%A2%97%E7%94%B0-%E4%BA%A8/dp/477419087X)
+- [ドメイン駆動設計入門 ボトムアップでわかる! ドメイン駆動設計の基本](https://www.amazon.co.jp/%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E5%85%A5%E9%96%80-%E3%83%9C%E3%83%88%E3%83%A0%E3%82%A2%E3%83%83%E3%83%97%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8B-%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%E3%81%AE%E5%9F%BA%E6%9C%AC-%E6%88%90%E7%80%AC-%E5%85%81%E5%AE%A3/dp/479815072X/ref=pd_bxgy_img_3/356-5413493-6590159?_encoding=UTF8&pd_rd_i=479815072X&pd_rd_r=25af8022-aba0-47be-9dca-dc850539071e&pd_rd_w=wK8gF&pd_rd_wg=XlUTt&pf_rd_p=e64b0a81-ca1b-4802-bd2c-a4b65bccc76e&pf_rd_r=SM7DWPBV8CYYH21GJ529&psc=1&refRID=SM7DWPBV8CYYH21GJ529)
+- [ドメイン駆動設計 モデリング/実装ガイド](https://booth.pm/ja/items/1835632)
 
 
 # 気づき

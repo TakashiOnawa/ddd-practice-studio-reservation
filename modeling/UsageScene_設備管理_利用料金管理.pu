@@ -1,0 +1,35 @@
+@startuml UsageScene
+
+left to right direction
+
+actor 管理者
+
+frame 基本利用料金設定
+note right of 基本利用料金設定
+UC:
+* バンド練習基本利用料金を設定する
+* 個人練習基本利用料金を設定する
+end note
+
+frame パック料金設定
+note right of パック料金設定
+UC:
+* パック料金を登録する
+* パック料金を変更する
+* パック料金を削除する
+end note
+
+frame キャンセル料金設定
+note right of キャンセル料金設定
+UC:
+* キャンセル料金を設定する
+
+＜Note＞
+* xx 日前から xx % というように設定する。
+end note
+
+管理者 -- 基本利用料金設定
+管理者 -- パック料金設定
+管理者 -- キャンセル料金設定
+
+@enduml
