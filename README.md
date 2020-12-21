@@ -4,11 +4,11 @@
 要件定義は RADRA 2.0 を参考にしています。
 
 # システムコンテキスト
-![](./modeling/01_SystemContext/SystemContext.png)
+![](./modeling/SystemContext/SystemContext.png)
 
 # 要求モデル
 ## 要望
-![](./modeling/02_RequirementModel/RequirementModel.png)
+![](./modeling/RequirementModel/RequirementModel.png)
 
 ## 要件
 - スタジオ、機材の空き状況を確認できること。
@@ -18,7 +18,7 @@
 # ビジネスコンテキスト
 - トップレベルの業務を明らかにする。
 
-![](./modeling/03_BusinessContext/BusinessContext.png)
+![](./modeling/BusinessContext/BusinessContext.png)
 
 # ビジネスユースケース
 - ビジネスコンテキストの業務ごとにブレークダウンする。
@@ -27,14 +27,14 @@
 - 分割の根拠を明確にする。（業務フローが同じになるような場合は分割しすぎない。）
 
 ## 会員管理
-![](./modeling/04_BusinessUsecase_会員管理/BusinessUsecase.png)
+![](./modeling/BusinessUsecase_会員管理/BusinessUsecase.png)
 - 会員登録
   - 利用者がシステムを利用するための Web で会員登録を行う。
 - 会員管理
   - スタッフが会員情報を管理する。
 
 ## 予約
-![](./modeling/04_BusinessUsecase_予約/BusinessUsecase.png)
+![](./modeling/BusinessUsecase_予約/BusinessUsecase.png)
 - Web予約
   - 利用者が Web で予約する。
 - 電話/店頭予約
@@ -42,7 +42,7 @@
   - 会員登録していなくても予約できる。
 
 ## スタジオ利用
-![](./modeling/04_BusinessUsecase_スタジオ利用/BusinessUsecase.png)
+![](./modeling/BusinessUsecase_スタジオ利用/BusinessUsecase.png)
 - スタジオ準備
   - スタッフが予約内容を元にスタジオの転換を行う。
 - 受付
@@ -55,12 +55,12 @@
   - レンタル機材が全て返却されたかどうかを確認する。
 
 ## 会計
-![](./modeling/04_BusinessUsecase_会計/BusinessUsecase.png)
+![](./modeling/BusinessUsecase_会計/BusinessUsecase.png)
 - 会計
   - 利用者が支払いを行う。
 
 ## 設備管理
-![](./modeling/04_BusinessUsecase_設備管理/BusinessUsecase.png)
+![](./modeling/BusinessUsecase_設備管理/BusinessUsecase.png)
 - スタッフ管理
   - 管理者がスタッフの管理を行う。
 - スタジオ管理
@@ -118,13 +118,13 @@
 ![](./modeling/SiteStructure/SiteStructure.png)
 
 # 画面設計
-- 洗い出したユースケースを満たせるようなワイヤーフレームを作っていく。
+- 洗い出したユースケースを満たせるようなワイヤーフレームを作っていき、完成イメージを見える化する。
 
 # ドメインモデル
 - ドメインモデル図とビジネスルールをまとめていく。
 
 ## ドメインモデル図
-![](./modeling/07_DomainModel/DomainModel.png)
+![](./modeling/DomainModel/DomainModel.png)
 
 ## 用語集
 - ドメインに登場する概念とそれが何を示すかの説明をまとめ、開発者間で認識齟齬が生まれないようにする。（ユビキタス言語を定義する。）
