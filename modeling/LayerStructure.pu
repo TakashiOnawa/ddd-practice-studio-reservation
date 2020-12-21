@@ -1,52 +1,39 @@
 @startuml LayerStructure
 
-package domain
-{
-    package model {
-        interface Repository
-        class DomainService
-        class DomainObject
-        {
-            Entity
-            ValueObject
-        }
-    }
+skinparam sequence {
+    ArrowColor #Black
+}
+skinparam NoteBorderColor #Black
+skinparam NodeFontStyle Bold
+
+rectangle {
+    node "プレゼンテーション（Presentation）" as Presentation #dae8fc
+    node "ユースケース（UseCase）" as UseCase #d5e8d4
+    node "ドメイン（Domain）" as Domain #ffe6cc
+    node "インフラストラクチャ（Infrastructure）" as Infrastructure #f8cecc
+
+    Presentation --> UseCase
+    Presentation --> Domain
+    UseCase --> Domain
+    Infrastructure -up-> Domain
+    Infrastructure -up-> UseCase
+    Infrastructure -up-> Presentation
 }
 
-package usecase
-{
-    package command {
-        class CommandService
-    }
+note right of Presentation
+画面の入出力、API のエンドポイントとなる。
+end note
 
-    package query {
-        interface QueryService
-    }
-}
+note right of UseCase
+Domain 層のオブジェクトを利用してユースケースを実現する。
+end note
 
-package infrastructure
-{
-    class RepositoryImpl
-    class QueryServiceImpl
-}
+note right of Domain
+ビジネスルールを表現する。
+end note
 
-package api
-{
-    class Controller
-}
-
-DomainService -> Repository
-DomainService -> DomainObject
-Repository --> DomainObject
-
-CommandService --> Repository
-CommandService --> DomainObject
-CommandService --> DomainService
-
-Repository <|--- RepositoryImpl
-QueryService <|--- QueryServiceImpl
-
-Controller --> CommandService
-Controller --> QueryService
+note right of Infrastructure
+上位レイヤーを実現するための技術的機能を提供する。
+end note
 
 @enduml
