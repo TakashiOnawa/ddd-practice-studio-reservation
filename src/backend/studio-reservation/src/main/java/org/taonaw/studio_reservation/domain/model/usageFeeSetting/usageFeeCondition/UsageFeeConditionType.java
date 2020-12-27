@@ -7,7 +7,7 @@ import java.time.LocalTime;
 public enum UsageFeeConditionType {
     STUDIO(1),
     DAY_TYPE(2),
-    TIME_PERIOD(3),
+    TIME_RANGE(3),
     USER_COUNT(4);
 
     int value;
@@ -25,7 +25,7 @@ public enum UsageFeeConditionType {
     }
 
     public static UsageFeeCondition createTimeRangeCondition(LocalTime startTime, LocalTime endTime) {
-        return new TimeRangeCondition(TIME_PERIOD, startTime, endTime);
+        return new TimeRangeCondition(TIME_RANGE, startTime, endTime);
     }
 
     public static UserCountCondition createUserCountCondition(int userCount) {
