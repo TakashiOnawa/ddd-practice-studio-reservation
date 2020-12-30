@@ -51,18 +51,19 @@
 - スタジオ利用
   - 利用者が実際にスタジオを利用する。
   - スタジオ利用中に追加機材を頼むこともある。  
-- 機材返却
-  - レンタル機材が全て返却されたかどうかを確認する。
 
 ## 会計
 ![](./modeling/BusinessUsecase_会計/BusinessUsecase.png)
 - 会計
   - 利用者が支払いを行う。
 
+## スタッフ管理
+![](./modeling/BusinessUsecase_スタッフ管理/BusinessUsecase.png)
+- スタッフ管理
+  - 管理者がスタッフの管理を行う。 
+
 ## 設備管理
 ![](./modeling/BusinessUsecase_設備管理/BusinessUsecase.png)
-- スタッフ管理
-  - 管理者がスタッフの管理を行う。
 - スタジオ管理
   - 管理者がスタジオの管理を行う。
 - 機材管理
@@ -101,10 +102,11 @@
 ### BUC: 会計
 ![](./modeling/BusinessFlow_会計_会計/BusinessFlow.png)
 
-## 設備管理
+## スタッフ管理
 ### BUC: スタッフ管理
-![](./modeling/UsageScene_設備管理_スタッフ管理/UsageScene.png)
+![](./modeling/UsageScene_スタッフ管理_スタッフ管理/UsageScene.png)
 
+## 設備管理
 ### BUC: スタジオ管理
 ![](./modeling/UsageScene_設備管理_スタジオ管理/UsageScene.png)
 
