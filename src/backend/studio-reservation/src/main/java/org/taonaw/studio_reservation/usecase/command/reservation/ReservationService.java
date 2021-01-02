@@ -8,7 +8,8 @@ import org.taonaw.studio_reservation.domain.model.memberAccount.MemberAccountRep
 import org.taonaw.studio_reservation.domain.model.reservation.Reservation;
 import org.taonaw.studio_reservation.domain.model.reservation.ReservationRepository;
 import org.taonaw.studio_reservation.domain.model.reservation.ReservationRuleFactory;
-import org.taonaw.studio_reservation.domain.model.reservation.ReservedUsageEquipments;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting.BasicUsageFeeSettingRepository;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSetting.PackFeeSettingRepository;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 import org.taonaw.studio_reservation.shared.CurrentDate;
@@ -29,6 +30,10 @@ public class ReservationService {
     @Autowired
     private final MemberAccountRepository memberAccountRepository;
     @Autowired
+    private final BasicUsageFeeSettingRepository basicUsageFeeSettingRepository;
+    @Autowired
+    private final PackFeeSettingRepository packFeeSettingRepository;
+    @Autowired
     private final CancellationFeeSettingRepository cancellationFeeSettingRepository;
     @Autowired
     private final CurrentDate currentDate;
@@ -41,6 +46,10 @@ public class ReservationService {
                 command.getPracticeType(),
                 command.getUsageEquipments().getUsageEquipmentIds())
                 .orElseThrow();
+
+        var basicUsageFeeSetting = basicUsageFeeSettingRepository.findAll();
+
+        var packFeeSetting = packFeeSettingRepository.findAll();
 
         var reservation = Reservation.create(
                 command.getStudioId(),

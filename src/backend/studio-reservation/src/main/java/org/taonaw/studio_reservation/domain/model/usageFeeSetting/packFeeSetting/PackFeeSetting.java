@@ -1,6 +1,7 @@
 package org.taonaw.studio_reservation.domain.model.usageFeeSetting.packFeeSetting;
 
 import lombok.NonNull;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.ApplicablePeriod;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class PackFeeSetting {
     private final PackFeeSettingId id;
     private PackName name;
+    private ApplicablePeriod applicablePeriod;
     private UsageFeeConditionTypes usageFeeConditionTypes = UsageFeeConditionTypes.empty();
     private UsageFees usageFees = UsageFees.empty();
 
@@ -19,26 +21,24 @@ public class PackFeeSetting {
 
     public static PackFeeSetting create(
             @NonNull PackName name,
-            @NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-
-        var errorNotification = new ErrorNotification();
-        errorNotification.addError(usageFeeConditionTypes.validateDuplicated());
-        errorNotification.throwIfHasErrors("パック料金設定に不備があります。");
+            @NonNull ApplicablePeriod applicablePeriod) {
 
         var instance = new PackFeeSetting(PackFeeSettingId.newId());
         instance.name = name;
-        instance.usageFeeConditionTypes = usageFeeConditionTypes;
+        instance.applicablePeriod = applicablePeriod;
         return instance;
     }
 
     public static PackFeeSetting reconstruct(
             PackFeeSettingId id,
             PackName name,
+            ApplicablePeriod applicablePeriod,
             UsageFeeConditionTypes usageFeeConditionTypes,
             UsageFees usageFees) {
 
         var instance = new PackFeeSetting(id);
         instance.name = name;
+        instance.applicablePeriod = applicablePeriod;
         instance.usageFeeConditionTypes = usageFeeConditionTypes;
         instance.usageFees = usageFees;
         return instance;

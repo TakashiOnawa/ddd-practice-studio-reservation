@@ -10,7 +10,7 @@ public enum UsageFeeConditionType {
     TIME_RANGE(3),
     USER_COUNT(4);
 
-    int value;
+    private int value;
 
     UsageFeeConditionType(int value) {
         this.value = value;

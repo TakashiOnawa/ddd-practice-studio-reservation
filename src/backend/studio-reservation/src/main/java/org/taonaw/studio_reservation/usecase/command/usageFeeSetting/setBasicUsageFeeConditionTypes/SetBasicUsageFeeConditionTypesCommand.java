@@ -3,13 +3,13 @@ package org.taonaw.studio_reservation.usecase.command.usageFeeSetting.setBasicUs
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting.BasicUsageFeeSettingId;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class SetBasicUsageFeeConditionTypesCommand {
-    private PracticeType practiceType;
+    private BasicUsageFeeSettingId basicUsageFeeSettingId;
     private UsageFeeConditionTypes usageFeeConditionTypes;
 }

@@ -17,7 +17,7 @@ public class PackFeeSettingService {
     private final PackFeeSettingRepository packFeeSettingRepository;
 
     public void handle(@NonNull CreatePackFeeSettingCommand command) {
-        var packFeeSetting = PackFeeSetting.create(command.getPackName(), command.getUsageFeeConditionTypes());
+        var packFeeSetting = PackFeeSetting.create(command.getPackName(), command.getApplicablePeriod());
 
         packFeeSettingRepository.add(packFeeSetting);
     }
