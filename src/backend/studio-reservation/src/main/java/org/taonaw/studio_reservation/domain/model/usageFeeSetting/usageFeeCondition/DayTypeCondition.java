@@ -9,8 +9,7 @@ import org.taonaw.studio_reservation.domain.shared.Assertion;
 public class DayTypeCondition extends UsageFeeCondition {
     private final DayType dayType;
 
-    public DayTypeCondition(UsageFeeConditionType type, DayType dayType) {
-        super(type);
+    public DayTypeCondition(DayType dayType) {
         Assertion.required(dayType);
         this.dayType = dayType;
     }

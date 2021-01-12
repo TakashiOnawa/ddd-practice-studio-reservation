@@ -33,7 +33,7 @@ public enum ReservationStartDateTypes {
         this.value = value;
     }
 
-    public static ReservationStartDateTypes from(int value) {
+    public static ReservationStartDateTypes of(int value) {
         for (var item : values()) {
             if (item.value == value) {
                 return item;

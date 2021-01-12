@@ -1,4 +1,4 @@
-@startuml DomainModel
+@startuml DomainModel_Details
 
 package 予約 {
     object 予約 {

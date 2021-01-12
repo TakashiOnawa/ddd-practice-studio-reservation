@@ -10,8 +10,7 @@ import org.taonaw.studio_reservation.domain.shared.Assertion;
 public class StudioCondition extends UsageFeeCondition {
     private final StudioId studioId;
 
-    public StudioCondition(UsageFeeConditionType type, StudioId studioId) {
-        super(type);
+    public StudioCondition(StudioId studioId) {
         Assertion.required(studioId);
         this.studioId = studioId;
     }

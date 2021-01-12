@@ -28,6 +28,10 @@ public class UsageFeeConditionTypes {
         return new ArrayList<>(items);
     }
 
+    public int size() {
+        return items.size();
+    }
+
     public Optional<Error> validateDuplicated() {
         var errorItems = items.stream()
                 .filter(item -> items.stream().filter(item::equals).count() > 1)

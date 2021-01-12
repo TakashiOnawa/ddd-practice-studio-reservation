@@ -2,8 +2,10 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeDuplicatedError;
+import org.apache.commons.lang3.NotImplementedException;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeConditionTypeDifferentError;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.error.UsageFeeDuplicatedError;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeCondition;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 import org.taonaw.studio_reservation.domain.shared.Assertion;
 import org.taonaw.studio_reservation.domain.shared.exception.Error;
@@ -32,7 +34,7 @@ public class UsageFees {
 
     public Optional<Error> validateUsageFeeConditionTypesDifferent(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         var errorItems = items.stream()
-                .filter(item -> !item.isUsageFeeConditionsTypeIn(usageFeeConditionTypes))
+                .filter(item -> !item.isUsageFeeConditionsTypeEqual(usageFeeConditionTypes))
                 .collect(Collectors.toList());
         if (errorItems.isEmpty())
             return Optional.empty();
@@ -55,5 +57,20 @@ public class UsageFees {
                 .map(item -> item.removeBasicUsageFeeCondition(usageFeeConditionTypes))
                 .collect(Collectors.toList());
         return new UsageFees(removedConditionTypesItems);
+    }
+
+    public <T extends UsageFeeCondition> List<T> getUsageFeeConditions(@NonNull Class<T> type) {
+        var usageFeeConditions = new ArrayList<T>();
+        for (var item : items) {
+            item.getUsageFeeCondition(type).ifPresent(usageFeeConditions::add);
+        }
+        return usageFeeConditions;
+    }
+
+    public <T extends UsageFeeCondition> List<T> getGroupingUsageFeeConditions(
+            @NonNull Class<T> type,
+            @NonNull Class<? extends UsageFeeCondition>... group) {
+
+        throw new NotImplementedException("");
     }
 }

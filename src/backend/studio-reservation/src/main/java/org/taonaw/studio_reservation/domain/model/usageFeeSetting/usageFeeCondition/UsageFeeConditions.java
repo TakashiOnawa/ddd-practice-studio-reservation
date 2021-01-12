@@ -24,9 +24,9 @@ public class UsageFeeConditions {
         return new ArrayList<>(items);
     }
 
-    public Optional<Error> validateTypeDuplicated() {
+    public Optional<Error> validateConditionTypeDuplicated() {
         var errorItems = items.stream()
-                .filter(item -> items.stream().anyMatch(item::isTypeDuplicated))
+                .filter(item -> items.stream().anyMatch(item::isConditionTypeDuplicated))
                 .collect(Collectors.toList());
         if (errorItems.isEmpty())
             return Optional.empty();
@@ -34,8 +34,9 @@ public class UsageFeeConditions {
             return Optional.of(new UsageFeeConditionDuplicatedError(errorItems));
     }
 
-    public boolean isTypeIn(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-        return items.stream().allMatch(item -> item.isTypeIn(usageFeeConditionTypes));
+    public boolean isConditionTypeEqual(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
+        return items.size() == usageFeeConditionTypes.size() &&
+                items.stream().allMatch(item -> usageFeeConditionTypes.contains(item.getConditionType()));
     }
 
     public boolean isDuplicated(@NonNull UsageFeeConditions other) {
@@ -45,8 +46,15 @@ public class UsageFeeConditions {
 
     public UsageFeeConditions remove(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
         var removedItems = items.stream()
-                .filter(condition -> !usageFeeConditionTypes.contains(condition.getType()))
+                .filter(condition -> !usageFeeConditionTypes.contains(condition.getConditionType()))
                 .collect(Collectors.toList());
         return new UsageFeeConditions(removedItems);
+    }
+
+    public <T extends UsageFeeCondition> Optional<T> first(@NonNull Class<T> type) {
+        return items.stream()
+                .filter(item -> item.getClass().equals(type))
+                .map(type::cast)
+                .findFirst();
     }
 }

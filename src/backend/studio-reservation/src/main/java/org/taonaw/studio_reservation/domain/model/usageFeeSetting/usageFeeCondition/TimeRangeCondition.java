@@ -12,8 +12,7 @@ import java.time.LocalTime;
 public class TimeRangeCondition extends UsageFeeCondition {
     private final TimeRange timeRange;
 
-    public TimeRangeCondition(UsageFeeConditionType type, LocalTime startTime, LocalTime endTime) {
-        super(type);
+    public TimeRangeCondition(LocalTime startTime, LocalTime endTime) {
         timeRange = new TimeRange(startTime, endTime);
 
         if (timeRange.hasStartTimeSeconds()) {

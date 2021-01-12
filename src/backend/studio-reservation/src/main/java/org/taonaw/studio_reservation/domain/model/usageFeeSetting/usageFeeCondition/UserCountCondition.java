@@ -11,8 +11,7 @@ import org.taonaw.studio_reservation.domain.shared.Assertion;
 public class UserCountCondition extends UsageFeeCondition {
     private final int userCount;
 
-    public UserCountCondition(UsageFeeConditionType type, int userCount) {
-        super(type);
+    public UserCountCondition(int userCount) {
         Assertion.argumentRange(userCount, 1, 99);
         this.userCount = userCount;
     }

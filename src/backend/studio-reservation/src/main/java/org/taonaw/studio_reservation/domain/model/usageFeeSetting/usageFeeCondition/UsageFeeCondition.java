@@ -3,24 +3,16 @@ package org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondi
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
-import org.taonaw.studio_reservation.domain.shared.Assertion;
 
 @Getter
 @EqualsAndHashCode
 public abstract class UsageFeeCondition {
-    private final UsageFeeConditionType type;
-
-    protected UsageFeeCondition(UsageFeeConditionType type) {
-        Assertion.required(type);
-        this.type = type;
+    public UsageFeeConditionType getConditionType() {
+        return UsageFeeConditionType.of(this);
     }
 
-    public boolean isTypeIn(@NonNull UsageFeeConditionTypes usageFeeConditionTypes) {
-        return usageFeeConditionTypes.contains(type);
-    }
-
-    public boolean isTypeDuplicated(@NonNull UsageFeeCondition other) {
-        return this != other && this.getType() == other.getType();
+    public boolean isConditionTypeDuplicated(@NonNull UsageFeeCondition other) {
+        return this != other && this.getConditionType() == other.getConditionType();
     }
 
     public boolean isDuplicated(@NonNull UsageFeeCondition other) {

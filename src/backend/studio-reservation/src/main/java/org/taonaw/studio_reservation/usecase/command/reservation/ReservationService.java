@@ -30,10 +30,6 @@ public class ReservationService {
     @Autowired
     private final MemberAccountRepository memberAccountRepository;
     @Autowired
-    private final BasicUsageFeeSettingRepository basicUsageFeeSettingRepository;
-    @Autowired
-    private final PackFeeSettingRepository packFeeSettingRepository;
-    @Autowired
     private final CancellationFeeSettingRepository cancellationFeeSettingRepository;
     @Autowired
     private final CurrentDate currentDate;
@@ -46,10 +42,6 @@ public class ReservationService {
                 command.getPracticeType(),
                 command.getUsageEquipments().getUsageEquipmentIds())
                 .orElseThrow();
-
-        var basicUsageFeeSetting = basicUsageFeeSettingRepository.findAll();
-
-        var packFeeSetting = packFeeSettingRepository.findAll();
 
         var reservation = Reservation.create(
                 command.getStudioId(),

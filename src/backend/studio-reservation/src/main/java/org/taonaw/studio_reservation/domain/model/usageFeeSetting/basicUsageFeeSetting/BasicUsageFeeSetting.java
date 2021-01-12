@@ -1,12 +1,19 @@
 package org.taonaw.studio_reservation.domain.model.usageFeeSetting.basicUsageFeeSetting;
 
 import lombok.NonNull;
+import org.taonaw.studio_reservation.domain.model.openingHourSetting.OpeningHourSetting;
 import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeType;
+import org.taonaw.studio_reservation.domain.model.practiceTypeSetting.PracticeTypeSetting;
+import org.taonaw.studio_reservation.domain.model.studio.Studio;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.ApplicablePeriod;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFee.UsageFees;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.DayTypeCondition;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.StudioCondition;
+import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionType;
 import org.taonaw.studio_reservation.domain.model.usageFeeSetting.usageFeeCondition.UsageFeeConditionTypes;
 import org.taonaw.studio_reservation.domain.shared.exception.ErrorNotification;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BasicUsageFeeSetting {
@@ -64,8 +71,21 @@ public class BasicUsageFeeSetting {
             this.usageFees = usageFees;
     }
 
-    public PracticeType practiceType() {
-        return practiceType;
+    public void check(
+            List<Studio> studios,
+            List<PracticeTypeSetting> practiceTypeSettings,
+            OpeningHourSetting openingHourSetting) {
+
+        // TODO: 仮実装。
+
+        if (usageFeeConditionTypes.contains(UsageFeeConditionType.STUDIO)) {
+            var studioConditions = usageFees.getUsageFeeConditions(StudioCondition.class);
+            // 全てのスタジオがあるかをチェックする。
+        }
+
+        if (usageFeeConditionTypes.contains(UsageFeeConditionType.DAY_TYPE)) {
+            usageFees.getGroupingUsageFeeConditions(DayTypeCondition.class, StudioCondition.class);
+        }
     }
 
     @Override
