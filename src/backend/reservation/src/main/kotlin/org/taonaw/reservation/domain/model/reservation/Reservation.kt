@@ -6,7 +6,7 @@ import org.taonaw.reservation.domain.model.shared.StudioId
 import java.time.LocalDateTime
 
 class Reservation private constructor(
-        private val reservationId: ReservationId,
+        val reservationId: ReservationId,
         private var memberId: MemberId,
         private var studioId: StudioId,
         private var usageTime: UsageTime,

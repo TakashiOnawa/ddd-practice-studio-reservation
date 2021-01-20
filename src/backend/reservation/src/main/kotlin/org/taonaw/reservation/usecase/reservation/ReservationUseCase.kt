@@ -1,6 +1,7 @@
 package org.taonaw.reservation.usecase.reservation
 
 import org.springframework.stereotype.Component
+import org.taonaw.reservation.domain.model.equipment.EquipmentRepository
 import org.taonaw.reservation.domain.model.reservation.Reservation
 import org.taonaw.reservation.domain.model.reservation.ReservationRepository
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicyRepository
@@ -10,11 +11,11 @@ import java.time.LocalDateTime
 @Component
 class ReservationUseCase(
         private val reservationRepository: ReservationRepository,
-        private val reservationPolicyRepository: ReservationPolicyRepository) {
+        private val reservationPolicyRepository: ReservationPolicyRepository,
+        private val equipmentRepository: EquipmentRepository) {
 
     fun handle(command: ReserveStudioCommand) {
-
-        // TODO: 排他制御
+        reservationRepository.lock()
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
@@ -32,10 +33,10 @@ class ReservationUseCase(
                 reservationPolicy)
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
-
         overlappingReservations.validateDuplicated(reservation)
 
-        // TODO: 機材の在庫チェック
+        val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
+        overlappingReservations.validateUsageEquipmentsOutOfStocks(reservation, equipments)
 
         reservationRepository.save(reservation)
     }
