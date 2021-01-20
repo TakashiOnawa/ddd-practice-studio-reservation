@@ -9,37 +9,43 @@ class Reservation private constructor(
         private val reservationId: ReservationId,
         private var memberId: MemberId,
         private var studioId: StudioId,
-        private var usageDateTime: UsageDateTime,
+        private var usageTime: UsageTime,
         private var userCount: UserCount,
         private var practiceType: PracticeType,
         private var rentalEquipments: RentalEquipments) {
 
     companion object {
         fun create(
-            memberId: MemberId,
-            studioId: StudioId,
-            usageDateTime: UsageDateTime,
-            userCount: UserCount,
-            practiceType: PracticeType,
-            rentalEquipments: RentalEquipments,
-            currentDateTime: LocalDateTime,
-            reservationPolicy: ReservationPolicy) : Reservation {
+                memberId: MemberId,
+                studioId: StudioId,
+                usageTime: UsageTime,
+                userCount: UserCount,
+                practiceType: PracticeType,
+                rentalEquipments: RentalEquipments,
+                currentDateTime: LocalDateTime,
+                reservationPolicy: ReservationPolicy) : Reservation {
 
-            reservationPolicy.validateReservableDateTime(usageDateTime)
-            reservationPolicy.validateStartTime(usageDateTime)
-            reservationPolicy.validateReservationStartDateTime(usageDateTime, currentDateTime)
-            reservationPolicy.validateUserMaxCount(userCount)
-            reservationPolicy.validateRentalEquipmentMaxQuantity(rentalEquipments)
+            reservationPolicy.validateOpeningHour(usageTime)
+            reservationPolicy.validateStartTime(usageTime)
+            reservationPolicy.validateAcceptingReservationStartDate(usageTime, currentDateTime)
+            reservationPolicy.validateMaxUserCount(userCount)
+            reservationPolicy.validateMaxRentalEquipmentQuantity(rentalEquipments)
 
             return Reservation(
                     ReservationId.newId(),
                     memberId,
                     studioId,
-                    usageDateTime,
+                    usageTime,
                     userCount,
                     practiceType,
                     rentalEquipments)
         }
+    }
+
+    fun isDuplicated(other: Reservation): Boolean {
+        return this != other &&
+                studioId == other.studioId &&
+                usageTime.isOverlapping(other.usageTime)
     }
 
     override fun equals(other: Any?): Boolean {

@@ -16,21 +16,26 @@ class ReservationUseCase(
 
         // TODO: 排他制御
 
-        val reservationPolicy = reservationPolicyRepository.get()
+        val reservationPolicy = reservationPolicyRepository.findBy(
+                command.studioId,
+                command.practiceType,
+                command.rentalEquipments.equipmentIds())
 
         val reservation = Reservation.create(
                 command.memberId,
                 command.studioId,
-                command.usageDateTime,
+                command.usageTime,
                 command.userCount,
                 command.practiceType,
                 command.rentalEquipments,
                 LocalDateTime.now(),
                 reservationPolicy)
 
-        // TODO: 予約重複チェック
+        val overlappingReservations = reservationRepository.findBy(command.usageTime)
 
-        // TODO: レンタル機材重複チェック
+        overlappingReservations.validateDuplicated(reservation)
+
+        // TODO: 機材の在庫チェック
 
         reservationRepository.save(reservation)
     }
