@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservationPolicy
 import org.taonaw.reservation.domain.model.reservation.RentalEquipments
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
-import org.taonaw.reservation.domain.model.shared.EquipmentId
+import org.taonaw.reservation.domain.model.equipment.EquipmentId
 import java.time.LocalDateTime
 
 class ReservationPolicy(

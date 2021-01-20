@@ -1,6 +1,6 @@
 package org.taonaw.reservation.domain.model.reservation
 
-import org.taonaw.reservation.domain.model.shared.EquipmentId
+import org.taonaw.reservation.domain.model.equipment.EquipmentId
 
 class ReservedRentalEquipments {
     private val items: Map<EquipmentId, List<RentalEquipment>> = HashMap()

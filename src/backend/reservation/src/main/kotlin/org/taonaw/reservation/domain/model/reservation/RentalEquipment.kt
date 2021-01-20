@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.reservationPolicy.MaxRentalEquipmentQuantity
-import org.taonaw.reservation.domain.model.shared.EquipmentId
+import org.taonaw.reservation.domain.model.equipment.EquipmentId
 
 data class RentalEquipment(
         val equipmentId: EquipmentId,
