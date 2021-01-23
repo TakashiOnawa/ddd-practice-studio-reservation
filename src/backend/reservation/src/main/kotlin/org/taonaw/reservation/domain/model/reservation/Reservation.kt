@@ -1,8 +1,13 @@
 package org.taonaw.reservation.domain.model.reservation
 
+import org.taonaw.reservation.domain.model.cancellationFeeSetting.CancellationFeeSetting
+import org.taonaw.reservation.domain.model.equipment.Equipments
+import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicy
 import org.taonaw.reservation.domain.model.shared.MemberId
 import org.taonaw.reservation.domain.model.shared.StudioId
+import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCondition
+import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSetting
 import java.time.LocalDateTime
 
 class Reservation private constructor(
@@ -12,7 +17,8 @@ class Reservation private constructor(
         private var usageTime: UsageTime,
         private var userCount: UserCount,
         private var practiceType: PracticeType,
-        private var rentalEquipments: RentalEquipments) {
+        private var rentalEquipments: RentalEquipments,
+        private var usageFee: UsageFee) {
 
     companion object {
         fun create(
@@ -22,14 +28,20 @@ class Reservation private constructor(
                 userCount: UserCount,
                 practiceType: PracticeType,
                 rentalEquipments: RentalEquipments,
-                currentDateTime: LocalDateTime,
-                reservationPolicy: ReservationPolicy) : Reservation {
+                reservationPolicy: ReservationPolicy,
+                usageFeeSetting: UsageFeeSetting,
+                equipments: Equipments,
+                reservedAt: LocalDateTime) : Reservation {
 
             reservationPolicy.validateOpeningHour(usageTime)
             reservationPolicy.validateStartTime(usageTime)
-            reservationPolicy.validateAcceptingReservationStartDate(usageTime, currentDateTime)
+            reservationPolicy.validateAcceptingReservationStartDate(usageTime, reservedAt)
             reservationPolicy.validateMaxUserCount(userCount)
             reservationPolicy.validateMaxRentalEquipmentQuantity(rentalEquipments)
+
+            val usageFee = usageFeeSetting.calculateUsageFee(
+                    UsageFeeCondition(studioId, usageTime, userCount, practiceType, rentalEquipments),
+                    equipments)
 
             return Reservation(
                     ReservationId.newId(),
@@ -38,8 +50,24 @@ class Reservation private constructor(
                     usageTime,
                     userCount,
                     practiceType,
-                    rentalEquipments)
+                    rentalEquipments,
+                    usageFee)
         }
+    }
+
+    fun change(
+            memberId: MemberId,
+            studioId: StudioId,
+            usageTime: UsageTime,
+            userCount: UserCount,
+            practiceType: PracticeType,
+            rentalEquipments: RentalEquipments,
+            reservationPolicy: ReservationPolicy,
+            cancellationFeeSetting: CancellationFeeSetting,
+            usageFeeSetting: UsageFeeSetting,
+            equipments: Equipments,
+            changedAt: LocalDateTime) {
+
     }
 
     fun isDuplicated(other: Reservation): Boolean {

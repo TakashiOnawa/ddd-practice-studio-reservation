@@ -1,8 +1,11 @@
 package org.taonaw.reservation.domain.model.equipment
 
+import org.taonaw.reservation.domain.model.shared.Fee
+
 class Equipment(
         val equipmentId: EquipmentId,
-        private val equipmentStocks: EquipmentStocks) {
+        val equipmentStocks: EquipmentStocks,
+        val rentalFee: Fee) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
