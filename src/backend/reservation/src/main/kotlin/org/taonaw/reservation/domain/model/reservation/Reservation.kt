@@ -2,6 +2,7 @@ package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.cancellationFeeSetting.CancellationFeeSetting
 import org.taonaw.reservation.domain.model.equipment.Equipments
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicy
 import org.taonaw.reservation.domain.model.shared.MemberId

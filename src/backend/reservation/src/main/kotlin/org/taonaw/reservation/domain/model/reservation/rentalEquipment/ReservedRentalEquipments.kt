@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.reservation
+package org.taonaw.reservation.domain.model.reservation.rentalEquipment
 
 import org.taonaw.reservation.domain.model.equipment.EquipmentId
 

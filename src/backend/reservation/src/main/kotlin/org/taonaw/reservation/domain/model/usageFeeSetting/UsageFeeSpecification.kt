@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.usageFeeSetting
 
 import org.taonaw.reservation.domain.model.reservation.PracticeType
-import org.taonaw.reservation.domain.model.reservation.RentalEquipments
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
 import org.taonaw.reservation.domain.model.shared.BasicTimeRange

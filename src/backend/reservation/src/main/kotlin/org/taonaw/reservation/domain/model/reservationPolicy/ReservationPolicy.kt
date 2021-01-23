@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservationPolicy
 
 import org.taonaw.reservation.domain.model.equipment.EquipmentId
-import org.taonaw.reservation.domain.model.reservation.RentalEquipments
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
 import java.time.LocalDateTime
