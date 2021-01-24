@@ -1,9 +1,10 @@
 package org.taonaw.reservation.domain.model.usageFeeSetting
 
 import org.taonaw.reservation.domain.model.reservation.PracticeType
-import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
+import org.taonaw.reservation.domain.model.reservation.ReservationDetails
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.shared.BasicTimeRange
 import org.taonaw.reservation.domain.model.shared.StudioId
 import org.taonaw.reservation.domain.shared.Specification
@@ -16,6 +17,13 @@ data class UsageFeeCondition(
         val userCount: UserCount,
         val practiceType: PracticeType,
         val rentalEquipments: RentalEquipments) {
+
+    companion object {
+        fun from(details: ReservationDetails): UsageFeeCondition {
+            return UsageFeeCondition(
+                    details.studioId, details.usageTime, details.userCount, details.practiceType, details.rentalEquipments)
+        }
+    }
 
     fun splitByMinUsageTimeUnit(): List<UsageFeeCondition> {
         return usageTime.splitMinUnit().map { copy(usageTime = it) }

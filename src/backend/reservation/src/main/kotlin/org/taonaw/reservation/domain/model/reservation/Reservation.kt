@@ -28,9 +28,7 @@ class Reservation private constructor(
 
             details.validate(reservationPolicy, reservedAt)
 
-            val usageFee = usageFeeSetting.calculateUsageFee(
-                    UsageFeeCondition(details.studioId, details.usageTime, details.userCount, details.practiceType, details.rentalEquipments),
-                    equipments)
+            val usageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(details), equipments)
 
             return Reservation(ReservationId.newId(), user, details, usageFee)
         }
@@ -51,9 +49,7 @@ class Reservation private constructor(
         this.details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
         changingDetails.validate(reservationPolicy, changedAt)
 
-        val changingUsageFee = usageFeeSetting.calculateUsageFee(
-                UsageFeeCondition(changingDetails.studioId, changingDetails.usageTime, changingDetails.userCount, changingDetails.practiceType, changingDetails.rentalEquipments),
-                equipments)
+        val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 
         return Reservation(reservationId, changingUser, changingDetails, changingUsageFee)
     }
@@ -69,9 +65,7 @@ class Reservation private constructor(
         this.details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
         changingDetails.validate(reservationPolicy, changedAt)
 
-        val changingUsageFee = usageFeeSetting.calculateUsageFee(
-                UsageFeeCondition(changingDetails.studioId, changingDetails.usageTime, changingDetails.userCount, changingDetails.practiceType, changingDetails.rentalEquipments),
-                equipments)
+        val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 
         return Reservation(reservationId, user, changingDetails, changingUsageFee)
     }
