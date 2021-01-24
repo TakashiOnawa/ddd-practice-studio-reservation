@@ -8,7 +8,13 @@ data class RentalEquipment(
 }
 
 class RentalEquipments private constructor(items: List<RentalEquipment>) {
-    val items: List<RentalEquipment> = items.toList()
+    // 同じレンタル機材は数量をマージする。
+    val items: List<RentalEquipment> = items
+            .groupBy { it.equipmentId }
+            .map { it ->
+                val mergedQuantity = RentalEquipmentQuantity(it.value.sumOf { it.quantity.value })
+                RentalEquipment(it.key, mergedQuantity)
+            }
 
     fun equipmentIds(): List<EquipmentId> = items.map { it.equipmentId }
 }
