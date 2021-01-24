@@ -69,6 +69,22 @@ class Reservation private constructor(
             equipments: Equipments,
             changedAt: LocalDateTime) {
 
+        val chargedCancellationFee = cancellationFeeSetting.chargedCancellationFee(usageTime, changedAt)
+        if (this.studioId != studioId && chargedCancellationFee) {
+            throw Exception()
+        }
+        if (this.usageTime != usageTime && chargedCancellationFee) {
+            throw Exception()
+        }
+        if (this.usageTime != usageTime && chargedCancellationFee) {
+            throw Exception()
+        }
+
+        reservationPolicy.validateOpeningHour(usageTime)
+        reservationPolicy.validateStartTime(usageTime)
+        reservationPolicy.validateAcceptingReservationStartDate(usageTime, changedAt)
+        reservationPolicy.validateMaxUserCount(userCount)
+        reservationPolicy.validateMaxRentalEquipmentQuantity(rentalEquipments)
     }
 
     fun isDuplicated(other: Reservation): Boolean {

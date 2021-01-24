@@ -1,42 +1,42 @@
 package org.taonaw.reservation.domain.model.reservationPolicy
 
-import org.taonaw.reservation.domain.model.equipment.EquipmentId
-import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import java.time.LocalDateTime
 
+/**
+ * 予約ポリシー
+ */
 class ReservationPolicy(
         private val openingHour: OpeningHour,
         private val startTime: StartTime,
         private val acceptingReservationStartDate: AcceptingReservationStartDate,
-        private val masUserCount: MaxUserCount,
-        private val maxRentalEquipmentQuantities: Map<EquipmentId, MaxRentalEquipmentQuantity>) {
+        private val maxUserCount: MaxUserCount,
+        private val maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities) {
 
     fun validateOpeningHour(usageTime: UsageTime) {
-        if (!usageTime.satisfy(openingHour))
+        if (!openingHour.isSatisfiedBy(usageTime))
             throw Exception()
     }
 
     fun validateStartTime(usageTime: UsageTime) {
-        if (!usageTime.satisfy(startTime))
+        if (!startTime.isSatisfiedBy(usageTime))
             throw Exception()
     }
 
     fun validateAcceptingReservationStartDate(usageTime: UsageTime, currentDateTime: LocalDateTime) {
-        if (!usageTime.satisfy(acceptingReservationStartDate, currentDateTime))
+        if (!acceptingReservationStartDate.isSatisfiedBy(usageTime, currentDateTime))
             throw Exception()
     }
 
     fun validateMaxUserCount(userCount: UserCount) {
-        if (!userCount.satisfy(masUserCount))
+        if (!maxUserCount.isSatisfiedBy(userCount))
             throw Exception()
     }
 
     fun validateMaxRentalEquipmentQuantity(rentalEquipments: RentalEquipments) {
-        rentalEquipments.notSatisfyEquipments(maxRentalEquipmentQuantities).let {
-            if (it.isNotEmpty())
-                throw Exception()
-        }
+        if (!maxRentalEquipmentQuantities.isSatisfiedBy(rentalEquipments))
+            throw Exception()
     }
 }

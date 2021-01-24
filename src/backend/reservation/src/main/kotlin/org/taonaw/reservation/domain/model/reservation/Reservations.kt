@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservation
 import org.taonaw.reservation.domain.model.equipment.Equipments
 
 class Reservations private constructor(items: List<Reservation>) {
-    private val items = items.toList()
+    val items = items.toList()
 
     fun validateDuplicated(reservation: Reservation) {
         if (items.any { it.isDuplicated(reservation) })
