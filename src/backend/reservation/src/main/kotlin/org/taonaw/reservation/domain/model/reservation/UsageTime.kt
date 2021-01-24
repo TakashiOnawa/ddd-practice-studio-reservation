@@ -9,7 +9,7 @@ data class UsageTime(
         override val end: LocalDateTime) : DateTimeRange {
 
     companion object {
-        private const val MIN_MINUTES_UNIT: Int = 60
+        const val MIN_MINUTES_UNIT: Int = 60
     }
 
     init {

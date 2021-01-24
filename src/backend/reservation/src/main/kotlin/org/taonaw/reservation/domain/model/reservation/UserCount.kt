@@ -6,8 +6,8 @@ package org.taonaw.reservation.domain.model.reservation
 data class UserCount(val value: Int) {
 
     companion object {
-        private const val MIN: Int = 1
-        private const val MAX: Int = 99
+        const val MIN: Int = 1
+        const val MAX: Int = 99
     }
 
     init {

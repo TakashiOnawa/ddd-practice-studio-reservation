@@ -8,9 +8,9 @@ class Reservations private constructor(items: List<Reservation>) {
     fun toReservedRentalEquipments(reservation: Reservation): ReservedRentalEquipments {
         return ReservedRentalEquipments.create(items.map {
             if (it == reservation)
-                reservation.rentalEquipments
+                reservation.details.rentalEquipments
             else
-                it.rentalEquipments
+                it.details.rentalEquipments
         })
     }
 

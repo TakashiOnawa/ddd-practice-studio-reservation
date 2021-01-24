@@ -16,7 +16,7 @@ data class ReservationDetails(
         val practiceType: PracticeType,
         val rentalEquipments: RentalEquipments) {
 
-    fun validate(reservationPolicy: ReservationPolicy, currentDateTime: LocalDateTime) {
+    internal fun validate(reservationPolicy: ReservationPolicy, currentDateTime: LocalDateTime) {
         reservationPolicy.validateOpeningHour(usageTime)
         reservationPolicy.validateStartTime(usageTime)
         reservationPolicy.validateAcceptingReservationStartDate(usageTime, currentDateTime)
@@ -24,7 +24,7 @@ data class ReservationDetails(
         reservationPolicy.validateMaxRentalEquipmentQuantity(rentalEquipments)
     }
 
-    fun validateChanging(
+    internal fun validateChanging(
             changingDetails: ReservationDetails,
             cancellationFeeSetting: CancellationFeeSetting,
             changedAt: LocalDateTime) {
