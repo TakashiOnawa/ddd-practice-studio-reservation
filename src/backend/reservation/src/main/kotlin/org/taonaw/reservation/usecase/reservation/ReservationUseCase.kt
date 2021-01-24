@@ -33,7 +33,7 @@ class ReservationUseCase(
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         val reservation = Reservation.create(
-                command.memberId,
+                command.user,
                 command.studioId,
                 command.usageTime,
                 command.userCount,
@@ -68,7 +68,7 @@ class ReservationUseCase(
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         reservation = reservation.change(
-                command.memberId,
+                command.user,
                 command.studioId,
                 command.usageTime,
                 command.userCount,
