@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import org.taonaw.reservation.domain.model.cancellationFeeSetting.CancellationFeeSettingRepository
 import org.taonaw.reservation.domain.model.equipment.EquipmentRepository
 import org.taonaw.reservation.domain.model.reservation.Reservation
+import org.taonaw.reservation.domain.model.reservation.ReservationDetails
 import org.taonaw.reservation.domain.model.reservation.ReservationRepository
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicyRepository
 import org.taonaw.reservation.domain.model.shared.DateTimeGenerator
@@ -32,8 +33,8 @@ class ReservationUseCase(
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
-        val reservationDetails = Reservation.Companion
-                .Details(command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
+        val reservationDetails = ReservationDetails(
+                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
         val reservation = Reservation.create(
                 command.user,
@@ -55,8 +56,8 @@ class ReservationUseCase(
 
         var reservation = reservationRepository.findBy(command.reservationId) ?: throw Exception()
 
-        val reservationDetails = Reservation.Companion
-                .Details(command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
+        val reservationDetails = ReservationDetails(
+                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
