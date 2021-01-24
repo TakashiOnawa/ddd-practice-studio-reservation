@@ -13,13 +13,13 @@ import java.time.LocalDateTime
 
 class Reservation private constructor(
         val reservationId: ReservationId,
-        private var memberId: MemberId,
-        private var studioId: StudioId,
-        private var usageTime: UsageTime,
-        private var userCount: UserCount,
-        private var practiceType: PracticeType,
-        private var rentalEquipments: RentalEquipments,
-        private var usageFee: UsageFee) {
+        val memberId: MemberId,
+        val studioId: StudioId,
+        val usageTime: UsageTime,
+        val userCount: UserCount,
+        val practiceType: PracticeType,
+        val rentalEquipments: RentalEquipments,
+        val usageFee: UsageFee) {
 
     companion object {
         fun create(
@@ -44,15 +44,7 @@ class Reservation private constructor(
                     UsageFeeCondition(studioId, usageTime, userCount, practiceType, rentalEquipments),
                     equipments)
 
-            return Reservation(
-                    ReservationId.newId(),
-                    memberId,
-                    studioId,
-                    usageTime,
-                    userCount,
-                    practiceType,
-                    rentalEquipments,
-                    usageFee)
+            return Reservation(ReservationId.newId(), memberId, studioId, usageTime, userCount, practiceType, rentalEquipments, usageFee)
         }
     }
 
@@ -67,7 +59,7 @@ class Reservation private constructor(
             cancellationFeeSetting: CancellationFeeSetting,
             usageFeeSetting: UsageFeeSetting,
             equipments: Equipments,
-            changedAt: LocalDateTime) {
+            changedAt: LocalDateTime): Reservation {
 
         val chargedCancellationFee = cancellationFeeSetting.chargedCancellationFee(usageTime, changedAt)
         if (this.studioId != studioId && chargedCancellationFee) {
@@ -85,6 +77,8 @@ class Reservation private constructor(
         reservationPolicy.validateAcceptingReservationStartDate(usageTime, changedAt)
         reservationPolicy.validateMaxUserCount(userCount)
         reservationPolicy.validateMaxRentalEquipmentQuantity(rentalEquipments)
+
+        return Reservation(reservationId, memberId, studioId, usageTime, userCount, practiceType, rentalEquipments, usageFee)
     }
 
     fun isDuplicated(other: Reservation): Boolean {

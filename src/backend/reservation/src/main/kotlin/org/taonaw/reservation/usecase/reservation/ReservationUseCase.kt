@@ -54,7 +54,7 @@ class ReservationUseCase(
     fun handle(command: ChangeReservationCommand) {
         reservationRepository.lock()
 
-        val reservation = reservationRepository.findBy(command.reservationId) ?: throw Exception()
+        var reservation = reservationRepository.findBy(command.reservationId) ?: throw Exception()
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
@@ -67,7 +67,7 @@ class ReservationUseCase(
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
-        reservation.change(
+        reservation = reservation.change(
                 command.memberId,
                 command.studioId,
                 command.usageTime,
