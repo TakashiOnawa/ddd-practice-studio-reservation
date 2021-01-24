@@ -19,21 +19,16 @@ class Reservation private constructor(
     companion object {
         fun create(
                 user: User,
-                studioId: StudioId,
-                usageTime: UsageTime,
-                userCount: UserCount,
-                practiceType: PracticeType,
-                rentalEquipments: RentalEquipments,
+                details: Details,
                 reservationPolicy: ReservationPolicy,
                 usageFeeSetting: UsageFeeSetting,
                 equipments: Equipments,
                 reservedAt: LocalDateTime) : Reservation {
 
-            val details = Details(studioId, usageTime, userCount, practiceType, rentalEquipments)
             details.validate(reservationPolicy, reservedAt)
 
             val usageFee = usageFeeSetting.calculateUsageFee(
-                    UsageFeeCondition(studioId, usageTime, userCount, practiceType, rentalEquipments),
+                    UsageFeeCondition(details.studioId, details.usageTime, details.userCount, details.practiceType, details.rentalEquipments),
                     equipments)
 
             return Reservation(ReservationId.newId(), user, details, usageFee)
@@ -55,27 +50,20 @@ class Reservation private constructor(
             }
 
             fun change(
-                    studioId: StudioId,
-                    usageTime: UsageTime,
-                    userCount: UserCount,
-                    practiceType: PracticeType,
-                    rentalEquipments: RentalEquipments,
+                    details: Details,
                     reservationPolicy: ReservationPolicy,
                     cancellationFeeSetting: CancellationFeeSetting,
                     changedAt: LocalDateTime): Details {
 
                 val chargedCancellationFee = cancellationFeeSetting.chargedCancellationFee(usageTime, changedAt)
-                if (this.studioId != studioId && chargedCancellationFee) {
-                    throw Exception()
-                }
-                if (this.usageTime != usageTime && chargedCancellationFee) {
+                // TODO: 変更判定
+                if (this.studioId != details.studioId && chargedCancellationFee) {
                     throw Exception()
                 }
                 if (this.usageTime != usageTime && chargedCancellationFee) {
                     throw Exception()
                 }
 
-                val details = Details(studioId, usageTime, userCount, practiceType, rentalEquipments)
                 details.validate(reservationPolicy, changedAt)
                 return details
             }
@@ -84,11 +72,7 @@ class Reservation private constructor(
 
     fun change(
             user: User.NonMember,
-            studioId: StudioId,
-            usageTime: UsageTime,
-            userCount: UserCount,
-            practiceType: PracticeType,
-            rentalEquipments: RentalEquipments,
+            details: Details,
             reservationPolicy: ReservationPolicy,
             cancellationFeeSetting: CancellationFeeSetting,
             usageFeeSetting: UsageFeeSetting,
@@ -98,24 +82,30 @@ class Reservation private constructor(
         if (this.user !is User.NonMember)
             throw Exception()
 
-        val changingDetails = details.change(studioId, usageTime, userCount, practiceType, rentalEquipments, reservationPolicy, cancellationFeeSetting, changedAt)
-        return Reservation(reservationId, user, changingDetails, usageFee)
+        val changingDetails = this.details.change(details, reservationPolicy, cancellationFeeSetting, changedAt)
+
+        val changingUsageFee = usageFeeSetting.calculateUsageFee(
+                UsageFeeCondition(changingDetails.studioId, changingDetails.usageTime, changingDetails.userCount, changingDetails.practiceType, changingDetails.rentalEquipments),
+                equipments)
+
+        return Reservation(reservationId, user, changingDetails, changingUsageFee)
     }
 
     fun change(
-            studioId: StudioId,
-            usageTime: UsageTime,
-            userCount: UserCount,
-            practiceType: PracticeType,
-            rentalEquipments: RentalEquipments,
+            details: Details,
             reservationPolicy: ReservationPolicy,
             cancellationFeeSetting: CancellationFeeSetting,
             usageFeeSetting: UsageFeeSetting,
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        val changingDetails = details.change(studioId, usageTime, userCount, practiceType, rentalEquipments, reservationPolicy, cancellationFeeSetting, changedAt)
-        return Reservation(reservationId, user, changingDetails, usageFee)
+        val changingDetails = this.details.change(details, reservationPolicy, cancellationFeeSetting, changedAt)
+
+        val changingUsageFee = usageFeeSetting.calculateUsageFee(
+                UsageFeeCondition(changingDetails.studioId, changingDetails.usageTime, changingDetails.userCount, changingDetails.practiceType, changingDetails.rentalEquipments),
+                equipments)
+
+        return Reservation(reservationId, user, changingDetails, changingUsageFee)
     }
 
     fun isDuplicated(other: Reservation): Boolean {
