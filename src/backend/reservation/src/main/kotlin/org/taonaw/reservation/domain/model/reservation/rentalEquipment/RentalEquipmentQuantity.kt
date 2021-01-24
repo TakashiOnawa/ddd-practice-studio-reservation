@@ -2,6 +2,9 @@ package org.taonaw.reservation.domain.model.reservation.rentalEquipment
 
 import org.taonaw.reservation.domain.model.reservationPolicy.MaxRentalEquipmentQuantity
 
+/**
+ * レンタル機材数量
+ */
 data class RentalEquipmentQuantity(val value: Int) {
 
     companion object {

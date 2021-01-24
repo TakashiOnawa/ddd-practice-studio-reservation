@@ -2,6 +2,9 @@ package org.taonaw.reservation.domain.model.reservation.rentalEquipment
 
 import org.taonaw.reservation.domain.model.equipment.EquipmentId
 
+/**
+ * レンタル機材
+ */
 data class RentalEquipment(
         val equipmentId: EquipmentId,
         val quantity: RentalEquipmentQuantity) {

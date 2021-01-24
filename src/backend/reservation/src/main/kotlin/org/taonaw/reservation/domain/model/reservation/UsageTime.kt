@@ -4,6 +4,9 @@ import org.taonaw.reservation.domain.model.shared.DateTimeRange
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
+/**
+ * 利用時間
+ */
 data class UsageTime(
         override val start: LocalDateTime,
         override val end: LocalDateTime) : DateTimeRange {

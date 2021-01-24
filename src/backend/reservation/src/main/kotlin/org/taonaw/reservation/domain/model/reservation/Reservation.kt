@@ -8,6 +8,9 @@ import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCondition
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSetting
 import java.time.LocalDateTime
 
+/**
+ * 予約
+ */
 class Reservation private constructor(
         val reservationId: ReservationId,
         val user: User,

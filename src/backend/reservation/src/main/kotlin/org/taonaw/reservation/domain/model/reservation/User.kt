@@ -2,10 +2,20 @@ package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.shared.MemberId
 
+/**
+ * 利用者
+ */
 sealed class User {
+
+    /**
+     * 会員
+     */
     data class Member(val memberId: MemberId): User() {
     }
 
+    /**
+     * 非会員
+     */
     data class NonMember(val name: String, val phoneNumber: String): User() {
 
         companion object {
