@@ -46,7 +46,7 @@ class ReservationUseCase(
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
         overlappingReservations.validateDuplicated(reservation)
-        overlappingReservations.validateUsageEquipmentsOutOfStocks(reservation, equipments)
+        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)
 
         reservationRepository.save(reservation)
     }
@@ -82,7 +82,7 @@ class ReservationUseCase(
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
         overlappingReservations.validateDuplicated(reservation)
-        overlappingReservations.validateUsageEquipmentsOutOfStocks(reservation, equipments)
+        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)
 
         reservationRepository.save(reservation)
     }

@@ -21,6 +21,6 @@ data class MaxRentalEquipmentQuantities(
         return rentalEquipments.items.filter {
             val maxRentalEquipmentQuantity = maxRentalEquipmentQuantities[it.equipmentId] ?: throw Exception()
             return !maxRentalEquipmentQuantity.isSatisfiedBy(it)
-        }.any()
+        }.isNotEmpty()
     }
 }

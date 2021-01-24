@@ -4,7 +4,7 @@ import org.taonaw.reservation.domain.model.shared.Fee
 
 class Equipment(
         val equipmentId: EquipmentId,
-        val equipmentStocks: EquipmentStocks,
+        val equipmentStocks: Int,
         val rentalFee: Fee) {
 
     override fun equals(other: Any?): Boolean {

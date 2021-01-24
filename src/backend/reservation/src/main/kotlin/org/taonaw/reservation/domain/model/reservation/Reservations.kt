@@ -1,16 +1,21 @@
 package org.taonaw.reservation.domain.model.reservation
 
-import org.taonaw.reservation.domain.model.equipment.Equipments
+import org.taonaw.reservation.domain.model.reservation.rentalEquipment.ReservedRentalEquipments
 
 class Reservations private constructor(items: List<Reservation>) {
-    val items = items.toList()
+    val items: List<Reservation> = items.toList()
+
+    fun toReservedRentalEquipments(reservation: Reservation): ReservedRentalEquipments {
+        return ReservedRentalEquipments.create(items.map {
+            if (it == reservation)
+                reservation.rentalEquipments
+            else
+                it.rentalEquipments
+        })
+    }
 
     fun validateDuplicated(reservation: Reservation) {
         if (items.any { it.isDuplicated(reservation) })
             throw Exception()
-    }
-
-    fun validateUsageEquipmentsOutOfStocks(reservation: Reservation, equipments: Equipments) {
-        // TODO: 実装する
     }
 }
