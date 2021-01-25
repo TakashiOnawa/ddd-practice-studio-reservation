@@ -19,18 +19,18 @@ sealed class User {
     data class NonMember(val name: String, val phoneNumber: String): User() {
 
         companion object {
-            const val USER_NAME_MIN_LENGTH: Int = 1
-            const val USER_NAME_MAX_LENGTH: Int = 41
-            const val PHONE_NUMBER_MIN_LENGTH: Int = 6
-            const val PHONE_NUMBER_MAX_LENGTH: Int = 6
+            const val USER_NAME_LENGTH_MIN: Int = 1
+            const val USER_NAME_LENGTH_MAX: Int = 41
+            const val PHONE_NUMBER_LENGTH_MIN: Int = 6
+            const val PHONE_NUMBER_LENGTH_MAX: Int = 14
         }
 
         init {
-            require(name.length < USER_NAME_MIN_LENGTH || name.length > USER_NAME_MAX_LENGTH) {
-                "氏名は $USER_NAME_MIN_LENGTH 以上 $USER_NAME_MAX_LENGTH 以下でなければなりません。"
+            require(name.length in USER_NAME_LENGTH_MIN..USER_NAME_LENGTH_MAX) {
+                "氏名は $USER_NAME_LENGTH_MIN 以上 $USER_NAME_LENGTH_MAX 以下でなければなりません。"
             }
-            require(phoneNumber.length < PHONE_NUMBER_MIN_LENGTH || phoneNumber.length > PHONE_NUMBER_MAX_LENGTH) {
-                "氏名は $PHONE_NUMBER_MIN_LENGTH 以上 $PHONE_NUMBER_MAX_LENGTH 以下でなければなりません。"
+            require(phoneNumber.length in PHONE_NUMBER_LENGTH_MIN..PHONE_NUMBER_LENGTH_MAX) {
+                "電話番号は $PHONE_NUMBER_LENGTH_MIN 以上 $PHONE_NUMBER_LENGTH_MAX 以下でなければなりません。"
             }
         }
     }

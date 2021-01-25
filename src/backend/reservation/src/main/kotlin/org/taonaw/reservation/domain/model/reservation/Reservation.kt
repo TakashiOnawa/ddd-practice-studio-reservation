@@ -43,8 +43,7 @@ class Reservation private constructor(
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        if (this.user !is User.NonMember)
-            throw Exception()
+        require(this.user is User.NonMember)
 
         this.details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
         changingDetails.validate(reservationPolicy, changedAt)

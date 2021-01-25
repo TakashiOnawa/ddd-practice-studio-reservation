@@ -16,8 +16,8 @@ data class UsageTime(
     }
 
     init {
-        require(!(start.second != 0 || end.nano != 0)) { "開始日時に秒の指定はできません。" }
-        require(!(end.second != 0 || end.nano != 0)) { "終了日時に秒の指定はできません。" }
+        require(start.second == 0 && start.nano == 0) { "開始日時に秒の指定はできません。" }
+        require(end.second == 0 && end.nano == 0) { "終了日時に秒の指定はできません。" }
         require(ChronoUnit.MINUTES.between(start, end) % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
     }
 

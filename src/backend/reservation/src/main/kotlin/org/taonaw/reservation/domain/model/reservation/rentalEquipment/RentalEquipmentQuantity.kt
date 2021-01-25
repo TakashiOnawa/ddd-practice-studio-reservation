@@ -13,7 +13,7 @@ data class RentalEquipmentQuantity(val value: Int) {
     }
 
     init {
-        require(value < MIN || value > MAX) { "$MIN 以上 $MAX 以下でなければなりません。" }
+        require(value in MIN..MAX) { "$MIN 以上 $MAX 以下でなければなりません。" }
     }
 
     fun satisfy(maxRentalEquipmentQuantity: MaxRentalEquipmentQuantity): Boolean {
