@@ -1,6 +1,7 @@
 package org.taonaw.reservation.domain.model.reservationPolicy
 
 import org.taonaw.reservation.domain.model.reservation.UsageTime
+import org.taonaw.reservation.domain.shared.exception.Err
 
 /**
  * 開始時間
@@ -12,7 +13,8 @@ enum class StartTime(
     ON_THE_HOUR(1, 0),
     ON_THE_HALF_HOUR(2, 30);
 
-    fun isSatisfiedBy(usageTime: UsageTime): Boolean {
-        return usageTime.start.minute == startMinutes
+    fun validate(usageTime: UsageTime): Err? {
+        if (usageTime.start.minute == startMinutes) return null
+        return StartTimeErr()
     }
 }

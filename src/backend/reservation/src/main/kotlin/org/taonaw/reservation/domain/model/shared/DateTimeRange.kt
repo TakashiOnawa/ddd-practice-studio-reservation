@@ -11,6 +11,10 @@ interface DateTimeRange {
         return !start.isBefore(other.start) && !end.isAfter(other.end)
     }
 
+    fun isNotIn(other: DateTimeRange): Boolean {
+        return !isIn(other)
+    }
+
     fun isOverlapping(other: UsageTime): Boolean {
         return start.isBefore(other.end) && other.start.isBefore(end)
     }

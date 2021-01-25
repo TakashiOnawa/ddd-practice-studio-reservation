@@ -24,6 +24,9 @@ class ReservationUseCase(
     fun handle(command: ReserveStudioCommand) {
         reservationRepository.lock()
 
+        val reservationDetails = ReservationDetails(
+                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
+
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
                 command.practiceType,
@@ -32,9 +35,6 @@ class ReservationUseCase(
         val usageFeeSetting = usageFeeSettingRepository.get()
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
-
-        val reservationDetails = ReservationDetails(
-                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
         val reservation = Reservation.create(
                 command.user,

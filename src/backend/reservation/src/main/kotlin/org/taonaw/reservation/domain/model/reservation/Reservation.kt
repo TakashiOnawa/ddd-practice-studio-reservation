@@ -26,7 +26,7 @@ class Reservation private constructor(
                 equipments: Equipments,
                 reservedAt: LocalDateTime) : Reservation {
 
-            details.validate(reservationPolicy, reservedAt)
+            reservationPolicy.validate(details, reservedAt).throwIfHasErrs("予約内容に不備があります。")
 
             val usageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(details), equipments)
 
@@ -45,8 +45,9 @@ class Reservation private constructor(
 
         require(this.user is User.NonMember)
 
-        this.details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
-        changingDetails.validate(reservationPolicy, changedAt)
+        details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
+
+        reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
 
         val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 
@@ -61,8 +62,9 @@ class Reservation private constructor(
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        this.details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
-        changingDetails.validate(reservationPolicy, changedAt)
+        details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
+
+        reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
 
         val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 

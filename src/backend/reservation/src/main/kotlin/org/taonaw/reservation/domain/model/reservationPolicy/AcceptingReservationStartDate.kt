@@ -1,6 +1,7 @@
 package org.taonaw.reservation.domain.model.reservationPolicy
 
 import org.taonaw.reservation.domain.model.reservation.UsageTime
+import org.taonaw.reservation.domain.shared.exception.Err
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -33,9 +34,11 @@ data class AcceptingReservationStartDate(
         abstract fun acceptingReservationStartDate(dateValue: Int, targetDateTime: LocalDateTime): LocalDate
     }
 
-    fun isSatisfiedBy(usageTime: UsageTime, currentDateTime: LocalDateTime): Boolean {
+    fun validate(usageTime: UsageTime, currentDateTime: LocalDateTime): Err? {
         val acceptingReservationStartDate = dateType.acceptingReservationStartDate(dateValue, usageTime.start)
         val currentDate = currentDateTime.toLocalDate()
-        return currentDate == acceptingReservationStartDate || currentDate.isAfter(acceptingReservationStartDate)
+        if (currentDate == acceptingReservationStartDate) return null
+        if (currentDate.isAfter(acceptingReservationStartDate)) return null
+        return AcceptingReservationStartDateErr()
     }
 }
