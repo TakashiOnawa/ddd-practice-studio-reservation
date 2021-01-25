@@ -7,7 +7,8 @@ import org.taonaw.reservation.domain.model.reservation.UserCount
 import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
 import org.taonaw.reservation.domain.model.shared.StudioId
 
-data class ReserveStudioCommand(
+data class
+ReserveStudioCommand(
         val user: User,
         val studioId: StudioId,
         val usageTime: UsageTime,

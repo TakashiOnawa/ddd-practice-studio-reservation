@@ -45,8 +45,8 @@ class ReservationUseCase(
                 dateTimeGenerator.currentDateTime())
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
-        overlappingReservations.validateDuplicated(reservation)
-        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)
+        overlappingReservations.validateDuplicated(reservation)?.throwErr()
+        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)?.throwErr()
 
         reservationRepository.save(reservation)
     }
@@ -80,8 +80,8 @@ class ReservationUseCase(
                 dateTimeGenerator.currentDateTime())
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
-        overlappingReservations.validateDuplicated(reservation)
-        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)
+        overlappingReservations.validateDuplicated(reservation)?.throwErr()
+        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)?.throwErr()
 
         reservationRepository.save(reservation)
     }

@@ -1,6 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.reservation.rentalEquipment.ReservedRentalEquipments
+import org.taonaw.reservation.domain.shared.exception.Err
 
 class Reservations private constructor(items: List<Reservation>) {
     val items: List<Reservation> = items.toList()
@@ -14,8 +15,8 @@ class Reservations private constructor(items: List<Reservation>) {
         })
     }
 
-    fun validateDuplicated(reservation: Reservation) {
-        if (items.any { it.isDuplicated(reservation) })
-            throw Exception()
+    fun validateDuplicated(reservation: Reservation): Err? {
+        if (items.any { it.isDuplicated(reservation) }) return ReservationDuplicatedErr()
+        return null
     }
 }
