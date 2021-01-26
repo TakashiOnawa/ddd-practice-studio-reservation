@@ -13,4 +13,8 @@ data class UserCount(val value: Int) {
     init {
         require(value in MIN..MAX) { "$MIN 以上 $MAX 以下でなければなりません。" }
     }
+
+    fun isDecrease(other: UserCount): Boolean {
+        return value < other.value
+    }
 }

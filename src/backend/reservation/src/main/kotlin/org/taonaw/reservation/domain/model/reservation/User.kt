@@ -10,7 +10,21 @@ sealed class User {
     /**
      * 会員
      */
-    data class Member(val memberId: MemberId): User() {
+    class Member(val memberId: MemberId): User() {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Member
+
+            if (memberId != other.memberId) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return memberId.hashCode()
+        }
     }
 
     /**

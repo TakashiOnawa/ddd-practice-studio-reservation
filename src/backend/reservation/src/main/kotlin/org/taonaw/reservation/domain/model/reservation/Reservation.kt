@@ -40,7 +40,7 @@ class Reservation private constructor(
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
+        details.validateChanging(changingDetails, usageFeeSetting, cancellationFeeSetting, changedAt).throwIfHasErrs("予約内容に不備があります。")
 
         reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
 

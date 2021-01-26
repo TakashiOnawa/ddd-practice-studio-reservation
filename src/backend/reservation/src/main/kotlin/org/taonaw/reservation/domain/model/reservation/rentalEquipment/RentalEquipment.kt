@@ -5,9 +5,24 @@ import org.taonaw.reservation.domain.model.equipment.EquipmentId
 /**
  * レンタル機材
  */
-data class RentalEquipment(
+class RentalEquipment(
         val equipmentId: EquipmentId,
         val quantity: RentalEquipmentQuantity) {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as RentalEquipment
+
+        if (equipmentId != other.equipmentId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return equipmentId.hashCode()
+    }
 }
 
 class RentalEquipments private constructor(items: List<RentalEquipment>) {
@@ -20,4 +35,12 @@ class RentalEquipments private constructor(items: List<RentalEquipment>) {
             }
 
     fun equipmentIds(): List<EquipmentId> = items.map { it.equipmentId }
+
+    fun isChangedQuantity(other: RentalEquipments): Boolean {
+        TODO("実装する")
+    }
+
+    fun isDecreasedQuantity(other: RentalEquipments): Boolean {
+        TODO("実装する")
+    }
 }

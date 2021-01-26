@@ -10,4 +10,9 @@ data class UsageFeeSetting(
     internal fun calculateUsageFee(condition: UsageFeeCondition, equipments: Equipments): UsageFee {
         TODO("実装する")
     }
+
+    fun isDeterminedByUserCount(): Boolean {
+        TODO("実装する")
+        return true
+    }
 }
