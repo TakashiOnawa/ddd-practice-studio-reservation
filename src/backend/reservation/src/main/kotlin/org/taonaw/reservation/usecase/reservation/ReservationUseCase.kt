@@ -6,6 +6,7 @@ import org.taonaw.reservation.domain.model.equipment.EquipmentRepository
 import org.taonaw.reservation.domain.model.reservation.Reservation
 import org.taonaw.reservation.domain.model.reservation.ReservationDetails
 import org.taonaw.reservation.domain.model.reservation.ReservationRepository
+import org.taonaw.reservation.domain.model.reservationPolicy.ReservationChangingPolicy
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicyRepository
 import org.taonaw.reservation.domain.model.shared.DateTimeGenerator
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSettingRepository
@@ -27,14 +28,14 @@ class ReservationUseCase(
         val reservationDetails = ReservationDetails(
                 command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
+        val usageFeeSetting = usageFeeSettingRepository.get()
+
+        val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
+
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
                 command.practiceType,
                 command.rentalEquipments.equipmentIds())
-
-        val usageFeeSetting = usageFeeSettingRepository.get()
-
-        val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         val reservation = Reservation.create(
                 reservationDetails,
@@ -58,21 +59,23 @@ class ReservationUseCase(
         val reservationDetails = ReservationDetails(
                 command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
-        val reservationPolicy = reservationPolicyRepository.findBy(
-                command.studioId,
-                command.practiceType,
-                command.rentalEquipments.equipmentIds())
-
         val cancellationFeeSetting = cancellationFeeSettingRepository.get()
 
         val usageFeeSetting = usageFeeSettingRepository.get()
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
+        val reservationPolicy = reservationPolicyRepository.findBy(
+                command.studioId,
+                command.practiceType,
+                command.rentalEquipments.equipmentIds())
+
+        val reservationChangingPolicy = ReservationChangingPolicy(usageFeeSetting, cancellationFeeSetting)
+
         reservation = reservation.change(
                 reservationDetails,
                 reservationPolicy,
-                cancellationFeeSetting,
+                reservationChangingPolicy,
                 usageFeeSetting,
                 equipments,
                 dateTimeGenerator.currentDateTime())

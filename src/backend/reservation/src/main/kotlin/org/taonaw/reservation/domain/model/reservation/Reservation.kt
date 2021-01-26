@@ -1,8 +1,8 @@
 package org.taonaw.reservation.domain.model.reservation
 
-import org.taonaw.reservation.domain.model.cancellationFeeSetting.CancellationFeeSetting
 import org.taonaw.reservation.domain.model.equipment.Equipments
 import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
+import org.taonaw.reservation.domain.model.reservationPolicy.ReservationChangingPolicy
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicy
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCondition
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSetting
@@ -35,13 +35,12 @@ class Reservation private constructor(
     fun change(
             changingDetails: ReservationDetails,
             reservationPolicy: ReservationPolicy,
-            cancellationFeeSetting: CancellationFeeSetting,
+            reservationChangingPolicy: ReservationChangingPolicy,
             usageFeeSetting: UsageFeeSetting,
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        details.validateChanging(changingDetails, usageFeeSetting, cancellationFeeSetting, changedAt).throwIfHasErrs("予約内容に不備があります。")
-
+        reservationChangingPolicy.validate(details, changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
         reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
 
         val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
