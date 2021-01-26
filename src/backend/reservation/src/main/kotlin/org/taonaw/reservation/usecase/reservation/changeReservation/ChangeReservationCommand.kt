@@ -6,7 +6,7 @@ import org.taonaw.reservation.domain.model.shared.StudioId
 
 data class ChangeReservationCommand(
         val reservationId: ReservationId,
-        val user: User.NonMember,
+        val user: User,
         val studioId: StudioId,
         val usageTime: UsageTime,
         val userCount: UserCount,

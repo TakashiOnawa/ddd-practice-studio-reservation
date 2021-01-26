@@ -9,6 +9,7 @@ import java.time.LocalDateTime
  * 予約内容
  */
 data class ReservationDetails(
+        val user: User,
         val studioId: StudioId,
         val usageTime: UsageTime,
         val userCount: UserCount,

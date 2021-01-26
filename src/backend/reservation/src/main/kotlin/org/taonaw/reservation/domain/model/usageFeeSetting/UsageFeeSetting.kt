@@ -7,7 +7,7 @@ data class UsageFeeSetting(
         val basicFeeSetting: BasicFeeSetting,
         val packFeeSetting: PackFeeSetting) {
 
-    fun calculateUsageFee(condition: UsageFeeCondition, equipments: Equipments): UsageFee {
+    internal fun calculateUsageFee(condition: UsageFeeCondition, equipments: Equipments): UsageFee {
         TODO("実装する")
     }
 }

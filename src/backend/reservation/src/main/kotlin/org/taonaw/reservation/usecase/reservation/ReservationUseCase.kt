@@ -25,7 +25,7 @@ class ReservationUseCase(
         reservationRepository.lock()
 
         val reservationDetails = ReservationDetails(
-                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
+                command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
@@ -37,7 +37,6 @@ class ReservationUseCase(
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         val reservation = Reservation.create(
-                command.user,
                 reservationDetails,
                 reservationPolicy,
                 usageFeeSetting,
@@ -57,7 +56,7 @@ class ReservationUseCase(
         var reservation = reservationRepository.findBy(command.reservationId) ?: throw Exception()
 
         val reservationDetails = ReservationDetails(
-                command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
+                command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
@@ -71,7 +70,6 @@ class ReservationUseCase(
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         reservation = reservation.change(
-                command.user,
                 reservationDetails,
                 reservationPolicy,
                 cancellationFeeSetting,

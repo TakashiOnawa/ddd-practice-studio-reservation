@@ -14,7 +14,7 @@ class ReservationPolicy(
         private val maxUserCount: MaxUserCount,
         private val maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities) {
 
-    fun validate(reservationDetails: ReservationDetails, currentDateTime: LocalDateTime): ErrNotification {
+    internal fun validate(reservationDetails: ReservationDetails, currentDateTime: LocalDateTime): ErrNotification {
         val errNotification = ErrNotification()
         errNotification.addErr(openingHour.validate(reservationDetails.usageTime))
         errNotification.addErr(startTime.validate(reservationDetails.usageTime))

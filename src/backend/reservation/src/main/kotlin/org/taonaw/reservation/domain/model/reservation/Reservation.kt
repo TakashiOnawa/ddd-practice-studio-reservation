@@ -13,13 +13,11 @@ import java.time.LocalDateTime
  */
 class Reservation private constructor(
         val reservationId: ReservationId,
-        val user: User,
         val details: ReservationDetails,
         val usageFee: UsageFee) {
 
     companion object {
         fun create(
-                user: User,
                 details: ReservationDetails,
                 reservationPolicy: ReservationPolicy,
                 usageFeeSetting: UsageFeeSetting,
@@ -30,31 +28,11 @@ class Reservation private constructor(
 
             val usageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(details), equipments)
 
-            return Reservation(ReservationId.newId(), user, details, usageFee)
+            return Reservation(ReservationId.newId(), details, usageFee)
         }
     }
 
     fun change(
-            changingUser: User.NonMember,
-            changingDetails: ReservationDetails,
-            reservationPolicy: ReservationPolicy,
-            cancellationFeeSetting: CancellationFeeSetting,
-            usageFeeSetting: UsageFeeSetting,
-            equipments: Equipments,
-            changedAt: LocalDateTime): Reservation {
-
-        require(this.user is User.NonMember)
-
-        details.validateChanging(changingDetails, cancellationFeeSetting, changedAt)
-
-        reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
-
-        val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
-
-        return Reservation(reservationId, changingUser, changingDetails, changingUsageFee)
-    }
-
-    fun change(
             changingDetails: ReservationDetails,
             reservationPolicy: ReservationPolicy,
             cancellationFeeSetting: CancellationFeeSetting,
@@ -68,7 +46,7 @@ class Reservation private constructor(
 
         val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 
-        return Reservation(reservationId, user, changingDetails, changingUsageFee)
+        return Reservation(reservationId, changingDetails, changingUsageFee)
     }
 
     fun isDuplicated(other: Reservation): Boolean {
