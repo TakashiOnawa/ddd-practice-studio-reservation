@@ -17,4 +17,12 @@ data class UserCount(val value: Int) {
     fun isDecrease(other: UserCount): Boolean {
         return value < other.value
     }
+
+    fun isBetween(min: Int, max: Int): Boolean {
+        return value in min..max
+    }
+
+    operator fun compareTo(other: Int): Int {
+        return value.compareTo(other)
+    }
 }
