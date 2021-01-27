@@ -1,14 +1,24 @@
 package org.taonaw.reservation.domain.shared.exception
 
-class ErrNotification {
-    private val errs: MutableList<Err> = mutableListOf()
+class ErrNotification private constructor(private val errs: List<Err>){
 
-    fun addErr(err: Err?) {
-        err?.let { errs.add(it) }
+    constructor() : this(emptyList()) {
     }
 
-    fun addErr(errNotification: ErrNotification?) {
-        errNotification?.let { errs.addAll(it.errs) }
+    fun addErr(err: Err?): ErrNotification {
+        return if (err != null) {
+            ErrNotification(errs.plus(err))
+        } else {
+            this
+        }
+    }
+
+    fun addErr(errNotification: ErrNotification?): ErrNotification {
+        return if (errNotification != null) {
+            ErrNotification(errs.plus(errNotification.errs))
+        } else {
+            this
+        }
     }
 
     fun hasErrs(): Boolean {
@@ -32,9 +42,7 @@ class ErrNotification {
 open class Err(val message: String) {
 
     fun throwErr() {
-        val errNotification = ErrNotification()
-        errNotification.addErr(this)
-        errNotification.throwIfHasErrs(message)
+        ErrNotification().addErr(this).throwIfHasErrs(message)
     }
 
     override fun toString(): String {

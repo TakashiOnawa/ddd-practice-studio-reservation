@@ -15,12 +15,11 @@ class ReservationPolicy(
         private val maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities) {
 
     internal fun validate(reservationDetails: ReservationDetails, currentDateTime: LocalDateTime): ErrNotification {
-        val errNotification = ErrNotification()
-        errNotification.addErr(openingHour.validate(reservationDetails.usageTime))
-        errNotification.addErr(startTime.validate(reservationDetails.usageTime))
-        errNotification.addErr(acceptingReservationStartDate.validate(reservationDetails.usageTime, currentDateTime))
-        errNotification.addErr(maxUserCount.validate(reservationDetails.userCount))
-        errNotification.addErr(maxRentalEquipmentQuantities.validate(reservationDetails.rentalEquipments))
-        return errNotification
+        return ErrNotification()
+                .addErr(openingHour.validate(reservationDetails.usageTime))
+                .addErr(startTime.validate(reservationDetails.usageTime))
+                .addErr(acceptingReservationStartDate.validate(reservationDetails.usageTime, currentDateTime))
+                .addErr(maxUserCount.validate(reservationDetails.userCount))
+                .addErr(maxRentalEquipmentQuantities.validate(reservationDetails.rentalEquipments))
     }
 }

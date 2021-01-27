@@ -40,8 +40,9 @@ class Reservation private constructor(
             equipments: Equipments,
             changedAt: LocalDateTime): Reservation {
 
-        reservationChangingPolicy.validate(details, changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
-        reservationPolicy.validate(changingDetails, changedAt).throwIfHasErrs("予約内容に不備があります。")
+        reservationChangingPolicy.validate(details, changingDetails, changedAt)
+                .addErr(reservationPolicy.validate(changingDetails, changedAt))
+                .throwIfHasErrs("予約内容に不備があります。")
 
         val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
 
