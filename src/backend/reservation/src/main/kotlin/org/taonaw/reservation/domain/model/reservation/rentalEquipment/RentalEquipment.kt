@@ -36,11 +36,19 @@ class RentalEquipments private constructor(items: List<RentalEquipment>) {
 
     fun equipmentIds(): List<EquipmentId> = items.map { it.equipmentId }
 
+    fun isNotChangeQuantity(other: RentalEquipments): Boolean {
+        return items.size == other.items.size &&
+                items.all { other.items.find { otherItem -> otherItem == it }?.quantity == it.quantity }
+    }
+
     fun isChangedQuantity(other: RentalEquipments): Boolean {
-        TODO("実装する")
+        return !isNotChangeQuantity(other)
     }
 
     fun isDecreasedQuantity(other: RentalEquipments): Boolean {
-        TODO("実装する")
+        return other.items.any() {
+            val thisItem = items.find { thisItem -> thisItem == it }
+            thisItem == null || thisItem.quantity < it.quantity
+        }
     }
 }

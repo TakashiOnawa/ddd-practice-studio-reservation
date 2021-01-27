@@ -19,4 +19,8 @@ data class RentalEquipmentQuantity(val value: Int) {
     fun satisfy(maxRentalEquipmentQuantity: MaxRentalEquipmentQuantity): Boolean {
         return value <= maxRentalEquipmentQuantity.value
     }
+
+    operator fun compareTo(other: RentalEquipmentQuantity): Int {
+        return value.compareTo(other.value)
+    }
 }
