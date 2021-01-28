@@ -4,7 +4,7 @@ import org.taonaw.reservation.domain.model.equipment.Equipments
 import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationChangingPolicy
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicy
-import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCondition
+import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCalculationCondition
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSetting
 import java.time.LocalDateTime
 
@@ -26,7 +26,7 @@ class Reservation private constructor(
 
             reservationPolicy.validate(details, reservedAt).throwIfHasErrs("予約内容に不備があります。")
 
-            val usageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(details), equipments)
+            val usageFee = usageFeeSetting.calculateUsageFee(UsageFeeCalculationCondition.from(details), equipments)
 
             return Reservation(ReservationId.newId(), details, usageFee)
         }
@@ -44,7 +44,7 @@ class Reservation private constructor(
                 .addErr(reservationPolicy.validate(changingDetails, changedAt))
                 .throwIfHasErrs("予約内容に不備があります。")
 
-        val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCondition.from(changingDetails), equipments)
+        val changingUsageFee = usageFeeSetting.calculateUsageFee(UsageFeeCalculationCondition.from(changingDetails), equipments)
 
         return Reservation(reservationId, changingDetails, changingUsageFee)
     }
