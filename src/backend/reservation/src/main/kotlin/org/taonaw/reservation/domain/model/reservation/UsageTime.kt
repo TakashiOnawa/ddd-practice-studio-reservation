@@ -19,7 +19,7 @@ data class UsageTime(
     init {
         require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
         require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
-        require(isDivisibleMinUnit()) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
+        require(durationAsMinutes() % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
 
         // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
         // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
@@ -32,12 +32,12 @@ data class UsageTime(
         return listOf(this)
     }
 
-    private fun isDivisibleMinUnit(): Boolean {
-        return ChronoUnit.MINUTES.between(start, end) % MIN_MINUTES_UNIT == 0L
+    fun durationAsMinutes(): Long {
+        return ChronoUnit.MINUTES.between(start, end)
     }
 
-    fun isMinUnit(): Boolean {
-        return ChronoUnit.MINUTES.between(start, end) == MIN_MINUTES_UNIT
+    fun isDurationAsMinutesEqual(minutes: Long): Boolean {
+        return durationAsMinutes() == minutes
     }
 
     fun isDecrease(other: UsageTime): Boolean {

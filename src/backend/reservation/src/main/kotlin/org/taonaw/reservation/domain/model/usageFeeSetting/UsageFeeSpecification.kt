@@ -33,14 +33,20 @@ data class DayTypeSpecification(private val dayType: DayType, private val public
     }
 }
 
+data class UserCountSpecification(private val userCountMin: Int, private val userCountMax: Int) : Specification<UsageFeeCalculationCondition> {
+    override fun isSatisfiedBy(condition: UsageFeeCalculationCondition): Boolean {
+        return condition.userCount.isBetween(userCountMin, userCountMax)
+    }
+}
+
 data class TimeRangeSpecification(private val timeRange: BasicTimeRange) : Specification<UsageFeeCalculationCondition> {
     override fun isSatisfiedBy(condition: UsageFeeCalculationCondition): Boolean {
         return condition.usageTime.isIn(timeRange)
     }
 }
 
-data class UserCountSpecification(private val userCountMin: Int, private val userCountMax: Int) : Specification<UsageFeeCalculationCondition> {
+data class UsageTimeSpecification(private val minutes: Long) : Specification<UsageFeeCalculationCondition> {
     override fun isSatisfiedBy(condition: UsageFeeCalculationCondition): Boolean {
-        return condition.userCount.isBetween(userCountMin, userCountMax)
+        return condition.usageTime.isDurationAsMinutesEqual(minutes)
     }
 }
