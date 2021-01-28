@@ -13,12 +13,7 @@ data class OpeningHour(
         override val end: LocalTime) : TimeRange {
 
     fun validate(usageTime: UsageTime): Err? {
-        if (isAllDay()) return null
-        if (usageTime.isIn(this.toDateTimeRange(usageTime.start.toLocalDate()))) return null
+        if (usageTime.isIn(this)) return null
         return OpeningHourErr()
-    }
-
-    private fun isAllDay() : Boolean {
-        return start == end
     }
 }

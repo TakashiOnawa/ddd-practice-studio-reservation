@@ -8,12 +8,16 @@ interface TimeRange {
     val start: LocalTime
     val end: LocalTime
 
-    fun hasStartTimeSeconds(): Boolean {
+    fun hasStartSeconds(): Boolean {
         return start.second != 0 || start.nano != 0
     }
 
-    fun hasEndTimeSeconds(): Boolean {
+    fun hasEndSeconds(): Boolean {
         return end.second != 0 || end.nano != 0
+    }
+
+    fun isAllDay() : Boolean {
+        return start == end
     }
 
     fun isStraddleTheDay(): Boolean {

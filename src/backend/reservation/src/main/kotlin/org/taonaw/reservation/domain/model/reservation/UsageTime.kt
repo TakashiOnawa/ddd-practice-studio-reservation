@@ -13,13 +13,13 @@ data class UsageTime(
         override val end: LocalDateTime) : DateTimeRange {
 
     companion object {
-        const val MIN_MINUTES_UNIT: Int = 60
+        const val MIN_MINUTES_UNIT: Long = 60
     }
 
     init {
-        require(start.second == 0 && start.nano == 0) { "開始日時に秒の指定はできません。" }
-        require(end.second == 0 && end.nano == 0) { "終了日時に秒の指定はできません。" }
-        require(ChronoUnit.MINUTES.between(start, end) % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
+        require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
+        require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
+        require(isDivisibleMinUnit()) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
 
         // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
         // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
@@ -30,6 +30,14 @@ data class UsageTime(
     fun splitMinUnit(): List<UsageTime> {
         // TODO: 実装する
         return listOf(this)
+    }
+
+    private fun isDivisibleMinUnit(): Boolean {
+        return ChronoUnit.MINUTES.between(start, end) % MIN_MINUTES_UNIT == 0L
+    }
+
+    fun isMinUnit(): Boolean {
+        return ChronoUnit.MINUTES.between(start, end) == MIN_MINUTES_UNIT
     }
 
     fun isDecrease(other: UsageTime): Boolean {

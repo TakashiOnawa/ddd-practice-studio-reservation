@@ -7,12 +7,22 @@ interface DateTimeRange {
     val start: LocalDateTime
     val end: LocalDateTime
 
+    fun hasStartSeconds(): Boolean {
+        return start.second != 0 || start.nano != 0
+    }
+
+    fun hasEndSeconds(): Boolean {
+        return end.second != 0 || end.nano != 0
+    }
+
     fun isIn(other: DateTimeRange): Boolean {
         return !start.isBefore(other.start) && !end.isAfter(other.end)
     }
 
-    fun isNotIn(other: DateTimeRange): Boolean {
-        return !isIn(other)
+    fun isIn(timeRange: TimeRange): Boolean {
+        if (timeRange.isAllDay()) return true
+        if (isIn(timeRange.toDateTimeRange(start.toLocalDate()))) return true
+        return false
     }
 
     fun isOverlapping(other: UsageTime): Boolean {

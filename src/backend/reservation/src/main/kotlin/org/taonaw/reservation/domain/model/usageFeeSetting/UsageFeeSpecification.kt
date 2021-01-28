@@ -36,15 +36,16 @@ data class StudioSpecification(private val studioId: StudioId) : UsageFeeSpecifi
     }
 }
 
-data class DayTypeSpecification(private val dayType: DayType) : UsageFeeSpecification {
+data class DayTypeSpecification(private val dayType: DayType, private val publicHolidays: PublicHolidays) : UsageFeeSpecification {
     override fun isSatisfiedBy(condition: UsageFeeCondition): Boolean {
-        TODO("Not yet implemented")
+        return dayType.contains(condition.usageTime.start.toLocalDate(), publicHolidays)
     }
 }
 
 data class TimeRangeSpecification(private val timeRange: BasicTimeRange) : UsageFeeSpecification {
     override fun isSatisfiedBy(condition: UsageFeeCondition): Boolean {
-        TODO("Not yet implemented")
+        require(condition.usageTime.isMinUnit()) { "利用時間は最小単位で分割されていなければなりません。" }
+        return condition.usageTime.isIn(timeRange)
     }
 }
 
