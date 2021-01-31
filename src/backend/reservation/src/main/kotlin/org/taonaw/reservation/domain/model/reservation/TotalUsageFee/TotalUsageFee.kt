@@ -1,6 +1,6 @@
-package org.taonaw.reservation.domain.model.reservation.usageFee
+package org.taonaw.reservation.domain.model.reservation.TotalUsageFee
 
-data class UsageFee(
+data class TotalUsageFee(
         val basicFees: List<BasicFee>,
         val packFee: PackFee,
         val rentalEquipmentFees: List<RentalEquipmentFee>) {

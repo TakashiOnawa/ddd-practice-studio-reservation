@@ -1,7 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.equipment.Equipments
-import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
+import org.taonaw.reservation.domain.model.reservation.TotalUsageFee.TotalUsageFee
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationChangingPolicy
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicy
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeCalculationCondition
@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class Reservation private constructor(
         val reservationId: ReservationId,
         val details: ReservationDetails,
-        val usageFee: UsageFee) {
+        val totalUsageFee: TotalUsageFee) {
 
     companion object {
         fun create(

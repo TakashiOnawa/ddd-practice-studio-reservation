@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.reservation.usageFee
+package org.taonaw.reservation.domain.model.reservation.TotalUsageFee
 
 import org.taonaw.reservation.domain.model.equipment.EquipmentId
 import org.taonaw.reservation.domain.model.shared.Fee

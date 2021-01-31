@@ -1,6 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation
 
 import org.taonaw.reservation.domain.model.shared.DateTimeRange
+import org.taonaw.reservation.domain.model.shared.TimeRange
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -14,12 +15,14 @@ data class UsageTime(
 
     companion object {
         const val MIN_MINUTES_UNIT: Long = 60
+        const val MAX_DURATION_MINUTES: Long = 1440
     }
 
     init {
         require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
         require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
         require(durationAsMinutes() % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
+        require(durationAsMinutes() <= MAX_DURATION_MINUTES) { "$MAX_DURATION_MINUTES 分以内でなければなりません。" }
 
         // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
         // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
@@ -36,15 +39,48 @@ data class UsageTime(
         return ChronoUnit.MINUTES.between(start, end)
     }
 
-    fun isDurationAsMinutesEqual(minutes: Long): Boolean {
-        return durationAsMinutes() == minutes
-    }
-
     fun isDecrease(other: UsageTime): Boolean {
         return duration() < other.duration()
     }
 
-    private fun duration(): Duration {
+    fun duration(): Duration {
         return Duration.between(start, end)
+    }
+
+    fun extract(timeRange: TimeRange): List<UsageTime> {
+        val extracted = mutableListOf<UsageTime>()
+
+        // 利用日時の日付を 1 日ずつずらしていく
+        var extractCurrentStartDate = start.toLocalDate()
+        while (extractCurrentStartDate <= end.toLocalDate()) {
+            // 現在の切り出し日付における切り出し日時を取得する
+            val extractDateTimeRange = timeRange.toDateTimeRange(extractCurrentStartDate)
+
+            // 切り出し日時が利用日時に被っていない場合は切り出せない
+            if (!extractDateTimeRange.isOverlapping(this))
+                continue
+
+            // 切り出し開始日時を決定する
+            val extractStart = if (extractDateTimeRange.start < start) {
+                start
+            } else{
+                extractDateTimeRange.start
+            }
+
+            // 切り出し終了日時を決定する
+            val extractEnd = if (extractDateTimeRange.end < end) {
+                extractDateTimeRange.end
+            } else {
+                end
+            }
+
+            // 切り出す
+            extracted.add(UsageTime(extractStart, extractEnd))
+
+            // 次の日付にずらす
+            extractCurrentStartDate = extractCurrentStartDate.plusDays(1)
+        }
+
+        return extracted
     }
 }
