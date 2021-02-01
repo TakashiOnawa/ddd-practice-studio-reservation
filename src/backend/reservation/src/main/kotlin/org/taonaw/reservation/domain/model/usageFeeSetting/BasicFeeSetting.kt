@@ -1,11 +1,10 @@
 package org.taonaw.reservation.domain.model.usageFeeSetting
 
-data class BasicFeeSetting(val usageFees: List<UsageFee>) {
+import org.taonaw.reservation.domain.model.reservation.usageFee.BasicFee
 
-    fun calculate(calculationCondition: UsageFeeCalculationCondition) {
+data class BasicFeeSetting(private val usageFeeSpecifications: UsageFeeSpecifications) {
 
-        val dateTimeRangeFees = usageFees.map { it.getDateTimeRangeFee(calculationCondition) }
-
-
+    fun calculateUsageFee(usageFeeCondition: UsageFeeCondition): BasicFee {
+        return BasicFee(usageFeeSpecifications.calculateUsageFee(usageFeeCondition))
     }
 }

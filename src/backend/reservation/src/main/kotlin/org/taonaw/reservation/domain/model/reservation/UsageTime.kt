@@ -15,24 +15,17 @@ data class UsageTime(
 
     companion object {
         const val MIN_MINUTES_UNIT: Long = 60
-        const val MAX_DURATION_MINUTES: Long = 1440
     }
 
     init {
         require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
         require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
         require(durationAsMinutes() % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
-        require(durationAsMinutes() <= MAX_DURATION_MINUTES) { "$MAX_DURATION_MINUTES 分以内でなければなりません。" }
 
         // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
         // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
         // よって、ドメイン例外にして呼び出し元でキャッチできるようにする。
         require(start.isBefore(end)) { "終了日時を開始日時より後でなければなりません。" }
-    }
-
-    fun splitMinUnit(): List<UsageTime> {
-        // TODO: 実装する
-        return listOf(this)
     }
 
     fun durationAsMinutes(): Long {
@@ -47,14 +40,25 @@ data class UsageTime(
         return Duration.between(start, end)
     }
 
+    fun contains(timeRange: TimeRange): Boolean {
+        var currentDate = start.toLocalDate()
+        while (currentDate <= end.toLocalDate()) {
+            if (timeRange.toDateTimeRange(currentDate).isOverlapping(this))
+                return true
+
+            currentDate = currentDate.plusDays(1)
+        }
+        return false
+    }
+
     fun extract(timeRange: TimeRange): List<UsageTime> {
         val extracted = mutableListOf<UsageTime>()
 
         // 利用日時の日付を 1 日ずつずらしていく
-        var extractCurrentStartDate = start.toLocalDate()
-        while (extractCurrentStartDate <= end.toLocalDate()) {
+        var extractCurrentDate = start.toLocalDate()
+        while (extractCurrentDate <= end.toLocalDate()) {
             // 現在の切り出し日付における切り出し日時を取得する
-            val extractDateTimeRange = timeRange.toDateTimeRange(extractCurrentStartDate)
+            val extractDateTimeRange = timeRange.toDateTimeRange(extractCurrentDate)
 
             // 切り出し日時が利用日時に被っていない場合は切り出せない
             if (!extractDateTimeRange.isOverlapping(this))
@@ -78,7 +82,7 @@ data class UsageTime(
             extracted.add(UsageTime(extractStart, extractEnd))
 
             // 次の日付にずらす
-            extractCurrentStartDate = extractCurrentStartDate.plusDays(1)
+            extractCurrentDate = extractCurrentDate.plusDays(1)
         }
 
         return extracted
