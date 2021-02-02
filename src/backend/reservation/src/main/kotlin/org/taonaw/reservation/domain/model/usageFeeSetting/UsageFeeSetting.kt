@@ -5,9 +5,13 @@ import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFee
 
 data class UsageFeeSetting(
         val basicFeeSetting: BasicFeeSetting,
-        val packFeeSetting: PackFeeSetting) {
+        val packFeeSettings: List<PackFeeSetting>) {
 
     internal fun calculateUsageFee(usageFeeCondition: UsageFeeCondition, equipments: Equipments): UsageFee {
+        for (packFeeSetting in packFeeSettings) {
+
+        }
+
         TODO("実装する")
     }
 
