@@ -1,6 +1,6 @@
 package org.taonaw.reservation.domain.model.usageFeeSetting
 
-import org.taonaw.reservation.domain.model.reservation.PracticeType
+import org.taonaw.reservation.domain.model.shared.PracticeType
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.usageFee.FeeType
 import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFeeDetails

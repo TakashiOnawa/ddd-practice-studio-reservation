@@ -1,4 +1,4 @@
-package org.taonaw.reservation.domain.model.reservation
+package org.taonaw.reservation.domain.model.shared
 
 /**
  * 練習区分

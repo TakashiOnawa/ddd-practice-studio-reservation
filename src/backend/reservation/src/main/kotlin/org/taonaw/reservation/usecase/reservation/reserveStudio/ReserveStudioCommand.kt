@@ -1,6 +1,6 @@
 package org.taonaw.reservation.usecase.reservation.reserveStudio
 
-import org.taonaw.reservation.domain.model.reservation.PracticeType
+import org.taonaw.reservation.domain.model.shared.PracticeType
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.User
 import org.taonaw.reservation.domain.model.reservation.UserCount
