@@ -123,7 +123,7 @@ data class UsageTime(
             }
         }
 
-        if (start >= other.start) {
+        if (start > other.start) {
             if (start > other.end) {
                 return listOf(this)
             }
