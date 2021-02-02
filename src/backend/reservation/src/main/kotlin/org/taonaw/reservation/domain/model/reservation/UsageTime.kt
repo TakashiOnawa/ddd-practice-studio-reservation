@@ -87,4 +87,62 @@ data class UsageTime(
 
         return extracted
     }
+
+    fun except(other: UsageTime): List<UsageTime> {
+        val excepted = mutableListOf<UsageTime>()
+
+        if (start < other.start) {
+            if (end < other.start) {
+                return listOf(this)
+            }
+            if (end == other.start) {
+                return listOf(this)
+            }
+            if (end > other.start) {
+                if (end < other.end) {
+                    return listOf(UsageTime(start, other.start))
+                }
+                if (end == other.end) {
+                    return listOf(UsageTime(start, other.start))
+                }
+                if (end > other.end) {
+                    return listOf(UsageTime(start, other.start), UsageTime(other.end, end))
+                }
+            }
+        }
+
+        if (start == other.start) {
+            if (end < other.end) {
+                return listOf()
+            }
+            if (end == other.end) {
+                return listOf()
+            }
+            if (end > other.end) {
+                return listOf(UsageTime(other.end, end))
+            }
+        }
+
+        if (start >= other.start) {
+            if (start > other.end) {
+                return listOf(this)
+            }
+            if (start == other.end) {
+                return listOf(this)
+            }
+            if (start < other.end) {
+                if (end < other.end) {
+                    return listOf()
+                }
+                if (end == other.end) {
+                    return listOf()
+                }
+                if (end > other.end) {
+                    return listOf(UsageTime(other.end, end))
+                }
+            }
+        }
+
+        TODO("実装する")
+    }
 }
