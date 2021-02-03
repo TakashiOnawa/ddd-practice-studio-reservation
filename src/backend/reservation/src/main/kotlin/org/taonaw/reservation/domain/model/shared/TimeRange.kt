@@ -41,7 +41,8 @@ interface TimeRange {
             sampleDate.atTime(other.end)
         }
 
-        return thisStartDateTime <= otherEndDateTime && otherStartDateTime <= thisEndDateTime
+        return BasicDateTimeRange(thisStartDateTime, thisEndDateTime)
+                .isOverlapping(BasicDateTimeRange(otherStartDateTime, otherEndDateTime))
     }
 
     fun toDateTimeRange(date: LocalDate): DateTimeRange {

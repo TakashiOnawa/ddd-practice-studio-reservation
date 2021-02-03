@@ -1,6 +1,5 @@
 package org.taonaw.reservation.domain.model.shared
 
-import org.taonaw.reservation.domain.model.reservation.UsageTime
 import java.time.LocalDateTime
 
 interface DateTimeRange {
@@ -25,8 +24,10 @@ interface DateTimeRange {
         return false
     }
 
-    fun isOverlapping(other: UsageTime): Boolean {
-        return start <= other.end && other.start <= end
+    fun isOverlapping(other: DateTimeRange): Boolean {
+        if (start == other.start && end == other.end)
+            return true
+        return start < other.end && other.start < end
     }
 
     fun isPassed(currentDateTime: LocalDateTime): Boolean {

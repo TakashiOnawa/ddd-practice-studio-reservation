@@ -111,6 +111,19 @@ data class UsageTime(
     }
 
     fun except(others: List<UsageTime>): List<UsageTime> {
+        val excepted = mutableListOf<UsageTime>()
+
+        var currentStart = start
+        var currentEnd = start
+
+        while (currentEnd < end) {
+            currentEnd = currentEnd.plusMinutes(MIN_MINUTES_UNIT)
+            val currentUsageTime = UsageTime(currentStart, currentEnd)
+
+
+        }
+
         TODO()
+        return excepted
     }
 }
