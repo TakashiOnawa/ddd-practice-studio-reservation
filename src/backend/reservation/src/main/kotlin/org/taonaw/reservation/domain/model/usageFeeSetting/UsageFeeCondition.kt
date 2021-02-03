@@ -20,4 +20,8 @@ data class UsageFeeCondition(
                     details.studioId, details.usageTime, details.userCount, details.practiceType, details.rentalEquipments)
         }
     }
+
+    fun exceptUsageTimes(usageTimes: List<UsageTime>): List<UsageFeeCondition> {
+        TODO("実装する。")
+    }
 }
