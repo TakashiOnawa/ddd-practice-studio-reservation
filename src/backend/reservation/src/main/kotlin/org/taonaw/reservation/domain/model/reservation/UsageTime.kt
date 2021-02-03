@@ -109,4 +109,9 @@ data class UsageTime(
 
         return listOf(this)
     }
+
+    fun except(others: List<UsageTime>): List<UsageTime> {
+        
+        TODO()
+    }
 }

@@ -1,10 +1,10 @@
 package org.taonaw.reservation.domain.model.usageFeeSetting
 
-import org.taonaw.reservation.domain.model.shared.PracticeType
 import org.taonaw.reservation.domain.model.reservation.ReservationDetails
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.UserCount
 import org.taonaw.reservation.domain.model.reservation.rentalEquipment.RentalEquipments
+import org.taonaw.reservation.domain.model.shared.PracticeType
 import org.taonaw.reservation.domain.model.shared.StudioId
 
 data class UsageFeeCondition(
@@ -22,6 +22,6 @@ data class UsageFeeCondition(
     }
 
     fun exceptUsageTimes(usageTimes: List<UsageTime>): List<UsageFeeCondition> {
-        TODO("実装する。")
+        return usageTime.except(usageTimes).map { copy(usageTime = it) }
     }
 }
