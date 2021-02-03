@@ -38,7 +38,7 @@ data class AcceptingReservationStartDate(
         val acceptingReservationStartDate = dateType.acceptingReservationStartDate(dateValue, usageTime.start)
         val currentDate = currentDateTime.toLocalDate()
         if (currentDate == acceptingReservationStartDate) return null
-        if (currentDate.isAfter(acceptingReservationStartDate)) return null
+        if (currentDate > acceptingReservationStartDate) return null
         return AcceptingReservationStartDateErr()
     }
 }

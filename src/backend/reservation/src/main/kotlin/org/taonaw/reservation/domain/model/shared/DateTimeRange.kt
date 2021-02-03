@@ -16,7 +16,7 @@ interface DateTimeRange {
     }
 
     fun isIn(other: DateTimeRange): Boolean {
-        return !start.isBefore(other.start) && !end.isAfter(other.end)
+        return other.start <= start && end <= other.end
     }
 
     fun isIn(timeRange: TimeRange): Boolean {
@@ -26,11 +26,11 @@ interface DateTimeRange {
     }
 
     fun isOverlapping(other: UsageTime): Boolean {
-        return start.isBefore(other.end) && other.start.isBefore(end)
+        return start <= other.end && other.start <= end
     }
 
     fun isPassed(currentDateTime: LocalDateTime): Boolean {
-        return !start.isBefore(currentDateTime)
+        return start <= currentDateTime
     }
 
     override fun equals(other: Any?): Boolean

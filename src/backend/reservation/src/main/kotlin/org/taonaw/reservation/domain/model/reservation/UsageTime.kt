@@ -25,7 +25,7 @@ data class UsageTime(
         // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
         // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
         // よって、ドメイン例外にして呼び出し元でキャッチできるようにする。
-        require(start.isBefore(end)) { "終了日時を開始日時より後でなければなりません。" }
+        require(start < end) { "終了日時を開始日時より後でなければなりません。" }
     }
 
     fun durationAsMinutes(): Long {
@@ -111,7 +111,6 @@ data class UsageTime(
     }
 
     fun except(others: List<UsageTime>): List<UsageTime> {
-        
         TODO()
     }
 }

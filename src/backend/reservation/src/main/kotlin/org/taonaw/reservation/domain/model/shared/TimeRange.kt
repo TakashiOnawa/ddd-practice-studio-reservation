@@ -21,8 +21,8 @@ interface TimeRange {
     }
 
     fun isStraddleTheDay(): Boolean {
-        return !start.isBefore(end)
-    }
+        return start >= end
+            }
 
     fun isOverlapped(other: TimeRange): Boolean {
         val sampleDate = LocalDate.now()
@@ -41,7 +41,7 @@ interface TimeRange {
             sampleDate.atTime(other.end)
         }
 
-        return thisStartDateTime.isBefore(otherEndDateTime) && otherStartDateTime.isBefore(thisEndDateTime)
+        return thisStartDateTime <= otherEndDateTime && otherStartDateTime <= thisEndDateTime
     }
 
     fun toDateTimeRange(date: LocalDate): DateTimeRange {
