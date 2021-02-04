@@ -24,10 +24,7 @@ data class UsageFeeSetting(
     }
 
     private fun calculatePackFee(usageFeeCondition: UsageFeeCondition): PackFee {
-        val packFeeDetailsList = mutableListOf<PackFeeDetails>()
-        for (packFeeSetting in packFeeSettings) {
-            packFeeDetailsList.add(packFeeSetting.calculatePackFeeDetails(usageFeeCondition))
-        }
+        val packFeeDetailsList = packFeeSettings.map { it.calculatePackFeeDetails(usageFeeCondition) }
         return PackFee(packFeeDetailsList)
     }
 
@@ -37,7 +34,14 @@ data class UsageFeeSetting(
     }
 
     private fun calculateRentalEquipmentFee(usageFeeCondition: UsageFeeCondition, equipments: Equipments): RentalEquipmentFee {
-        TODO("実装する。")
+        val rentalEquipmentFeeDetailsList = usageFeeCondition.rentalEquipments.items.map {
+            val equipment = equipments.findBy(it.equipmentId) ?: throw NoSuchElementException("機材が存在しません。equipmentId=${it.equipmentId.value}")
+            RentalEquipmentFeeDetails(
+                    it.equipmentId,
+                    it.quantity,
+                    UsageFeeDetails(usageFeeCondition.usageTime, equipment.rentalFee, FeeType.HOURLY))
+        }
+        return RentalEquipmentFee(rentalEquipmentFeeDetailsList)
     }
 
     private fun isInvalidFeeApplicableUsageTimes(usageFeeCondition: UsageFeeCondition, packFee: PackFee, basicFee: BasicFee): Boolean {
