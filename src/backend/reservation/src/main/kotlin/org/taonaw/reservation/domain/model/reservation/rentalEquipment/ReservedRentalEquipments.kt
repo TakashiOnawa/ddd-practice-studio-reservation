@@ -5,14 +5,8 @@ import org.taonaw.reservation.domain.model.equipment.Equipments
 import org.taonaw.reservation.domain.model.reservation.RentalEquipmentsOutOfStocksErr
 import org.taonaw.reservation.domain.shared.exception.Err
 
-class ReservedRentalEquipments private constructor(
-        val items: Map<EquipmentId, List<RentalEquipment>>) {
-
-    companion object {
-        fun create(rentalEquipments: List<RentalEquipments>): ReservedRentalEquipments {
-            return ReservedRentalEquipments(rentalEquipments.flatMap { it.items }.groupBy { it.equipmentId })
-        }
-    }
+class ReservedRentalEquipments(items: List<RentalEquipments>) {
+        val items: Map<EquipmentId, List<RentalEquipment>> = items.flatMap { it.items }.groupBy { it.equipmentId }
 
     fun validateUsageEquipmentsOutOfStocks(equipments: Equipments): Err? {
         val outOfStocksEquipmentIds = items.filter { it ->

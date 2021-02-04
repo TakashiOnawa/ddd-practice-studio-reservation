@@ -3,9 +3,9 @@ package org.taonaw.reservation.domain.model.usageFeeSetting
 import org.taonaw.reservation.domain.model.equipment.Equipments
 import org.taonaw.reservation.domain.model.reservation.usageFee.*
 
-data class UsageFeeSetting(
-        val basicFeeSetting: BasicFeeSetting,
-        val packFeeSettings: List<PackFeeSetting>) {
+class UsageFeeSetting(
+        private val basicFeeSetting: BasicFeeSetting,
+        private val packFeeSettings: List<PackFeeSetting>) {
 
     internal fun calculateUsageFee(usageFeeCondition: UsageFeeCondition, equipments: Equipments): UsageFee {
         val packFee = calculatePackFee(usageFeeCondition)

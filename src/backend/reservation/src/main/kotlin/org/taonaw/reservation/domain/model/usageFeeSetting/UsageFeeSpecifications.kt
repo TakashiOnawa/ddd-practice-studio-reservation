@@ -3,7 +3,8 @@ package org.taonaw.reservation.domain.model.usageFeeSetting
 import org.taonaw.reservation.domain.model.reservation.UsageTime
 import org.taonaw.reservation.domain.model.reservation.usageFee.UsageFeeDetails
 
-class UsageFeeSpecifications(private val items: List<UsageFeeSpecification>) {
+class UsageFeeSpecifications(items: List<UsageFeeSpecification>) {
+    private val items: List<UsageFeeSpecification> = items.toList()
 
     fun calculateUsageFeeDetails(condition: UsageFeeCondition): List<UsageFeeDetails> {
         val usageFeeDetailsList = mutableListOf<UsageFeeDetails>()
