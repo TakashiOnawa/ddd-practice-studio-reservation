@@ -14,3 +14,12 @@ data class PackFee(val packFeeDetailsList: List<PackFeeDetails>) {
         return packFeeDetailsList.flatMap { it.usageTimes() }
     }
 }
+
+data class PackFeeDetails(
+        val packName: String,
+        val detailsList: List<UsageFeeDetails>) {
+
+    fun usageTimes(): List<UsageTime> {
+        return detailsList.map { it.usageTime }
+    }
+}

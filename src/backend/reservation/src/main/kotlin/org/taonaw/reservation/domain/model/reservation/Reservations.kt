@@ -3,7 +3,7 @@ package org.taonaw.reservation.domain.model.reservation
 import org.taonaw.reservation.domain.model.reservation.rentalEquipment.ReservedRentalEquipments
 import org.taonaw.reservation.domain.shared.exception.Err
 
-class Reservations private constructor(items: List<Reservation>) {
+class Reservations(items: List<Reservation>) {
     val items: List<Reservation> = items.toList()
 
     fun toReservedRentalEquipments(reservation: Reservation): ReservedRentalEquipments {

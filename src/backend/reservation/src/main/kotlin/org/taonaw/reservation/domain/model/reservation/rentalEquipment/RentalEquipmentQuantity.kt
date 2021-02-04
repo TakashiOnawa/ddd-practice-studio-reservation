@@ -1,7 +1,5 @@
 package org.taonaw.reservation.domain.model.reservation.rentalEquipment
 
-import org.taonaw.reservation.domain.model.reservationPolicy.MaxRentalEquipmentQuantity
-
 /**
  * レンタル機材数量
  */
@@ -14,10 +12,6 @@ data class RentalEquipmentQuantity(val value: Int) {
 
     init {
         require(value in MIN..MAX) { "$MIN 以上 $MAX 以下でなければなりません。" }
-    }
-
-    fun satisfy(maxRentalEquipmentQuantity: MaxRentalEquipmentQuantity): Boolean {
-        return value <= maxRentalEquipmentQuantity.value
     }
 
     operator fun compareTo(other: RentalEquipmentQuantity): Int {
