@@ -11,12 +11,11 @@ class UsageFeeSpecifications(private val items: List<UsageFeeSpecification>) {
         // 時間帯ごとの利用料金仕様を取得する。
         val eachTimeRangeUsageFeeSpecifications = items
                 // 条件に一致する利用料金仕様に絞り込む。
-                .filter {
-                    (it.practiceTypeTypeSpecification == null || it.practiceTypeTypeSpecification.isSatisfiedBy(condition)) &&
-                            (it.studioSpecification == null || it.studioSpecification.isSatisfiedBy(condition)) &&
-                            (it.dayTypeSpecification == null || it.dayTypeSpecification.isSatisfiedBy(condition)) &&
-                            (it.userCountSpecification == null || it.userCountSpecification.isSatisfiedBy(condition)) &&
-                            it.timeRangeSpecification.isSatisfiedBy(condition)
+                .filter { (it.practiceTypeTypeSpecification == null || it.practiceTypeTypeSpecification.isSatisfiedBy(condition))
+                        .and(it.studioSpecification == null || it.studioSpecification.isSatisfiedBy(condition))
+                        .and(it.dayTypeSpecification == null || it.dayTypeSpecification.isSatisfiedBy(condition))
+                        .and(it.userCountSpecification == null || it.userCountSpecification.isSatisfiedBy(condition))
+                        .and(it.timeRangeSpecification.isSatisfiedBy(condition))
                 }
                 // 時間帯仕様ごとに分割する。
                 .groupBy { it.timeRangeSpecification }

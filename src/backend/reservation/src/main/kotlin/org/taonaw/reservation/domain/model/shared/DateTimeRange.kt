@@ -30,6 +30,10 @@ interface DateTimeRange {
         return start < other.end && other.start < end
     }
 
+    fun overlappingCount(others: List<DateTimeRange>): Int {
+        return others.count { it.isOverlapping(this) }
+    }
+
     fun isPassed(currentDateTime: LocalDateTime): Boolean {
         return start <= currentDateTime
     }

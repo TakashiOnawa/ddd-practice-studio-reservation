@@ -10,14 +10,6 @@ data class PackFee(val packFeeDetailsList: List<PackFeeDetails>) {
         }
     }
 
-    fun hasOverlappingUsageTimeFees(): Boolean {
-        return packFeeDetailsList
-                .flatMap { it.detailsList }
-                .any { packFeeDetails -> packFeeDetailsList
-                        .flatMap { it.detailsList }
-                        .count { it.usageTime.isOverlapping(packFeeDetails.usageTime) } > 1 }
-    }
-
     fun usageTimes(): List<UsageTime> {
         return packFeeDetailsList.flatMap { it.usageTimes() }
     }

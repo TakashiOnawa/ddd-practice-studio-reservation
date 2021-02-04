@@ -1,5 +1,7 @@
 package org.taonaw.reservation.domain.model.reservation.usageFee
 
+import org.taonaw.reservation.domain.model.reservation.UsageTime
+
 data class BasicFee(val detailsList: List<UsageFeeDetails>) {
 
     companion object {
@@ -8,9 +10,7 @@ data class BasicFee(val detailsList: List<UsageFeeDetails>) {
         }
     }
 
-    fun hasOverlappingUsageTimeFees(): Boolean {
-        return detailsList
-                .any { details -> detailsList
-                        .count { it.usageTime.isOverlapping(details.usageTime) } > 1 }
+    fun usageTimes(): List<UsageTime> {
+        return detailsList.map { it.usageTime }
     }
 }

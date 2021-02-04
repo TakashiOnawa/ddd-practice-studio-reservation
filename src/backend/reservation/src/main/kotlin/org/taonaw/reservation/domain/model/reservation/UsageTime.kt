@@ -51,6 +51,9 @@ data class UsageTime(
         return false
     }
 
+    /**
+     * 指定された時間帯を抜き出した利用時間を取得します。
+     */
     fun extract(timeRange: TimeRange): List<UsageTime> {
         val extracted = mutableListOf<UsageTime>()
 
@@ -88,6 +91,9 @@ data class UsageTime(
         return extracted
     }
 
+    /**
+     * 指定された利用時間を除いた利用時間を取得します。
+     */
     fun except(other: UsageTime): List<UsageTime> {
         if (start < other.start) {
             if (end > other.start) {
@@ -110,6 +116,9 @@ data class UsageTime(
         return listOf(this)
     }
 
+    /**
+     * 指定された利用時間を除いた利用時間を取得します。
+     */
     fun except(others: List<UsageTime>): List<UsageTime> {
         var excepted = listOf(this)
         for (other in others) {
