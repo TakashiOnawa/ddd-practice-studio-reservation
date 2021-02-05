@@ -10,6 +10,8 @@ import org.taonaw.reservation.domain.model.reservationPolicy.ReservationChanging
 import org.taonaw.reservation.domain.model.reservationPolicy.ReservationPolicyRepository
 import org.taonaw.reservation.domain.model.shared.DateTimeGenerator
 import org.taonaw.reservation.domain.model.usageFeeSetting.UsageFeeSettingRepository
+import org.taonaw.reservation.usecase.ReservationNotFound
+import org.taonaw.reservation.usecase.ReservationPolicyNotFound
 import org.taonaw.reservation.usecase.reservation.changeReservation.ChangeReservationCommand
 import org.taonaw.reservation.usecase.reservation.reserveStudio.ReserveStudioCommand
 
@@ -28,14 +30,14 @@ class ReservationUseCase(
         val reservationDetails = ReservationDetails(
                 command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
-        val usageFeeSetting = usageFeeSettingRepository.get()
+        val usageFeeSetting = usageFeeSettingRepository.find()
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
 
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
                 command.practiceType,
-                command.rentalEquipments.equipmentIds())
+                command.rentalEquipments.equipmentIds()) ?: throw ReservationPolicyNotFound()
 
         val reservation = Reservation.create(
                 reservationDetails,
@@ -54,21 +56,21 @@ class ReservationUseCase(
     fun handle(command: ChangeReservationCommand) {
         reservationRepository.lock()
 
-        var reservation = reservationRepository.findBy(command.reservationId) ?: throw Exception()
+        var reservation = reservationRepository.findBy(command.reservationId) ?: throw ReservationNotFound()
 
         val reservationDetails = ReservationDetails(
                 command.user, command.studioId, command.usageTime, command.userCount, command.practiceType, command.rentalEquipments)
 
-        val cancellationFeeSetting = cancellationFeeSettingRepository.get()
+        val cancellationFeeSetting = cancellationFeeSettingRepository.find()
 
-        val usageFeeSetting = usageFeeSettingRepository.get()
+        val usageFeeSetting = usageFeeSettingRepository.find()
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
-
+        
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
                 command.practiceType,
-                command.rentalEquipments.equipmentIds())
+                command.rentalEquipments.equipmentIds()) ?: throw ReservationPolicyNotFound()
 
         val reservationChangingPolicy = ReservationChangingPolicy(usageFeeSetting, cancellationFeeSetting)
 
