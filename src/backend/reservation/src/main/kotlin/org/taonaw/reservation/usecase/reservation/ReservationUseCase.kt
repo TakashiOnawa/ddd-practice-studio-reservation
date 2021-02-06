@@ -48,7 +48,7 @@ class ReservationUseCase(
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
         overlappingReservations.validateDuplicated(reservation)?.throwErr()
-        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)?.throwErr()
+        overlappingReservations.toReservedRentalEquipments(reservation).validateRentalEquipmentsOutOfStocks(equipments)?.throwErr()
 
         reservationRepository.save(reservation)
     }
@@ -66,7 +66,7 @@ class ReservationUseCase(
         val usageFeeSetting = usageFeeSettingRepository.find()
 
         val equipments = equipmentRepository.findBy(command.rentalEquipments.equipmentIds())
-        
+
         val reservationPolicy = reservationPolicyRepository.findBy(
                 command.studioId,
                 command.practiceType,
@@ -84,7 +84,7 @@ class ReservationUseCase(
 
         val overlappingReservations = reservationRepository.findBy(command.usageTime)
         overlappingReservations.validateDuplicated(reservation)?.throwErr()
-        overlappingReservations.toReservedRentalEquipments(reservation).validateUsageEquipmentsOutOfStocks(equipments)?.throwErr()
+        overlappingReservations.toReservedRentalEquipments(reservation).validateRentalEquipmentsOutOfStocks(equipments)?.throwErr()
 
         reservationRepository.save(reservation)
     }
