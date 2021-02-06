@@ -21,10 +21,6 @@ data class UsageTime(
         require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
         require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
         require(durationAsMinutes() % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
-
-        // TODO: このバリデーションは契約とすべき？それともドメイン例外とすべき？
-        // 契約 = バグと考えると、呼び出し元でのチェックを強要するが、フロントで前後のチェックをするより、ここでチェックした方が良いように思う。
-        // よって、ドメイン例外にして呼び出し元でキャッチできるようにする。
         require(start < end) { "終了日時を開始日時より後でなければなりません。" }
     }
 

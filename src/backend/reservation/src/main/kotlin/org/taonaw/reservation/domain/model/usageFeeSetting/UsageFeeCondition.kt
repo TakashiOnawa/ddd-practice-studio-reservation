@@ -17,7 +17,11 @@ data class UsageFeeCondition(
     companion object {
         fun from(details: ReservationDetails): UsageFeeCondition {
             return UsageFeeCondition(
-                    details.studioId, details.usageTime, details.userCount, details.practiceType, details.rentalEquipments)
+                    details.studioId,
+                    details.usageTime,
+                    details.userCount,
+                    details.practiceType,
+                    details.rentalEquipments)
         }
     }
 

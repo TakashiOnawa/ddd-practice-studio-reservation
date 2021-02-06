@@ -19,10 +19,6 @@ class UsageFeeSetting(
         return UsageFee(basicFee, packFee, rentalEquipmentFee)
     }
 
-    fun isDeterminedByUserCount(): Boolean {
-        TODO("実装する")
-    }
-
     private fun calculatePackFee(usageFeeCondition: UsageFeeCondition): PackFee {
         val packFeeDetailsList = packFeeSettings.map { it.calculatePackFeeDetails(usageFeeCondition) }
         return PackFee(packFeeDetailsList)

@@ -44,7 +44,7 @@ ReservationChangingPolicy(
 
     private fun validateUserCount(before: ReservationDetails, after: ReservationDetails, isCancellationFeeCharged: Boolean): Err? {
         if (before.userCount != after.userCount && isCancellationFeeCharged) {
-            if (usageFeeSetting.isDeterminedByUserCount() && after.userCount.isDecrease(before.userCount)) {
+            if (after.userCount.isDecrease(before.userCount)) {
                 return CanNotChangeUserCountErr("キャンセル料金が発生するため利用人数を減らすことはできません。")
             }
         }
