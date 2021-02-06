@@ -21,7 +21,7 @@ class StaffAccountUseCase(
 
         val saveResult = staffAccountRepository.save(staffAccount)
 
-        if (saveResult == StaffAccountRepository.SaveResult.USER_ID_REGISTERED) {
+        if (saveResult == StaffAccountRepository.SaveResult.USER_ID_ALREADY_REGISTERED) {
             throw UserIdAlreadyRegistered()
         } else if (saveResult != StaffAccountRepository.SaveResult.SUCCEEDED) {
             throw IllegalStateException("スタッフアカウントの登録に失敗しました。")

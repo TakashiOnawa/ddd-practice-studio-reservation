@@ -5,6 +5,6 @@ interface StaffAccountRepository {
 
     enum class SaveResult {
         SUCCEEDED,
-        USER_ID_REGISTERED
+        USER_ID_ALREADY_REGISTERED
     }
 }
