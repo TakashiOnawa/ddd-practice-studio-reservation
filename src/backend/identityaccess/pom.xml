@@ -61,6 +61,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/de.huxhorn.sulky/de.huxhorn.sulky.ulid -->
+		<dependency>
+			<groupId>de.huxhorn.sulky</groupId>
+			<artifactId>de.huxhorn.sulky.ulid</artifactId>
+			<version>8.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
