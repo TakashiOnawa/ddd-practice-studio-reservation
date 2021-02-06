@@ -7,7 +7,7 @@ class Reservations(items: List<Reservation>) {
     val items: List<Reservation> = items.toList()
 
     fun toReservedRentalEquipments(reservation: Reservation): ReservedRentalEquipments {
-        return ReservedRentalEquipments.create(items.map {
+        return ReservedRentalEquipments(items.map {
             if (it == reservation)
                 reservation.details.rentalEquipments
             else

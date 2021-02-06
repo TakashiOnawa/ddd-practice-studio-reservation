@@ -6,11 +6,11 @@ import org.taonaw.reservation.domain.model.reservation.RentalEquipmentsOutOfStoc
 import org.taonaw.reservation.domain.shared.exception.Err
 
 class ReservedRentalEquipments(items: List<RentalEquipments>) {
-        val items: Map<EquipmentId, List<RentalEquipment>> = items.flatMap { it.items }.groupBy { it.equipmentId }
+        private val items: Map<EquipmentId, List<RentalEquipment>> = items.flatMap { it.items }.groupBy { it.equipmentId }
 
     fun validateUsageEquipmentsOutOfStocks(equipments: Equipments): Err? {
         val outOfStocksEquipmentIds = items.filter { it ->
-            val equipment = equipments.findBy(it.key) ?: throw Exception()
+            val equipment = equipments.findBy(it.key) ?: throw NoSuchElementException("機材が存在しません。equipmentId=${it.key.value}")
             equipment.equipmentStocks < it.value.sumOf { it.quantity.value }
         }.map { it.key }
 
