@@ -126,10 +126,8 @@
 - ドメインモデル図とビジネスルールをまとめていく。
 
 ## ドメインモデル図
-![](./modeling/DomainModel_Details/DomainModel_Details.png)
-
-## 用語集
-- ドメインに登場する概念とそれが何を示すかの説明をまとめ、開発者間で認識齟齬が生まれないようにする。（ユビキタス言語を定義する。）
+### 予約
+![](./modeling/DomainModel_予約/DomainModel.png)
 
 ## ビジネスルール
 ### 予約
