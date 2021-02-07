@@ -1,6 +1,6 @@
 package org.taonaw.identityaccess.domain.model.memberAccount
 
-import org.taonaw.identityaccess.domain.shared.HashedPassword
+import org.taonaw.identityaccess.domain.model.shared.HashedPassword
 
 class MemberAccount private constructor(
         val memberAccountId: MemberAccountId,

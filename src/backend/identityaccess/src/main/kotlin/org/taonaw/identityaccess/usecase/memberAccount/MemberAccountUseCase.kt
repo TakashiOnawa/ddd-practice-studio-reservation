@@ -3,7 +3,7 @@ package org.taonaw.identityaccess.usecase.memberAccount
 import org.springframework.stereotype.Component
 import org.taonaw.identityaccess.domain.model.memberAccount.MemberAccount
 import org.taonaw.identityaccess.domain.model.memberAccount.MemberAccountRepository
-import org.taonaw.identityaccess.domain.shared.PasswordHashingService
+import org.taonaw.identityaccess.domain.model.shared.PasswordHashingService
 import org.taonaw.identityaccess.usecase.EmailAlreadyRegistered
 import org.taonaw.identityaccess.usecase.MemberAccountNotFound
 import org.taonaw.identityaccess.usecase.memberAccount.changeMemberAccount.ChangeMemberAccountCommand

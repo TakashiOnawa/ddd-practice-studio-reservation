@@ -3,10 +3,11 @@ package org.taonaw.identityaccess.usecase.staffAccount
 import org.springframework.stereotype.Component
 import org.taonaw.identityaccess.domain.model.staffAccount.StaffAccount
 import org.taonaw.identityaccess.domain.model.staffAccount.StaffAccountRepository
-import org.taonaw.identityaccess.domain.shared.PasswordHashingService
+import org.taonaw.identityaccess.domain.model.shared.PasswordHashingService
 import org.taonaw.identityaccess.usecase.StaffAccountNotFound
 import org.taonaw.identityaccess.usecase.UserIdAlreadyRegistered
 import org.taonaw.identityaccess.usecase.staffAccount.changeStaffAccount.ChangeStaffAccountCommand
+import org.taonaw.identityaccess.usecase.staffAccount.changeStaffAccountPassword.ChangeStaffAccountPasswordCommand
 import org.taonaw.identityaccess.usecase.staffAccount.registerStaffAccount.RegisterStaffAccountCommand
 
 @Component
@@ -18,7 +19,8 @@ class StaffAccountUseCase(
         val staffAccount = StaffAccount.create(
                 command.staffName,
                 command.userId,
-                command.password.hash(passwordHashingService))
+                command.password,
+                passwordHashingService)
 
         save(staffAccount)
     }
@@ -27,6 +29,14 @@ class StaffAccountUseCase(
         var staffAccount = staffAccountRepository.findBy(command.staffAccountId) ?: throw StaffAccountNotFound()
 
         staffAccount = staffAccount.change(command.staffName, command.userId)
+
+        save(staffAccount)
+    }
+
+    fun handle(command :ChangeStaffAccountPasswordCommand) {
+        var staffAccount = staffAccountRepository.findBy(command.staffAccountId) ?: throw StaffAccountNotFound()
+
+        staffAccount = staffAccount.changePassword(command.oldPassword, command.newPassword, passwordHashingService)
 
         save(staffAccount)
     }

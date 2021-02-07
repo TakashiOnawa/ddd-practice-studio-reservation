@@ -1,4 +1,4 @@
-package org.taonaw.identityaccess.domain.shared
+package org.taonaw.identityaccess.domain.model.shared
 
 data class PlainTextPassword(private val value: String) {
 
@@ -19,5 +19,9 @@ data class PlainTextPassword(private val value: String) {
 
     fun hash(passwordHashingService: PasswordHashingService): HashedPassword {
         return passwordHashingService.hash(value)
+    }
+
+    fun matches(hashedPassword: HashedPassword, passwordHashingService: PasswordHashingService): Boolean {
+        return passwordHashingService.matches(value, hashedPassword)
     }
 }
