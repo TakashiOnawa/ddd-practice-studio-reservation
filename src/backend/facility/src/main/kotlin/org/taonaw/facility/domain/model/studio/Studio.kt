@@ -3,13 +3,21 @@ package org.taonaw.facility.domain.model.studio
 class Studio private constructor(
         val studioId: StudioId,
         val studioName: StudioName,
-        val studioUsableStatus: StudioUsableStatus,
-        val startTime: StartTime){
+        val startTime: StartTime,
+        val studioUsableStatus: StudioUsableStatus){
 
     companion object {
         fun create(studioName: StudioName, startTime: StartTime): Studio {
-            return Studio(StudioId.newId(), studioName, StudioUsableStatus.SUSPENDED, startTime)
+            return Studio(StudioId.newId(), studioName, startTime, StudioUsableStatus.SUSPENDED)
         }
+    }
+
+    fun change(
+            studioName: StudioName,
+            startTime: StartTime,
+            studioUsableStatus: StudioUsableStatus): Studio {
+
+        return Studio(studioId, studioName, startTime, studioUsableStatus)
     }
 
     override fun equals(other: Any?): Boolean {
