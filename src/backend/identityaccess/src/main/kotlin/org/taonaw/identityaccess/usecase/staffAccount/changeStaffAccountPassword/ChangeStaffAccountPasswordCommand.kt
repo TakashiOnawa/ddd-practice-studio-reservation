@@ -5,6 +5,6 @@ import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword
 
 data class ChangeStaffAccountPasswordCommand(
         val staffAccountId: StaffAccountId,
-        val oldPassword: PlainTextPassword,
-        val newPassword: PlainTextPassword) {
+        val oldPlainTextPassword: PlainTextPassword,
+        val newPlainTextPassword: PlainTextPassword) {
 }

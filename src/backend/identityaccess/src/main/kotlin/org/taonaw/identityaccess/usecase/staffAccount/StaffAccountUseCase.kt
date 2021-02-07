@@ -19,7 +19,7 @@ class StaffAccountUseCase(
         val staffAccount = StaffAccount.create(
                 command.staffName,
                 command.userId,
-                command.password,
+                command.plainTextPassword,
                 passwordHashingService)
 
         save(staffAccount)
@@ -28,7 +28,9 @@ class StaffAccountUseCase(
     fun handle(command: ChangeStaffAccountCommand) {
         var staffAccount = staffAccountRepository.findBy(command.staffAccountId) ?: throw StaffAccountNotFound()
 
-        staffAccount = staffAccount.change(command.staffName, command.userId)
+        staffAccount = staffAccount.change(
+                command.staffName,
+                command.userId)
 
         save(staffAccount)
     }
@@ -36,7 +38,10 @@ class StaffAccountUseCase(
     fun handle(command :ChangeStaffAccountPasswordCommand) {
         var staffAccount = staffAccountRepository.findBy(command.staffAccountId) ?: throw StaffAccountNotFound()
 
-        staffAccount = staffAccount.changePassword(command.oldPassword, command.newPassword, passwordHashingService)
+        staffAccount = staffAccount.changePassword(
+                command.oldPlainTextPassword,
+                command.newPlainTextPassword,
+                passwordHashingService)
 
         save(staffAccount)
     }

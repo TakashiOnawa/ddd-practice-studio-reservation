@@ -1,25 +1,39 @@
 package org.taonaw.identityaccess.domain.model.memberAccount
 
 import org.taonaw.identityaccess.domain.model.shared.HashedPassword
+import org.taonaw.identityaccess.domain.model.shared.PasswordHashingService
+import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword
 
 class MemberAccount private constructor(
         val memberAccountId: MemberAccountId,
         val memberName: MemberName,
-        val password: HashedPassword,
-        val contractInformation: ContractInformation) {
+        val contractInformation: ContractInformation,
+        val password: HashedPassword) {
 
     companion object {
         fun create(
                 memberName: MemberName,
-                password: HashedPassword,
-                contractInformation: ContractInformation): MemberAccount {
+                contractInformation: ContractInformation,
+                plainTextPassword: PlainTextPassword,
+                passwordHashingService: PasswordHashingService): MemberAccount {
 
-            return MemberAccount(MemberAccountId.newId(), memberName, password, contractInformation)
+            return MemberAccount(MemberAccountId.newId(), memberName, contractInformation, plainTextPassword.hash(passwordHashingService))
         }
     }
 
     fun change(memberName: MemberName, contractInformation: ContractInformation): MemberAccount {
-        return MemberAccount(memberAccountId, memberName, password, contractInformation)
+        return MemberAccount(memberAccountId, memberName, contractInformation, password)
+    }
+
+    fun changePassword(
+            oldPlainTextPassword: PlainTextPassword,
+            newPlainTextPassword: PlainTextPassword,
+            passwordHashingService: PasswordHashingService): MemberAccount {
+
+        if (!oldPlainTextPassword.matches(password, passwordHashingService))
+            MemberAccountOldPasswordDifferentErr().throwErr()
+
+        return MemberAccount(memberAccountId, memberName, contractInformation, newPlainTextPassword.hash(passwordHashingService))
     }
 
     override fun equals(other: Any?): Boolean {

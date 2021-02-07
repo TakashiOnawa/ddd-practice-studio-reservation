@@ -6,6 +6,6 @@ import org.taonaw.identityaccess.domain.model.shared.PlainTextPassword
 
 data class RegisterMemberAccountCommand(
         val memberName: MemberName,
-        val password: PlainTextPassword,
-        val contractInformation: ContractInformation) {
+        val contractInformation: ContractInformation,
+        val plainTextPassword: PlainTextPassword) {
 }

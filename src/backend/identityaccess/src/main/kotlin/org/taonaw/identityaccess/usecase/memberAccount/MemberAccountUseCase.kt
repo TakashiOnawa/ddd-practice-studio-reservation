@@ -7,6 +7,7 @@ import org.taonaw.identityaccess.domain.model.shared.PasswordHashingService
 import org.taonaw.identityaccess.usecase.EmailAlreadyRegistered
 import org.taonaw.identityaccess.usecase.MemberAccountNotFound
 import org.taonaw.identityaccess.usecase.memberAccount.changeMemberAccount.ChangeMemberAccountCommand
+import org.taonaw.identityaccess.usecase.memberAccount.changeMemberAccountPassword.ChangeMemberAccountPasswordCommand
 import org.taonaw.identityaccess.usecase.memberAccount.registerMemberAccount.RegisterMemberAccountCommand
 
 @Component
@@ -17,8 +18,9 @@ class MemberAccountUseCase(
     fun handle(command: RegisterMemberAccountCommand) {
         val memberAccount = MemberAccount.create(
                 command.memberName,
-                command.password.hash(passwordHashingService),
-                command.contractInformation)
+                command.contractInformation,
+                command.plainTextPassword,
+                passwordHashingService)
 
         save(memberAccount)
     }
@@ -29,6 +31,17 @@ class MemberAccountUseCase(
         memberAccount = memberAccount.change(
                 command.memberName,
                 command.contractInformation)
+
+        save(memberAccount)
+    }
+
+    fun handle(command: ChangeMemberAccountPasswordCommand) {
+        var memberAccount = memberAccountRepository.findBy(command.memberAccountId) ?: throw MemberAccountNotFound()
+
+        memberAccount = memberAccount.changePassword(
+                command.oldPlainTextPassword,
+                command.newPlainTextPassword,
+                passwordHashingService)
 
         save(memberAccount)
     }
