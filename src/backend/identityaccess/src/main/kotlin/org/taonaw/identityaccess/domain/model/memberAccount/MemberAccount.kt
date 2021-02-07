@@ -36,8 +36,12 @@ class MemberAccount private constructor(
         return MemberAccount(memberAccountId, memberName, contractInformation, newPlainTextPassword.hash(passwordHashingService))
     }
 
-    fun authenticate(plainTextPassword: PlainTextPassword, passwordHashingService: PasswordHashingService): Boolean {
-        return plainTextPassword.matches(password, passwordHashingService)
+    fun authenticate(
+            emailAddress: EmailAddress,
+            plainTextPassword: PlainTextPassword,
+            passwordHashingService: PasswordHashingService): Boolean {
+
+        return contractInformation.emailAddress == emailAddress && plainTextPassword.matches(password, passwordHashingService)
     }
 
     override fun equals(other: Any?): Boolean {

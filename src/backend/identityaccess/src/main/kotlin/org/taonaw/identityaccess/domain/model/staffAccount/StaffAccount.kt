@@ -36,6 +36,14 @@ class StaffAccount private constructor(
         return StaffAccount(staffAccountId, staffName, userId, newPlainTextPassword.hash(passwordHashingService))
     }
 
+    fun authenticate(
+            userId: UserId,
+            plainTextPassword: PlainTextPassword,
+            passwordHashingService: PasswordHashingService): Boolean {
+
+        return this.userId == userId && plainTextPassword.matches(password, passwordHashingService)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

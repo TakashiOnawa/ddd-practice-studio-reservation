@@ -8,14 +8,14 @@ import org.taonaw.identityaccess.usecase.MemberUnAuthentication
 import org.taonaw.identityaccess.usecase.memberAccount.authenticateMember.AuthenticateMemberCommand
 
 @Component
-class AuthenticationMemberUserCase(
+class AuthenticationMemberUseCase(
         private val memberAccountRepository: MemberAccountRepository,
         private val passwordHashingService: PasswordHashingService) {
 
     fun handle(command: AuthenticateMemberCommand) {
-        val memberAccount = memberAccountRepository.findBy(command.userId) ?: throw MemberAccountNotFound()
+        val memberAccount = memberAccountRepository.findBy(command.emailAddress) ?: throw MemberAccountNotFound()
 
-        if (!memberAccount.authenticate(command.password, passwordHashingService))
+        if (!memberAccount.authenticate(command.emailAddress, command.password, passwordHashingService))
             throw MemberUnAuthentication()
     }
 }
