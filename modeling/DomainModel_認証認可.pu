@@ -1,0 +1,25 @@
+@startuml DomainModel
+
+package スタッフアカウント {
+    object スタッフアカウント {
+        スタッフ名
+        ユーザーID
+        パスワード
+    }
+}
+
+package 会員アカウント {
+    object 会員アカウント {
+        会員名
+        パスワード
+    }
+
+    object 契約情報 {
+        メールアドレス
+        電話番号
+    }
+}
+
+会員アカウント o-- "1" 契約情報
+
+@enduml

@@ -129,6 +129,9 @@
 ### 予約
 ![](./modeling/DomainModel_予約/DomainModel.png)
 
+### 認証認可
+![](./modeling/DomainModel_認証認可/DomainModel.png)
+
 ## ビジネスルール
 ### 予約
 - 予約時間の単位は 1 時間
