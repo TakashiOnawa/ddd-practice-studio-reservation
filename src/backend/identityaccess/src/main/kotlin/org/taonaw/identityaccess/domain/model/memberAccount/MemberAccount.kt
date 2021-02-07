@@ -36,6 +36,10 @@ class MemberAccount private constructor(
         return MemberAccount(memberAccountId, memberName, contractInformation, newPlainTextPassword.hash(passwordHashingService))
     }
 
+    fun authenticate(plainTextPassword: PlainTextPassword, passwordHashingService: PasswordHashingService): Boolean {
+        return plainTextPassword.matches(password, passwordHashingService)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
