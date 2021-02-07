@@ -16,11 +16,11 @@ class PracticeType private constructor(
                 Type.BAND -> PracticeType(
                         type,
                         MaxUserCount(MaxUserCount.MAX),
-                        AcceptingReservationStartDate(2, AcceptingReservationStartDate.DateType.MONTHS_AGO))
+                        AcceptingReservationStartDate.DateType.MONTHS_AGO.create(2))
                 Type.PERSONAL -> PracticeType(
                         type,
                         MaxUserCount(MaxUserCount.MAX),
-                        AcceptingReservationStartDate(1, AcceptingReservationStartDate.DateType.DAYS_AGO))
+                        AcceptingReservationStartDate.DateType.DAYS_AGO.create(1))
             }
         }
     }
