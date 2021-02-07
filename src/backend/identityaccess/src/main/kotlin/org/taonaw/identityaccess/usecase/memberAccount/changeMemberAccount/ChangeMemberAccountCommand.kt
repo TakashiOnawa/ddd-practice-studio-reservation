@@ -1,11 +1,11 @@
-package org.taonaw.identityaccess.usecase.memberAccount.registerMemberAccount
+package org.taonaw.identityaccess.usecase.memberAccount.changeMemberAccount
 
 import org.taonaw.identityaccess.domain.model.memberAccount.ContractInformation
+import org.taonaw.identityaccess.domain.model.memberAccount.MemberAccountId
 import org.taonaw.identityaccess.domain.model.memberAccount.MemberName
-import org.taonaw.identityaccess.domain.shared.PlainTextPassword
 
-data class RegisterMemberAccount(
+class ChangeMemberAccountCommand(
+        val memberAccountId: MemberAccountId,
         val memberName: MemberName,
-        val password: PlainTextPassword,
         val contractInformation: ContractInformation) {
 }

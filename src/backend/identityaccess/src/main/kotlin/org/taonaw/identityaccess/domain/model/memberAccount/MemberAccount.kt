@@ -18,6 +18,10 @@ class MemberAccount private constructor(
         }
     }
 
+    fun change(memberName: MemberName, contractInformation: ContractInformation): MemberAccount {
+        return MemberAccount(memberAccountId, memberName, password, contractInformation)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
