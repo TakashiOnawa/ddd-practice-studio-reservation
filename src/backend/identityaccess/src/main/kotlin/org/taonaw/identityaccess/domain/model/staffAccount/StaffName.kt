@@ -13,10 +13,10 @@ data class StaffName(
 
     init {
         require(lastName.length in LAST_NAME_LENGTH_MIN..LAST_NAME_LENGTH_MAX) {
-            "姓 $LAST_NAME_LENGTH_MIN 以上 $LAST_NAME_LENGTH_MAX 以下でなければなりません。"
+            "姓 $LAST_NAME_LENGTH_MIN 文字以上 $LAST_NAME_LENGTH_MAX 文字以下でなければなりません。"
         }
         require(firstName.length in FIRST_NAME_LENGTH_MIN..FIRST_NAME_LENGTH_MAX) {
-            "名は $FIRST_NAME_LENGTH_MIN 以上 $FIRST_NAME_LENGTH_MAX 以下でなければなりません。"
+            "名は $FIRST_NAME_LENGTH_MIN 文字以上 $FIRST_NAME_LENGTH_MAX 文字以下でなければなりません。"
         }
     }
 

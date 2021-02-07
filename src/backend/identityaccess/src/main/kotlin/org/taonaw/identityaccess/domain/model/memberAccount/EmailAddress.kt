@@ -10,7 +10,7 @@ data class EmailAddress(val value: String) {
 
     init {
         require(value.length in LENGTH_MIN..LENGTH_MAX) {
-            "メールアドレスは $LENGTH_MIN 以上 $LENGTH_MAX 以下でなければなりません。"
+            "メールアドレスは $LENGTH_MIN 文字以上 $LENGTH_MAX 文字以下でなければなりません。"
         }
         require(Regex(FORMAT_PATTERN).matches(value)) {
             "メールアドレスのフォーマットが不正です。"

@@ -10,7 +10,7 @@ data class PhoneNumber(val value: String) {
 
     init {
         require(value.length in LENGTH_MIN..LENGTH_MAX) {
-            "電話番号は $LENGTH_MIN 以上 $LENGTH_MAX 以下でなければなりません。"
+            "電話番号は $LENGTH_MIN 文字以上 $LENGTH_MAX 文字以下でなければなりません。"
         }
         require(Regex(FORMAT_PATTERN).matches(value)) {
             "電話番号は半角数字でなければなりません。"

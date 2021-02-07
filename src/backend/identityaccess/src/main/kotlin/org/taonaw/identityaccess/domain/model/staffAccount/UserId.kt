@@ -10,7 +10,7 @@ data class UserId(val value: String) {
 
     init {
         require(value.length in LENGTH_MIN..LENGTH_MAX) {
-            "ユーザー ID は $LENGTH_MIN 以上 $LENGTH_MAX 以下でなければなりません。"
+            "ユーザー ID は $LENGTH_MIN 文字以上 $LENGTH_MAX 文字以下でなければなりません。"
         }
         require(Regex(FORMAT_PATTERN).matches(value)) {
             "ユーザー ID は半角英数でなければなりません。"
