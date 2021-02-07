@@ -20,13 +20,7 @@ class MemberAccountUseCase(
                 command.password.hash(passwordHashingService),
                 command.contractInformation)
 
-        val saveResult = memberAccountRepository.save(memberAccount)
-
-        if (saveResult == MemberAccountRepository.SaveResult.EMAIL_ALREADY_REGISTERED) {
-            throw EmailAlreadyRegistered()
-        } else if (saveResult != MemberAccountRepository.SaveResult.SUCCEEDED) {
-            throw IllegalStateException("会員アカウントの登録に失敗しました。")
-        }
+        save(memberAccount)
     }
 
     fun handle(command: ChangeMemberAccountCommand) {
@@ -36,6 +30,10 @@ class MemberAccountUseCase(
                 command.memberName,
                 command.contractInformation)
 
+        save(memberAccount)
+    }
+
+    fun save(memberAccount: MemberAccount) {
         val saveResult = memberAccountRepository.save(memberAccount)
 
         if (saveResult == MemberAccountRepository.SaveResult.EMAIL_ALREADY_REGISTERED) {

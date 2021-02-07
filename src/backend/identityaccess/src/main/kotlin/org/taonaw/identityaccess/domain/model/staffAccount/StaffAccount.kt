@@ -18,6 +18,10 @@ class StaffAccount private constructor(
         }
     }
 
+    fun change(staffName: StaffName, userId: UserId): StaffAccount {
+        return StaffAccount(staffAccountId, staffName, userId, password)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

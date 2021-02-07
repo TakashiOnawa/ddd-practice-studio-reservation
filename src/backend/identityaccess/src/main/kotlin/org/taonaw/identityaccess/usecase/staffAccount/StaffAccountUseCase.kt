@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component
 import org.taonaw.identityaccess.domain.model.staffAccount.StaffAccount
 import org.taonaw.identityaccess.domain.model.staffAccount.StaffAccountRepository
 import org.taonaw.identityaccess.domain.shared.PasswordHashingService
+import org.taonaw.identityaccess.usecase.StaffAccountNotFound
 import org.taonaw.identityaccess.usecase.UserIdAlreadyRegistered
+import org.taonaw.identityaccess.usecase.staffAccount.changeStaffAccount.ChangeStaffAccountCommand
 import org.taonaw.identityaccess.usecase.staffAccount.registerStaffAccount.RegisterStaffAccountCommand
-import java.lang.IllegalStateException
 
 @Component
 class StaffAccountUseCase(
@@ -19,6 +20,18 @@ class StaffAccountUseCase(
                 command.userId,
                 command.password.hash(passwordHashingService))
 
+        save(staffAccount)
+    }
+
+    fun handle(command: ChangeStaffAccountCommand) {
+        var staffAccount = staffAccountRepository.findBy(command.staffAccountId) ?: throw StaffAccountNotFound()
+
+        staffAccount = staffAccount.change(command.staffName, command.userId)
+
+        save(staffAccount)
+    }
+
+    fun save(staffAccount: StaffAccount) {
         val saveResult = staffAccountRepository.save(staffAccount)
 
         if (saveResult == StaffAccountRepository.SaveResult.USER_ID_ALREADY_REGISTERED) {
