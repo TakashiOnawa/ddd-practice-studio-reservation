@@ -13,4 +13,14 @@ data class AcceptingReservationStartDate(
             return AcceptingReservationStartDate(dateValue, this)
         }
     }
+
+    companion object {
+        const val DATE_VALUE_MIN = 0
+    }
+
+    init {
+        require(dateValue >= DATE_VALUE_MIN) {
+            "日付は $DATE_VALUE_MIN 以上でなければなりません。"
+        }
+    }
 }

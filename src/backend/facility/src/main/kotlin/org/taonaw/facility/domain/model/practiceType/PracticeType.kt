@@ -6,23 +6,24 @@ class PracticeType private constructor(
         val acceptingReservationStartDate: AcceptingReservationStartDate) {
 
     enum class Type(val value: Int) {
-        BAND(1),
-        PERSONAL(2)
-    }
-
-    companion object {
-        fun default(type: Type): PracticeType {
-            return when(type) {
-                Type.BAND -> PracticeType(
-                        type,
+        BAND(1) {
+            override fun default(): PracticeType {
+                return PracticeType(
+                        this,
                         MaxUserCount(MaxUserCount.MAX),
                         AcceptingReservationStartDate.DateType.MONTHS_AGO.create(2))
-                Type.PERSONAL -> PracticeType(
-                        type,
+            }
+        },
+        PERSONAL(2) {
+            override fun default(): PracticeType {
+                return PracticeType(
+                        this,
                         MaxUserCount(MaxUserCount.MAX),
                         AcceptingReservationStartDate.DateType.DAYS_AGO.create(1))
             }
-        }
+        };
+
+        abstract fun default(): PracticeType
     }
 
     fun change(
