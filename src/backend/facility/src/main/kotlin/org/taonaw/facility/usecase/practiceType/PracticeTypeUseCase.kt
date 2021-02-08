@@ -10,7 +10,7 @@ class PracticeTypeUseCase(val practiceTypeRepository: PracticeTypeRepository) {
     fun handle(command: ChangePracticeTypeCommand) {
         var practiceType = practiceTypeRepository.findBy(command.type)
 
-        practiceType.change(command.maxUserCount, command.acceptingReservationStartDate)
+        practiceType = practiceType.change(command.maxUserCount, command.acceptingReservationStartDate)
 
         practiceTypeRepository.save(practiceType)
     }
