@@ -1,4 +1,4 @@
-package org.taonaw.facility.domain.model.studio
+package org.taonaw.facility.domain.model.room
 
 enum class StartTime(
         private val value: Int,

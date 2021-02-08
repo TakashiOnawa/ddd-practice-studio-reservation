@@ -1,6 +1,6 @@
-package org.taonaw.facility.domain.model.studio
+package org.taonaw.facility.domain.model.room
 
-data class StudioName(val value: String) {
+data class RoomName(val value: String) {
 
     companion object {
         const val LENGTH_MIN = 1
