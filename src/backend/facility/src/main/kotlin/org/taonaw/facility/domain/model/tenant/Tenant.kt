@@ -11,6 +11,10 @@ class Tenant private constructor(
         }
     }
 
+    fun change(tenantName: TenantName, openingHour: OpeningHour): Tenant {
+        return Tenant(tenantId, tenantName, openingHour)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
