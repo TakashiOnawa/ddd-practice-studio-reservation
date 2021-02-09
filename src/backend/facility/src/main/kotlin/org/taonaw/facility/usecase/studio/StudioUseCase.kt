@@ -11,7 +11,11 @@ import org.taonaw.facility.usecase.studio.registerStudio.RegisterStudioCommand
 class StudioUseCase(private val studioRepository: StudioRepository) {
 
     fun handle(command: RegisterStudioCommand) {
-        val studio = Studio.create(command.studioName, command.studioSize, command.startTime)
+        val studio = Studio.create(
+                command.studioName,
+                command.studioSize,
+                command.startTime,
+                command.maxRentalEquipmentQuantities)
 
         studioRepository.save(studio)
     }
@@ -19,7 +23,12 @@ class StudioUseCase(private val studioRepository: StudioRepository) {
     fun handle(command: ChangeStudioCommand) {
         var studio = studioRepository.findBy(command.studioId) ?: throw StudioNotFound()
 
-        studio = studio.change(command.studioName, command.studioSize, command.startTime, command.studioUsableStatus)
+        studio = studio.change(
+                command.studioName,
+                command.studioSize,
+                command.startTime,
+                command.studioUsableStatus,
+                command.maxRentalEquipmentQuantities)
 
         studioRepository.save(studio)
     }

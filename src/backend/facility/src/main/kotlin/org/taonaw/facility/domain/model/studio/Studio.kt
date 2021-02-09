@@ -5,11 +5,19 @@ class Studio private constructor(
         val studioName: StudioName,
         val studioSize: StudioSize,
         val startTime: StartTime,
-        val studioUsableStatus: StudioUsableStatus){
+        val studioUsableStatus: StudioUsableStatus,
+        val maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities) {
 
     companion object {
-        fun create(studioName: StudioName, studioSize: StudioSize, startTime: StartTime): Studio {
-            return Studio(StudioId.newId(), studioName, studioSize, startTime, StudioUsableStatus.SUSPENDED)
+        fun create(
+                studioName: StudioName,
+                studioSize: StudioSize,
+                startTime: StartTime,
+                maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities): Studio {
+
+            maxRentalEquipmentQuantities.validateDuplicated()?.throwErr()
+
+            return Studio(StudioId.newId(), studioName, studioSize, startTime, StudioUsableStatus.SUSPENDED, maxRentalEquipmentQuantities)
         }
     }
 
@@ -17,9 +25,12 @@ class Studio private constructor(
             studioName: StudioName,
             studioSize: StudioSize,
             startTime: StartTime,
-            studioUsableStatus: StudioUsableStatus): Studio {
+            studioUsableStatus: StudioUsableStatus,
+            maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities): Studio {
 
-        return Studio(studioId, studioName, studioSize, startTime, studioUsableStatus)
+        maxRentalEquipmentQuantities.validateDuplicated()?.throwErr()
+
+        return Studio(studioId, studioName, studioSize, startTime, studioUsableStatus, maxRentalEquipmentQuantities)
     }
 
     override fun equals(other: Any?): Boolean {

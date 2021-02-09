@@ -7,5 +7,6 @@ data class ChangeStudioCommand(
         val studioName: StudioName,
         val studioSize: StudioSize,
         val studioUsableStatus: StudioUsableStatus,
-        val startTime: StartTime) {
+        val startTime: StartTime,
+        val maxRentalEquipmentQuantities: MaxRentalEquipmentQuantities) {
 }
