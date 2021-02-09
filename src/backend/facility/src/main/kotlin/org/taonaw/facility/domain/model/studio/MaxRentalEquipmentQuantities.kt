@@ -6,9 +6,11 @@ class MaxRentalEquipmentQuantities(items: List<MaxRentalEquipmentQuantity>) {
     val items: List<MaxRentalEquipmentQuantity> = items.toList()
 
     fun validateDuplicated(): Err? {
-        val errorItems = items
+        val errorItems = items.asSequence()
                 .filter { items.any { other -> it.isDuplicated(other) } }
                 .map { it.equipmentCategoryId }
+                .distinct()
+                .toList()
 
         if (errorItems.isEmpty()) return MaxRentalEquipmentQuantityDuplicatedErr(errorItems)
         return null

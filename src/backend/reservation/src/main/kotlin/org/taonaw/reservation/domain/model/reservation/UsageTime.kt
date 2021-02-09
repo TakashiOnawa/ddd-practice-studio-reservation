@@ -21,7 +21,7 @@ data class UsageTime(
         require(!hasStartSeconds()) { "開始日時に秒の指定はできません。" }
         require(!hasEndSeconds()) { "終了日時に秒の指定はできません。" }
         require(durationAsMinutes() % MIN_MINUTES_UNIT == 0L) { "$MIN_MINUTES_UNIT 分単位でなければなりません。" }
-        require(start < end) { "終了日時を開始日時より後でなければなりません。" }
+        require(start < end) { "終了日時は開始日時より後でなければなりません。" }
     }
 
     fun durationAsMinutes(): Long {
