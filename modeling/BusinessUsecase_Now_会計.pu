@@ -1,0 +1,15 @@
+@startuml BusinessUsecase
+
+left to right direction
+
+actor 利用者
+actor スタッフ
+
+利用者 -- (会計)
+(会計) -- スタッフ
+
+note top of (会計)
+利用料金を支払う。
+end note
+
+@enduml

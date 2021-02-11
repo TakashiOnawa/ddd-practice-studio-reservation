@@ -1,9 +1,57 @@
 # 概要
-スタジオ予約を題材とした DDD の練習プロジェクトです。
+- スタジオ予約を題材とした DDD の練習プロジェクトです。
+- 要件定義は RDRA 2.0 を参考にしています。
 
-要件定義は RADRA 2.0 を参考にしています。
+# 業務分析
+- RDRA のプロセスでは最初にシステムコンテキスト（システム化の目的）を考えるが、業務改善を目的とする場合は、現状の業務分析を行い、改善点を見つけたのち、システム化の目的を考えていった方が良いと思う。
+- よって、まずは現状の業務を把握するために業務の流れを整理する。
+
+## ビジネスコンテキスト
+- 現状のトップレベルの業務を明らかにする。
+- メインとなる業務をヒアリングしていう中で徐々に明らかにしてく。
+
+![](./modeling/BusinessContext_Now/BusinessContext.png)
+
+## ビジネスユースケース
+- ビジネスコンテキストの業務ごとにブレークダウンする。
+- ビジネスユースケースが業務フローの単位となる。
+- 分割の粒度を調整しながら洗い出す。
+- 分割の根拠を明確にする。（業務フローが同じになるような場合は分割しすぎない。）
+
+### 予約
+![](./modeling/BusinessUsecase_Now_予約/BusinessUsecase.png)
+
+### スタジオ利用
+![](./modeling/BusinessUsecase_Now_スタジオ利用/BusinessUsecase.png)
+
+### 会計
+![](./modeling/BusinessUsecase_Now_会計/BusinessUsecase.png)
+
+## 業務フロー
+- 現状の業務の流れをヒアリングしながら業務フォローを整理していく。
+- ビジネスユースケースの単位で整理してくと良い。
+
+### 予約
+![](./modeling/BusinessFlow_Now_予約/BusinessFlow.png)
+
+### スタジオ準備
+![](./modeling/BusinessFlow_Now_スタジオ準備/BusinessFlow.png)
+
+### 受付
+![](./modeling/BusinessFlow_Now_受付/BusinessFlow.png)
+
+### スタジオ利用
+![](./modeling/BusinessFlow_Now_スタジオ利用/BusinessFlow.png)
+
+### 会計
+![](./modeling/BusinessFlow_Now_会計/BusinessFlow.png)
 
 # システムコンテキスト
+- 業務フローから業務効率を高めるための改善点を洗い出し、システム化の目的を決定する。
+
+## 問題点
+
+## システム化の目的
 ![](./modeling/SystemContext/SystemContext.png)
 
 # 要求モデル
@@ -50,7 +98,7 @@
   - 追加のレンタル機材を受け付けることもある。
 - スタジオ利用
   - 利用者が実際にスタジオを利用する。
-  - スタジオ利用中に追加機材を頼むこともある。  
+  - スタジオ利用中に追加機材を頼むこともある。
 
 ## 会計
 ![](./modeling/BusinessUsecase_会計/BusinessUsecase.png)

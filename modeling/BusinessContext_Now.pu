@@ -1,0 +1,17 @@
+@startuml BusinessContext
+
+left to right direction
+
+actor 利用者
+actor スタッフ
+
+利用者 -- (予約)
+(予約) -- スタッフ
+
+利用者 -- (スタジオ利用)
+(スタジオ利用) -- スタッフ
+
+利用者 -- (会計)
+(会計) -- スタッフ
+
+@enduml

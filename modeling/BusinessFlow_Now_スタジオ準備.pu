@@ -1,0 +1,13 @@
+@startuml BusinessFlow
+
+|利用者|
+
+|スタッフ|
+start
+:次の予約を確認する;
+:スタジオを転換する;
+:レンタル機材を準備する;
+
+stop
+
+@enduml
