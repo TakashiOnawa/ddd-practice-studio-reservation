@@ -12,8 +12,7 @@ usecase (スタジオ予約システム) as studioReservationSystem
 
 note top of studioReservationSystem
 <b>システム化の目的</b>
-利用者が Web でスタジオ予約できるようにすることで、
-スタッフの作業を効率化する。
+予約の業務を効率化することで、スタッフの作業負担を減らし、人件費を削減する。
 end note
 
 @enduml
