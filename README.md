@@ -76,7 +76,7 @@
 - 洗い出した要件は、後述するビジネスコンテキストの各業務に紐づくはずなので、ビジネスコンテキストと合わせて記載する。
 
 # システム設計
-- 要件を満たすようなシステムを利用した理想的な業務フローを考え、システムに対するユースケースを洗い出す。
+- 要件を満たすようなシステムを利用した業務フローを考え、システムに対するユースケースを洗い出す。
 
 ## ビジネスコンテキスト
 - 要件をグルーピングして、トップレベルの業務を明らかにする。
@@ -85,97 +85,56 @@
 
 ## ビジネスユースケース
 - トップレベルの業務ごとにブレークダウンしビジネスユースケースを明らかにする。
-- ビジネスユースケースがシステムを利用した理想的な業務フローを考える単位となる。
+- ビジネスユースケースが業務フローを考える単位となる。
 
-### 会員管理
-![](./modeling/BusinessUsecase_会員管理/BusinessUsecase.png)
-- 会員登録
-  - 利用者がシステムを利用するための Web で会員登録を行う。
-- 会員管理
-  - スタッフが会員情報を管理する。
-  
+![](./modeling/BusinessUsecase/BusinessUsecase.png)
+
+## 業務フロー/利用シーン
+- ビジネスユースケースごとに、システムを利用した時の業務フローを明らかにし、システムに対するユースケースを洗い出す。
+
 ### 予約
-![](./modeling/BusinessUsecase_予約/BusinessUsecase.png)
-- Web予約
-  - 利用者が Web で予約する。
-- 電話/店頭予約
-  - 利用者が電話または店頭で予約する。（スタッフが Web 予約を代行する形になる。）
-  - 会員登録していなくても予約できる。
-
-### スタジオ利用
-![](./modeling/BusinessUsecase_スタジオ利用/BusinessUsecase.png)
-- スタジオ準備
-  - スタッフが予約内容を元にスタジオの転換を行う。
-- 受付
-  - 利用者の予約があるかを確認し、レンタル機材を渡す。
-  - 追加のレンタル機材を受け付けることもある。
-- スタジオ利用
-  - 利用者が実際にスタジオを利用する。
-  - スタジオ利用中に追加機材を頼むこともある。
-
-### 会計
-![](./modeling/BusinessUsecase_会計/BusinessUsecase.png)
-- 会計
-  - 利用者が支払いを行う。
-
-### スタッフ管理
-![](./modeling/BusinessUsecase_スタッフ管理/BusinessUsecase.png)
-- スタッフ管理
-  - 管理者がスタッフの管理を行う。 
-
-### 設備管理
-![](./modeling/BusinessUsecase_設備管理/BusinessUsecase.png)
-- スタジオ管理
-  - 管理者がスタジオの管理を行う。
-- 機材管理
-  - 管理者が機材の管理を行う。
-- 利用料金管理
-  - 管理者が利用料金の管理を行う。
-
-# 業務フロー/利用シーン
-- ビジネスユースケースごとに業務フロー図、利用シーン図を作成し、ユースケースを洗い出す。
-
-## 会員管理
-### BUC: 会員登録
-![](./modeling/UsageScene_会員管理_会員登録/UsageScene.png)
-
-### BUC: 会員管理
-![](./modeling/UsageScene_会員管理_会員管理/UsageScene.png)
-
-## 予約
-### BUC: Web予約
+#### BUC: Web予約
 ![](./modeling/BusinessFlow_予約_WEB予約/BusinessFlow.png)
 
-### BUC: 電話/店頭予約
+#### BUC: 電話/店頭予約
 ![](./modeling/BusinessFlow_予約_電話予約_店頭予約/BusinessFlow.png)
 
-## スタジオ利用
-### BUC: スタジオ準備
+### スタジオ利用
+#### BUC: スタジオ準備
 ![](./modeling/BusinessFlow_スタジオ利用_スタジオ準備/BusinessFlow.png)
 
-### BUC: 受付
+#### BUC: 受付
 ![](./modeling/BusinessFlow_スタジオ利用_受付/BusinessFlow.png)
 
-### BUC: スタジオ利用
+#### BUC: スタジオ利用
 ![](./modeling/BusinessFlow_スタジオ利用_スタジオ利用/BusinessFlow.png)
 
-## 会計
-### BUC: 会計
+### 会計
+#### BUC: 会計
 ![](./modeling/BusinessFlow_会計_会計/BusinessFlow.png)
 
-## スタッフ管理
-### BUC: スタッフ管理
+### 会員管理
+#### BUC: 会員登録
+![](./modeling/UsageScene_会員管理_会員登録/UsageScene.png)
+
+#### BUC: 会員管理
+![](./modeling/UsageScene_会員管理_会員管理/UsageScene.png)
+
+### スタッフ管理
+#### BUC: スタッフ管理
 ![](./modeling/UsageScene_スタッフ管理_スタッフ管理/UsageScene.png)
 
-## 設備管理
-### BUC: スタジオ管理
+### 設備管理
+#### BUC: スタジオ管理
 ![](./modeling/UsageScene_設備管理_スタジオ管理/UsageScene.png)
 
-### BUC: 機材管理
+#### BUC: 機材管理
 ![](./modeling/UsageScene_設備管理_機材管理/UsageScene.png)
 
-### BUC: 利用料金管理
+#### BUC: 利用料金管理
 ![](./modeling/UsageScene_設備管理_利用料金管理/UsageScene.png)
+
+#### BUC: 店舗管理
 
 # サイト構成
 ![](./modeling/SiteStructure/SiteStructure.png)
