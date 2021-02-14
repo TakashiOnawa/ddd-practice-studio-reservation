@@ -1,0 +1,28 @@
+@startuml BusinessUsecase 
+
+left to right direction
+
+actor スタッフ
+actor 利用者
+
+(スタジオ準備) -- スタッフ
+
+利用者 -- (受付)
+(受付) -- スタッフ
+
+利用者 -- (スタジオ利用)
+(スタジオ利用) -- スタッフ
+
+note top of (スタジオ準備)
+予約内容を元にスタジオの転換を行う。
+end note
+
+note top of (受付)
+予約を確認し、レンタル機材を渡す。
+end note
+
+note top of (スタジオ利用)
+利用者が実際にスタジオを利用する。
+end note
+
+@enduml
