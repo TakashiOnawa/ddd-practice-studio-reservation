@@ -97,7 +97,7 @@
 ![](./modeling/BusinessFlow_WEB予約/BusinessFlow.png)
 
 #### BUC: 電話/店頭予約
-![](./modeling/BusinessFlow_予約_電話予約_店頭予約/BusinessFlow.png)
+![](./modeling/BusinessFlow_電話予約_店頭予約/BusinessFlow.png)
 
 ### スタジオ利用
 #### BUC: スタジオ準備
