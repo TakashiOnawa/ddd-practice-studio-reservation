@@ -101,17 +101,17 @@
 
 ### スタジオ利用
 #### BUC: スタジオ準備
-![](./modeling/BusinessFlow_スタジオ利用_スタジオ準備/BusinessFlow.png)
+![](./modeling/BusinessFlow_スタジオ準備/BusinessFlow.png)
 
 #### BUC: 受付
-![](./modeling/BusinessFlow_スタジオ利用_受付/BusinessFlow.png)
+![](./modeling/BusinessFlow_受付/BusinessFlow.png)
 
 #### BUC: スタジオ利用
-![](./modeling/BusinessFlow_スタジオ利用_スタジオ利用/BusinessFlow.png)
+![](./modeling/BusinessFlow_スタジオ利用/BusinessFlow.png)
 
 ### 会計
 #### BUC: 会計
-![](./modeling/BusinessFlow_会計_会計/BusinessFlow.png)
+![](./modeling/BusinessFlow_会計/BusinessFlow.png)
 
 ### 会員管理
 #### BUC: 会員登録
