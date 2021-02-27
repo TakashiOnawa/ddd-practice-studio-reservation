@@ -96,33 +96,33 @@
 #### Web予約
 ![](./modeling/BusinessFlow_WEB予約/BusinessFlow.png)
 
-#### BUC: 電話/店頭予約
+#### 電話/店頭予約
 ![](./modeling/BusinessFlow_電話予約_店頭予約/BusinessFlow.png)
 
 ### スタジオ利用
-#### BUC: スタジオ準備
+#### スタジオ準備
 ![](./modeling/BusinessFlow_スタジオ準備/BusinessFlow.png)
 
-#### BUC: 受付
+#### 受付
 ![](./modeling/BusinessFlow_受付/BusinessFlow.png)
 
-#### BUC: スタジオ利用
+#### スタジオ利用
 ![](./modeling/BusinessFlow_スタジオ利用/BusinessFlow.png)
 
 ### 会計
-#### BUC: 会計
+#### 会計
 ![](./modeling/BusinessFlow_会計/BusinessFlow.png)
 
 ### 会員管理
-#### BUC: 会員登録
-![](./modeling/UsageScene_会員管理_会員登録/UsageScene.png)
+#### 会員アカウント管理
+![](./modeling/UsageScene_会員アカウント管理/UsageScene.png)
 
-#### BUC: 会員管理
-![](./modeling/UsageScene_会員管理_会員管理/UsageScene.png)
+#### 会員アカウント登録
+![](./modeling/UsageScene_会員アカウント登録/UsageScene.png)
 
 ### スタッフ管理
-#### BUC: スタッフ管理
-![](./modeling/UsageScene_スタッフ管理_スタッフ管理/UsageScene.png)
+#### スタッフ管理
+![](./modeling/UsageScene_スタッフアカウント管理/UsageScene.png)
 
 ### 設備管理
 #### BUC: スタジオ管理

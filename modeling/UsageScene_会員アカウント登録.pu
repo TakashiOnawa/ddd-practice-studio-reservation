@@ -1,0 +1,32 @@
+@startuml UsageScene
+
+left to right direction
+
+actor 利用者
+
+frame 会員アカウント登録
+note right of 会員アカウント登録
+システムを利用するためのアカウントを登録する。
+end note
+
+frame 会員アカウント変更
+note right of 会員アカウント変更
+メールアドレス、パスワードなどの情報を変更する。
+end note
+
+frame 会員アカウント削除
+note right of 会員アカウント削除
+会員アカウントを削除する
+end note
+
+frame ログイン
+note right of ログイン
+システムを利用するためにログインする。
+end note
+
+利用者 -- 会員アカウント登録
+利用者 -- 会員アカウント変更
+利用者 -- 会員アカウント削除
+利用者 -- ログイン
+
+@enduml

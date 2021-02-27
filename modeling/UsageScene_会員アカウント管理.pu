@@ -1,0 +1,22 @@
+@startuml UsageScene
+
+left to right direction
+
+actor スタッフ
+
+frame 会員アカウント確認
+note right of 会員アカウント確認
+会員登録されているかどうかを確認する際などに利用する。
+end note
+
+frame 会員アカウント変更
+note right of 会員アカウント変更
+基本的には会員以外が会員アカウントの情報を変更することがないが、
+管理機能としては変更できる必要がある。
+強制的にアカウントの利用を停止するような場合にも利用する。
+end note
+
+スタッフ -- 会員アカウント確認
+スタッフ -- 会員アカウント変更
+
+@enduml

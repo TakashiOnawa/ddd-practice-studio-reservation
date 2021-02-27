@@ -1,0 +1,33 @@
+@startuml UsageScene
+
+left to right direction
+
+actor スタッフ
+
+frame スタッフアカウント登録
+note right of スタッフアカウント登録
+システムを利用するためのアカウントを登録する。
+end note
+
+frame スタッフアカウント変更
+note right of スタッフアカウント変更
+アカウントの内容を変更する。
+end note
+
+frame スタッフアカウント削除
+note right of スタッフアカウント削除
+アカウントを削除する。
+スタッフが退職した場合などに利用する。
+end note
+
+frame ログイン
+note right of ログイン
+システムを利用するためにログインする。
+end note
+
+スタッフ -- スタッフアカウント登録
+スタッフ -- スタッフアカウント削除
+スタッフ -- スタッフアカウント変更
+スタッフ -- ログイン
+
+@enduml
